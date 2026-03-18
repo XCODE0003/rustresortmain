@@ -1,0 +1,423 @@
+<template>
+    <MainLayout>
+        <div class="container flex flex-col gap-12 md:gap-16 lg:gap-20">
+            <!-- Hero Section -->
+            <div class="relative flex w-full flex-col items-center gap-8 text-center">
+                <div class="flex flex-col gap-4">
+                    <h1
+                        class="text-4xl font-bold uppercase text-white md:text-5xl lg:text-6xl"
+                    >
+                        Rust Resort
+                    </h1>
+                    <p class="text-base text-TextGray md:text-lg">
+                        Лучшие сервера Rust с уникальными возможностями
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <Link
+                        href="/servers"
+                        class="cursor-pointer rounded-lg bg-Orange px-8 py-4 text-sm font-bold uppercase text-black duration-300 ease-in-out hover:bg-Orange/80"
+                    >
+                        Выбрать сервер
+                    </Link>
+                    <Link
+                        href="/shop"
+                        class="button-black cursor-pointer rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-white duration-300 ease-in-out hover:border-Orange hover:text-Orange"
+                    >
+                        Перейти в магазин
+                    </Link>
+                </div>
+            </div>
+
+            <!-- Баннеры -->
+            <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+                <div
+                    class="relative h-[200px] overflow-hidden rounded-xl border border-StrokeGray md:h-[240px] lg:h-[280px]"
+                >
+                    <img
+                        src="/images/banner-1.png"
+                        alt="Специальное предложение"
+                        loading="eager"
+                        decoding="async"
+                        class="h-full w-full object-cover"
+                    />
+                    <div
+                        class="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"
+                    ></div>
+                    <div class="absolute bottom-6 left-6 flex flex-col gap-2">
+                        <h2 class="text-xl font-bold text-white lg:text-2xl">
+                            Специальное предложение
+                        </h2>
+                        <p class="text-sm text-TextGray">
+                            Скидки до 50% на избранные товары
+                        </p>
+                        <Link
+                            href="/shop"
+                            class="mt-2 inline-flex w-max items-center gap-2 text-sm font-bold text-Orange duration-300 hover:opacity-80"
+                        >
+                            Перейти в магазин
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M6 12L10 8L6 4"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
+
+                <div
+                    class="relative h-[200px] overflow-hidden rounded-xl border border-StrokeGray md:h-[240px] lg:h-[280px]"
+                >
+                    <img
+                        src="/images/banner-2.png"
+                        alt="Новые товары"
+                        loading="eager"
+                        decoding="async"
+                        class="h-full w-full object-cover"
+                    />
+                    <div
+                        class="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"
+                    ></div>
+                    <div class="absolute bottom-6 left-6 flex flex-col gap-2">
+                        <h2 class="text-xl font-bold text-white lg:text-2xl">
+                            Новые товары
+                        </h2>
+                        <p class="text-sm text-TextGray">
+                            Эксклюзивные предметы в магазине
+                        </p>
+                        <Link
+                            href="/shop"
+                            class="mt-2 inline-flex w-max items-center gap-2 text-sm font-bold text-Orange duration-300 hover:opacity-80"
+                        >
+                            Смотреть все
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M6 12L10 8L6 4"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Популярные сервера -->
+            <div class="flex w-full flex-col gap-6">
+                <h2
+                    class="text-center text-2xl font-bold uppercase text-white md:text-3xl"
+                >
+                    Наши сервера
+                </h2>
+
+                <div
+                    v-if="servers && servers.length > 0"
+                    class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5"
+                >
+                    <div
+                        v-for="server in servers.slice(0, 4)"
+                        :key="server.id"
+                        class="relative overflow-hidden rounded-xl border border-StrokeGray"
+                    >
+                        <div class="flex items-center gap-5 p-5">
+                            <div
+                                class="relative min-w-max overflow-hidden rounded-xl"
+                            >
+                                <img
+                                    :src="server.image || '/images/test-bg-server.png'"
+                                    :alt="server.name"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="200"
+                                    height="120"
+                                    class="h-[120px] w-[200px] object-cover"
+                                />
+                                <div
+                                    class="absolute top-0 left-0 flex h-full w-full gap-1.5 p-1.5"
+                                >
+                                    <div
+                                        v-if="server.options?.rate"
+                                        class="bg-table flex h-[26px] w-max items-center justify-center rounded-sm border border-StrokeGray px-2 py-0.5 text-[10px]/[10px] font-medium text-TextGray backdrop-blur-xs"
+                                    >
+                                        {{ server.options.rate }}
+                                    </div>
+                                    <div
+                                        v-if="server.next_wipe"
+                                        class="bg-table flex h-[26px] w-max items-center justify-center rounded-sm border border-StrokeGray px-2 py-0.5 text-[10px]/[10px] font-medium text-TextGray backdrop-blur-xs"
+                                    >
+                                        {{ formatWipeInfo(server.next_wipe) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex w-full flex-col justify-between gap-3">
+                                <div class="flex flex-col gap-2">
+                                    <h3
+                                        v-if="server.category"
+                                        class="text-[12px]/[12px] font-medium text-TextGray"
+                                    >
+                                        {{
+                                            server.category.title_ru?.toUpperCase() ||
+                                            'СЕРВЕР'
+                                        }}
+                                    </h3>
+                                    <h3 class="text-[16px] font-bold text-white">
+                                        {{ server.name }}
+                                    </h3>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <button
+                                        @click="connectToServer(server)"
+                                        class="cursor-pointer rounded-md bg-Orange px-5 py-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
+                                    >
+                                        Подключиться
+                                    </button>
+                                    <Link
+                                        :href="`/shop/server/${server.id}`"
+                                        class="flex items-center justify-center cursor-pointer rounded-md bg-Green p-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Green/80"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                clip-rule="evenodd"
+                                                d="M7.88368 18.2168C8.63003 18.2169 9.2411 18.8419 9.2411 19.6133C9.24099 20.3755 8.62997 21 7.88368 21C7.12833 21 6.5166 20.3756 6.51649 19.6133C6.51649 18.8418 7.12826 18.2168 7.88368 18.2168ZM18.0009 18.2168C18.7473 18.2168 19.3593 18.8418 19.3593 19.6133C19.3592 20.3755 18.7472 21 18.0009 21C17.2455 21 16.6338 20.3756 16.6337 19.6133C16.6337 18.8418 17.2455 18.2168 18.0009 18.2168ZM3.79188 3.00785L5.93641 3.33793C6.24209 3.39394 6.46695 3.64979 6.49403 3.96195L6.66493 6.01957C6.69191 6.31438 6.92599 6.53519 7.21375 6.5352H19.3593C19.9076 6.5353 20.2672 6.72806 20.6268 7.15043C20.9863 7.57281 21.0495 8.17859 20.9686 8.72856L20.1141 14.7539C19.9523 15.9121 18.9809 16.7657 17.8388 16.7657H8.02723C6.83135 16.7655 5.84196 15.8295 5.74305 14.6172L4.9159 4.60551L3.55848 4.36625C3.19876 4.30196 2.9467 3.9436 3.00965 3.57621C3.0727 3.20071 3.42327 2.95188 3.79188 3.00785ZM13.9091 9.93168C13.5314 9.93177 13.2343 10.2354 13.2343 10.6211C13.2343 10.9976 13.5315 11.3095 13.9091 11.3096H16.4003C16.7779 11.3096 17.075 10.9976 17.0751 10.6211C17.0751 10.2354 16.778 9.93168 16.4003 9.93168H13.9091Z"
+                                                fill="#090B0D"
+                                            />
+                                        </svg>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <Link
+                        href="/servers"
+                        class="button-black rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-TextGray duration-300 ease-in-out hover:border-Orange hover:text-Orange"
+                    >
+                        Посмотреть все сервера
+                    </Link>
+                </div>
+            </div>
+
+            <!-- Преимущества -->
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
+                <div
+                    class="flex flex-col gap-4 rounded-xl border border-StrokeGray p-6"
+                >
+                    <div
+                        class="flex size-12 items-center justify-center rounded-lg bg-Orange/20"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+                            <path
+                                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                                fill="#F3A45D"
+                            />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">
+                        Высокая производительность
+                    </h3>
+                    <p class="text-sm text-TextGray">
+                        Мощные серверы с минимальными задержками и стабильной работой
+                    </p>
+                </div>
+
+                <div
+                    class="flex flex-col gap-4 rounded-xl border border-StrokeGray p-6"
+                >
+                    <div
+                        class="flex size-12 items-center justify-center rounded-lg bg-Green/20"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+                            <path
+                                d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                                stroke="#64CE82"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">
+                        Честная игра
+                    </h3>
+                    <p class="text-sm text-TextGray">
+                        Активная модерация и защита от читеров для комфортной игры
+                    </p>
+                </div>
+
+                <div
+                    class="flex flex-col gap-4 rounded-xl border border-StrokeGray p-6"
+                >
+                    <div
+                        class="flex size-12 items-center justify-center rounded-lg bg-Orange/20"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+                            <path
+                                d="M17 20H22V18C22 16.3431 20.6569 15 19 15C18.0444 15 17.1931 15.4468 16.6438 16.1429M17 20H7M17 20V18C17 17.3438 16.8736 16.717 16.6438 16.1429M7 20H2V18C2 16.3431 3.34315 15 5 15C5.95561 15 6.80686 15.4468 7.35625 16.1429M7 20V18C7 17.3438 7.12642 16.717 7.35625 16.1429M7.35625 16.1429C8.0935 14.301 9.89482 13 12 13C14.1052 13 15.9065 14.301 16.6438 16.1429M15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7ZM21 10C21 11.1046 20.1046 12 19 12C17.8954 12 17 11.1046 17 10C17 8.89543 17.8954 8 19 8C20.1046 8 21 8.89543 21 10ZM7 10C7 11.1046 6.10457 12 5 12C3.89543 12 3 11.1046 3 10C3 8.89543 3.89543 8 5 8C6.10457 8 7 8.89543 7 10Z"
+                                stroke="#F3A45D"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">
+                        Активное сообщество
+                    </h3>
+                    <p class="text-sm text-TextGray">
+                        Дружелюбное комьюнити и регулярные ивенты для игроков
+                    </p>
+                </div>
+            </div>
+
+            <!-- Призыв к действию -->
+            <div
+                class="relative flex flex-col items-center gap-6 rounded-xl border border-StrokeGray p-8 text-center md:p-12"
+            >
+                <div
+                    class="absolute top-1/2 left-1/2 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/10 blur-3xl"
+                ></div>
+                <h2 class="relative z-10 text-2xl font-bold text-white md:text-3xl">
+                    Готовы начать играть?
+                </h2>
+                <p class="relative z-10 max-w-2xl text-base text-TextGray">
+                    Присоединяйтесь к тысячам игроков на наших серверах. Выберите
+                    сервер, купите стартовый набор и начните своё приключение в Rust
+                    прямо сейчас!
+                </p>
+                <div class="relative z-10 flex flex-wrap items-center justify-center gap-3">
+                    <Link
+                        href="/servers"
+                        class="cursor-pointer rounded-lg bg-Orange px-8 py-4 text-sm font-bold uppercase text-black duration-300 ease-in-out hover:bg-Orange/80"
+                    >
+                        Выбрать сервер
+                    </Link>
+                    <Link
+                        href="/shop"
+                        class="button-black cursor-pointer rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-white duration-300 ease-in-out hover:border-Orange hover:text-Orange"
+                    >
+                        Купить набор
+                    </Link>
+                </div>
+            </div>
+        </div>
+    </MainLayout>
+</template>
+
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import MainLayout from '@/layouts/main.vue';
+
+interface Server {
+    id: number;
+    name: string;
+    image?: string;
+    online_players?: number;
+    max_players?: number;
+    next_wipe?: string;
+    options?: {
+        ip?: string;
+        port?: number;
+        rate?: string;
+    };
+    category?: {
+        title_ru?: string;
+    };
+}
+
+const props = defineProps<{
+    servers: Server[];
+}>();
+
+const getServerIp = (server: Server): string => {
+    if (server.options?.ip && server.options?.port) {
+        return `${server.options.ip}:${server.options.port}`;
+    }
+    return 'N/A';
+};
+
+const formatWipeInfo = (wipeDate: string): string => {
+    try {
+        const date = new Date(wipeDate);
+        const now = new Date();
+        const diffMs = date.getTime() - now.getTime();
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) {
+            return `ВАЙП ${Math.abs(diffDays)} ДН. НАЗАД`;
+        } else if (diffDays === 0) {
+            return 'ВАЙП СЕГОДНЯ';
+        } else if (diffDays === 1) {
+            return 'ВАЙП ЗАВТРА';
+        } else {
+            return `ВАЙП ЧЕРЕЗ ${diffDays} ДН.`;
+        }
+    } catch {
+        return 'ЕЖЕНЕДЕЛЬНЫЙ ВАЙП';
+    }
+};
+
+const connectToServer = (server: Server) => {
+    const ip = getServerIp(server);
+    if (ip !== 'N/A') {
+        window.location.href = `steam://connect/${ip}`;
+    }
+};
+</script>
+
+<style scoped>
+.bg-table {
+    background: linear-gradient(
+        180deg,
+        rgba(9, 11, 13, 0.8) 0%,
+        rgba(9, 11, 13, 0.8) 100%
+    );
+}
+</style>

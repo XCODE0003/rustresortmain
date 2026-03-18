@@ -1,0 +1,35 @@
+{
+    "name": "rovazh/phpsocks",
+    "description": "SOCKS5 proxy client, written in pure PHP with zero dependencies.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["socks", "socks5", "php socks", "php socks5", "php proxy", "proxy client", "socks client"],
+    "autoload": {
+        "psr-4": {
+            "PhpSocks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpSocks\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Roman Vazhynskyi",
+            "email": "rvazhynskyi@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "vimeo/psalm": "^5",
+        "mockery/mockery": "^1.6.12",
+        "friendsofphp/php-cs-fixer": "^3.64"
+    },
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-sockets": "*"
+    }
+}

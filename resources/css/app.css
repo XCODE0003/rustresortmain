@@ -1,0 +1,135 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@font-face {
+    font-family: 'Stem';
+    src: url('/fonts/Stem-Medium.otf') format('truetype');
+    font-weight: 400-900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'inter';
+    src: url('/fonts/Inter.ttf') format('truetype');
+    font-weight: 400-900;
+    font-style: normal;
+}
+
+@theme {
+    --color-Orange: #f3a45d;
+    --color-Green: #64ce82;
+    --color-StrokeGray: #2b292d;
+    --color-TextBlack: #090b0d;
+    --color-TextGray: #636363;
+    --color-PageMain: #090b0d;
+    --color-PaleOrange: #413026;
+    --color-BgRed: #ed544b;
+    --color-TextRed: #4a1313;
+    --color-PaleGreen: #356644;
+    --color-TextGreen: #64CE82;
+    --font-stem: 'Stem', sans-serif;
+    --font-inter: 'inter', sans-serif;
+}
+
+#app {
+    @apply min-h-screen flex flex-col;
+    overflow-x: clip;
+}
+
+body {
+    font-family: var(--font-stem);
+    background-color: var(--color-PageMain);
+    background-image: url('/images/bg-main.png');
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: cover;
+}
+
+.button-black {
+    background: linear-gradient(180deg, rgba(9, 11, 13, 0.40) 0%, rgba(9, 11, 13, 0.40) 100%);
+    color: #636363;
+    @apply hover:text-white;
+}
+
+
+
+.block-black {
+    background: linear-gradient(180deg, rgba(7, 10, 12, 0.10) 0%, rgba(7, 10, 12, 0.10) 100%);
+}
+
+.red-button {
+    @apply relative z-10 border border-[#4A1313] before:content-[''] before:absolute before:inset-0 before:w-full before:h-full before:bg-[url('/images/bg-red-btn.png')] before:mix-blend-lighten before:bg-cover before:bg-no-repeat before:rounded-sm before:opacity-30 before:blur-[1px] rounded-sm text-BgRed relative z-20  ;
+    background: linear-gradient(90deg, #351919 0%, rgba(40, 23, 23, 0.64) 100%);
+}
+.green-button {
+    @apply relative z-10 border border-[#134A36] before:content-[''] before:absolute before:inset-0 before:w-full before:h-full before:bg-[url('/images/bg-green-btn.png')] before:mix-blend-lighten before:bg-cover before:bg-no-repeat before:rounded-sm before:opacity-30 before:blur-[1px] rounded-sm text-TextGreen relative z-20  ;
+    background: linear-gradient(90deg, #193533 0%, #172028 100%);
+}
+
+.container {
+    @apply mx-auto lg:max-w-[1400px] md:max-w-[974px] px-4 sm:px-6 xl:px-0;
+}
+
+.container-header {
+    @apply mx-auto lg:max-w-[1700px] md:max-w-5xl  px-4 sm:px-6 lg:px-8;
+}
+
+
+.scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.description-modal-text img{
+    @apply w-8 h-8 object-cover;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+.scrollbar-hide::-webkit-scrollbar-thumb {
+    display: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+}
+
+
+.scrollbar-track-transparent {
+    scrollbar-track-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+.bg-modal {
+    background: linear-gradient(180deg, rgba(9, 11, 13, 0.80) 0%, rgba(9, 11, 13, 0.80) 100%);
+}
+
+.toggle-button {
+    @apply border border-StrokeGray rounded-sm h-3 w-[22px] bg-transparent;
+
+}
+
+.toggle-button.active {
+    @apply border-PaleOrange;
+}
+
+.toggle-button span {
+    @apply bg-TextGray size-2;
+}
+
+.toggle-button.active span {
+    background-color: #F3A45D;
+}
