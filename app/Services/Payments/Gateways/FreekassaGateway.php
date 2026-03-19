@@ -22,15 +22,15 @@ class FreekassaGateway implements PaymentGatewayInterface
     {
         $merchantId = $this->gateway->getSetting('merchant_id');
         $secretWord = $this->gateway->getSetting('secret_word');
-        
+
         $orderId = $donate->id;
         $amount = $donate->amount;
         $currency = $this->gateway->currency;
-        
-        $sign = md5($merchantId . ':' . $amount . ':' . $secretWord . ':' . $currency . ':' . $orderId);
-        
-        $paymentUrl = 'https://pay.freekassa.com';
-        
+
+        $sign = md5($merchantId.':'.$amount.':'.$secretWord.':'.$currency.':'.$orderId);
+
+        $paymentUrl = 'https://pay.freekassa.ru';
+
         $params = [
             'm' => $merchantId,
             'oa' => $amount,
@@ -38,14 +38,14 @@ class FreekassaGateway implements PaymentGatewayInterface
             's' => $sign,
             'currency' => $currency,
         ];
-        
+
         Log::channel('freekassa')->info('Creating payment', [
             'donate_id' => $donate->id,
             'amount' => $amount,
         ]);
-        
+
         return [
-            'url' => $paymentUrl . '?' . http_build_query($params),
+            'url' => $paymentUrl.'?'.http_build_query($params),
             'method' => 'GET',
         ];
     }
@@ -56,18 +56,18 @@ class FreekassaGateway implements PaymentGatewayInterface
         $amount = $request->input('AMOUNT');
         $orderId = $request->input('MERCHANT_ORDER_ID');
         $sign = $request->input('SIGN');
-        
+
         $secretWord2 = $this->gateway->getSetting('secret_word_2');
-        
-        $expectedSign = md5($merchantId . ':' . $amount . ':' . $secretWord2 . ':' . $orderId);
-        
+
+        $expectedSign = md5($merchantId.':'.$amount.':'.$secretWord2.':'.$orderId);
+
         $isValid = hash_equals($expectedSign, $sign);
-        
+
         Log::channel('freekassa')->info('Webhook verification', [
             'order_id' => $orderId,
             'is_valid' => $isValid,
         ]);
-        
+
         return $isValid;
     }
 
@@ -75,7 +75,7 @@ class FreekassaGateway implements PaymentGatewayInterface
     {
         $orderId = $request->input('MERCHANT_ORDER_ID');
         $amount = $request->input('AMOUNT');
-        
+
         return new PaymentData(
             orderId: $orderId,
             amount: (float) $amount,

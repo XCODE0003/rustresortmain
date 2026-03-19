@@ -13,25 +13,27 @@ class PaymentGatewaysSeeder extends Seeder
     {
         try {
             $oldConnection = config('database.connections.mysql_old');
-            
-            if (!$oldConnection || !$oldConnection['database']) {
+
+            if (! $oldConnection || ! $oldConnection['database']) {
                 Log::warning('Old database connection not configured. Skipping payment gateways migration.');
                 $this->seedDefaultGateways();
+
                 return;
             }
 
             DB::connection('mysql_old')->getPdo();
-            
-            if (!DB::connection('mysql_old')->getSchemaBuilder()->hasTable('options')) {
+
+            if (! DB::connection('mysql_old')->getSchemaBuilder()->hasTable('options')) {
                 Log::warning('Options table not found in old database. Seeding default gateways.');
                 $this->seedDefaultGateways();
+
                 return;
             }
 
             $this->migrateFromOldDatabase();
-            
+
         } catch (\Exception $e) {
-            Log::warning('Could not connect to old database: ' . $e->getMessage());
+            Log::warning('Could not connect to old database: '.$e->getMessage());
             $this->seedDefaultGateways();
         }
     }
@@ -43,6 +45,7 @@ class PaymentGatewaysSeeder extends Seeder
             ->whereIn('key', [
                 'tebex_public_token', 'tebex_webhook_Key', 'tebex_package_id',
                 'paypal_email',
+                'freekassa_merchant_id', 'freekassa_secret_word', 'freekassa_secret_word_2',
             ])
             ->get()
             ->keyBy('key');
@@ -105,6 +108,25 @@ class PaymentGatewaysSeeder extends Seeder
                     'merchant_uuid' => $this->legacyEnv('HELEKET_MERCHANT_UUID'),
                     'payment_key' => $this->legacyEnv('HELEKET_PAYMENT_KEY'),
                     'payout_key' => $this->legacyEnv('HELEKET_PAYOUT_KEY'),
+                ],
+            ]
+        );
+
+        PaymentGateway::updateOrCreate(
+            ['code' => 'freekassa'],
+            [
+                'code' => 'freekassa',
+                'name' => 'Freekassa',
+                'name_ru' => 'Freekassa',
+                'is_active' => false,
+                'sort' => 3,
+                'currency' => 'RUB',
+                'min_amount' => 10,
+                'commission_percent' => 0,
+                'settings' => [
+                    'merchant_id' => $oldOptions['freekassa_merchant_id']->value ?? '',
+                    'secret_word' => $oldOptions['freekassa_secret_word']->value ?? '',
+                    'secret_word_2' => $oldOptions['freekassa_secret_word_2']->value ?? '',
                 ],
             ]
         );
@@ -185,6 +207,25 @@ class PaymentGatewaysSeeder extends Seeder
             ]
         );
 
+        PaymentGateway::updateOrCreate(
+            ['code' => 'freekassa'],
+            [
+                'code' => 'freekassa',
+                'name' => 'Freekassa',
+                'name_ru' => 'Freekassa',
+                'is_active' => false,
+                'sort' => 3,
+                'currency' => 'RUB',
+                'min_amount' => 10,
+                'commission_percent' => 0,
+                'settings' => [
+                    'merchant_id' => env('FREEKASSA_MERCHANT_ID', ''),
+                    'secret_word' => env('FREEKASSA_SECRET_WORD', ''),
+                    'secret_word_2' => env('FREEKASSA_SECRET_WORD_2', ''),
+                ],
+            ]
+        );
+
         $gateways = $this->getDefaultGateways();
         foreach ($gateways as $gateway) {
             $gateway['is_active'] = true;
@@ -210,7 +251,10 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
+                'settings' => [
+                    'backend' => 'pally',
+                    'payment_method' => 'BANK_CARD',
+                ],
                 'logo' => 'images/payment-logos/viza_mc_rf.png',
             ],
             [
@@ -222,7 +266,10 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
+                'settings' => [
+                    'backend' => 'pally',
+                    'payment_method' => 'SBP',
+                ],
                 'logo' => 'images/payment-logos/MIR.png',
             ],
             [
@@ -247,10 +294,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 1,
                 'commission_percent' => 0,
                 'settings' => [
-                    'backend' => 'paypal',
-                    'client_id' => env('PAYPAL_CLIENT_ID', ''),
-                    'secret' => env('PAYPAL_SECRET', ''),
-                    'mode' => env('PAYPAL_MODE', 'sandbox'),
+                    'backend' => 'tebex',
                 ],
                 'logo' => 'images/payment-logos/PayPal.png',
             ],
@@ -311,7 +355,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
+                'settings' => ['backend' => 'freekassa'],
                 'logo' => 'images/payment-logos/steam-logo3.png',
             ],
             [
@@ -323,7 +367,10 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
+                'settings' => [
+                    'backend' => 'heleket',
+                    'to_currency' => 'BTC',
+                ],
                 'logo' => 'images/payment-logos/Bitcoin.png',
             ],
             [
@@ -335,7 +382,10 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
+                'settings' => [
+                    'backend' => 'heleket',
+                    'to_currency' => 'USDT',
+                ],
                 'logo' => 'images/payment-logos/USDT.png',
             ],
             [
@@ -347,7 +397,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
+                'settings' => ['backend' => 'heleket'],
                 'logo' => 'images/payment-logos/SBP.png',
             ],
         ];
@@ -415,5 +465,4 @@ class PaymentGatewaysSeeder extends Seeder
 
         return $cached = $values;
     }
-
 }

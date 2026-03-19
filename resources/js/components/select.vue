@@ -211,8 +211,9 @@ onBeforeUnmount(() => {
 
 .rr-select :deep(.vs__dropdown-menu) {
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: auto !important;
+    bottom: calc(100% + 0.5rem) !important;
+    left: 0 !important;
     width: 100%;
     z-index: 1000;
     border: 1px solid var(--color-StrokeGray);
@@ -221,7 +222,7 @@ onBeforeUnmount(() => {
     border-radius: 0.75rem;
     padding: 0.25rem;
     animation: select-open 0.22s ease;
-    transform-origin: top center;
+    transform-origin: bottom center;
 }
 
 .rr-select :deep(.vs__dropdown-option) {

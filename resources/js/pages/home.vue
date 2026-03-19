@@ -121,6 +121,136 @@
                 </div>
             </div>
 
+            <!-- Товары магазина -->
+            <div class="flex w-full flex-col gap-6">
+                <div class="flex flex-col items-center gap-2 text-center">
+                    <h2 class="text-2xl font-bold uppercase text-white md:text-3xl">
+                        Товары магазина
+                    </h2>
+                    <p class="max-w-2xl text-sm text-TextGray md:text-base">
+                        Подберите наборы и услуги прямо с главной страницы, а затем завершите покупку в магазине.
+                    </p>
+                </div>
+
+                <div class="flex w-full flex-col gap-4 rounded-xl border border-StrokeGray p-4 md:p-6">
+                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <button
+                                type="button"
+                                @click="changeShopCategory(null)"
+                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
+                                :class="selectedShopCategory === null ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
+                            >
+                                Все
+                            </button>
+                            <button
+                                v-for="category in shopCategories"
+                                :key="category.id"
+                                type="button"
+                                @click="changeShopCategory(category.id)"
+                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
+                                :class="selectedShopCategory === category.id ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
+                            >
+                                {{ category.title_ru }}
+                            </button>
+                        </div>
+
+                        <form class="flex w-full gap-2 md:w-[360px]" @submit.prevent="submitShopSearch">
+                            <input
+                                v-model="shopSearchInput"
+                                type="text"
+                                placeholder="Поиск по товарам..."
+                                class="button-black w-full rounded-lg border border-StrokeGray px-4 py-2 text-sm text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
+                            />
+                            <button
+                                type="submit"
+                                class="rounded-lg bg-Orange px-4 py-2 text-sm font-bold text-black transition-all duration-300 hover:bg-Orange/80"
+                            >
+                                Найти
+                            </button>
+                        </form>
+                    </div>
+
+                    <div v-if="shopItems.data.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div
+                            v-for="item in shopItems.data"
+                            :key="item.id"
+                            class="button-black flex flex-col rounded-xl border border-StrokeGray p-4 transition-all duration-300 hover:border-Orange"
+                        >
+                            <div class="relative mb-3 flex h-[140px] items-center justify-center overflow-hidden rounded-lg border border-StrokeGray bg-[#0E1012]">
+                                <img
+                                    :src="item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png'"
+                                    :alt="item.name_ru"
+                                    class="h-[120px] w-auto object-contain"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                                <span
+                                    v-if="item.category?.title_ru"
+                                    class="absolute top-2 left-2 rounded-md border border-StrokeGray bg-black/70 px-2 py-1 text-[10px] font-bold uppercase text-TextGray"
+                                >
+                                    {{ item.category.title_ru }}
+                                </span>
+                            </div>
+
+                            <h3 class="mb-1 min-h-[40px] overflow-hidden text-sm font-bold uppercase text-white">
+                                {{ item.name_ru }}
+                            </h3>
+                            <div class="mt-auto flex items-center justify-between gap-2 pt-2">
+                                <span class="text-base font-bold text-Orange">
+                                    {{ formatPrice(item.price) }} ₽
+                                </span>
+                                <button
+                                    type="button"
+                                    @click="openItemModal(item)"
+                                    class="rounded-md bg-PaleOrange px-4 py-2 text-xs font-bold uppercase text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
+                                >
+                                    Купить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else class="rounded-lg border border-StrokeGray p-6 text-center text-sm text-TextGray">
+                        По текущим фильтрам товары не найдены.
+                    </div>
+
+                    <div
+                        v-if="shopItems.last_page > 1"
+                        class="flex flex-wrap items-center justify-center gap-2 pt-2"
+                    >
+                        <button
+                            type="button"
+                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                            :disabled="shopItems.current_page <= 1"
+                            @click="goToShopPage(shopItems.current_page - 1)"
+                        >
+                            Назад
+                        </button>
+
+                        <button
+                            v-for="page in shopPageNumbers"
+                            :key="page"
+                            type="button"
+                            class="button-black rounded-md border px-3 py-2 text-xs font-bold transition-all duration-300"
+                            :class="shopItems.current_page === page ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
+                            @click="goToShopPage(page)"
+                        >
+                            {{ page }}
+                        </button>
+
+                        <button
+                            type="button"
+                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                            :disabled="shopItems.current_page >= shopItems.last_page"
+                            @click="goToShopPage(shopItems.current_page + 1)"
+                        >
+                            Вперёд
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Популярные сервера -->
             <div class="flex w-full flex-col gap-6">
                 <h2
@@ -348,12 +478,16 @@
                 </div>
             </div>
         </div>
+        <DescriptionModal />
     </MainLayout>
 </template>
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import { computed, ref, watch } from 'vue';
+import DescriptionModal from '@/components/modals/descriptionModal.vue';
 import MainLayout from '@/layouts/main.vue';
+import { useDescriptionModalStore } from '@/stores/descriptionModal';
 
 interface Server {
     id: number;
@@ -372,9 +506,140 @@ interface Server {
     };
 }
 
+interface ShopCategory {
+    id: number;
+    title_ru: string;
+}
+
+interface ShopItem {
+    id: number;
+    name_ru: string;
+    price: number;
+    image?: string;
+    description_ru?: string;
+    variations?: Array<{
+        variation_id?: number;
+        variation_name?: string;
+        variation_price?: number;
+        id?: number;
+        name?: string;
+        price?: number;
+    }>;
+    category?: {
+        title_ru?: string;
+    };
+}
+
+interface ShopPaginated {
+    data: ShopItem[];
+    current_page: number;
+    last_page: number;
+}
+
 const props = defineProps<{
     servers: Server[];
+    shopCategories: ShopCategory[];
+    shopItems: ShopPaginated;
+    shopFilters: {
+        shop_category: number | null;
+        shop_search: string;
+    };
 }>();
+
+const selectedShopCategory = ref<number | null>(props.shopFilters.shop_category);
+const shopSearchInput = ref(props.shopFilters.shop_search ?? '');
+const modalStore = useDescriptionModalStore();
+
+watch(
+    () => props.shopFilters,
+    (filters) => {
+        selectedShopCategory.value = filters.shop_category;
+        shopSearchInput.value = filters.shop_search ?? '';
+    },
+);
+
+const shopPageNumbers = computed<number[]>(() => {
+    const current = props.shopItems.current_page;
+    const last = props.shopItems.last_page;
+    const start = Math.max(1, current - 2);
+    const end = Math.min(last, current + 2);
+    const pages: number[] = [];
+
+    for (let page = start; page <= end; page += 1) {
+        pages.push(page);
+    }
+
+    return pages;
+});
+
+const submitShopSearch = (): void => {
+    goToShopPage(1);
+};
+
+const changeShopCategory = (categoryId: number | null): void => {
+    selectedShopCategory.value = categoryId;
+    goToShopPage(1);
+};
+
+const goToShopPage = (page: number): void => {
+    const normalizedSearch = shopSearchInput.value.trim();
+
+    router.get(
+        '/',
+        {
+            shop_category: selectedShopCategory.value ?? undefined,
+            shop_search: normalizedSearch !== '' ? normalizedSearch : undefined,
+            shop_page: page > 1 ? page : undefined,
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        },
+    );
+};
+
+const formatPrice = (value: number): string => {
+    return Number(value).toLocaleString('ru-RU');
+};
+
+const toSafeNumber = (value: unknown, fallback = 0): number => {
+    if (typeof value === 'number' && Number.isFinite(value)) {
+        return value;
+    }
+
+    if (typeof value === 'string') {
+        const normalized = value.replace(',', '.').replace(/[^\d.-]/g, '');
+        const parsed = Number(normalized);
+        if (Number.isFinite(parsed)) {
+            return parsed;
+        }
+    }
+
+    return fallback;
+};
+
+const openItemModal = (item: ShopItem): void => {
+    const fallbackItemPrice = toSafeNumber(item.price, 0);
+    const mappedVariations = Array.isArray(item.variations) && item.variations.length > 0
+        ? item.variations.map((variation) => ({
+            label: variation.variation_name || variation.name || 'Вариант',
+            value: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
+            price: toSafeNumber(variation.variation_price ?? variation.price, fallbackItemPrice),
+            variationId: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
+        }))
+        : undefined;
+
+    modalStore.open({
+        itemId: item.id,
+        title: item.name_ru,
+        description: item.description_ru || 'Описание товара',
+        priceRub: fallbackItemPrice,
+        imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
+        variations: mappedVariations,
+        defaultAmount: 1,
+    });
+};
 
 const getServerIp = (server: Server): string => {
     if (server.options?.ip && server.options?.port) {

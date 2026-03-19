@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -30,6 +30,10 @@ Route::get('/shop/server', [\App\Http\Controllers\ServerController::class, 'shop
 Route::get('/shop/server/{server}', [\App\Http\Controllers\ServerController::class, 'shopServerShow'])->name('shop.server.show');
 Route::inertia('/shop/other', 'shop/other', [])->name('shop.other');
 
+Route::get('/payment/{donate}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/{donate}/cancel', [\App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
+Route::get('/balance/tebex', [\App\Http\Controllers\BalanceController::class, 'tebex'])->name('balance.tebex');
+
 Route::middleware('auth')->group(function () {
     Route::get('/shop/basket', [\App\Http\Controllers\CartController::class, 'index'])->name('shop.basket');
     Route::post('/shop/cart', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
@@ -42,8 +46,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payment/create', [\App\Http\Controllers\PaymentController::class, 'create'])->name('payment.create');
     Route::post('/payment', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
-    Route::get('/payment/{donate}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
-    Route::get('/payment/{donate}/cancel', [\App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
 
     Route::get('/purchases', [\App\Http\Controllers\PurchaseController::class, 'index'])->name('purchases.index');
     Route::get('/purchases/{purchase}', [\App\Http\Controllers\PurchaseController::class, 'show'])->name('purchases.show');
@@ -69,5 +71,6 @@ Route::inertia('/compedium', 'compedium', [
 
 Route::get('/test/login', function () {
     Auth::login(User::first());
+
     return redirect('/');
 })->name('test.login');

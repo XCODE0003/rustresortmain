@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 export const webhook = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ webhook.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.url = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ webhook.url = (args: { gateway: string | number } | [gateway: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.get = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ webhook.get = (args: { gateway: string | number } | [gateway: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.head = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ webhook.head = (args: { gateway: string | number } | [gateway: string | number ]
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.post = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -73,7 +73,7 @@ webhook.post = (args: { gateway: string | number } | [gateway: string | number ]
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.put = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -83,7 +83,7 @@ webhook.put = (args: { gateway: string | number } | [gateway: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.patch = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -93,7 +93,7 @@ webhook.patch = (args: { gateway: string | number } | [gateway: string | number 
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.delete = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -103,7 +103,7 @@ webhook.delete = (args: { gateway: string | number } | [gateway: string | number
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhook.options = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -113,7 +113,7 @@ webhook.options = (args: { gateway: string | number } | [gateway: string | numbe
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 const webhookForm = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -123,7 +123,7 @@ const webhookForm = (args: { gateway: string | number } | [gateway: string | num
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.get = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -133,7 +133,7 @@ webhookForm.get = (args: { gateway: string | number } | [gateway: string | numbe
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.head = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -148,7 +148,7 @@ webhookForm.head = (args: { gateway: string | number } | [gateway: string | numb
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.post = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -158,7 +158,7 @@ webhookForm.post = (args: { gateway: string | number } | [gateway: string | numb
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.put = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -173,7 +173,7 @@ webhookForm.put = (args: { gateway: string | number } | [gateway: string | numbe
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.patch = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -188,7 +188,7 @@ webhookForm.patch = (args: { gateway: string | number } | [gateway: string | num
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.delete = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -203,7 +203,7 @@ webhookForm.delete = (args: { gateway: string | number } | [gateway: string | nu
 
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
-* @see app/Http/Controllers/Api/PaymentWebhookController.php:17
+* @see app/Http/Controllers/Api/PaymentWebhookController.php:18
 * @route '/api/payments/notification/{gateway}'
 */
 webhookForm.options = (args: { gateway: string | number } | [gateway: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

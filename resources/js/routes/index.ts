@@ -219,7 +219,7 @@ register.form = registerForm
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +234,7 @@ home.definition = {
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 home.url = (options?: RouteQueryOptions) => {
@@ -243,7 +243,7 @@ home.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -253,7 +253,7 @@ home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -263,7 +263,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -273,7 +273,7 @@ const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -283,7 +283,7 @@ homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\HomeController::home
-* @see app/Http/Controllers/HomeController.php:11
+* @see app/Http/Controllers/HomeController.php:13
 * @route '/'
 */
 homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -462,7 +462,7 @@ servers.form = serversForm
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 export const payment = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -477,7 +477,7 @@ payment.definition = {
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 payment.url = (options?: RouteQueryOptions) => {
@@ -486,7 +486,7 @@ payment.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 payment.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -496,7 +496,7 @@ payment.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 payment.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -506,7 +506,7 @@ payment.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 const paymentForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -516,7 +516,7 @@ const paymentForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 paymentForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -526,7 +526,7 @@ paymentForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\BalanceController::payment
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 paymentForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

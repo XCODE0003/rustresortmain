@@ -1,7 +1,88 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+export const tebex = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: tebex.url(options),
+    method: 'get',
+})
+
+tebex.definition = {
+    methods: ["get","head"],
+    url: '/balance/tebex',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+tebex.url = (options?: RouteQueryOptions) => {
+    return tebex.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+tebex.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: tebex.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+tebex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: tebex.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+const tebexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: tebex.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+tebexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: tebex.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\BalanceController::tebex
+* @see app/Http/Controllers/BalanceController.php:139
+* @route '/balance/tebex'
+*/
+tebexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: tebex.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+tebex.form = tebexForm
+
+/**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +97,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +106,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +116,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +126,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +136,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +146,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::index
-* @see app/Http/Controllers/BalanceController.php:19
+* @see app/Http/Controllers/BalanceController.php:21
 * @route '/payment'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +163,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\BalanceController::topup
-* @see app/Http/Controllers/BalanceController.php:29
+* @see app/Http/Controllers/BalanceController.php:34
 * @route '/balance/topup'
 */
 export const topup = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +178,7 @@ topup.definition = {
 
 /**
 * @see \App\Http\Controllers\BalanceController::topup
-* @see app/Http/Controllers/BalanceController.php:29
+* @see app/Http/Controllers/BalanceController.php:34
 * @route '/balance/topup'
 */
 topup.url = (options?: RouteQueryOptions) => {
@@ -106,7 +187,7 @@ topup.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BalanceController::topup
-* @see app/Http/Controllers/BalanceController.php:29
+* @see app/Http/Controllers/BalanceController.php:34
 * @route '/balance/topup'
 */
 topup.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +197,7 @@ topup.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::topup
-* @see app/Http/Controllers/BalanceController.php:29
+* @see app/Http/Controllers/BalanceController.php:34
 * @route '/balance/topup'
 */
 const topupForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +207,7 @@ const topupForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\BalanceController::topup
-* @see app/Http/Controllers/BalanceController.php:29
+* @see app/Http/Controllers/BalanceController.php:34
 * @route '/balance/topup'
 */
 topupForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -136,6 +217,6 @@ topupForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 
 topup.form = topupForm
 
-const BalanceController = { index, topup }
+const BalanceController = { tebex, index, topup }
 
 export default BalanceController

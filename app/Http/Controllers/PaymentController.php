@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePaymentRequest;
 use App\Models\Donate;
 use App\Models\ShopCart;
+use App\Models\User;
 use App\Services\Payments\PaymentManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -83,19 +86,65 @@ class PaymentController extends Controller
             ]);
 
             return redirect()->route('payment.cancel', $donate)
-                ->with('error', 'Ошибка создания платежа: ' . $e->getMessage());
+                ->with('error', 'Ошибка создания платежа: '.$e->getMessage());
         }
     }
 
-    public function success(Donate $donate): Response
+    public function success(Request $request, Donate $donate): Response
     {
+        Log::info('PAYMENT_SUCCESS_PAGE_OPENED', [
+            'donate_id' => $donate->id,
+            'payment_id' => $donate->payment_id,
+            'status' => $donate->status,
+            'payment_system' => $donate->payment_system,
+            'query' => $request->query(),
+            'is_auth_before' => Auth::check(),
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        if (! Auth::check() && $donate->user_id) {
+            $user = User::find($donate->user_id);
+            if ($user) {
+                Auth::login($user, true);
+                $request->session()->regenerate();
+                Log::info('PAYMENT_SUCCESS_AUTOLOGIN_PERFORMED', [
+                    'donate_id' => $donate->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
+
         return Inertia::render('Payment/Success', [
             'payment' => $donate,
         ]);
     }
 
-    public function cancel(Donate $donate): Response
+    public function cancel(Request $request, Donate $donate): Response
     {
+        Log::info('PAYMENT_CANCEL_PAGE_OPENED', [
+            'donate_id' => $donate->id,
+            'payment_id' => $donate->payment_id,
+            'status' => $donate->status,
+            'payment_system' => $donate->payment_system,
+            'query' => $request->query(),
+            'is_auth_before' => Auth::check(),
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        if (! Auth::check() && $donate->user_id) {
+            $user = User::find($donate->user_id);
+            if ($user) {
+                Auth::login($user, true);
+                $request->session()->regenerate();
+                Log::info('PAYMENT_CANCEL_AUTOLOGIN_PERFORMED', [
+                    'donate_id' => $donate->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
+
         return Inertia::render('Payment/Cancel', [
             'payment' => $donate,
         ]);

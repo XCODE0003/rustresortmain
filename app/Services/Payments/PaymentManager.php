@@ -91,31 +91,62 @@ class PaymentManager
 
     protected function resolveGatewayClass(string $name): ?string
     {
+        if (PaymentGatewayModel::getConnectionResolver()) {
+            $methodGateway = PaymentGatewayModel::query()
+                ->where('code', $name)
+                ->first();
+
+            if ($methodGateway) {
+                $backendCode = $methodGateway->getSetting('backend');
+
+                if (is_string($backendCode) && isset($this->gateways[$backendCode])) {
+                    $this->safeLog('info', 'PAYMENT_GATEWAY_RESOLVED_VIA_BACKEND', [
+                        'requested_gateway' => $name,
+                        'backend_code' => $backendCode,
+                        'gateway_class' => $this->gateways[$backendCode],
+                    ]);
+
+                    return $this->gateways[$backendCode];
+                }
+
+                if (isset($this->gateways[$methodGateway->code])) {
+                    $this->safeLog('info', 'PAYMENT_GATEWAY_RESOLVED_VIA_METHOD_CODE', [
+                        'requested_gateway' => $name,
+                        'method_code' => $methodGateway->code,
+                        'gateway_class' => $this->gateways[$methodGateway->code],
+                    ]);
+
+                    return $this->gateways[$methodGateway->code];
+                }
+            }
+        }
+
         if (isset($this->gateways[$name])) {
+            $this->safeLog('info', 'PAYMENT_GATEWAY_RESOLVED_DIRECT', [
+                'requested_gateway' => $name,
+                'gateway_class' => $this->gateways[$name],
+            ]);
+
             return $this->gateways[$name];
         }
 
-        if (! PaymentGatewayModel::getConnectionResolver()) {
-            return null;
+        $this->safeLog('warning', 'PAYMENT_GATEWAY_NOT_FOUND', [
+            'requested_gateway' => $name,
+        ]);
+
+        return null;
+    }
+
+    protected function safeLog(string $level, string $message, array $context = []): void
+    {
+        if (! function_exists('logger')) {
+            return;
         }
 
-        $methodGateway = PaymentGatewayModel::query()
-            ->where('code', $name)
-            ->first();
-
-        if (! $methodGateway) {
-            return null;
+        try {
+            logger()->log($level, $message, $context);
+        } catch (\Throwable) {
+            // Keep gateway resolver usable in lightweight tests without bootstrapped facades.
         }
-
-        $backendCode = $methodGateway->getSetting('backend');
-
-        if (is_string($backendCode) && isset($this->gateways[$backendCode])) {
-            return $this->gateways[$backendCode];
-        }
-
-        return isset($this->gateways[$methodGateway->code])
-            ? $this->gateways[$methodGateway->code]
-            : null;
     }
 }
-

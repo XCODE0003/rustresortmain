@@ -4,9 +4,9 @@ import HomeController from './HomeController'
 import LocaleController from './LocaleController'
 import ServerController from './ServerController'
 import ShopController from './ShopController'
-import CartController from './CartController'
-import BalanceController from './BalanceController'
 import PaymentController from './PaymentController'
+import BalanceController from './BalanceController'
+import CartController from './CartController'
 import PurchaseController from './PurchaseController'
 import ProfileController from './ProfileController'
 
@@ -17,9 +17,9 @@ const Controllers = {
     LocaleController: Object.assign(LocaleController, LocaleController),
     ServerController: Object.assign(ServerController, ServerController),
     ShopController: Object.assign(ShopController, ShopController),
-    CartController: Object.assign(CartController, CartController),
-    BalanceController: Object.assign(BalanceController, BalanceController),
     PaymentController: Object.assign(PaymentController, PaymentController),
+    BalanceController: Object.assign(BalanceController, BalanceController),
+    CartController: Object.assign(CartController, CartController),
     PurchaseController: Object.assign(PurchaseController, PurchaseController),
     ProfileController: Object.assign(ProfileController, ProfileController),
 }
