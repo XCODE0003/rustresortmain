@@ -17,7 +17,7 @@ class TopProductsWidget extends TableWidget
         return $table
             ->query(
                 \App\Models\ShopStatistic::query()
-                    ->selectRaw('item_id, COUNT(*) as sales, SUM(price) as revenue')
+                    ->selectRaw('item_id, COUNT(*) as sales, SUM(price) as revenue, MIN(id) as id')
                     ->where('created_at', '>=', now()->subDays(30))
                     ->whereNotNull('item_id')
                     ->groupBy('item_id')
