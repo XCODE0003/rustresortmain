@@ -87,7 +87,12 @@ const selectLanguage = (lang: Language) => {
     if (lang.code !== currentLanguage.value.code) {
         router.post('/locale', { locale: lang.code }, {
             preserveScroll: true,
+            preserveState: true,
             onSuccess: () => {
+                // Обновляем i18n локаль на клиенте
+                if (window.$i18n) {
+                    window.$i18n.global.locale.value = lang.code;
+                }
                 isOpen.value = false;
             }
         });

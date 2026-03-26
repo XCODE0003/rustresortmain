@@ -1,0 +1,1 @@
+import{i as a}from"./app-BBSFe390.js";function p(){const{t:e}=a();return{formatWipeInfo:n=>{try{const o=new Date(n),r=new Date,i=o.getTime()-r.getTime(),t=Math.floor(i/(1e3*60*60*24));return t<0?e("wipe.days_ago",{n:Math.abs(t)}):t===0?e("wipe.today"):t===1?e("wipe.tomorrow"):e("wipe.in_days",{n:t})}catch{return e("wipe.weekly")}}}}export{p as u};

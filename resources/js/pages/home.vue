@@ -10,7 +10,7 @@
                         Rust Resort
                     </h1>
                     <p class="text-base text-TextGray md:text-lg">
-                        Лучшие сервера Rust с уникальными возможностями
+                        {{ $t('home.tagline') }}
                     </p>
                 </div>
 
@@ -19,13 +19,13 @@
                         href="/servers"
                         class="cursor-pointer rounded-lg bg-Orange px-8 py-4 text-sm font-bold uppercase text-black duration-300 ease-in-out hover:bg-Orange/80"
                     >
-                        Выбрать сервер
+                        {{ $t('shop.pick_server') }}
                     </Link>
                     <Link
                         href="/shop"
                         class="button-black cursor-pointer rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-white duration-300 ease-in-out hover:border-Orange hover:text-Orange"
                     >
-                        Перейти в магазин
+                        {{ $t('home.go_shop') }}
                     </Link>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 >
                     <img
                         src="/images/banner-1.png"
-                        alt="Специальное предложение"
+                        :alt="$t('shop.special_offer')"
                         loading="eager"
                         decoding="async"
                         class="h-full w-full object-cover"
@@ -47,16 +47,16 @@
                     ></div>
                     <div class="absolute bottom-6 left-6 flex flex-col gap-2">
                         <h2 class="text-xl font-bold text-white lg:text-2xl">
-                            Специальное предложение
+                            {{ $t('shop.special_offer') }}
                         </h2>
                         <p class="text-sm text-TextGray">
-                            Скидки до 50% на избранные товары
+                            {{ $t('shop.special_offer_sub') }}
                         </p>
                         <Link
                             href="/shop"
                             class="mt-2 inline-flex w-max items-center gap-2 text-sm font-bold text-Orange duration-300 hover:opacity-80"
                         >
-                            Перейти в магазин
+                            {{ $t('home.go_shop') }}
                             <svg
                                 width="16"
                                 height="16"
@@ -81,7 +81,7 @@
                 >
                     <img
                         src="/images/banner-2.png"
-                        alt="Новые товары"
+                        :alt="$t('shop.new_items')"
                         loading="eager"
                         decoding="async"
                         class="h-full w-full object-cover"
@@ -91,16 +91,16 @@
                     ></div>
                     <div class="absolute bottom-6 left-6 flex flex-col gap-2">
                         <h2 class="text-xl font-bold text-white lg:text-2xl">
-                            Новые товары
+                            {{ $t('shop.new_items') }}
                         </h2>
                         <p class="text-sm text-TextGray">
-                            Эксклюзивные предметы в магазине
+                            {{ $t('shop.new_items_sub') }}
                         </p>
                         <Link
                             href="/shop"
                             class="mt-2 inline-flex w-max items-center gap-2 text-sm font-bold text-Orange duration-300 hover:opacity-80"
                         >
-                            Смотреть все
+                            {{ $t('home.view_all') }}
                             <svg
                                 width="16"
                                 height="16"
@@ -125,10 +125,10 @@
             <div class="flex w-full flex-col gap-6">
                 <div class="flex flex-col items-center gap-2 text-center">
                     <h2 class="text-2xl font-bold uppercase text-white md:text-3xl">
-                        Товары магазина
+                        {{ $t('home.shop_section_title') }}
                     </h2>
                     <p class="max-w-2xl text-sm text-TextGray md:text-base">
-                        Подберите наборы и услуги прямо с главной страницы, а затем завершите покупку в магазине.
+                        {{ $t('home.shop_section_sub') }}
                     </p>
                 </div>
 
@@ -141,7 +141,7 @@
                                 class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
                                 :class="selectedShopCategory === null ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
                             >
-                                Все
+                                {{ $t('home.all') }}
                             </button>
                             <button
                                 v-for="category in shopCategories"
@@ -151,7 +151,7 @@
                                 class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
                                 :class="selectedShopCategory === category.id ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
                             >
-                                {{ category.title_ru }}
+                                {{ categoryTitle(category) }}
                             </button>
                         </div>
 
@@ -159,14 +159,14 @@
                             <input
                                 v-model="shopSearchInput"
                                 type="text"
-                                placeholder="Поиск по товарам..."
+                                :placeholder="$t('home.search_items_placeholder')"
                                 class="button-black w-full rounded-lg border border-StrokeGray px-4 py-2 text-sm text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
                             />
                             <button
                                 type="submit"
                                 class="rounded-lg bg-Orange px-4 py-2 text-sm font-bold text-black transition-all duration-300 hover:bg-Orange/80"
                             >
-                                Найти
+                                {{ $t('home.find') }}
                             </button>
                         </form>
                     </div>
@@ -180,21 +180,21 @@
                             <div class="relative mb-3 flex h-[140px] items-center justify-center overflow-hidden rounded-lg border border-StrokeGray bg-[#0E1012]">
                                 <img
                                     :src="item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png'"
-                                    :alt="item.name_ru"
+                                    :alt="itemName(item)"
                                     class="h-[120px] w-auto object-contain"
                                     loading="lazy"
                                     decoding="async"
                                 />
                                 <span
-                                    v-if="item.category?.title_ru"
+                                    v-if="categoryTitle(item.category)"
                                     class="absolute top-2 left-2 rounded-md border border-StrokeGray bg-black/70 px-2 py-1 text-[10px] font-bold uppercase text-TextGray"
                                 >
-                                    {{ item.category.title_ru }}
+                                    {{ categoryTitle(item.category) }}
                                 </span>
                             </div>
 
                             <h3 class="mb-1 min-h-[40px] overflow-hidden text-sm font-bold uppercase text-white">
-                                {{ item.name_ru }}
+                                {{ itemName(item) }}
                             </h3>
                             <div class="mt-auto flex items-center justify-between gap-2 pt-2">
                                 <span class="text-base font-bold text-Orange">
@@ -205,14 +205,14 @@
                                     @click="openItemModal(item)"
                                     class="rounded-md bg-PaleOrange px-4 py-2 text-xs font-bold uppercase text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
                                 >
-                                    Купить
+                                    {{ $t('shop.buy') }}
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <div v-else class="rounded-lg border border-StrokeGray p-6 text-center text-sm text-TextGray">
-                        По текущим фильтрам товары не найдены.
+                        {{ $t('home.no_items_filters') }}
                     </div>
 
                     <div
@@ -225,7 +225,7 @@
                             :disabled="shopItems.current_page <= 1"
                             @click="goToShopPage(shopItems.current_page - 1)"
                         >
-                            Назад
+                            {{ $t('common.back') }}
                         </button>
 
                         <button
@@ -245,7 +245,7 @@
                             :disabled="shopItems.current_page >= shopItems.last_page"
                             @click="goToShopPage(shopItems.current_page + 1)"
                         >
-                            Вперёд
+                            {{ $t('home.forward') }}
                         </button>
                     </div>
                 </div>
@@ -256,7 +256,7 @@
                 <h2
                     class="text-center text-2xl font-bold uppercase text-white md:text-3xl"
                 >
-                    Наши сервера
+                    {{ $t('home.our_servers') }}
                 </h2>
 
                 <div
@@ -306,8 +306,7 @@
                                         class="text-[12px]/[12px] font-medium text-TextGray"
                                     >
                                         {{
-                                            server.category.title_ru?.toUpperCase() ||
-                                            'СЕРВЕР'
+                                            serverCategoryLabel(server)
                                         }}
                                     </h3>
                                     <h3 class="text-[16px] font-bold text-white">
@@ -320,7 +319,7 @@
                                         @click="connectToServer(server)"
                                         class="cursor-pointer rounded-md bg-Orange px-5 py-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
                                     >
-                                        Подключиться
+                                        {{ $t('server.connect') }}
                                     </button>
                                     <Link
                                         :href="`/shop/server/${server.id}`"
@@ -352,7 +351,7 @@
                         href="/servers"
                         class="button-black rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-TextGray duration-300 ease-in-out hover:border-Orange hover:text-Orange"
                     >
-                        Посмотреть все сервера
+                        {{ $t('home.view_all_servers') }}
                     </Link>
                 </div>
             </div>
@@ -379,10 +378,10 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-white">
-                        Высокая производительность
+                        {{ $t('home.feat_perf_title') }}
                     </h3>
                     <p class="text-sm text-TextGray">
-                        Мощные серверы с минимальными задержками и стабильной работой
+                        {{ $t('home.feat_perf_text') }}
                     </p>
                 </div>
 
@@ -409,10 +408,10 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-white">
-                        Честная игра
+                        {{ $t('home.feat_fair_title') }}
                     </h3>
                     <p class="text-sm text-TextGray">
-                        Активная модерация и защита от читеров для комфортной игры
+                        {{ $t('home.feat_fair_text') }}
                     </p>
                 </div>
 
@@ -439,10 +438,10 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-white">
-                        Активное сообщество
+                        {{ $t('home.feat_comm_title') }}
                     </h3>
                     <p class="text-sm text-TextGray">
-                        Дружелюбное комьюнити и регулярные ивенты для игроков
+                        {{ $t('home.feat_comm_text') }}
                     </p>
                 </div>
             </div>
@@ -455,25 +454,23 @@
                     class="absolute top-1/2 left-1/2 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/10 blur-3xl"
                 ></div>
                 <h2 class="relative z-10 text-2xl font-bold text-white md:text-3xl">
-                    Готовы начать играть?
+                    {{ $t('home.cta_title') }}
                 </h2>
                 <p class="relative z-10 max-w-2xl text-base text-TextGray">
-                    Присоединяйтесь к тысячам игроков на наших серверах. Выберите
-                    сервер, купите стартовый набор и начните своё приключение в Rust
-                    прямо сейчас!
+                    {{ $t('home.cta_text') }}
                 </p>
                 <div class="relative z-10 flex flex-wrap items-center justify-center gap-3">
                     <Link
                         href="/servers"
                         class="cursor-pointer rounded-lg bg-Orange px-8 py-4 text-sm font-bold uppercase text-black duration-300 ease-in-out hover:bg-Orange/80"
                     >
-                        Выбрать сервер
+                        {{ $t('shop.pick_server') }}
                     </Link>
                     <Link
                         href="/shop"
                         class="button-black cursor-pointer rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-white duration-300 ease-in-out hover:border-Orange hover:text-Orange"
                     >
-                        Купить набор
+                        {{ $t('home.buy_starter') }}
                     </Link>
                 </div>
             </div>
@@ -485,7 +482,10 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import DescriptionModal from '@/components/modals/descriptionModal.vue';
+import { useShopLocale } from '@/composables/useShopLocale';
+import { useWipeInfo } from '@/composables/useWipeInfo';
 import MainLayout from '@/layouts/main.vue';
 import { useDescriptionModalStore } from '@/stores/descriptionModal';
 
@@ -503,20 +503,24 @@ interface Server {
     };
     category?: {
         title_ru?: string;
+        title_en?: string | null;
     };
 }
 
 interface ShopCategory {
     id: number;
     title_ru: string;
+    title_en?: string | null;
 }
 
 interface ShopItem {
     id: number;
     name_ru: string;
+    name_en?: string | null;
     price: number;
     image?: string;
     description_ru?: string;
+    description_en?: string | null;
     variations?: Array<{
         variation_id?: number;
         variation_name?: string;
@@ -527,6 +531,7 @@ interface ShopItem {
     }>;
     category?: {
         title_ru?: string;
+        title_en?: string | null;
     };
 }
 
@@ -546,9 +551,19 @@ const props = defineProps<{
     };
 }>();
 
+const { locale, t } = useI18n();
+const { itemName, itemDescription, categoryTitle } = useShopLocale();
+const { formatWipeInfo } = useWipeInfo();
+
 const selectedShopCategory = ref<number | null>(props.shopFilters.shop_category);
 const shopSearchInput = ref(props.shopFilters.shop_search ?? '');
 const modalStore = useDescriptionModalStore();
+
+const serverCategoryLabel = (server: Server): string => {
+    const label = categoryTitle(server.category);
+
+    return label !== '' ? label.toUpperCase() : t('home.server_badge');
+};
 
 watch(
     () => props.shopFilters,
@@ -600,7 +615,7 @@ const goToShopPage = (page: number): void => {
 };
 
 const formatPrice = (value: number): string => {
-    return Number(value).toLocaleString('ru-RU');
+    return Number(value).toLocaleString(locale.value === 'en' ? 'en-US' : 'ru-RU');
 };
 
 const toSafeNumber = (value: unknown, fallback = 0): number => {
@@ -623,7 +638,7 @@ const openItemModal = (item: ShopItem): void => {
     const fallbackItemPrice = toSafeNumber(item.price, 0);
     const mappedVariations = Array.isArray(item.variations) && item.variations.length > 0
         ? item.variations.map((variation) => ({
-            label: variation.variation_name || variation.name || 'Вариант',
+            label: variation.variation_name || variation.name || t('shop.variation_default'),
             value: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
             price: toSafeNumber(variation.variation_price ?? variation.price, fallbackItemPrice),
             variationId: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
@@ -632,8 +647,8 @@ const openItemModal = (item: ShopItem): void => {
 
     modalStore.open({
         itemId: item.id,
-        title: item.name_ru,
-        description: item.description_ru || 'Описание товара',
+        title: itemName(item),
+        description: itemDescription(item),
         priceRub: fallbackItemPrice,
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations: mappedVariations,
@@ -646,27 +661,6 @@ const getServerIp = (server: Server): string => {
         return `${server.options.ip}:${server.options.port}`;
     }
     return 'N/A';
-};
-
-const formatWipeInfo = (wipeDate: string): string => {
-    try {
-        const date = new Date(wipeDate);
-        const now = new Date();
-        const diffMs = date.getTime() - now.getTime();
-        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-        if (diffDays < 0) {
-            return `ВАЙП ${Math.abs(diffDays)} ДН. НАЗАД`;
-        } else if (diffDays === 0) {
-            return 'ВАЙП СЕГОДНЯ';
-        } else if (diffDays === 1) {
-            return 'ВАЙП ЗАВТРА';
-        } else {
-            return `ВАЙП ЧЕРЕЗ ${diffDays} ДН.`;
-        }
-    } catch {
-        return 'ЕЖЕНЕДЕЛЬНЫЙ ВАЙП';
-    }
 };
 
 const connectToServer = (server: Server) => {

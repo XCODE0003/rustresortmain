@@ -5,7 +5,6 @@ namespace App\Filament\Resources\PaymentGateways\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -23,23 +22,23 @@ class PaymentGatewaysTable
                     ->circular()
                     ->defaultImageUrl('/images/placeholder.png')
                     ->size(40),
-                
+
                 TextColumn::make('name_ru')
                     ->label('Название')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
-                
+
                 TextColumn::make('code')
                     ->label('Код')
                     ->searchable()
                     ->badge()
                     ->color('gray'),
-                
+
                 ToggleColumn::make('is_active')
                     ->label('Активна')
                     ->sortable(),
-                
+
                 TextColumn::make('currency')
                     ->label('Валюта')
                     ->badge()
@@ -50,23 +49,23 @@ class PaymentGatewaysTable
                         'BTC', 'USDT', 'ETH' => 'danger',
                         default => 'gray',
                     }),
-                
+
                 TextColumn::make('min_amount')
                     ->label('Мин. сумма')
                     ->money(fn ($record) => $record->currency)
                     ->sortable(),
-                
+
                 TextColumn::make('commission_percent')
                     ->label('Комиссия')
                     ->suffix('%')
                     ->sortable(),
-                
+
                 TextColumn::make('sort')
                     ->label('Порядок')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
                 TextColumn::make('created_at')
                     ->label('Создано')
                     ->dateTime('d.m.Y H:i')

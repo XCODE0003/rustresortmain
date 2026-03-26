@@ -4,7 +4,7 @@
             <h2
                 class="text-center text-[15px] font-bold text-white uppercase md:text-[17px] lg:text-[19px]"
             >
-                Выберите способ оплаты
+                {{ $t('payment.choose_method') }}
             </h2>
 
             <div class="flex w-full items-start gap-4 max-lg:flex-col">
@@ -42,24 +42,24 @@
                         :disabled="!selectedGateway || form.processing"
                         class="mt-6 w-full rounded-lg bg-TextGreen px-6 py-4 text-base font-bold text-TextBlack transition-all duration-300 hover:bg-TextGreen/80 disabled:opacity-50"
                     >
-                        Продолжить
+                        {{ $t('payment.continue') }}
                     </button>
                 </div>
 
                 <div class="block-black w-full rounded-xl border border-StrokeGray p-6 lg:w-96">
-                    <h3 class="mb-4 text-lg font-bold text-white">Ваш заказ</h3>
+                    <h3 class="mb-4 text-lg font-bold text-white">{{ $t('payment.your_order') }}</h3>
                     <div class="space-y-3">
                         <div
                             v-for="item in cart"
                             :key="item.id"
                             class="flex items-center justify-between text-sm"
                         >
-                            <span class="text-TextGray">{{ item.item.name_ru }} x{{ item.count }}</span>
+                            <span class="text-TextGray">{{ itemName(item.item) }} x{{ item.count }}</span>
                             <span class="text-white font-bold">{{ ((item.item.price || 0) - (item.item.discount || 0)) * item.count }} ₽</span>
                         </div>
                         <div class="border-t border-StrokeGray pt-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-base font-bold text-white">Итого:</span>
+                                <span class="text-base font-bold text-white">{{ $t('payment.total') }}</span>
                                 <span class="text-2xl font-bold text-Orange">{{ total }} ₽</span>
                             </div>
                         </div>
@@ -73,7 +73,10 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { useShopLocale } from '@/composables/useShopLocale';
 import ShopLayout from '@/layouts/shop.vue';
+
+const { itemName } = useShopLocale();
 
 const props = defineProps({
     cart: Array,

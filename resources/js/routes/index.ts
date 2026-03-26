@@ -543,7 +543,7 @@ payment.form = paymentForm
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 export const profile = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -558,7 +558,7 @@ profile.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 profile.url = (options?: RouteQueryOptions) => {
@@ -567,7 +567,7 @@ profile.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 profile.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -577,7 +577,7 @@ profile.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -587,7 +587,7 @@ profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 const profileForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -597,7 +597,7 @@ const profileForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 profileForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -607,7 +607,7 @@ profileForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\ProfileController::profile
-* @see app/Http/Controllers/ProfileController.php:12
+* @see app/Http/Controllers/ProfileController.php:11
 * @route '/profile'
 */
 profileForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

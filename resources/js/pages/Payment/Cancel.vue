@@ -10,18 +10,18 @@
                     </div>
                 </div>
 
-                <h2 class="mb-4 text-2xl font-bold text-white">Оплата отменена</h2>
+                <h2 class="mb-4 text-2xl font-bold text-white">{{ $t('payment.cancelled_title') }}</h2>
                 <p class="mb-6 text-TextGray">
-                    Платёж был отменён. Вы можете попробовать снова или выбрать другой способ оплаты.
+                    {{ $t('payment.cancelled_text') }}
                 </p>
 
                 <div class="mb-6 rounded-lg border border-StrokeGray p-4">
                     <div class="flex justify-between text-sm">
-                        <span class="text-TextGray">Номер платежа:</span>
+                        <span class="text-TextGray">{{ $t('payment.payment_number') }}</span>
                         <span class="font-bold text-white">#{{ payment.id }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-TextGray">Сумма:</span>
+                        <span class="text-TextGray">{{ $t('payment.amount') }}</span>
                         <span class="font-bold text-Orange">{{ payment.amount }} ₽</span>
                     </div>
                 </div>
@@ -31,13 +31,13 @@
                         href="/payment/create"
                         class="flex-1 rounded-lg bg-Orange px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-Orange/80"
                     >
-                        Попробовать снова
+                        {{ $t('payment.try_again') }}
                     </Link>
                     <Link
                         href="/shop"
                         class="flex-1 rounded-lg border border-StrokeGray px-6 py-3 font-bold text-white transition-all duration-300 hover:border-Orange"
                     >
-                        В магазин
+                        {{ $t('payment.to_shop') }}
                     </Link>
                 </div>
             </div>

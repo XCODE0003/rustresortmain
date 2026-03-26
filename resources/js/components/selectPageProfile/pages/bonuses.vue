@@ -1,6 +1,6 @@
 <template>
   <ContentPageProfile :is_empty="true">
-    <h1>Бонусы</h1>
+    <h1>{{ $t('profile.bonuses') }}</h1>
   </ContentPageProfile>
 </template>
 

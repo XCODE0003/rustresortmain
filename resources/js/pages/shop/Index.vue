@@ -8,7 +8,7 @@
                 >
                     <img
                         src="/images/banner-1.png"
-                        alt="Баннер 1"
+                        :alt="$t('shop.banner_alt_1')"
                         loading="eager"
                         decoding="async"
                         class="h-full w-full object-cover"
@@ -20,10 +20,10 @@
                         class="absolute bottom-6 left-6 flex flex-col gap-2"
                     >
                         <h2 class="text-xl font-bold text-white lg:text-2xl">
-                            Специальное предложение
+                            {{ $t('shop.special_offer') }}
                         </h2>
                         <p class="text-sm text-TextGray">
-                            Скидки до 50% на избранные товары
+                            {{ $t('shop.special_offer_sub') }}
                         </p>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 >
                     <img
                         src="/images/banner-2.png"
-                        alt="Баннер 2"
+                        :alt="$t('shop.banner_alt_2')"
                         loading="eager"
                         decoding="async"
                         class="h-full w-full object-cover"
@@ -45,10 +45,10 @@
                         class="absolute bottom-6 left-6 flex flex-col gap-2"
                     >
                         <h2 class="text-xl font-bold text-white lg:text-2xl">
-                            Новые товары
+                            {{ $t('shop.new_items') }}
                         </h2>
                         <p class="text-sm text-TextGray">
-                            Эксклюзивные предметы в магазине
+                            {{ $t('shop.new_items_sub') }}
                         </p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             >
                 <div class="flex flex-col gap-4">
                     <h3 class="text-base font-bold text-white uppercase md:text-lg">
-                        Выбор сервера
+                        {{ $t('shop.select_server') }}
                     </h3>
                     <div class="flex flex-wrap gap-2">
                         <Link
@@ -87,11 +87,11 @@
                             href="/shop/server"
                             class="button-black rounded-lg border border-StrokeGray px-4 py-2.5 text-sm font-bold text-TextGray duration-300 ease-in-out hover:text-white"
                         >
-                            Выбрать сервер
+                            {{ $t('shop.pick_server') }}
                         </Link>
                     </div>
                     <p class="text-xs text-TextGray">
-                        {{ selectedServer ? 'Показаны товары для выбранного сервера' : 'Выберите сервер для фильтрации товаров' }}
+                        {{ selectedServer ? $t('shop.items_for_selected_server') : $t('shop.pick_server_to_filter') }}
                     </p>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                     <input
                         v-model="searchQuery"
                         type="text"
-                        placeholder="Поиск товаров..."
+                        :placeholder="$t('shop.search_placeholder')"
                         class="button-black w-full rounded-lg border border-StrokeGray px-5 py-3.5 text-sm font-medium text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
                     />
                     <svg
@@ -134,15 +134,15 @@
             <!-- Категории и корзина -->
             <div class="relative flex w-full flex-col gap-6">
                 <div class="flex w-full flex-wrap items-center justify-center gap-1.5">
-                    <button
-                        @click="selectedCategory = null"
-                        :class="[
-                            'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
-                            selectedCategory === null ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
-                        ]"
-                    >
-                        Все товары
-                    </button>
+                        <button
+                            @click="selectedCategory = null"
+                            :class="[
+                                'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
+                                selectedCategory === null ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
+                            ]"
+                        >
+                            {{ $t('shop.all_items') }}
+                        </button>
                     <button
                         v-for="category in categories"
                         :key="category.id"
@@ -152,35 +152,8 @@
                             selectedCategory === category.id ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
                         ]"
                     >
-                        {{ category.title_ru }}
+                        {{ categoryTitle(category) }}
                     </button>
-                    <Link
-                        href="/shop/basket"
-                        class="button-black top-0 right-0 flex items-center gap-1 rounded-lg border border-StrokeGray p-2.5 text-sm font-bold uppercase duration-300 ease-in-out hover:opacity-80 md:absolute"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M8.34204 17.5265C9.00552 17.5265 9.54907 18.0819 9.54907 18.7677C9.54887 19.4452 9.0054 20.0001 8.34204 20.0001C7.67069 20.0001 7.1274 19.4452 7.1272 18.7677C7.1272 18.0819 7.67056 17.5265 8.34204 17.5265ZM17.3352 17.5265C17.9986 17.5266 18.5422 18.082 18.5422 18.7677C18.542 19.4451 17.9985 20.0001 17.3352 20.0001C16.1639 20.0001 16.1206 19.4452 16.1204 18.7677C16.1204 18.0819 16.6637 17.5265 17.3352 17.5265ZM4.70435 4.00698L6.6106 4.29995C6.38238 4.34975 6.58271 4.57803 6.60669 4.85561L6.75806 6.68374C6.78204 6.9458 6.99054 7.14174 7.74634 7.14174H18.5413C19.0289 7.14174 19.3485 7.31405 19.6682 7.6896C19.4879 8.06514 20.0439 8.60392 19.9719 9.09292L19.2131 14.4484C19.0692 15.4777 18.2058 16.2364 17.1907 16.2365H8.46899C7.40598 16.2363 6.52664 15.4038 6.43872 14.3263L5.70337 5.4269L4.49634 5.21499C4.17671 5.15783 3.95327 4.83928 4.00903 4.51284C4.06499 4.17893 4.3766 3.95718 4.70435 4.00698ZM13.6965 10.1623C13.361 10.1625 13.0979 10.4318 13.0979 10.7746C13.098 11.109 13.3611 11.3866 13.6965 11.3869H15.9114C16.247 11.3868 16.0109 11.1092 16.511 10.7746C16.511 10.4317 16.2471 10.1623 15.9114 10.1623H13.6965Z"
-                                fill="#636363"
-                            />
-                        </svg>
-                        <span class="text-xs/[20px] font-bold text-Orange">
-                            0 ₽
-                        </span>
-                        <div
-                            class="flex size-4 items-center justify-center rounded-full bg-PaleGreen text-[9px]/[20px] font-bold text-Green"
-                        >
-                            0
-                        </div>
-                    </Link>
                 </div>
             </div>
 
@@ -191,24 +164,23 @@
                     :key="item.id"
                     :item="item"
                     @buy="handleBuyItem"
-                    @add-to-cart="addToCart"
                 />
             </div>
 
             <div v-if="filteredItems.length === 0" class="py-8 text-center text-TextGray">
-                <p class="text-lg">Товары не найдены</p>
+                <p class="text-lg">{{ $t('shop.no_items') }}</p>
                 <p v-if="selectedServer" class="mt-2 text-sm">
-                    Для сервера: {{ selectedServer.name }}
+                    {{ $t('shop.for_server', { name: selectedServer.name }) }}
                 </p>
                 <p v-else-if="searchQuery" class="mt-2 text-sm">
-                    По запросу: "{{ searchQuery }}"
+                    {{ $t('shop.for_query', { q: searchQuery }) }}
                 </p>
                 <Link
                     v-if="selectedServer"
                     href="/shop/server"
                     class="mt-4 inline-block text-Orange hover:underline"
                 >
-                    Выбрать другой сервер
+                    {{ $t('shop.pick_other_server') }}
                 </Link>
             </div>
         </div>
@@ -216,15 +188,17 @@
 </template>
 
 <script setup lang="ts">
-import { Link, router } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { ref, computed, watch } from 'vue';
 import ShopItemCard from '@/components/ShopItemCard.vue';
 import ShopLayout from '@/layouts/shop.vue';
+import { useShopLocale } from '@/composables/useShopLocale';
 import { useDescriptionModalStore } from '@/stores/descriptionModal';
 
 interface Category {
     id: number;
     title_ru: string;
+    title_en?: string | null;
     path: string;
 }
 
@@ -236,7 +210,9 @@ interface Server {
 interface ShopItem {
     id: number;
     name_ru: string;
+    name_en?: string | null;
     description_ru?: string;
+    description_en?: string | null;
     price: number;
     image?: string;
     category_id: number;
@@ -249,6 +225,8 @@ const props = defineProps<{
     selectedServer?: Server | null;
     categorySlug?: string | null;
 }>();
+
+const { itemName, itemDescription, categoryTitle } = useShopLocale();
 
 const selectedCategory = ref<number | null>(null);
 const searchQuery = ref('');
@@ -279,9 +257,12 @@ const filteredItems = computed(() => {
 
     if (searchQueryDebounced.value.trim()) {
         const query = searchQueryDebounced.value.toLowerCase().trim();
-        filtered = filtered.filter((item: ShopItem) =>
-            item.name_ru.toLowerCase().includes(query)
-        );
+        filtered = filtered.filter((item: ShopItem) => {
+            const ru = item.name_ru?.toLowerCase() ?? '';
+            const en = item.name_en?.toLowerCase() ?? '';
+
+            return ru.includes(query) || en.includes(query);
+        });
     }
 
     return filtered;
@@ -304,24 +285,12 @@ const handleBuyItem = (payload: any) => {
 
     modalStore.open({
         itemId: item.id,
-        title: item.name_ru,
-        description: item.description_ru || 'Описание товара',
+        title: itemName(item),
+        description: itemDescription(item),
         priceRub: item.price,
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,
-    });
-};
-
-const addToCart = (item: any) => {
-    router.post('/shop/cart', {
-        item_id: item.id,
-        count: item.quantity || 1,
-    }, {
-        preserveScroll: true,
-        onSuccess: () => {
-            // Можно добавить уведомление
-        },
     });
 };
 </script>

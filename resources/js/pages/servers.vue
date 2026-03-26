@@ -1,7 +1,7 @@
 <template>
     <div ref="pageRoot" class="container flex flex-col gap-10">
         <h1 ref="pageTitle" class="text-center text-[19px] font-bold text-white">
-            НАШИ СЕРВЕРА
+            {{ $t('servers_page.title') }}
         </h1>
         <div v-if="servers && servers.length > 0" ref="cardList" class="flex flex-col gap-5">
             <div
@@ -44,7 +44,7 @@
                                     v-if="server.category"
                                     class="text-[12px]/[12px] font-medium text-TextGray"
                                 >
-                                    {{ server.category.title_ru?.toUpperCase() || 'СЕРВЕР' }}
+                                    {{ serverCategoryLabel(server) }}
                                 </h2>
                                 <h2 class="text-[16px] font-bold text-white">
                                     {{ server.name }}
@@ -56,7 +56,7 @@
                                         @click="connectToServer(server)"
                                         class="cursor-pointer rounded-md bg-Orange px-6 py-3.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
                                     >
-                                        Подключиться
+                                        {{ $t('server.connect') }}
                                     </button>
                                     <Link
                                         :href="`/shop/server/${server.id}`"
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div v-else class="text-center text-TextGray">
-            <p>Нет доступных серверов</p>
+            <p>{{ $t('servers_page.no_servers') }}</p>
         </div>
     </div>
 </template>
@@ -111,6 +111,9 @@
 import { Link } from '@inertiajs/vue3';
 import gsap from 'gsap';
 import { onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useShopLocale } from '@/composables/useShopLocale';
+import { useWipeInfo } from '@/composables/useWipeInfo';
 import MainLayout from '@/layouts/main.vue';
 
 defineOptions({ layout: MainLayout });
@@ -129,12 +132,23 @@ interface Server {
     };
     category?: {
         title_ru?: string;
+        title_en?: string | null;
     };
 }
 
 const props = defineProps<{
     servers: Server[];
 }>();
+
+const { t } = useI18n();
+const { categoryTitle } = useShopLocale();
+const { formatWipeInfo } = useWipeInfo();
+
+const serverCategoryLabel = (server: Server): string => {
+    const label = categoryTitle(server.category);
+
+    return label !== '' ? label.toUpperCase() : t('servers_page.server');
+};
 
 const pageTitle = ref<HTMLElement | null>(null);
 const cardList = ref<HTMLElement | null>(null);
@@ -144,27 +158,6 @@ const getServerIp = (server: Server): string => {
         return `${server.options.ip}:${server.options.port}`;
     }
     return 'N/A';
-};
-
-const formatWipeInfo = (wipeDate: string): string => {
-    try {
-        const date = new Date(wipeDate);
-        const now = new Date();
-        const diffMs = date.getTime() - now.getTime();
-        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-        
-        if (diffDays < 0) {
-            return `ВАЙП ${Math.abs(diffDays)} ДН. НАЗАД`;
-        } else if (diffDays === 0) {
-            return 'ВАЙП СЕГОДНЯ';
-        } else if (diffDays === 1) {
-            return 'ВАЙП ЗАВТРА';
-        } else {
-            return `ВАЙП ЧЕРЕЗ ${diffDays} ДН.`;
-        }
-    } catch {
-        return 'ЕЖЕНЕДЕЛЬНЫЙ ВАЙП';
-    }
 };
 
 const connectToServer = (server: Server) => {

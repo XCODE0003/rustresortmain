@@ -35,11 +35,7 @@ Route::get('/payment/{donate}/cancel', [\App\Http\Controllers\PaymentController:
 Route::get('/balance/tebex', [\App\Http\Controllers\BalanceController::class, 'tebex'])->name('balance.tebex');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/shop/basket', [\App\Http\Controllers\CartController::class, 'index'])->name('shop.basket');
-    Route::post('/shop/cart', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
-    Route::patch('/shop/cart/{cart}', [\App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
-    Route::delete('/shop/cart/{cart}', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
-    Route::delete('/shop/cart', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+    Route::post('/shop/buy-balance', [\App\Http\Controllers\ShopController::class, 'buyWithBalance'])->name('shop.buy-balance');
 
     Route::get('/payment', [\App\Http\Controllers\BalanceController::class, 'index'])->name('payment');
     Route::post('/balance/topup', [\App\Http\Controllers\BalanceController::class, 'topup'])->name('balance.topup');
@@ -49,6 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/purchases', [\App\Http\Controllers\PurchaseController::class, 'index'])->name('purchases.index');
     Route::get('/purchases/{purchase}', [\App\Http\Controllers\PurchaseController::class, 'show'])->name('purchases.show');
+    Route::delete('/profile/purchases/{purchase}', [\App\Http\Controllers\PurchaseController::class, 'refund'])->name('purchases.refund');
 
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

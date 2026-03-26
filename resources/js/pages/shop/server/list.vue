@@ -7,12 +7,14 @@
 
                 <div class="flex w-full flex-col gap-6">
                     <h2 class="text-white text-center text-4xl font-bold uppercase">
-                        Магазин
+                        {{ $t('shop.title') }}
                     </h2>
                     <div class="flex w-full flex-wrap items-center justify-center gap-1.5">
                         <button v-for="server in servers" :key="server.id" @click="selectedServerId = server.id" :class="[
-                            'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
-                            selectedServerId === server.id ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
+                            'button-black rounded-lg border px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
+                            selectedServerId === server.id
+                                ? '!text-Orange border-Orange bg-Orange/10 shadow-[0_0_12px_rgba(255,140,0,0.3)]'
+                                : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40'
                         ]">
                             {{ server.name }}
 
@@ -24,16 +26,20 @@
                 <div v-if="selectedServerId" class="relative flex w-full flex-col gap-6">
                     <div class="flex w-full flex-wrap items-center justify-center gap-1.5">
                         <button @click="selectedCategoryId = null" :class="[
-                            'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
-                            selectedCategoryId === null ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
+                            'button-black rounded-lg border px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
+                            selectedCategoryId === null
+                                ? '!text-Orange border-Orange bg-Orange/10 shadow-[0_0_12px_rgba(255,140,0,0.3)]'
+                                : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40'
                         ]">
-                            Все товары
+                            {{ $t('shop.all_items') }}
                         </button>
                         <button v-for="category in shopCategories" :key="category.id" @click="selectedCategoryId = category.id" :class="[
-                            'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
-                            selectedCategoryId === category.id ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
+                            'button-black rounded-lg border px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
+                            selectedCategoryId === category.id
+                                ? '!text-Orange border-Orange bg-Orange/10 shadow-[0_0_12px_rgba(255,140,0,0.3)]'
+                                : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40'
                         ]">
-                            {{ category.title_ru }}
+                            {{ categoryTitle(category) }}
                         </button>
                     </div>
                 </div>
@@ -43,11 +49,11 @@
                     v-if="selectedServerId"
                     class="flex flex-wrap justify-center gap-x-1 gap-y-16 md:gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24"
                 >
-                    <ShopItemCard v-for="item in filteredItems" :key="item.id" :item="item" @buy="handleBuyItem" @add-to-cart="addToCart" />
+                    <ShopItemCard v-for="item in filteredItems" :key="item.id" :item="item" @buy="handleBuyItem" />
                 </div>
 
                 <div v-if="selectedServerId && filteredItems.length === 0" class="text-center text-TextGray py-8">
-                    <p class="text-lg">Товары не найдены для этого сервера</p>
+                    <p class="text-lg">{{ $t('shop.no_items_server') }}</p>
                 </div>
             </div>
         </div>
@@ -55,11 +61,13 @@
 </template>
 
 <script setup>
-import { router } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import ShopItemCard from '@/components/ShopItemCard.vue';
 import ShopLayout from '@/layouts/shop.vue';
+import { useShopLocale } from '@/composables/useShopLocale';
 import { useDescriptionModalStore } from '@/stores/descriptionModal';
+
+const { itemName, itemDescription, categoryTitle } = useShopLocale();
 
 const props = defineProps({
     servers: {
@@ -124,24 +132,12 @@ const handleBuyItem = (payload) => {
 
     modalStore.open({
         itemId: item.id,
-        title: item.name_ru,
-        description: item.description_ru || 'Описание товара',
+        title: itemName(item),
+        description: itemDescription(item),
         priceRub: item.price,
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,
-    });
-};
-
-const addToCart = (item) => {
-    router.post('/shop/cart', {
-        item_id: item.id,
-        count: item.quantity || 1,
-    }, {
-        preserveScroll: true,
-        onSuccess: () => {
-            // Можно добавить уведомление
-        },
     });
 };
 </script>

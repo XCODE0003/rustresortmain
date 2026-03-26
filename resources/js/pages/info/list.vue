@@ -2,7 +2,7 @@
     <MainLayout>
         <div class="container flex flex-col gap-10">
             <h1 class="text-center text-[19px] font-bold text-white uppercase">
-                Новости
+                {{ $t('news.title') }}
             </h1>
             <div class="flex flex-col gap-5">
                 <a href="/info/test"

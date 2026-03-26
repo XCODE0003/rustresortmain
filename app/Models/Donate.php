@@ -14,6 +14,7 @@ class Donate extends Model
         'amount',
         'bonus_amount',
         'item_id',
+        'count',
         'var_id',
         'status',
         'payment_system',

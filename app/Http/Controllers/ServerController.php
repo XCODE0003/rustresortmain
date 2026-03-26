@@ -37,8 +37,8 @@ class ServerController extends Controller
 
         $shopCategories = ShopCategory::orderBy('sort')->get();
 
-        $items = ShopItem::with('category:id,path,title_ru')
-            ->select(['id', 'name_ru', 'price', 'image', 'category_id', 'servers', 'variations', 'sort', 'amount', 'description_ru'])
+        $items = ShopItem::with('category:id,path,title_ru,title_en')
+            ->select(['id', 'name_ru', 'name_en', 'price', 'image', 'category_id', 'servers', 'variations', 'sort', 'amount', 'description_ru', 'description_en'])
             ->where('status', 1)
             ->whereNotNull('category_id')
             ->orderBy('sort')

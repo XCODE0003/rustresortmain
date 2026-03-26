@@ -60,8 +60,8 @@ onBeforeUnmount(() => {
             <div class="stripe absolute bottom-0 h-px w-full"></div>
             <div class="flex items-center gap-24 text-xs font-medium uppercase md:absolute md:left-1/2 md:-translate-x-1/2">
                 <div class="flex items-center gap-16 text-TextGray max-xl:hidden">
-                    <Link href="/servers/" :class="{ 'text-white': $page.url.includes('/servers') }" class="transition-colors duration-300 hover:text-white">сервера</Link>
-                    <Link href="/shop/server" :class="{ 'text-white': $page.url.includes('/shop') }" class="transition-colors duration-300 hover:text-white">магазин</Link>
+                    <Link href="/servers/" :class="{ 'text-white': $page.url.includes('/servers') }" class="transition-colors duration-300 hover:text-white">{{ $t('nav.servers') }}</Link>
+                    <Link href="/shop/server" :class="{ 'text-white': $page.url.includes('/shop') }" class="transition-colors duration-300 hover:text-white">{{ $t('nav.shop') }}</Link>
 
                 </div>
                 <div class="flex items-center gap-5">
@@ -73,9 +73,9 @@ onBeforeUnmount(() => {
                 </div>
 
                 <div class="flex items-center gap-16 text-TextGray max-xl:hidden">
-                    <Link href="/rating" :class="{ 'text-white': $page.url.includes('/rating') }" class="transition-colors duration-300 hover:text-white">рейтинг</Link>
+                    <Link href="/rating" :class="{ 'text-white': $page.url.includes('/rating') }" class="transition-colors duration-300 hover:text-white">{{ $t('nav.rating') }}</Link>
 
-                    <Link href="/info" :class="{ 'text-white': $page.url.includes('/info') }" class="transition-colors duration-300 hover:text-white">инфо</Link>
+                    <Link href="/info" :class="{ 'text-white': $page.url.includes('/info') }" class="transition-colors duration-300 hover:text-white">{{ $t('nav.faq') }}</Link>
                 </div>
             </div>
             <div class="flex items-center gap-6">
@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
                     >
                         <Link href="/payment" class="relative z-10 flex flex-col items-end cursor-pointer transition-opacity duration-300 hover:opacity-80">
                             <h1 class="text-[10px] font-medium text-TextGray">
-                                {{ user.name || 'Игрок' }}
+                                {{ user.name || $t('auth.player_default') }}
                             </h1>
                             <h2 class="text-sm font-bold text-Orange">
                                 {{ user.balance || 0 }} ₽
@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
                                 />
                             </svg>
                             <span class="text-xs font-bold uppercase text-white max-md:hidden">
-                                Войти
+                                {{ $t('auth.login') }}
                             </span>
                         </a>
                     </div>
@@ -171,19 +171,19 @@ onBeforeUnmount(() => {
         </div>
         <Transition name="nav">
             <nav v-if="NavActive" class="absolute top-[90px] flex w-full flex-col overflow-hidden">
-                <Link href="/servers" :class="{ 'text-white': $page.url.includes('/servers') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">Сервера</Link>
-                <Link href="/shop/server" :class="{ 'text-white': $page.url.includes('/shop') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">Магазин</Link>
-                <Link href="/rating" :class="{ 'text-white': $page.url.includes('/rating') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">Рейтинг</Link>
-                <Link href="/info" :class="{ 'text-white': $page.url.includes('/info') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">Инфо</Link>
+                <Link href="/servers" :class="{ 'text-white': $page.url.includes('/servers') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">{{ $t('nav.servers') }}</Link>
+                <Link href="/shop/server" :class="{ 'text-white': $page.url.includes('/shop') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">{{ $t('nav.shop') }}</Link>
+                <Link href="/rating" :class="{ 'text-white': $page.url.includes('/rating') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">{{ $t('nav.rating') }}</Link>
+                <Link href="/info" :class="{ 'text-white': $page.url.includes('/info') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">{{ $t('nav.info') }}</Link>
 
-                <Link v-if="user" href="/profile" :class="{ 'text-white': $page.url.includes('/profile') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">Профиль</Link>
+                <Link v-if="user" href="/profile" :class="{ 'text-white': $page.url.includes('/profile') }" class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80">{{ $t('nav.profile') }}</Link>
 
                 <button
                     v-if="user"
                     @click="logout"
                     class="nav-item bg-burger flex items-center gap-2 border-t border-b border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80"
                 >
-                    Выход
+                    {{ $t('common.logout') }}
                 </button>
 
                 <a
@@ -191,7 +191,7 @@ onBeforeUnmount(() => {
                     href="/auth/steam"
                     class="nav-item bg-burger flex items-center gap-2 border-t border-b border-StrokeGray px-3.5 py-3 text-Orange duration-300 ease-in-out hover:opacity-80"
                 >
-                    Войти через Steam
+                    {{ $t('auth.login_steam') }}
                 </a>
             </nav>
         </Transition>

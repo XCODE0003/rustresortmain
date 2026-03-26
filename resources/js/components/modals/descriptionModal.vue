@@ -49,7 +49,7 @@
                             placeholder="Steam ID64"
                         />
                         <span class="pl-2.5 text-xs font-medium text-TextGray">
-                            Вы сделаете подарок этому пользователю
+                            {{ $t('shop.gift_hint') }}
                         </span>
                     </div>
                 </Transition>
@@ -63,21 +63,21 @@
                         :disabled="itemId == null"
                         class="rounded-lg bg-Orange px-6 py-3.5 text-sm font-bold text-black duration-300 ease-in-out hover:bg-PaleOrange hover:text-Orange disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Купить за {{ currentPrice }} ₽
+                        {{ $t('shop.buy_for', { price: currentPrice }) }}
                     </button>
 
                     <AppSelect
                         v-if="hasVariations"
                         v-model="selectedVariation"
                         :options="variations"
-                        prefix="Срок - "
+                        :prefix="$t('shop.duration_prefix')"
                     />
 
                     <div
                         v-else
                         class="button-black flex items-center gap-2.5 rounded-lg border border-StrokeGray px-3 py-3.5 text-sm font-bold"
                     >
-                        <span class="text-TextGray">Кол-во:</span>
+                        <span class="text-TextGray">{{ $t('shop.quantity_label') }}</span>
                         <div class="flex items-center gap-2.5">
                             <button
                                 type="button"
@@ -105,7 +105,7 @@
                             isGift ? 'text-Orange' : 'text-TextGray',
                         ]"
                     >
-                        Купить в подарок
+                        {{ $t('shop.buy_as_gift') }}
                         <Toggle v-model="giftState" />
                     </button>
                 </div>
@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { computed, onBeforeUnmount, onMounted } from 'vue';
 
 import AppSelect from '@/components/select.vue';
@@ -153,16 +153,24 @@ const giftState = computed({
 
 const handleBuy = (): void => {
     if (itemId.value == null) return;
-    router.post('/shop/cart', {
-        item_id: itemId.value,
-        count: amount.value,
-    }, {
-        preserveScroll: true,
-        onSuccess: () => {
-            close();
-            router.visit('/shop/basket');
-        },
-    });
+
+    const pageProps = usePage().props as any;
+    const userBalance = Number(pageProps.auth?.user?.balance ?? 0);
+    const price = Number(currentPrice.value);
+
+    if (userBalance >= price) {
+        router.post('/shop/buy-balance', {
+            item_id: itemId.value,
+            count: hasVariations.value ? 1 : amount.value,
+            var_id: hasVariations.value ? (selectedVariation.value?.variationId ?? null) : null,
+        }, {
+            preserveScroll: true,
+            onSuccess: () => close(),
+        });
+    } else {
+        close();
+        router.visit('/payment');
+    }
 };
 
 const onGiftButtonClick = (): void => {

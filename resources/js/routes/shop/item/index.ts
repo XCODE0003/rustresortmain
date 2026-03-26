@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 export const show = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 show.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ show.url = (args: { item: number | { id: number } } | [item: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 show.get = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ show.get = (args: { item: number | { id: number } } | [item: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 show.head = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ show.head = (args: { item: number | { id: number } } | [item: number | { id: num
 
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 const showForm = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const showForm = (args: { item: number | { id: number } } | [item: number | { id
 
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 showForm.get = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ showForm.get = (args: { item: number | { id: number } } | [item: number | { id: 
 
 /**
 * @see \App\Http\Controllers\ShopController::show
-* @see app/Http/Controllers/ShopController.php:58
+* @see app/Http/Controllers/ShopController.php:62
 * @route '/shop/item/{item}'
 */
 showForm.head = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

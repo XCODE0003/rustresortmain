@@ -7,7 +7,7 @@
         : '',
     ]"
   >
-    <template v-if="is_empty">Пусто</template>
+    <template v-if="is_empty">{{ $t('profile.empty') }}</template>
     <slot v-else />
   </div>
 </template>

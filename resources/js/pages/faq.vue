@@ -11,14 +11,14 @@
                         'text-white': $page.url.includes('/tickets'),
                     }"
                 >
-                    Тикеты
+                    {{ $t('faq.tickets') }}
                 </Link>
                 <Link
                     href="/faq"
                     class="text-[15px] font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white hover:opacity-80 md:text-[17px] lg:text-[19px]"
                     :class="{ 'text-white': $page.url.includes('/faq') }"
                 >
-                    Частые вопросы
+                    {{ $t('faq.questions') }}
                 </Link>
             </div>
             <div class="flex w-full flex-col gap-1 lg:gap-2.5">
@@ -36,7 +36,7 @@
                             width="24"
                             height="24"
                             class="shrink-0 duration-300 ease-in-out"
-                            :class="{ 'rotate-180': item.open }"
+                            :class="{ 'rotate-180': expanded[index] }"
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@
                     </div>
                     <Transition name="faq">
                         <p
-                            v-show="item.open"
+                            v-show="expanded[index]"
                             class="overflow-hidden pt-3 text-sm font-medium text-TextGray"
                         >
                             {{ item.answer }}
@@ -66,47 +66,25 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 import MainLayout from '@/layouts/main.vue';
 
-const faqItems = reactive([
-    {
-        question: 'Проблема с подключением к серверу',
-        answer:
-            'Одно из самых важных, популярных, невероятно ненавистных и сложных действий в Rust - это набеги. Механика набегов постоянно настраивается и сбалансирована, поскольку игроки толкают эту игру к ее пределам. Пожалуйста, ознакомьтесь важных, популярных, невероятно ненавистных и сложных',
-        open: false,
-    },
-    {
-        question: 'Как приобрести VIP-услугу для обхода очереди?',
-        answer:
-            'Одно из самых важных, популярных, невероятно ненавистных и сложных действий в Rust - это набеги. Механика набегов постоянно настраивается и сбалансирована, поскольку игроки толкают эту игру к ее пределам. Пожалуйста, ознакомьтесь важных, популярных, невероятно ненавистных и сложных',
-        open: false,
-    },
-    {
-        question: 'Как начать играть в RUST?',
-        answer:
-            'Одно из самых важных, популярных, невероятно ненавистных и сложных действий в Rust - это набеги. Механика набегов постоянно настраивается и сбалансирована, поскольку игроки толкают эту игру к ее пределам. Пожалуйста, ознакомьтесь важных, популярных, невероятно ненавистных и сложных',
-        open: false,
-    },
-    {
-        question:
-            'У меня проблема с оплатой/игрой/блокировокой, куда мне обратиться?',
-        answer:
-            'Одно из самых важных, популярных, невероятно ненавистных и сложных действий в Rust - это набеги. Механика набегов постоянно настраивается и сбалансирована, поскольку игроки толкают эту игру к ее пределам. Пожалуйста, ознакомьтесь важных, популярных, невероятно ненавистных и сложных',
-        open: false,
-    },
-    {
-        question:
-            'Общие сведения и реквизиты, контакты для связи с проектом',
-        answer:
-            'Одно из самых важных, популярных, невероятно ненавистных и сложных действий в Rust - это набеги. Механика набегов постоянно настраивается и сбалансирована, поскольку игроки толкают эту игру к ее пределам. Пожалуйста, ознакомьтесь важных, популярных, невероятно ненавистных и сложных',
-        open: false,
-    },
-]);
+const { t } = useI18n();
+
+const faqKeys = ['q1', 'q2', 'q3', 'q4', 'q5'] as const;
+
+const expanded = reactive<Record<number, boolean>>({});
+
+const faqItems = computed(() =>
+    faqKeys.map((key) => ({
+        question: t(`faq.${key}`),
+        answer: t('faq.placeholder_answer'),
+    })),
+);
 
 function toggle(index: number): void {
-    const item = faqItems[index];
-    item.open = !item.open;
+    expanded[index] = !expanded[index];
 }
 </script>
 

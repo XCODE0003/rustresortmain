@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\SteamApi;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,21 +18,8 @@ class ProfileController extends Controller
             'donates' => fn ($query) => $query->latest()->limit(5),
         ]);
 
-        // Получаем данные Steam, если есть steam_id
-        $steamData = null;
-        if ($user->steam_id) {
-            $bansResult = SteamApi::getPlayerBans($user->steam_id);
-            $gamesResult = SteamApi::getOwnedGames($user->steam_id, 252490); // Rust AppID
-            
-            $steamData = [
-                'bans' => $bansResult->status === 'success' ? $bansResult->data : null,
-                'rust_playtime' => $gamesResult->status === 'success' ? $gamesResult->data : null,
-            ];
-        }
-
         return Inertia::render('profile', [
             'user' => $user,
-            'steamData' => $steamData,
         ]);
     }
 

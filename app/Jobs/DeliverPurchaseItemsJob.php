@@ -4,8 +4,8 @@ namespace App\Jobs;
 
 use App\Models\Donate;
 use App\Models\ShopItem;
-use App\Models\ShopPurchase;
 use App\Models\Shopping;
+use App\Models\ShopPurchase;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -43,6 +43,12 @@ class DeliverPurchaseItemsJob implements ShouldQueue
         if ($item->wipe_block) {
             $server = \App\Models\Server::find($this->donate->server);
             $validityDate = $server?->next_wipe;
+        } elseif ($item->is_command && $this->donate->var_id) {
+            // variation_id = количество дней (например VIP 6д, 30д)
+            $days = (int) $this->donate->var_id;
+            if ($days > 0) {
+                $validityDate = now()->addDays($days);
+            }
         }
 
         ShopPurchase::create([

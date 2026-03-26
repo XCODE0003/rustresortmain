@@ -21,13 +21,13 @@ class HomeController extends Controller
             ->get();
 
         $shopCategories = ShopCategory::query()
-            ->select(['id', 'title_ru'])
+            ->select(['id', 'title_ru', 'title_en'])
             ->orderBy('sort')
             ->get();
 
         $shopItemsQuery = ShopItem::query()
-            ->select(['id', 'name_ru', 'price', 'image', 'category_id', 'sort', 'description_ru', 'variations'])
-            ->with('category:id,title_ru')
+            ->select(['id', 'name_ru', 'name_en', 'price', 'image', 'category_id', 'sort', 'description_ru', 'description_en', 'variations'])
+            ->with('category:id,title_ru,title_en')
             ->where('status', 1)
             ->whereNotNull('category_id')
             ->orderBy('sort');
@@ -39,7 +39,9 @@ class HomeController extends Controller
         if ($shopSearch !== '') {
             $shopItemsQuery->where(function ($query) use ($shopSearch) {
                 $query->where('name_ru', 'like', '%'.$shopSearch.'%')
-                    ->orWhere('description_ru', 'like', '%'.$shopSearch.'%');
+                    ->orWhere('description_ru', 'like', '%'.$shopSearch.'%')
+                    ->orWhere('name_en', 'like', '%'.$shopSearch.'%')
+                    ->orWhere('description_en', 'like', '%'.$shopSearch.'%');
             });
         }
 

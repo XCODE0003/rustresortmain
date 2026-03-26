@@ -4,13 +4,13 @@
             <div
                 class="block-black flex flex-col items-center gap-6 rounded-xl border border-StrokeGray py-7 lg:py-10"
             >
-                <div class="size-36 text-white lg:size-44">График</div>
+                <div class="size-36 text-white lg:size-44">{{ $t('profile.chart') }}</div>
                 <div class="flex items-center gap-2.5">
                     <div class="flex flex-col items-center gap-1">
                         <h1
                             class="text-[10px] font-medium text-TextGray uppercase"
                         >
-                            Выстрелов
+                            {{ $t('profile.shots') }}
                         </h1>
                         <div
                             class="flex items-center gap-1 text-xs font-bold text-white"
@@ -25,7 +25,7 @@
                         <h1
                             class="text-[10px] font-medium text-TextGray uppercase"
                         >
-                            попаданий
+                            {{ $t('profile.hits') }}
                         </h1>
                         <div
                             class="flex items-center gap-1 text-xs font-bold text-white"
@@ -38,7 +38,7 @@
                         <h1
                             class="text-[10px] font-medium text-TextGray uppercase"
                         >
-                            МЕТКОСТЬ
+                            {{ $t('profile.accuracy') }}
                         </h1>
                         <div
                             class="flex items-center gap-1 text-xs font-bold text-white"
@@ -61,7 +61,7 @@
                                 <h1
                                     class="text-[9px]/[20px] text-TextGray uppercase"
                                 >
-                                    КДР
+                                    {{ $t('profile.kdr') }}
                                 </h1>
                                 <h2 class="text-sm font-bold text-white">10</h2>
                             </div>
@@ -72,7 +72,7 @@
                                 <h1
                                     class="text-[9px]/[20px] text-TextGray uppercase"
                                 >
-                                    Ракет использовано
+                                    {{ $t('profile.rockets_used') }}
                                 </h1>
                                 <h2
                                     class="block-black text-sm font-bold text-white"
@@ -91,17 +91,17 @@
                         class="block-black w-max items-center gap-1 rounded-xl border border-StrokeGray px-5 py-3.5 text-center text-TextGray"
                     >
                         <h1 class="text-[9px]/[20px] font-bold">
-                            Играл в кланах
+                            {{ $t('profile.clan_play') }}
                         </h1>
                         <h2 class="text-[11px]/[20px] font-bold">
-                            Отсутсвтует
+                            {{ $t('profile.absent') }}
                         </h2>
                     </div>
                 </div>
                 <button
                     class="w-max rounded-lg bg-PaleOrange px-6 py-3.5 text-[12px]/[20px] font-bold text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
                 >
-                    Подробная Статистика
+                    {{ $t('profile.detailed_stats') }}
                 </button>
             </div>
             <div
@@ -111,14 +111,14 @@
                     class="block-black flex flex-col items-center gap-1 rounded-xl border border-StrokeGray px-10 py-8"
                 >
                     <h1 class="text-[10px] font-medium text-TextGray uppercase">
-                        Топ проекта
+                        {{ $t('profile.top_project') }}
                     </h1>
                     <h2 class="text-sm/[20px] font-bold text-Orange">2065</h2>
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1">
                         <h1
                             class="text-[10px] font-medium text-TextGray uppercase"
                         >
-                            Топ проекта
+                            {{ $t('profile.top_project') }}
                         </h1>
                         <h2 class="text-sm/[20px] font-bold text-Orange">
                             2065
@@ -129,10 +129,10 @@
                     class="block-black flex flex-col items-center gap-1 rounded-xl border border-StrokeGray px-10 py-8"
                 >
                     <h1 class="text-[10px] font-medium text-TextGray uppercase">
-                        Победитель рейд ивента
+                        {{ $t('profile.raid_winner') }}
                     </h1>
                     <h2 class="text-sm/[20px] font-bold text-TextGray">
-                        Отсутсвует
+                        {{ $t('profile.absent') }}
                     </h2>
                 </div>
             </div>

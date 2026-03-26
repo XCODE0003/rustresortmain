@@ -47,16 +47,13 @@ export default {
     },
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      tabs: [
-        { key: 'statistics', label: 'Статистика' },
-        { key: 'market', label: 'Товары магазина', count: 3 },
-        { key: 'inventory', label: 'Инвентарь' },
-        { key: 'subscriptions', label: 'Подписки' },
-        { key: 'bonuses', label: 'Бонусы' },
-      ],
-    };
+  computed: {
+    tabs() {
+      return [
+        { key: 'market', label: this.$t('profile.market_tab') },
+        { key: 'subscriptions', label: this.$t('profile.subscriptions_tab') },
+      ];
+    },
   },
   mounted() {
     this.animateIndicator(false);

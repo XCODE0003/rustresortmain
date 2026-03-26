@@ -4,7 +4,7 @@
             <h2
                 class="text-center text-[15px] font-bold text-white uppercase md:text-[17px] lg:text-[19px]"
             >
-                Мои покупки
+                {{ $t('profile.my_purchases') }}
             </h2>
 
             <div class="w-full space-y-4">
@@ -17,16 +17,16 @@
                         <div class="size-16 overflow-hidden rounded-lg">
                             <img
                                 :src="purchase.item?.image || '/images/ak.png'"
-                                :alt="purchase.item?.name_ru"
+                                :alt="itemName(purchase.item)"
                                 class="h-full w-full object-cover"
                             />
                         </div>
                         <div class="flex flex-col gap-2">
                             <h3 class="text-base font-bold text-white">
-                                {{ purchase.item?.name_ru }}
+                                {{ itemName(purchase.item) }}
                             </h3>
                             <p class="text-xs text-TextGray">
-                                Куплено: {{ new Date(purchase.created_at).toLocaleDateString() }}
+                                {{ $t('purchase.purchased_at', { date: formatPurchaseDate(purchase.created_at) }) }}
                             </p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             :href="`/purchases/${purchase.id}`"
                             class="rounded-lg bg-Orange px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:bg-Orange/80"
                         >
-                            Детали
+                            {{ $t('common.details') }}
                         </Link>
                     </div>
                 </div>
@@ -64,11 +64,28 @@
     </ShopLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
+import { useShopLocale } from '@/composables/useShopLocale';
 import ShopLayout from '@/layouts/shop.vue';
 
-defineProps({
-    purchases: Object,
-});
+defineProps<{
+    purchases: {
+        data: Array<{
+            id: number;
+            created_at: string;
+            price: number;
+            count: number;
+            item?: { name_ru?: string; name_en?: string | null; image?: string };
+        }>;
+        links?: Array<{ url: string | null; label: string; active: boolean }>;
+    };
+}>();
+
+const { locale } = useI18n();
+const { itemName } = useShopLocale();
+
+const formatPurchaseDate = (value: string): string =>
+    new Date(value).toLocaleDateString(locale.value === 'en' ? 'en-US' : 'ru-RU');
 </script>

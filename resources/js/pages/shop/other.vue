@@ -15,7 +15,7 @@
                             href="/shop/server/1"
                             class="button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white"
                         >
-                            Кейсы
+                            {{ $t('shop.cases') }}
                         </Link>
                         <Link
                             href="/shop/basket"

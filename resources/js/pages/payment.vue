@@ -4,7 +4,7 @@
             class="container flex flex-col items-center gap-6 md:gap-8 lg:gap-10"
         >
             <h1 class="text-center text-[19px] font-bold text-white uppercase">
-                Баланс
+                {{ $t('payment.balance_page_title') }}
             </h1>
             <div
                 class="flex w-full items-center justify-center max-md:justify-around md:gap-12"
@@ -14,7 +14,7 @@
                     class="text-[15px] font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white hover:opacity-80 md:text-[17px] lg:text-[19px]"
                     :class="{ 'text-white': $page.url.includes('/payment') }"
                 >
-                    Пополнение
+                    {{ $t('payment.tab_topup') }}
                 </Link>
                 <Link
                     href="/purchases"
@@ -23,7 +23,7 @@
                         'text-white': $page.url.includes('/purchases'),
                     }"
                 >
-                    История
+                    {{ $t('payment.tab_history') }}
                 </Link>
             </div>
             <div
@@ -67,7 +67,7 @@
                             <h1
                                 class="text-xs font-medium text-TextGray uppercase"
                             >
-                                Выбранный метод оплаты
+                                {{ $t('payment.selected_method') }}
                             </h1>
                             <p
                                 class="text-base font-bold text-Orange uppercase"
@@ -117,32 +117,32 @@
                                 stroke-linejoin="round"
                             />
                         </svg>
-                        Минимальная сумма: {{ gateways[selectedGateway].min_amount }} {{ gateways[selectedGateway].currency }}
+                        {{ $t('payment.min_amount_line', { amount: gateways[selectedGateway].min_amount, currency: gateways[selectedGateway].currency }) }}
                     </div>
                     <div
                         class="block-black flex flex-col gap-2.5 rounded-xl border border-StrokeGray p-2.5 md:gap-5 md:p-5 lg:gap-[30px] lg:p-8"
                     >
                         <div class="flex flex-col gap-1">
                             <h1 class="px-2 text-xs font-medium text-TextGray">
-                                Промокод
+                                {{ $t('payment.promo_code') }}
                             </h1>
                             <div class="flex items-stretch gap-1">
                                 <input
                                     v-model="promoCode"
                                     type="text"
                                     class="w-full rounded-md border border-StrokeGray bg-transparent px-6 py-2 text-xs font-medium text-white outline-none placeholder:text-TextGray"
-                                    placeholder="Введите промокод"
+                                    :placeholder="$t('payment.promo_placeholder')"
                                 />
                                 <button
                                     class="w-max rounded-lg bg-PaleOrange px-6 py-3.5 text-[12px]/[20px] font-bold text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
                                 >
-                                    Активировать
+                                    {{ $t('payment.activate') }}
                                 </button>
                             </div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <h1 class="px-2 text-xs font-medium text-TextGray">
-                                Введите сумму
+                                {{ $t('payment.enter_amount') }}
                             </h1>
                             <div class="flex items-stretch gap-1">
                                 <input
@@ -151,7 +151,7 @@
                                     :min="selectedGateway && gateways[selectedGateway] ? gateways[selectedGateway].min_amount : 10"
                                     :max="selectedGateway && gateways[selectedGateway] ? gateways[selectedGateway].max_amount : null"
                                     class="w-full rounded-md border border-StrokeGray bg-transparent px-6 py-2 text-xs/[30px] font-medium text-white outline-none placeholder:text-TextGray"
-                                    placeholder="0.00 ₽"
+                                    :placeholder="$t('payment.amount_placeholder')"
                                 />
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                             <h1
                                 class="text-xs font-medium text-TextGray uppercase"
                             >
-                                Вы получите на баланс
+                                {{ $t('payment.you_receive_balance') }}
                             </h1>
                             <p
                                 class="text-base font-bold text-Orange uppercase"
@@ -175,12 +175,11 @@
                             >
                                 <Toggle v-model="agreeTerms" />
                                 <h1 class="text-xs font-medium text-TextGray">
-                                    Я принимаю условия
+                                    {{ $t('payment.accept_terms_lead') }}
                                     <Link
                                         href="/payment/terms"
                                         class="text-Orange duration-300 ease-in-out hover:opacity-80"
-                                        >Обслуживания</Link
-                                    >
+                                    >{{ $t('payment.terms_service_link') }}</Link>
                                 </h1>
                             </div>
                             <div
@@ -188,12 +187,11 @@
                             >
                                 <Toggle v-model="agreePolicy" />
                                 <h1 class="text-xs font-medium text-TextGray">
-                                    Я принимаю условия
+                                    {{ $t('payment.terms_policy_lead') }}
                                     <Link
                                         href="/payment/terms"
                                         class="text-Orange duration-300 ease-in-out hover:opacity-80"
-                                        >Соглашений о политики</Link
-                                    >
+                                    >{{ $t('payment.terms_policy_link') }}</Link>
                                 </h1>
                             </div>
                         </div>
@@ -202,7 +200,7 @@
                             :disabled="!selectedGateway || !agreeTerms || !agreePolicy || processing"
                             class="flex items-center justify-center gap-2.5 rounded-lg border border-StrokeGray bg-TextGreen px-5 py-3 text-TextBlack duration-300 ease-in-out hover:bg-TextGreen/80 hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {{ processing ? 'Обработка...' : 'Пополнить' }}
+                            {{ processing ? $t('payment.processing') : $t('payment.top_up_action') }}
                         </button>
                     </div>
                 </div>

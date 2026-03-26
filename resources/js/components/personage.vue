@@ -62,7 +62,7 @@
                     v-show="showCompendium"
                     class="absolute -bottom-6 left-1/2 -translate-x-1/2 rounded-lg bg-PaleOrange px-6 py-3.5 text-xs font-bold text-nowrap text-Orange uppercase "
                 >
-                    компендиум
+                    {{ $t('profile.compendium') }}
                 </div>
             </Transition>
         </div>

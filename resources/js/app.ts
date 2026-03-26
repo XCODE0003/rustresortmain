@@ -2,33 +2,10 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
-import { createI18n } from 'vue-i18n';
 import '../css/app.css';
-
-import de from './lang/de.json';
-import en from './lang/en.json';
-import es from './lang/es.json';
-import fr from './lang/fr.json';
-import it from './lang/it.json';
-import ru from './lang/ru.json';
-import uk from './lang/uk.json';
+import i18n from './i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
-const i18n = createI18n({
-    legacy: false,
-    locale: 'ru',
-    fallbackLocale: 'en',
-    messages: {
-        en,
-        ru,
-        de,
-        fr,
-        it,
-        es,
-        uk,
-    },
-});
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
@@ -38,10 +15,17 @@ createInertiaApp({
             import.meta.glob<DefineComponent>('./pages/**/*.vue'),
         ),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
+        const locale = (props.initialPage.props as any).locale || 'ru';
+        i18n.global.locale.value = locale;
+
+        const app = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(i18n)
-            .mount(el);
+            .use(i18n);
+
+        // Make i18n globally accessible for language switcher
+        (window as any).$i18n = i18n;
+
+        app.mount(el);
     },
     progress: {
         color: '#4B5563',

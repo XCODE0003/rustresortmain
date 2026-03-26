@@ -6,7 +6,6 @@ import ServerController from './ServerController'
 import ShopController from './ShopController'
 import PaymentController from './PaymentController'
 import BalanceController from './BalanceController'
-import CartController from './CartController'
 import PurchaseController from './PurchaseController'
 import ProfileController from './ProfileController'
 
@@ -19,7 +18,6 @@ const Controllers = {
     ShopController: Object.assign(ShopController, ShopController),
     PaymentController: Object.assign(PaymentController, PaymentController),
     BalanceController: Object.assign(BalanceController, BalanceController),
-    CartController: Object.assign(CartController, CartController),
     PurchaseController: Object.assign(PurchaseController, PurchaseController),
     ProfileController: Object.assign(ProfileController, ProfileController),
 }

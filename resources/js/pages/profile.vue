@@ -15,7 +15,7 @@
                     <button
                         class="relative z-30 m-3.5 h-max cursor-pointer rounded-lg bg-PaleOrange px-6 py-3.5 text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange text-sm font-bold"
                     >
-                        Редактировать профиль
+                        {{ $t('profile.edit_profile') }}
                     </button>
                 </div>
                 <div
@@ -41,7 +41,7 @@
                             </h2>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3">
+                    <div class="flex justify-between max-md:flex-col gap-3">
                         <div
                             class="flex flex-wrap items-center gap-3.5 gap-y-1"
                         >
@@ -104,98 +104,9 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                        <h1 class="text-sm font-medium text-TextGray">
-                            Веду набор в клан! Пишите в дискорд!
-                        </h1>
-                    </div>
-                    <div class="h-[1px] w-full bg-StrokeGray"></div>
-                    <div class="flex items-end justify-between">
-                        <div class="flex min-w-0 flex-wrap items-center gap-5">
-                            <div
-                                class="flex min-w-0 flex-nowrap items-center gap-2.5 overflow-x-auto overflow-y-hidden scrollbar-hide "
-                            >
-                                <div
-                                    class="button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-medium text-nowrap text-TextGray backdrop-blur-lg"
-                                >
-                                    Часов в игре •
-                                    <span class="text-white">{{ totalPlaytimeHours }}</span>
-                                </div>
-                                <div
-                                    class="button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-medium text-nowrap text-TextGray backdrop-blur-lg"
-                                >
-                                    Блокировок •
-                                    <span class="text-white">{{ totalBans }}</span>
-                                </div>
-                                <div
-                                    class="button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-medium text-nowrap text-TextGray backdrop-blur-lg"
-                                >
-                                    VAC • <span class="text-white">{{ vacBans }}</span>
-                                </div>
-                            </div>
 
-                            <div
-                                class="flex gap-10 gap-y-4 max-md:w-full max-md:flex-col md:items-center"
-                            >
-                                <div
-                                    class="flex items-center justify-between max-md:w-full"
-                                >
-                                    <div class="flex items-center gap-2.5">
-                                        <img
-                                            src="/images/test-bg-server.png"
-                                            alt="logo"
-                                            class="size-[48px] rounded-lg"
-                                        />
-                                        <div class="flex flex-col gap-1">
-                                            <h1
-                                                class="text-sm font-bold text-TextGray"
-                                            >
-                                                Клан
-                                            </h1>
-                                            <h1
-                                                class="text-sm font-bold text-white"
-                                            >
-                                                MrPropers
-                                            </h1>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex items-center gap-3.5 md:hidden"
-                                    >
-                                        <h1
-                                            class="text-sm text-nowrap text-Orange"
-                                        >
-                                            {{ user.balance || 0 }} ₽
-                                        </h1>
-                                        <Link
-                                            href="/payment"
-                                            class="cursor-pointer rounded-lg bg-Orange px-6 py-3.5 text-xs font-bold text-black duration-300 ease-in-out hover:opacity-80"
-                                        >
-                                            Баланс
-                                        </Link>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center gap-1">
-                                    <img
-                                        src="/images/test-bg-server.png"
-                                        alt="logo"
-                                        class="size-[48px] rounded-lg"
-                                    />
-                                    <img
-                                        src="/images/test-bg-server.png"
-                                        alt="logo"
-                                        class="size-[48px] rounded-lg"
-                                    />
-                                    <div
-                                        class="button-black flex size-[48px] items-center justify-center rounded-lg border border-StrokeGray text-xs text-white backdrop-blur-lg"
-                                    >
-                                        +4
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                        <div class="flex items-center gap-3.5 max-md:hidden">
+                        <div class="flex items-center gap-3.5">
                             <h1 class="text-sm text-nowrap text-Orange">
                                 {{ user.balance || 0 }} ₽
                             </h1>
@@ -203,10 +114,11 @@
                                 href="/payment"
                                 class="cursor-pointer rounded-lg bg-Orange px-6 py-3.5 text-xs font-bold text-black duration-300 ease-in-out hover:bg-PaleOrange hover:text-Orange"
                             >
-                                Баланс
+                                {{ $t('profile.balance') }}
                             </Link>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div
@@ -221,29 +133,13 @@
 
 <script lang="ts">
 import gsap from 'gsap';
-import { defineComponent, onMounted, ref, watch, computed } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import Personage from '@/components/personage.vue';
 import MainLayout from '@/layouts/main.vue';
 import PagesProfile from '@/layouts/pagesProfile.vue';
 
-type ProfilePageKey = 'statistics' | 'market' | 'inventory' | 'subscriptions' | 'bonuses';
-
-interface SteamBans {
-    VACBanned: boolean;
-    NumberOfVACBans: number;
-    NumberOfGameBans: number;
-}
-
-interface RustPlaytime {
-    playtime_forever: number;
-    playtime_2weeks?: number;
-}
-
-interface SteamData {
-    bans: SteamBans | null;
-    rust_playtime: RustPlaytime | null;
-}
+type ProfilePageKey = 'market' | 'subscriptions';
 
 interface User {
     id: number;
@@ -252,7 +148,6 @@ interface User {
     steam_id?: string;
     balance: number;
     level: number;
-    online_time?: number;
 }
 
 export default defineComponent({
@@ -267,40 +162,18 @@ export default defineComponent({
             type: Object as () => User,
             required: true,
         },
-        steamData: {
-            type: Object as () => SteamData | null,
-            default: null,
-        },
     },
     setup(props) {
-        const activePage = ref<ProfilePageKey>('statistics');
+        const activePage = ref<ProfilePageKey>('market');
         const profilePagesRow = ref<HTMLElement | null>(null);
         const profileCard = ref<HTMLElement | null>(null);
-
-        const totalPlaytimeHours = computed(() => {
-            if (props.steamData?.rust_playtime?.playtime_forever) {
-                return Math.floor(props.steamData.rust_playtime.playtime_forever / 60);
-            }
-            return props.user.online_time || 0;
-        });
-
-        const totalBans = computed(() => {
-            if (props.steamData?.bans) {
-                return (props.steamData.bans.NumberOfVACBans || 0) + (props.steamData.bans.NumberOfGameBans || 0);
-            }
-            return 0;
-        });
-
-        const vacBans = computed(() => {
-            return props.steamData?.bans?.NumberOfVACBans || 0;
-        });
 
         const animateBottomMargin = (): void => {
             if (!profilePagesRow.value) {
                 return;
             }
 
-            const target = activePage.value === 'inventory' ? 64 : 0;
+            const target = 0;
             gsap.to(profilePagesRow.value, {
                 marginBottom: target,
                 duration: 0.35,
@@ -339,9 +212,6 @@ export default defineComponent({
             activePage,
             profileCard,
             profilePagesRow,
-            totalPlaytimeHours,
-            totalBans,
-            vacBans,
         };
     },
 });
