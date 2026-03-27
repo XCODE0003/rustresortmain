@@ -12,7 +12,7 @@
                     >
                         <Link
                             href="/shop"
-                            class="button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white"
+                            class="cat-back-btn button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white"
                         >
                             {{ $t('shop.back_to_categories') }}
                         </Link>
@@ -21,12 +21,12 @@
                 <div
                     class="flex flex-wrap justify-center gap-1 gap-y-12 md:gap-y-14 lg:gap-2.5"
                 >
-                    <ShopItemCard
-                        v-for="item in category.items"
-                        :key="item.id"
-                        :item="item"
-                        @buy="handleBuyItem"
-                    />
+                    <div class="shop-card-item" v-for="item in category.items" :key="item.id">
+                        <ShopItemCard
+                            :item="item"
+                            @buy="handleBuyItem"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,6 +35,8 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import { onMounted, nextTick } from 'vue';
+import { gsap } from 'gsap';
 import ShopItemCard from '@/components/ShopItemCard.vue';
 import ShopLayout from '@/layouts/shop.vue';
 import { useShopLocale } from '@/composables/useShopLocale';
@@ -57,6 +59,16 @@ defineProps<{
 }>();
 
 const { itemName, itemDescription } = useShopLocale();
+
+onMounted(async () => {
+    await nextTick();
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    tl.fromTo('.cat-back-btn', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 });
+    const cards = document.querySelectorAll('.shop-card-item');
+    if (cards.length) {
+        tl.fromTo(cards, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.04 }, '-=0.2');
+    }
+});
 const modalStore = useDescriptionModalStore();
 
 const handleBuyItem = (payload: any): void => {

@@ -8,12 +8,12 @@
             >
                 <img
                     :src="getItemImage(purchase)"
-                    class="absolute top-1/2 left-1/2 z-10 h-16 w-auto max-w-[100px] object-contain -translate-x-1/2 -translate-y-1/2"
+                    class="absolute top-1/2 left-1/2 z-20 h-16 w-auto max-w-[100px] object-contain -translate-x-1/2 -translate-y-1/2"
                     :alt="getItemName(purchase)"
                 />
-                <div class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/20"></div>
+                <div class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/20 blur-2xl"></div>
 
-                <div class="absolute -top-[22px] left-1/2 -translate-x-1/2 rounded-xl border border-StrokeGray bg-[#0E1012] px-5 py-3.5 text-xs font-bold text-nowrap text-white uppercase">
+                <div class="absolute -top-[22px] left-1/2 -translate-x-1/2 rounded-xl border z-30 border-StrokeGray bg-[#0E1012] px-5 py-3.5 text-xs font-bold text-nowrap text-white uppercase">
                     {{ getItemName(purchase) }}
                     <div
                         v-if="purchase.server"
@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="absolute bottom-[-22px] left-1/2 z-10 flex -translate-x-1/2 items-center gap-1 text-nowrap">
+                <div class="absolute bottom-[-22px] left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 text-nowrap">
                     <div class="rounded-lg bg-PaleOrange px-4 py-2.5 text-sm font-bold text-Orange">
                         x{{ purchase.count }}
                     </div>
@@ -32,10 +32,9 @@
                     </div>
                 </div>
 
-                <!-- Кнопка возврата (появляется при наведении) -->
                 <button
                     @click="refund(purchase)"
-                    class="absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs font-bold text-white uppercase"
+                    class="absolute inset-0 z-20 flex items-center backdrop-blur-sm justify-center rounded-xl bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs font-bold text-white uppercase"
                 >
                     {{ $t('profile.refund') }}
                 </button>

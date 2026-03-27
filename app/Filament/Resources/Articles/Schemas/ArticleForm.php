@@ -3,163 +3,107 @@
 namespace App\Filament\Resources\Articles\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class ArticleForm
 {
     public static function configure(Schema $schema): Schema
     {
+        $languages = [
+            'ru' => '🇷🇺 RU',
+            'en' => '🇬🇧 EN',
+            'de' => '🇩🇪 DE',
+            'fr' => '🇫🇷 FR',
+            'it' => '🇮🇹 IT',
+            'es' => '🇪🇸 ES',
+            'uk' => '🇺🇦 UK',
+        ];
+
+        $tabs = [];
+        foreach ($languages as $lang => $label) {
+            $tabs[] = Tab::make($label)
+                ->schema([
+                    TextInput::make("title_{$lang}")
+                        ->label('Заголовок')
+                        ->default(null)
+                        ->columnSpanFull(),
+                    RichEditor::make("description_{$lang}")
+                        ->label('Содержимое')
+                        ->default(null)
+                        ->columnSpanFull()
+                        ->fileAttachmentsVisibility('public'),
+                    Section::make('SEO')
+                        ->collapsed()
+                        ->schema([
+                            TextInput::make("meta_title_{$lang}")
+                                ->label('Meta Title')
+                                ->default(null),
+                            TextInput::make("meta_h1_{$lang}")
+                                ->label('H1')
+                                ->default(null),
+                            TextInput::make("meta_h2_{$lang}")
+                                ->label('H2')
+                                ->default(null),
+                            TextInput::make("meta_h3_{$lang}")
+                                ->label('H3')
+                                ->default(null),
+                            Textarea::make("meta_description_{$lang}")
+                                ->label('Meta Description')
+                                ->default(null)
+                                ->columnSpanFull(),
+                            Textarea::make("meta_keywords_{$lang}")
+                                ->label('Meta Keywords')
+                                ->default(null)
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(2),
+                ]);
+        }
+
         return $schema
             ->components([
-                FileUpload::make('image')
-                    ->image(),
-                TextInput::make('type')
-                    ->default(null),
-                TextInput::make('path')
-                    ->required(),
-                TextInput::make('status')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
-                TextInput::make('sort')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                TextInput::make('title_en')
-                    ->default(null),
-                Textarea::make('description_en')
-                    ->default(null)
+                Section::make('Настройки')
+                    ->schema([
+                        FileUpload::make('image')
+                            ->label('Изображение')
+                            ->image()
+                            ->imagePreviewHeight('200')
+                            ->columnSpanFull(),
+                        TextInput::make('path')
+                            ->label('URL путь (slug)')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->helperText('Например: rust-update-04-01-2024'),
+                        TextInput::make('type')
+                            ->label('Тип')
+                            ->default(null)
+                            ->helperText('Например: update, event, news'),
+                        Select::make('status')
+                            ->label('Статус')
+                            ->options([
+                                1 => 'Активно',
+                                0 => 'Скрыто',
+                            ])
+                            ->default(1)
+                            ->required(),
+                        TextInput::make('sort')
+                            ->label('Сортировка')
+                            ->required()
+                            ->numeric()
+                            ->default(0),
+                    ])
+                    ->columns(2),
+
+                Tabs::make('Языки')
+                    ->tabs($tabs)
                     ->columnSpanFull(),
-                TextInput::make('meta_title_en')
-                    ->default(null),
-                Textarea::make('meta_description_en')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_en')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_en')
-                    ->default(null),
-                TextInput::make('meta_h2_en')
-                    ->default(null),
-                TextInput::make('meta_h3_en')
-                    ->default(null),
-                TextInput::make('title_ru')
-                    ->default(null),
-                Textarea::make('description_ru')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_title_ru')
-                    ->default(null),
-                Textarea::make('meta_description_ru')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_ru')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_ru')
-                    ->default(null),
-                TextInput::make('meta_h2_ru')
-                    ->default(null),
-                TextInput::make('meta_h3_ru')
-                    ->default(null),
-                TextInput::make('title_de')
-                    ->default(null),
-                Textarea::make('description_de')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_title_de')
-                    ->default(null),
-                Textarea::make('meta_description_de')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_de')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_de')
-                    ->default(null),
-                TextInput::make('meta_h2_de')
-                    ->default(null),
-                TextInput::make('meta_h3_de')
-                    ->default(null),
-                TextInput::make('title_fr')
-                    ->default(null),
-                Textarea::make('description_fr')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_title_fr')
-                    ->default(null),
-                Textarea::make('meta_description_fr')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_fr')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_fr')
-                    ->default(null),
-                TextInput::make('meta_h2_fr')
-                    ->default(null),
-                TextInput::make('meta_h3_fr')
-                    ->default(null),
-                TextInput::make('title_it')
-                    ->default(null),
-                Textarea::make('description_it')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_title_it')
-                    ->default(null),
-                Textarea::make('meta_description_it')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_it')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_it')
-                    ->default(null),
-                TextInput::make('meta_h2_it')
-                    ->default(null),
-                TextInput::make('meta_h3_it')
-                    ->default(null),
-                TextInput::make('title_es')
-                    ->default(null),
-                Textarea::make('description_es')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_title_es')
-                    ->default(null),
-                Textarea::make('meta_description_es')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_es')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_es')
-                    ->default(null),
-                TextInput::make('meta_h2_es')
-                    ->default(null),
-                TextInput::make('meta_h3_es')
-                    ->default(null),
-                TextInput::make('title_uk')
-                    ->default(null),
-                Textarea::make('description_uk')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_title_uk')
-                    ->default(null),
-                Textarea::make('meta_description_uk')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('meta_keywords_uk')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('meta_h1_uk')
-                    ->default(null),
-                TextInput::make('meta_h2_uk')
-                    ->default(null),
-                TextInput::make('meta_h3_uk')
-                    ->default(null),
             ]);
     }
 }

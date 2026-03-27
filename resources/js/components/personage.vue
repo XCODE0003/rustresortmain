@@ -20,7 +20,7 @@
                     alt=""
                 />
             </div>
-            <div
+            <!-- <div
                 class="button-black absolute top-2.5 left-2.5 size-14 rounded-lg border border-StrokeGray p-1  max-md:hidden"
             >
                 <img
@@ -47,7 +47,7 @@
                         />
                     </svg>
                 </div>
-            </div>
+            </div> -->
             <div
                 class="button-black absolute -top-6 left-1/2 -translate-x-1/2 rounded-lg border border-StrokeGray px-6 py-3.5 text-xs font-bold text-nowrap text-white "
             >

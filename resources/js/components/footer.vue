@@ -17,15 +17,15 @@
         <div class="flex items-center justify-center lg:justify-between w-full">
             <div class="flex items-center gap-2.5 md:gap-[30px] max-md:flex-col max-md:text-center">
                 <Link
-                    href="#"
+                    href="/legal/terms"
                     class="text-TextGray text-[11px] font-medium hover:opacity-80 ease-in-out duration-300"
                 >ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ</Link>
                 <Link
-                    href="#"
+                    href="/legal/privacy"
                     class="text-TextGray text-[11px] font-medium hover:opacity-80 ease-in-out duration-300"
                 >ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</Link>
                 <Link
-                    href="#"
+                    href="/legal/refund"
                     class="text-TextGray text-[11px] font-medium hover:opacity-80 ease-in-out duration-300"
                 >ПОЛИТИКА ВОЗВРАТА</Link>
             </div>

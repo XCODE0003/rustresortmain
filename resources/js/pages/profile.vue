@@ -12,11 +12,11 @@
                         class="absolute top-0 left-0 h-full md:w-full object-cover  max-md:object-fill "
                         alt=""
                     />
-                    <button
+                    <!-- <button
                         class="relative z-30 m-3.5 h-max cursor-pointer rounded-lg bg-PaleOrange px-6 py-3.5 text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange text-sm font-bold"
                     >
                         {{ $t('profile.edit_profile') }}
-                    </button>
+                    </button> -->
                 </div>
                 <div
                     class="relative z-20 flex flex-col gap-5 p-5 md:p-8 lg:p-10 lg:pt-[140px] md:pt-[120px] pt-[100px]"

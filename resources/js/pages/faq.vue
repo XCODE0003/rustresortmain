@@ -2,14 +2,12 @@
     <MainLayout>
         <div class="container flex flex-col gap-6 md:gap-9 lg:gap-10">
             <div
-                class="flex w-full items-center justify-center max-md:justify-around md:gap-12"
+                class="page-section flex w-full items-center justify-center max-md:justify-around md:gap-12"
             >
                 <Link
                     href="/tickets"
                     class="text-[15px] font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white hover:opacity-80 md:text-[17px] lg:text-[19px]"
-                    :class="{
-                        'text-white': $page.url.includes('/tickets'),
-                    }"
+                    :class="{ 'text-white': $page.url.includes('/tickets') }"
                 >
                     {{ $t('faq.tickets') }}
                 </Link>
@@ -21,11 +19,22 @@
                     {{ $t('faq.questions') }}
                 </Link>
             </div>
-            <div class="flex w-full flex-col gap-1 lg:gap-2.5">
+
+            <div v-if="faqs.length === 0" class="page-section flex flex-col gap-2">
                 <div
-                    v-for="(item, index) in faqItems"
-                    :key="index"
-                    class="group w-full cursor-pointer gap-3 rounded-xl border border-StrokeGray px-5 py-4  duration-300 ease-in-out hover:opacity-80 md:px-6 md:py-5"
+                    v-for="i in 4"
+                    :key="i"
+                    class="animate-pulse w-full rounded-xl border border-StrokeGray px-5 py-4"
+                >
+                    <div class="h-4 w-3/4 rounded bg-white/10" />
+                </div>
+            </div>
+
+            <div v-else class="flex w-full flex-col gap-1 lg:gap-2.5">
+                <div
+                    v-for="(item, index) in faqs"
+                    :key="item.id"
+                    class="faq-item group w-full cursor-pointer gap-3 rounded-xl border border-StrokeGray px-5 py-4 duration-300 ease-in-out hover:opacity-80 md:px-6 md:py-5"
                     @click="toggle(index)"
                 >
                     <div
@@ -66,26 +75,40 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { computed, reactive } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { reactive, onMounted } from 'vue';
+import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';
 
-const { t } = useI18n();
+interface FaqItem {
+    id: number;
+    question: string;
+    answer: string;
+}
 
-const faqKeys = ['q1', 'q2', 'q3', 'q4', 'q5'] as const;
+const props = defineProps<{
+    faqs: FaqItem[];
+}>();
 
 const expanded = reactive<Record<number, boolean>>({});
-
-const faqItems = computed(() =>
-    faqKeys.map((key) => ({
-        question: t(`faq.${key}`),
-        answer: t('faq.placeholder_answer'),
-    })),
-);
 
 function toggle(index: number): void {
     expanded[index] = !expanded[index];
 }
+
+onMounted(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    tl.fromTo(
+        '.page-section',
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, stagger: 0.1 },
+    );
+    tl.fromTo(
+        '.faq-item',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.35, stagger: 0.06 },
+        '-=0.2',
+    );
+});
 </script>
 
 <style scoped>

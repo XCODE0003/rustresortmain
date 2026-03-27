@@ -3,10 +3,10 @@
         <div
             class="flex flex-col items-center gap-5 text-center md:gap-8 lg:gap-10"
         >
-            <h1 class="text-center text-[19px] font-bold text-white uppercase">
+            <h1 class="contact-section text-center text-[19px] font-bold text-white uppercase">
                 Контакты
             </h1>
-            <div class="flex flex-col gap-2.5">
+            <div class="contact-section flex flex-col gap-2.5">
                 <h1 class="text-[16px]/[16px] font-bold text-white uppercase">
                     О нас
                 </h1>
@@ -15,7 +15,7 @@
                     состоялось 5 Января 2023 года
                 </p>
             </div>
-            <div class="flex flex-col gap-2.5">
+            <div class="contact-section flex flex-col gap-2.5">
                 <h1 class="text-[16px]/[16px] font-bold text-white uppercase">
                     Наша почта
                 </h1>
@@ -23,7 +23,7 @@
                     rustresort@gmail.com
                 </p>
             </div>
-            <div class="flex flex-col gap-2.5">
+            <div class="contact-section flex flex-col gap-2.5">
                 <h1 class="text-[16px]/[16px] font-bold text-white uppercase">
                     Наши соцсети
                 </h1>
@@ -77,7 +77,7 @@
                     </a>
                 </div>
             </div>
-            <div class="flex items-center gap-6 md:gap-7">
+            <div class="contact-section flex items-center gap-6 md:gap-7">
                 <Link
                     href="#"
                     class="text-sm font-bold text-Orange duration-300 ease-in-out hover:opacity-80"
@@ -94,15 +94,19 @@
     </MainLayout>
 </template>
 
-<script>
+<script setup lang="ts">
+import { onMounted } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';
-export default {
-    components: {
-        MainLayout,
-        Link,
-    },
-};
+
+onMounted(() => {
+    gsap.fromTo(
+        '.contact-section',
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, stagger: 0.1, ease: 'power2.out' },
+    );
+});
 </script>
 
 <style></style>

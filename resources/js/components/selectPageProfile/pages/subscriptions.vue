@@ -12,7 +12,7 @@
                     class="absolute top-1/2 left-1/2 z-10 h-16 w-auto max-w-[100px] object-contain -translate-x-1/2 -translate-y-1/2"
                     :alt="getItemName(purchase)"
                 />
-                <div class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/20"></div>
+                <div class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/20 blur-2xl"></div>
 
                 <div class="absolute -top-[22px] left-1/2 -translate-x-1/2 rounded-xl border border-StrokeGray bg-[#0E1012] px-5 py-3.5 text-xs font-bold text-nowrap text-white uppercase">
                     {{ getItemName(purchase) }}

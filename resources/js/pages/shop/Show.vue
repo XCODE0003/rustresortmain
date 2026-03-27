@@ -2,7 +2,7 @@
     <ShopLayout>
         <div class="flex w-full flex-col items-center gap-6 md:gap-8 lg:gap-10">
             <div class="grid w-full gap-6 lg:grid-cols-2">
-                <div class="block-black overflow-hidden rounded-xl border border-StrokeGray ">
+                <div class="show-image-block block-black overflow-hidden rounded-xl border border-StrokeGray ">
                     <div class="aspect-square w-full overflow-hidden">
                         <img
                             :src="item.image || '/images/ak.png'"
@@ -12,7 +12,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-6">
+                <div class="show-details-block flex flex-col gap-6">
                     <div class="block-black flex flex-col gap-4 rounded-xl border border-StrokeGray p-6 ">
                         <div class="flex items-center justify-between">
                             <h1 class="text-2xl font-bold text-white">
@@ -65,7 +65,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { gsap } from 'gsap';
 import ShopLayout from '@/layouts/shop.vue';
 import { useShopLocale } from '@/composables/useShopLocale';
 import { useDescriptionModalStore } from '@/stores/descriptionModal';
@@ -100,6 +101,12 @@ const props = defineProps<{
 
 const { itemName, itemDescription, categoryTitle } = useShopLocale();
 const modalStore = useDescriptionModalStore();
+
+onMounted(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    tl.fromTo('.show-image-block', { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45 });
+    tl.fromTo('.show-details-block', { x: 20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45 }, '-=0.3');
+});
 
 const displayName = computed(() => itemName(props.item));
 const displayDesc = computed(() => itemDescription(props.item));

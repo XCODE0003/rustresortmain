@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 export const show = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 show.url = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -130,7 +130,7 @@ show.url = (args: { purchase: number | { id: number } } | [purchase: number | { 
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 show.get = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -140,7 +140,7 @@ show.get = (args: { purchase: number | { id: number } } | [purchase: number | { 
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 show.head = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -150,7 +150,7 @@ show.head = (args: { purchase: number | { id: number } } | [purchase: number | {
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 const showForm = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -160,7 +160,7 @@ const showForm = (args: { purchase: number | { id: number } } | [purchase: numbe
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 showForm.get = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -170,7 +170,7 @@ showForm.get = (args: { purchase: number | { id: number } } | [purchase: number 
 
 /**
 * @see \App\Http\Controllers\PurchaseController::show
-* @see app/Http/Controllers/PurchaseController.php:24
+* @see app/Http/Controllers/PurchaseController.php:38
 * @route '/purchases/{purchase}'
 */
 showForm.head = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -187,7 +187,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\PurchaseController::refund
-* @see app/Http/Controllers/PurchaseController.php:35
+* @see app/Http/Controllers/PurchaseController.php:64
 * @route '/profile/purchases/{purchase}'
 */
 export const refund = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -202,7 +202,7 @@ refund.definition = {
 
 /**
 * @see \App\Http\Controllers\PurchaseController::refund
-* @see app/Http/Controllers/PurchaseController.php:35
+* @see app/Http/Controllers/PurchaseController.php:64
 * @route '/profile/purchases/{purchase}'
 */
 refund.url = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -235,7 +235,7 @@ refund.url = (args: { purchase: number | { id: number } } | [purchase: number | 
 
 /**
 * @see \App\Http\Controllers\PurchaseController::refund
-* @see app/Http/Controllers/PurchaseController.php:35
+* @see app/Http/Controllers/PurchaseController.php:64
 * @route '/profile/purchases/{purchase}'
 */
 refund.delete = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -245,7 +245,7 @@ refund.delete = (args: { purchase: number | { id: number } } | [purchase: number
 
 /**
 * @see \App\Http\Controllers\PurchaseController::refund
-* @see app/Http/Controllers/PurchaseController.php:35
+* @see app/Http/Controllers/PurchaseController.php:64
 * @route '/profile/purchases/{purchase}'
 */
 const refundForm = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -260,7 +260,7 @@ const refundForm = (args: { purchase: number | { id: number } } | [purchase: num
 
 /**
 * @see \App\Http\Controllers\PurchaseController::refund
-* @see app/Http/Controllers/PurchaseController.php:35
+* @see app/Http/Controllers/PurchaseController.php:64
 * @route '/profile/purchases/{purchase}'
 */
 refundForm.delete = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

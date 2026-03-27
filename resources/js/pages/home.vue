@@ -2,7 +2,7 @@
     <MainLayout>
         <div class="container flex flex-col gap-12 md:gap-16 lg:gap-20">
             <!-- Hero Section -->
-            <div class="relative flex w-full flex-col items-center gap-8 text-center">
+            <!-- <div class="relative flex w-full flex-col items-center gap-8 text-center">
                 <div class="flex flex-col gap-4">
                     <h1
                         class="text-4xl font-bold uppercase text-white md:text-5xl lg:text-6xl"
@@ -28,10 +28,10 @@
                         {{ $t('home.go_shop') }}
                     </Link>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Баннеры -->
-            <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+            <!-- <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
                 <div
                     class="relative h-[200px] overflow-hidden rounded-xl border border-StrokeGray md:h-[240px] lg:h-[280px]"
                 >
@@ -119,140 +119,11 @@
                         </Link>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Товары магазина -->
-            <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col items-center gap-2 text-center">
-                    <h2 class="text-2xl font-bold uppercase text-white md:text-3xl">
-                        {{ $t('home.shop_section_title') }}
-                    </h2>
-                    <p class="max-w-2xl text-sm text-TextGray md:text-base">
-                        {{ $t('home.shop_section_sub') }}
-                    </p>
-                </div>
 
-                <div class="flex w-full flex-col gap-4 rounded-xl border border-StrokeGray p-4 md:p-6">
-                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                        <div class="flex flex-wrap gap-2">
-                            <button
-                                type="button"
-                                @click="changeShopCategory(null)"
-                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
-                                :class="selectedShopCategory === null ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
-                            >
-                                {{ $t('home.all') }}
-                            </button>
-                            <button
-                                v-for="category in shopCategories"
-                                :key="category.id"
-                                type="button"
-                                @click="changeShopCategory(category.id)"
-                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
-                                :class="selectedShopCategory === category.id ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
-                            >
-                                {{ categoryTitle(category) }}
-                            </button>
-                        </div>
-
-                        <form class="flex w-full gap-2 md:w-[360px]" @submit.prevent="submitShopSearch">
-                            <input
-                                v-model="shopSearchInput"
-                                type="text"
-                                :placeholder="$t('home.search_items_placeholder')"
-                                class="button-black w-full rounded-lg border border-StrokeGray px-4 py-2 text-sm text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
-                            />
-                            <button
-                                type="submit"
-                                class="rounded-lg bg-Orange px-4 py-2 text-sm font-bold text-black transition-all duration-300 hover:bg-Orange/80"
-                            >
-                                {{ $t('home.find') }}
-                            </button>
-                        </form>
-                    </div>
-
-                    <div v-if="shopItems.data.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                        <div
-                            v-for="item in shopItems.data"
-                            :key="item.id"
-                            class="button-black flex flex-col rounded-xl border border-StrokeGray p-4 transition-all duration-300 hover:border-Orange"
-                        >
-                            <div class="relative mb-3 flex h-[140px] items-center justify-center overflow-hidden rounded-lg border border-StrokeGray bg-[#0E1012]">
-                                <img
-                                    :src="item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png'"
-                                    :alt="itemName(item)"
-                                    class="h-[120px] w-auto object-contain"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
-                                <span
-                                    v-if="categoryTitle(item.category)"
-                                    class="absolute top-2 left-2 rounded-md border border-StrokeGray bg-black/70 px-2 py-1 text-[10px] font-bold uppercase text-TextGray"
-                                >
-                                    {{ categoryTitle(item.category) }}
-                                </span>
-                            </div>
-
-                            <h3 class="mb-1 min-h-[40px] overflow-hidden text-sm font-bold uppercase text-white">
-                                {{ itemName(item) }}
-                            </h3>
-                            <div class="mt-auto flex items-center justify-between gap-2 pt-2">
-                                <span class="text-base font-bold text-Orange">
-                                    {{ formatPrice(item.price) }} ₽
-                                </span>
-                                <button
-                                    type="button"
-                                    @click="openItemModal(item)"
-                                    class="rounded-md bg-PaleOrange px-4 py-2 text-xs font-bold uppercase text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
-                                >
-                                    {{ $t('shop.buy') }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div v-else class="rounded-lg border border-StrokeGray p-6 text-center text-sm text-TextGray">
-                        {{ $t('home.no_items_filters') }}
-                    </div>
-
-                    <div
-                        v-if="shopItems.last_page > 1"
-                        class="flex flex-wrap items-center justify-center gap-2 pt-2"
-                    >
-                        <button
-                            type="button"
-                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-                            :disabled="shopItems.current_page <= 1"
-                            @click="goToShopPage(shopItems.current_page - 1)"
-                        >
-                            {{ $t('common.back') }}
-                        </button>
-
-                        <button
-                            v-for="page in shopPageNumbers"
-                            :key="page"
-                            type="button"
-                            class="button-black rounded-md border px-3 py-2 text-xs font-bold transition-all duration-300"
-                            :class="shopItems.current_page === page ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
-                            @click="goToShopPage(page)"
-                        >
-                            {{ page }}
-                        </button>
-
-                        <button
-                            type="button"
-                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-                            :disabled="shopItems.current_page >= shopItems.last_page"
-                            @click="goToShopPage(shopItems.current_page + 1)"
-                        >
-                            {{ $t('home.forward') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Популярные сервера -->
-            <div class="flex w-full flex-col gap-6">
+      <!-- Популярные сервера -->
+            <div class="home-servers-section flex w-full flex-col gap-6">
                 <h2
                     class="text-center text-2xl font-bold uppercase text-white md:text-3xl"
                 >
@@ -266,7 +137,7 @@
                     <div
                         v-for="server in servers.slice(0, 4)"
                         :key="server.id"
-                        class="relative overflow-hidden rounded-xl border border-StrokeGray"
+                        class="home-server-card relative overflow-hidden rounded-xl border border-StrokeGray"
                     >
                         <div class="flex items-center gap-5 p-5">
                             <div
@@ -355,9 +226,141 @@
                     </Link>
                 </div>
             </div>
+            
+            <!-- Товары магазина -->
+            <div class="home-shop-section flex w-full flex-col gap-6">
+                <div class="flex flex-col items-center gap-2 text-center">
+                    <h2 class="text-2xl font-bold uppercase text-white md:text-3xl">
+                        {{ $t('home.shop_section_title') }}
+                    </h2>
+                    <p class="max-w-2xl text-sm text-TextGray md:text-base">
+                        {{ $t('home.shop_section_sub') }}
+                    </p>
+                </div>
+
+                <div class="flex w-full flex-col gap-4 rounded-xl border border-StrokeGray p-4 md:p-6">
+                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <button
+                                type="button"
+                                @click="changeShopCategory(null)"
+                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
+                                :class="selectedShopCategory === null ? 'border-Orange !text-Orange shadow-[0_0_12px_rgba(255,140,0,0.3)]' : 'border-StrokeGray text-TextGray hover:text-white'"
+                            >
+                                {{ $t('home.all') }}
+                            </button>
+                            <button
+                                v-for="category in shopCategories"
+                                :key="category.id"
+                                type="button"
+                                @click="changeShopCategory(category.id)"
+                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
+                                :class="selectedShopCategory === category.id ? 'border-Orange !text-Orange shadow-[0_0_12px_rgba(255,140,0,0.3)]' : 'border-StrokeGray text-TextGray hover:text-white'"
+                            >
+                                {{ categoryTitle(category) }}
+                            </button>
+                        </div>
+
+                        <form class="flex w-full gap-2 md:w-[360px]" @submit.prevent="submitShopSearch">
+                            <input
+                                v-model="shopSearchInput"
+                                type="text"
+                                :placeholder="$t('home.search_items_placeholder')"
+                                class="button-black w-full rounded-lg border border-StrokeGray px-4 py-2 text-sm text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
+                            />
+                            <button
+                                type="submit"
+                                class="rounded-lg bg-Orange px-4 py-2 text-sm font-bold text-black transition-all duration-300 hover:bg-Orange/80"
+                            >
+                                {{ $t('home.find') }}
+                            </button>
+                        </form>
+                    </div>
+
+                    <div v-if="shopItems.data.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div
+                            v-for="item in shopItems.data"
+                            :key="item.id"
+                            class="home-shop-item button-black flex flex-col rounded-xl border border-StrokeGray p-4 transition-all duration-300 hover:border-Orange"
+                        >
+                            <div class="relative mb-3 flex h-[140px] items-center justify-center overflow-hidden rounded-lg border border-StrokeGray bg-[#0E1012]">
+                                <img
+                                    :src="item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png'"
+                                    :alt="itemName(item)"
+                                    class="h-[120px] w-auto object-contain"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                                <span
+                                    v-if="categoryTitle(item.category)"
+                                    class="absolute top-2 left-2 rounded-md border border-StrokeGray bg-black/70 px-2 py-1 text-[10px] font-bold uppercase text-TextGray"
+                                >
+                                    {{ categoryTitle(item.category) }}
+                                </span>
+                            </div>
+
+                            <h3 class="mb-1 min-h-[40px] overflow-hidden text-sm font-bold uppercase text-white">
+                                {{ itemName(item) }}
+                            </h3>
+                            <div class="mt-auto flex items-center justify-between gap-2 pt-2">
+                                <span class="text-base font-bold text-Orange">
+                                    {{ formatPrice(item.price) }} ₽
+                                </span>
+                                <button
+                                    type="button"
+                                    @click="openItemModal(item)"
+                                    class="rounded-md bg-PaleOrange px-4 py-2 text-xs font-bold uppercase text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
+                                >
+                                    {{ $t('shop.buy') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else class="rounded-lg border border-StrokeGray p-6 text-center text-sm text-TextGray">
+                        {{ $t('home.no_items_filters') }}
+                    </div>
+
+                    <div
+                        v-if="shopItems.last_page > 1"
+                        class="flex flex-wrap items-center justify-center gap-2 pt-2"
+                    >
+                        <button
+                            type="button"
+                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                            :disabled="shopItems.current_page <= 1"
+                            @click="goToShopPage(shopItems.current_page - 1)"
+                        >
+                            {{ $t('common.back') }}
+                        </button>
+
+                        <button
+                            v-for="page in shopPageNumbers"
+                            :key="page"
+                            type="button"
+                            class="button-black rounded-md border px-3 py-2 text-xs font-bold transition-all duration-300"
+                            :class="shopItems.current_page === page ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
+                            @click="goToShopPage(page)"
+                        >
+                            {{ page }}
+                        </button>
+
+                        <button
+                            type="button"
+                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                            :disabled="shopItems.current_page >= shopItems.last_page"
+                            @click="goToShopPage(shopItems.current_page + 1)"
+                        >
+                            {{ $t('home.forward') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+      
 
             <!-- Преимущества -->
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
+            <!-- <div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
                 <div
                     class="flex flex-col gap-4 rounded-xl border border-StrokeGray p-6"
                 >
@@ -444,10 +447,10 @@
                         {{ $t('home.feat_comm_text') }}
                     </p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Призыв к действию -->
-            <div
+            <!-- <div
                 class="relative flex flex-col items-center gap-6 rounded-xl border border-StrokeGray p-8 text-center md:p-12"
             >
                 <div
@@ -473,7 +476,7 @@
                         {{ $t('home.buy_starter') }}
                     </Link>
                 </div>
-            </div>
+            </div> -->
         </div>
         <DescriptionModal />
     </MainLayout>
@@ -481,7 +484,8 @@
 
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { gsap } from 'gsap';
 import { useI18n } from 'vue-i18n';
 import DescriptionModal from '@/components/modals/descriptionModal.vue';
 import { useShopLocale } from '@/composables/useShopLocale';
@@ -573,6 +577,20 @@ watch(
     },
 );
 
+const animateShopItems = async (): Promise<void> => {
+    await nextTick();
+    const cards = document.querySelectorAll('.home-shop-item');
+    if (cards.length) {
+        gsap.fromTo(
+            cards,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.3, stagger: 0.04, ease: 'power2.out' },
+        );
+    }
+};
+
+watch(() => props.shopItems.data, animateShopItems);
+
 const shopPageNumbers = computed<number[]>(() => {
     const current = props.shopItems.current_page;
     const last = props.shopItems.last_page;
@@ -662,6 +680,14 @@ const getServerIp = (server: Server): string => {
     }
     return 'N/A';
 };
+
+onMounted(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    tl.fromTo('.home-servers-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 });
+    tl.fromTo('.home-server-card', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.07 }, '-=0.25');
+    tl.fromTo('.home-shop-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45 }, '-=0.1');
+    tl.add(() => animateShopItems(), '-=0.1');
+});
 
 const connectToServer = (server: Server) => {
     const ip = getServerIp(server);

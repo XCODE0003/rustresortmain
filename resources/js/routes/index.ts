@@ -299,8 +299,8 @@ homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 home.form = homeForm
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 export const info = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -314,8 +314,8 @@ info.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 info.url = (options?: RouteQueryOptions) => {
@@ -323,8 +323,8 @@ info.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 info.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -333,8 +333,8 @@ info.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 info.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -343,8 +343,8 @@ info.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 const infoForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -353,8 +353,8 @@ const infoForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 infoForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -363,8 +363,8 @@ infoForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\ArticleController::info
+* @see app/Http/Controllers/ArticleController.php:11
 * @route '/info'
 */
 infoForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -623,8 +623,8 @@ profileForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 profile.form = profileForm
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 export const faq = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -638,8 +638,8 @@ faq.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 faq.url = (options?: RouteQueryOptions) => {
@@ -647,8 +647,8 @@ faq.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 faq.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -657,8 +657,8 @@ faq.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 faq.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -667,8 +667,8 @@ faq.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 const faqForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -677,8 +677,8 @@ const faqForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 faqForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -687,8 +687,8 @@ faqForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @see \App\Http\Controllers\FaqController::faq
+* @see app/Http/Controllers/FaqController.php:11
 * @route '/faq'
 */
 faqForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -2,6 +2,7 @@
 import { Link, usePage, router } from '@inertiajs/vue3';
 import { onBeforeUnmount, onMounted, ref, computed } from 'vue';
 import LanguageSelector from '@/components/LanguageSelector.vue';
+import NotificationDropdown from '@/components/NotificationDropdown.vue';
 
 const page = usePage();
 const user = computed(() => (page.props.auth as any)?.user);
@@ -84,12 +85,7 @@ onBeforeUnmount(() => {
                     <LanguageSelector :current-locale="($page.props as any).locale || 'ru'" class="max-md:hidden" />
 
                     <div class="flex items-center gap-6">
-                        <button class="relative cursor-pointer transition-opacity duration-300 hover:opacity-80">
-                            <div class="absolute top-0 right-0 size-2.5 rounded-full border-2 border-PageMain bg-Orange"></div>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10.3262 18.6436C10.7378 18.5537 13.2461 18.5537 13.6582 18.6436C14.0101 18.7274 14.3905 18.9236 14.3906 19.3516C14.3702 19.7591 14.1384 20.1202 13.8184 20.3496C13.4034 20.6835 12.9163 20.8955 12.4072 20.9717C12.126 21.0093 11.8496 21.0101 11.5781 20.9717C11.0682 20.8955 10.5811 20.6834 10.167 20.3486C9.84615 20.1201 9.61421 19.7591 9.59375 19.3516C9.59384 18.9236 9.97429 18.7275 10.3262 18.6436ZM12.0371 4C13.7502 4 15.5006 4.83945 16.54 6.23145C17.2142 7.12761 17.5234 8.02329 17.5234 9.41504V9.77734C17.5235 10.8446 17.7969 11.4742 18.3984 12.1992C18.8541 12.7334 19 13.4193 19 14.1631C18.9999 14.9058 18.7636 15.6111 18.29 16.1836C17.6697 16.8701 16.7943 17.3085 15.9014 17.3848C14.6074 17.4986 13.312 17.5947 12 17.5947C10.6873 17.5947 9.39347 17.5371 8.09961 17.3848C7.20584 17.3086 6.33052 16.8702 5.71094 16.1836C5.23731 15.611 5.0001 14.9059 5 14.1631C5 13.4193 5.14668 12.7334 5.60156 12.1992C6.22188 11.4742 6.47747 10.8446 6.47754 9.77734V9.41504C6.47754 7.98537 6.82293 7.04992 7.53418 6.13477C8.59166 4.8003 10.2869 4 11.9639 4H12.0371Z" fill="#636363" />
-                            </svg>
-                        </button>
+                        <NotificationDropdown />
 
                     <!-- Авторизация / Профиль -->
                     <div

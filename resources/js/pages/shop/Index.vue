@@ -1,8 +1,27 @@
 <template>
     <ShopLayout>
         <div class="relative flex w-full flex-col items-center gap-6 md:gap-8 lg:gap-10">
+
+            <!-- Декоративные элементы фона -->
+            <div class="pointer-events-none absolute inset-0 overflow-hidden">
+                <img
+                    ref="decorWorkbenchRef"
+                    src="/source/Home/workbench3.png"
+                    alt=""
+                    class="absolute -right-16 top-[60px] w-[280px] opacity-[0.07] select-none"
+                    aria-hidden="true"
+                />
+                <img
+                    ref="decorFurnaceRef"
+                    src="/source/Home/furnace-large.png"
+                    alt=""
+                    class="absolute -left-16 bottom-[120px] w-[220px] opacity-[0.07] select-none"
+                    aria-hidden="true"
+                />
+            </div>
+
             <!-- Баннеры -->
-            <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+            <div ref="bannersRef" class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
                 <div
                     class="relative h-[180px] overflow-hidden rounded-xl border border-StrokeGray md:h-[220px] lg:h-[260px]"
                 >
@@ -56,6 +75,7 @@
 
             <!-- Блок выбора сервера -->
             <div
+                ref="serverBlockRef"
                 class="relative w-full rounded-xl border border-StrokeGray p-5 md:p-6 lg:p-8"
             >
                 <div class="flex flex-col gap-4">
@@ -66,7 +86,7 @@
                         <Link
                             v-if="selectedServer"
                             href="/shop/server"
-                            class="button-black flex items-center gap-2 rounded-lg border border-Orange px-4 py-2.5 text-sm font-bold text-Orange duration-300 ease-in-out hover:opacity-80"
+                            class="button-black flex items-center gap-2 rounded-lg border border-Orange px-4 py-2.5 text-sm font-bold !text-Orange duration-300 ease-in-out hover:opacity-80"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +117,7 @@
             </div>
 
             <!-- Поиск товаров -->
-            <div class="w-full">
+            <div ref="searchRef" class="w-full">
                 <div class="relative">
                     <input
                         v-model="searchQuery"
@@ -133,9 +153,9 @@
 
             <!-- Категории и корзина -->
             <div class="relative flex w-full flex-col gap-6">
-                <div class="flex w-full flex-wrap items-center justify-center gap-1.5">
+                <div ref="categoriesRef" class="flex w-full flex-wrap items-center justify-center gap-1.5">
                         <button
-                            @click="selectedCategory = null"
+                            @click="selectCategory(null)"
                             :class="[
                                 'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
                                 selectedCategory === null ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
@@ -146,7 +166,7 @@
                     <button
                         v-for="category in categories"
                         :key="category.id"
-                        @click="selectedCategory = category.id"
+                        @click="selectCategory(category.id)"
                         :class="[
                             'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
                             selectedCategory === category.id ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
@@ -158,13 +178,20 @@
             </div>
 
             <!-- Товары -->
-            <div class="flex flex-wrap justify-center gap-x-1 gap-y-16 md:gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24">
-                <ShopItemCard
+            <div
+                ref="itemsGridRef"
+                class="flex flex-wrap justify-center gap-x-1 gap-y-16 md:gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24 w-full"
+            >
+                <div
                     v-for="item in filteredItems"
                     :key="item.id"
-                    :item="item"
-                    @buy="handleBuyItem"
-                />
+                    class="shop-card"
+                >
+                    <ShopItemCard
+                        :item="item"
+                        @buy="handleBuyItem"
+                    />
+                </div>
             </div>
 
             <div v-if="filteredItems.length === 0" class="py-8 text-center text-TextGray">
@@ -189,7 +216,8 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { gsap } from 'gsap';
 import ShopItemCard from '@/components/ShopItemCard.vue';
 import ShopLayout from '@/layouts/shop.vue';
 import { useShopLocale } from '@/composables/useShopLocale';
@@ -233,6 +261,15 @@ const searchQuery = ref('');
 const searchQueryDebounced = ref('');
 const modalStore = useDescriptionModalStore();
 
+// Template refs for GSAP
+const bannersRef = ref<HTMLElement | null>(null);
+const serverBlockRef = ref<HTMLElement | null>(null);
+const searchRef = ref<HTMLElement | null>(null);
+const categoriesRef = ref<HTMLElement | null>(null);
+const itemsGridRef = ref<HTMLElement | null>(null);
+const decorWorkbenchRef = ref<HTMLElement | null>(null);
+const decorFurnaceRef = ref<HTMLElement | null>(null);
+
 let searchTimeout: ReturnType<typeof setTimeout>;
 watch(searchQuery, (val) => {
     clearTimeout(searchTimeout);
@@ -260,12 +297,102 @@ const filteredItems = computed(() => {
         filtered = filtered.filter((item: ShopItem) => {
             const ru = item.name_ru?.toLowerCase() ?? '';
             const en = item.name_en?.toLowerCase() ?? '';
-
             return ru.includes(query) || en.includes(query);
         });
     }
 
     return filtered;
+});
+
+// Animate shop item cards
+const animateItems = async () => {
+    await nextTick();
+    const cards = itemsGridRef.value?.querySelectorAll('.shop-card');
+    if (cards && cards.length > 0) {
+        gsap.fromTo(
+            cards,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.45, stagger: 0.04, ease: 'power2.out' },
+        );
+    }
+};
+
+function selectCategory(id: number | null) {
+    selectedCategory.value = id;
+}
+
+watch(filteredItems, () => {
+    animateItems();
+});
+
+watch(searchQueryDebounced, () => {
+    animateItems();
+});
+
+onMounted(async () => {
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+    // Banners
+    if (bannersRef.value?.children) {
+        tl.fromTo(
+            Array.from(bannersRef.value.children),
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, stagger: 0.12 },
+        );
+    }
+
+    // Server block
+    if (serverBlockRef.value) {
+        tl.fromTo(
+            serverBlockRef.value,
+            { y: 25, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5 },
+            '-=0.35',
+        );
+    }
+
+    // Search
+    if (searchRef.value) {
+        tl.fromTo(
+            searchRef.value,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.4 },
+            '-=0.3',
+        );
+    }
+
+    // Category buttons
+    if (categoriesRef.value?.children) {
+        tl.fromTo(
+            Array.from(categoriesRef.value.children),
+            { y: 18, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.35, stagger: 0.05 },
+            '-=0.25',
+        );
+    }
+
+    // Items
+    tl.add(() => animateItems(), '-=0.1');
+
+    // Decorative float animations
+    if (decorWorkbenchRef.value) {
+        gsap.to(decorWorkbenchRef.value, {
+            y: -12,
+            duration: 3.5,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+        });
+    }
+    if (decorFurnaceRef.value) {
+        gsap.to(decorFurnaceRef.value, {
+            y: 10,
+            duration: 4,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+        });
+    }
 });
 
 const handleBuyItem = (payload: any) => {

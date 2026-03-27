@@ -94,7 +94,11 @@
     "total_price": "Total:",
     "server": "Server:",
     "purchase_date": "Purchase date:",
-    "back_to_list": "Back to purchases"
+    "valid_until": "Valid until:",
+    "back_to_list": "Back to purchases",
+    "active": "ACTIVE",
+    "expired": "EXPIRED",
+    "no_purchases": "You have no purchases yet"
   },
   "payment": {
     "payment": "Payment",

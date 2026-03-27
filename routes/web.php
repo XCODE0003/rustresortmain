@@ -14,11 +14,8 @@ Route::get('/auth/steam/callback', [\App\Http\Controllers\Auth\SteamAuthControll
 
 Route::post('/logout', [\App\Http\Controllers\Auth\SteamAuthController::class, 'logout'])->name('logout');
 
-Route::inertia('/info', 'info/list', [
-])->name('info');
-
-Route::inertia('/info/{id}', 'info/show', [
-])->name('info.show');
+Route::get('/info', [\App\Http\Controllers\ArticleController::class, 'index'])->name('info');
+Route::get('/info/{path}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('info.show');
 
 Route::get('/servers', [\App\Http\Controllers\ServerController::class, 'index'])->name('servers');
 
@@ -35,6 +32,9 @@ Route::get('/payment/{donate}/cancel', [\App\Http\Controllers\PaymentController:
 Route::get('/balance/tebex', [\App\Http\Controllers\BalanceController::class, 'tebex'])->name('balance.tebex');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+
     Route::post('/shop/buy-balance', [\App\Http\Controllers\ShopController::class, 'buyWithBalance'])->name('shop.buy-balance');
 
     Route::get('/payment', [\App\Http\Controllers\BalanceController::class, 'index'])->name('payment');
@@ -51,7 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::inertia('/faq', 'faq', [])->name('faq');
+Route::get('/faq', [\App\Http\Controllers\FaqController::class, 'index'])->name('faq');
+Route::get('/legal/{slug}', [\App\Http\Controllers\LegalPageController::class, 'show'])->name('legal.show');
 Route::inertia('/tickets', 'tickets', [])->name('tickets');
 
 Route::inertia('/rating', 'rating', [

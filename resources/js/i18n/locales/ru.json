@@ -94,7 +94,11 @@
     "total_price": "Общая цена:",
     "server": "Сервер:",
     "purchase_date": "Дата покупки:",
-    "back_to_list": "Назад к покупкам"
+    "valid_until": "Действует до:",
+    "back_to_list": "Назад к покупкам",
+    "active": "АКТИВНО",
+    "expired": "ИСТЁК",
+    "no_purchases": "У вас пока нет покупок"
   },
   "payment": {
     "payment": "Оплата",

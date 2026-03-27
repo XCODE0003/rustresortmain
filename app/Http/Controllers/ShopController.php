@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\DeliverPurchaseItemsJob;
+use App\Notifications\PurchaseComplete;
 use App\Models\Donate;
 use App\Models\Server;
 use App\Models\ShopCategory;
@@ -111,6 +112,8 @@ class ShopController extends Controller
         ]);
 
         DeliverPurchaseItemsJob::dispatchSync($donate);
+
+        $user->notify(new PurchaseComplete($item->getLocalizedName() ?? $item->name_ru ?? 'Предмет', $total));
 
         return redirect()->back()->with('success', __('common.purchase_success'));
     }

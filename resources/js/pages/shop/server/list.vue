@@ -6,10 +6,10 @@
                 <!-- Выбор сервера -->
 
                 <div class="flex w-full flex-col gap-6">
-                    <h2 class="text-white text-center text-4xl font-bold uppercase">
+                    <h2 class="srv-title text-white text-center text-4xl font-bold uppercase">
                         {{ $t('shop.title') }}
                     </h2>
-                    <div class="flex w-full flex-wrap items-center justify-center gap-1.5">
+                    <div class="srv-filters flex w-full flex-wrap items-center justify-center gap-1.5">
                         <button v-for="server in servers" :key="server.id" @click="selectedServerId = server.id" :class="[
                             'button-black rounded-lg border px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
                             selectedServerId === server.id
@@ -49,7 +49,9 @@
                     v-if="selectedServerId"
                     class="flex flex-wrap justify-center gap-x-1 gap-y-16 md:gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24"
                 >
-                    <ShopItemCard v-for="item in filteredItems" :key="item.id" :item="item" @buy="handleBuyItem" />
+                    <div class="srv-card" v-for="item in filteredItems" :key="item.id">
+                        <ShopItemCard :item="item" @buy="handleBuyItem" />
+                    </div>
                 </div>
 
                 <div v-if="selectedServerId && filteredItems.length === 0" class="text-center text-TextGray py-8">
@@ -61,7 +63,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { gsap } from 'gsap';
 import ShopItemCard from '@/components/ShopItemCard.vue';
 import ShopLayout from '@/layouts/shop.vue';
 import { useShopLocale } from '@/composables/useShopLocale';
@@ -87,6 +90,24 @@ const props = defineProps({
 const selectedServerId = ref(props.servers[0]?.id ?? null);
 const selectedCategoryId = ref(null);
 const modalStore = useDescriptionModalStore();
+
+const animateCards = async () => {
+    await nextTick();
+    const cards = document.querySelectorAll('.srv-card');
+    if (cards.length) {
+        gsap.fromTo(cards, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.04, ease: 'power2.out' });
+    }
+};
+
+onMounted(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    tl.fromTo('.srv-title', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 });
+    tl.fromTo('.srv-filters', { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35 }, '-=0.2');
+    animateCards();
+});
+
+watch(selectedServerId, animateCards);
+watch(selectedCategoryId, animateCards);
 
 const normalizedItems = computed(() => {
     return props.items.map((item) => {

@@ -2,6 +2,7 @@ import Articles from './Articles'
 import Donates from './Donates'
 import Faqs from './Faqs'
 import Guides from './Guides'
+import LegalPages from './LegalPages'
 import PaymentGateways from './PaymentGateways'
 import PromoCodes from './PromoCodes'
 import RconTasks from './RconTasks'
@@ -18,6 +19,7 @@ const Resources = {
     Donates: Object.assign(Donates, Donates),
     Faqs: Object.assign(Faqs, Faqs),
     Guides: Object.assign(Guides, Guides),
+    LegalPages: Object.assign(LegalPages, LegalPages),
     PaymentGateways: Object.assign(PaymentGateways, PaymentGateways),
     PromoCodes: Object.assign(PromoCodes, PromoCodes),
     RconTasks: Object.assign(RconTasks, RconTasks),

@@ -19,7 +19,7 @@
                     <img
                         :src="imageSrc"
                         alt=""
-                        class="absolute top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2 opacity-70"
+                        class="absolute top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2 opacity-70 blur-2xl"
                     />
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 {{ title }}
             </div>
             <div class="flex flex-col gap-8 text-center">
-                <h1 v-html="description" class="text-xs/[30px] max-h-[400px] overflow-y-auto description-modal-text font-medium text-white">
+                <h1 v-html="description" class="text-xs/[30px] max-h-[400px] overflow-y-auto description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
                 <Transition

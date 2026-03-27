@@ -3,11 +3,11 @@
         <div
             class="container flex flex-col items-center gap-6 md:gap-8 lg:gap-10"
         >
-            <h1 class="text-center text-[19px] font-bold text-white uppercase">
+            <h1 class="payment-section text-center text-[19px] font-bold text-white uppercase">
                 {{ $t('payment.balance_page_title') }}
             </h1>
             <div
-                class="flex w-full items-center justify-center max-md:justify-around md:gap-12"
+                class="payment-section flex w-full items-center justify-center max-md:justify-around md:gap-12"
             >
                 <Link
                     href="/payment"
@@ -27,7 +27,7 @@
                 </Link>
             </div>
             <div
-                class="relative flex w-full items-stretch lg:items-start gap-2.5 max-lg:flex-col md:gap-5 lg:gap-8"
+                class="payment-section relative flex w-full items-stretch lg:items-start gap-2.5 max-lg:flex-col md:gap-5 lg:gap-8"
             >
                 <div class="grid w-full grid-cols-3 gap-2.5 lg:grid-cols-4">
                     <div
@@ -211,7 +211,8 @@
 
 <script>
 import { Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';
 import Toggle from '../components/toggle.vue';
 
@@ -228,6 +229,14 @@ export default {
         },
     },
     setup(props) {
+        onMounted(() => {
+            gsap.fromTo(
+                '.payment-section',
+                { y: 28, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.45, stagger: 0.1, ease: 'power2.out' },
+            );
+        });
+
         const selectedGateway = ref(Object.keys(props.gateways)[0] || null);
         const amount = ref(100);
         const promoCode = ref('');
