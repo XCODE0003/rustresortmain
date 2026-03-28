@@ -64,14 +64,9 @@
         <!-- Карточка товара -->
         <div
             @click="handleBuy"
-            class="block-black relative h-[245px] w-[225px] rounded-xl border border-StrokeGray transition-colors duration-200 hover:border-Orange cursor-pointer"
+            class="block-black relative h-[190px] w-[155px] sm:h-[220px] sm:w-[195px] md:h-[245px] md:w-[225px] rounded-xl border border-StrokeGray transition-colors duration-200 hover:border-Orange cursor-pointer"
             style="contain: layout style"
         >
-            <!-- Декоративный glow -->
-            <!-- <div
-                class="absolute top-1/2 left-1/2 h-[145px] w-[145px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-Orange/20"
-            ></div> -->
-
             <img
                 :src="imageSrc"
                 :alt="displayName"
@@ -79,20 +74,20 @@
                 decoding="async"
                 width="145"
                 height="145"
-                class="absolute top-1/2 left-1/2 z-10 h-[145px] w-auto object-contain -translate-x-1/2 -translate-y-1/2"
+                class="absolute top-1/2 left-1/2 z-10 h-[100px] sm:h-[120px] md:h-[145px] w-auto object-contain -translate-x-1/2 -translate-y-1/2"
             />
 
             <div
-                class="absolute -top-[22px] left-1/2 -translate-x-1/2 rounded-lg border border-StrokeGray bg-[#0E1012] px-6 py-3.5 text-xs font-bold text-nowrap text-white uppercase"
+                class="absolute -top-[16px] sm:-top-[19px] md:-top-[22px] left-1/2 -translate-x-1/2 rounded-lg border border-StrokeGray bg-[#0E1012] px-3 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3.5 text-[10px] sm:text-xs font-bold text-nowrap text-white uppercase"
             >
                 {{ displayName }}
             </div>
             <div
-                class="absolute bottom-[-22px] left-1/2 z-10 flex -translate-x-1/2 items-center gap-1 text-nowrap"
+                class="absolute bottom-[-16px] sm:bottom-[-19px] md:bottom-[-22px] left-1/2 z-10 flex -translate-x-1/2 items-center gap-1 text-nowrap"
             >
                 <button
                     @click.stop="handleBuy"
-                    class="cursor-pointer rounded-md bg-PaleOrange px-5 py-2.5 text-sm font-bold text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange"
+                    class="cursor-pointer rounded-md bg-PaleOrange px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-xs sm:text-sm font-bold text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange"
                 >
                     {{ item.price }} ₽
                 </button>

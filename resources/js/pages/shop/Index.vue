@@ -180,7 +180,7 @@
             <!-- Товары -->
             <div
                 ref="itemsGridRef"
-                class="flex flex-wrap justify-center gap-x-1 gap-y-16 md:gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24 w-full"
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-10 sm:gap-x-2 sm:gap-y-12 md:gap-x-2 md:gap-y-16 lg:gap-x-2.5 lg:gap-y-20 w-full place-items-center"
             >
                 <div
                     v-for="item in filteredItems"

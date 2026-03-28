@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -51,6 +52,9 @@ class HandleInertiaRequests extends Middleware
                 ] : null,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'social_links' => SocialLink::where('active', true)->orderBy('sort')->get()
+                ->map(fn($s) => ['platform' => $s->platform, 'url' => $s->url])
+                ->toArray(),
             'notifications' => $request->user()
                 ? $request->user()->notifications()
                     ->latest()

@@ -11,6 +11,7 @@ import ShopCategories from './ShopCategories'
 import ShopItems from './ShopItems'
 import ShopPurchases from './ShopPurchases'
 import ShopSets from './ShopSets'
+import SocialLinks from './SocialLinks'
 import Tickets from './Tickets'
 import Users from './Users'
 
@@ -28,6 +29,7 @@ const Resources = {
     ShopItems: Object.assign(ShopItems, ShopItems),
     ShopPurchases: Object.assign(ShopPurchases, ShopPurchases),
     ShopSets: Object.assign(ShopSets, ShopSets),
+    SocialLinks: Object.assign(SocialLinks, SocialLinks),
     Tickets: Object.assign(Tickets, Tickets),
     Users: Object.assign(Users, Users),
 }

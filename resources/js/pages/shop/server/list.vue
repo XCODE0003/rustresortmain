@@ -47,7 +47,7 @@
                 <!-- Товары -->
                 <div
                     v-if="selectedServerId"
-                    class="flex flex-wrap justify-center gap-x-1 gap-y-16 md:gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24"
+                    class="flex flex-wrap justify-center gap-y-16 gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24"
                 >
                     <div class="srv-card" v-for="item in filteredItems" :key="item.id">
                         <ShopItemCard :item="item" @buy="handleBuyItem" />

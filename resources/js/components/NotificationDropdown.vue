@@ -102,7 +102,7 @@ function formatAmount(amount: number): string {
 </script>
 
 <template>
-    <div ref="wrapperRef" class="relative">
+    <div ref="wrapperRef" class="md:relative">
         <!-- Bell Button -->
         <button
             @click="togglePanel"
@@ -122,7 +122,7 @@ function formatAmount(amount: number): string {
         <div
             v-if="isOpen"
             ref="panelRef"
-            class="absolute -right-12 top-[calc(100%+12px)] z-50 w-[360px] max-h-[520px] overflow-hidden flex flex-col rounded-2xl border border-StrokeGray bg-[#090B0D]/60 shadow-2xl backdrop-blur-xl"
+            class="absolute max-md:left-0 md:-right-12 top-[calc(100%+12px)] z-50 w-full md:w-[360px] max-h-[520px] overflow-hidden flex flex-col rounded-2xl border border-StrokeGray bg-[#090B0D]/90 shadow-2xl backdrop-blur-xl"
         >
             <!-- Header -->
             <div class="flex items-center justify-between px-5 py-4 border-b border-StrokeGray flex-shrink-0">

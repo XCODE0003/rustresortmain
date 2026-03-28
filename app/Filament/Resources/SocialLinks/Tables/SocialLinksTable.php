@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Filament\Resources\SocialLinks\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class SocialLinksTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('platform')
+                    ->label('Платформа')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('url')
+                    ->label('URL')
+                    ->limit(50),
+                TextColumn::make('sort')
+                    ->label('Порядок')
+                    ->sortable(),
+                IconColumn::make('active')
+                    ->label('Активна')
+                    ->boolean(),
+                TextColumn::make('updated_at')
+                    ->label('Обновлено')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
+            ])
+            ->defaultSort('sort')
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}

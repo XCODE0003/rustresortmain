@@ -56,8 +56,8 @@
                             </h2>
                             <div
                                 v-if="itemDescription(purchase.item)"
-                                class="text-sm text-TextGray leading-relaxed"
-                                v-html="itemDescription(purchase.item)"
+                                class="text-sm text-TextGray leading-relaxed purchase-desc"
+                                v-html="decodeHtml(itemDescription(purchase.item))"
                             />
                             <span
                                 v-if="purchase.validity"
@@ -132,6 +132,12 @@ defineProps<{
 
 const { locale } = useI18n();
 const { itemName, itemDescription } = useShopLocale();
+
+const decodeHtml = (html: string): string => {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+};
 
 const formatDateTime = (value: string): string =>
     new Date(value).toLocaleString(locale.value === 'en' ? 'en-US' : 'ru-RU');

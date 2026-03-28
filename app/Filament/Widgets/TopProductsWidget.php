@@ -2,11 +2,9 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Actions\BulkActionGroup;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class TopProductsWidget extends TableWidget
 {
@@ -14,15 +12,17 @@ class TopProductsWidget extends TableWidget
 
     public function table(Table $table): Table
     {
+        $sub = DB::table('shop_statistics')
+            ->selectRaw('item_id, COUNT(*) as sales, SUM(price) as revenue, 0 as id')
+            ->where('created_at', '>=', now()->subDays(30))
+            ->whereNotNull('item_id')
+            ->groupBy('item_id');
+
         return $table
             ->query(
-                \App\Models\ShopStatistic::query()
-                    ->selectRaw('item_id, COUNT(*) as sales, SUM(price) as revenue, MIN(id) as id')
-                    ->where('created_at', '>=', now()->subDays(30))
-                    ->whereNotNull('item_id')
-                    ->groupBy('item_id')
-                    ->orderByDesc('sales')
-                    ->limit(10)
+                \App\Models\ShopStatistic::fromSub($sub, 'shop_statistics')
+                    ->reorder()
+                    ->orderByRaw('sales DESC')
             )
             ->columns([
                 \Filament\Tables\Columns\TextColumn::make('item.name_ru')

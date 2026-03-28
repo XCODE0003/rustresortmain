@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="container flex flex-col gap-12 md:gap-16 lg:gap-20">
+        <div class="container flex flex-col gap-8 md:gap-16 lg:gap-20">
             <!-- Hero Section -->
             <!-- <div class="relative flex w-full flex-col items-center gap-8 text-center">
                 <div class="flex flex-col gap-4">
@@ -139,18 +139,18 @@
                         :key="server.id"
                         class="home-server-card relative overflow-hidden rounded-xl border border-StrokeGray"
                     >
-                        <div class="flex items-center gap-5 p-5">
+                        <div class="flex md:items-center gap-4 p-3 md:p-5 max-md:flex-col">
                             <div
-                                class="relative min-w-max overflow-hidden rounded-xl"
+                                class="relative overflow-hidden rounded-xl"
                             >
                                 <img
                                     :src="server.image || '/images/test-bg-server.png'"
                                     :alt="server.name"
                                     loading="lazy"
                                     decoding="async"
-                                    width="200"
+              
                                     height="120"
-                                    class="h-[120px] w-[200px] object-cover"
+                                    class="h-[120px] max-md:min-w-full w-full max-md:w-full md:w-[200px] object-cover max-md:object-top"
                                 />
                                 <div
                                     class="absolute top-0 left-0 flex h-full w-full gap-1.5 p-1.5"
@@ -192,25 +192,7 @@
                                     >
                                         {{ $t('server.connect') }}
                                     </button>
-                                    <Link
-                                        :href="`/shop/server/${server.id}`"
-                                        class="flex items-center justify-center cursor-pointer rounded-md bg-Green p-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Green/80"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                        >
-                                            <path
-                                                fill-rule="evenodd"
-                                                clip-rule="evenodd"
-                                                d="M7.88368 18.2168C8.63003 18.2169 9.2411 18.8419 9.2411 19.6133C9.24099 20.3755 8.62997 21 7.88368 21C7.12833 21 6.5166 20.3756 6.51649 19.6133C6.51649 18.8418 7.12826 18.2168 7.88368 18.2168ZM18.0009 18.2168C18.7473 18.2168 19.3593 18.8418 19.3593 19.6133C19.3592 20.3755 18.7472 21 18.0009 21C17.2455 21 16.6338 20.3756 16.6337 19.6133C16.6337 18.8418 17.2455 18.2168 18.0009 18.2168ZM3.79188 3.00785L5.93641 3.33793C6.24209 3.39394 6.46695 3.64979 6.49403 3.96195L6.66493 6.01957C6.69191 6.31438 6.92599 6.53519 7.21375 6.5352H19.3593C19.9076 6.5353 20.2672 6.72806 20.6268 7.15043C20.9863 7.57281 21.0495 8.17859 20.9686 8.72856L20.1141 14.7539C19.9523 15.9121 18.9809 16.7657 17.8388 16.7657H8.02723C6.83135 16.7655 5.84196 15.8295 5.74305 14.6172L4.9159 4.60551L3.55848 4.36625C3.19876 4.30196 2.9467 3.9436 3.00965 3.57621C3.0727 3.20071 3.42327 2.95188 3.79188 3.00785ZM13.9091 9.93168C13.5314 9.93177 13.2343 10.2354 13.2343 10.6211C13.2343 10.9976 13.5315 11.3095 13.9091 11.3096H16.4003C16.7779 11.3096 17.075 10.9976 17.0751 10.6211C17.0751 10.2354 16.778 9.93168 16.4003 9.93168H13.9091Z"
-                                                fill="#090B0D"
-                                            />
-                                        </svg>
-                                    </Link>
+                             
                                 </div>
                             </div>
                         </div>
@@ -238,13 +220,13 @@
                     </p>
                 </div>
 
-                <div class="flex w-full flex-col gap-4 rounded-xl border border-StrokeGray p-4 md:p-6">
-                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                        <div class="flex flex-wrap gap-2">
+                <div class="flex w-full flex-col gap-3 rounded-xl border border-StrokeGray p-3 md:gap-4 md:p-6">
+                    <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                        <div class="flex flex-wrap gap-1.5">
                             <button
                                 type="button"
                                 @click="changeShopCategory(null)"
-                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
+                                class="button-black rounded-lg border px-3 py-1.5 text-[11px] font-bold uppercase transition-all duration-300 md:px-4 md:py-2 md:text-sm"
                                 :class="selectedShopCategory === null ? 'border-Orange !text-Orange shadow-[0_0_12px_rgba(255,140,0,0.3)]' : 'border-StrokeGray text-TextGray hover:text-white'"
                             >
                                 {{ $t('home.all') }}
@@ -254,7 +236,7 @@
                                 :key="category.id"
                                 type="button"
                                 @click="changeShopCategory(category.id)"
-                                class="button-black rounded-lg border px-4 py-2 text-xs font-bold uppercase transition-all duration-300 md:text-sm"
+                                class="button-black rounded-lg border px-3 py-1.5 text-[11px] font-bold uppercase transition-all duration-300 md:px-4 md:py-2 md:text-sm"
                                 :class="selectedShopCategory === category.id ? 'border-Orange !text-Orange shadow-[0_0_12px_rgba(255,140,0,0.3)]' : 'border-StrokeGray text-TextGray hover:text-white'"
                             >
                                 {{ categoryTitle(category) }}
@@ -266,50 +248,50 @@
                                 v-model="shopSearchInput"
                                 type="text"
                                 :placeholder="$t('home.search_items_placeholder')"
-                                class="button-black w-full rounded-lg border border-StrokeGray px-4 py-2 text-sm text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
+                                class="button-black w-full rounded-lg border border-StrokeGray px-3 py-2 text-sm text-white placeholder:text-TextGray focus:border-Orange focus:outline-none"
                             />
                             <button
                                 type="submit"
-                                class="rounded-lg bg-Orange px-4 py-2 text-sm font-bold text-black transition-all duration-300 hover:bg-Orange/80"
+                                class="rounded-lg bg-Orange px-3 py-2 text-sm font-bold text-black transition-all duration-300 hover:bg-Orange/80 shrink-0"
                             >
                                 {{ $t('home.find') }}
                             </button>
                         </form>
                     </div>
 
-                    <div v-if="shopItems.data.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <div v-if="shopItems.data.length > 0" class="grid grid-cols-2 gap-2 md:gap-4 lg:grid-cols-4">
                         <div
                             v-for="item in shopItems.data"
                             :key="item.id"
-                            class="home-shop-item button-black flex flex-col rounded-xl border border-StrokeGray p-4 transition-all duration-300 hover:border-Orange"
+                            class="home-shop-item button-black flex flex-col rounded-xl border border-StrokeGray p-2.5 md:p-4 transition-all duration-300 hover:border-Orange"
                         >
-                            <div class="relative mb-3 flex h-[140px] items-center justify-center overflow-hidden rounded-lg border border-StrokeGray bg-[#0E1012]">
+                            <div class="relative mb-3 flex h-[100px] md:h-[140px] items-center justify-center overflow-hidden rounded-lg border border-StrokeGray bg-[#0E1012]">
                                 <img
                                     :src="item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png'"
                                     :alt="itemName(item)"
-                                    class="h-[120px] w-auto object-contain"
+                                    class="h-[80px] md:h-[120px] w-auto object-contain"
                                     loading="lazy"
                                     decoding="async"
                                 />
                                 <span
                                     v-if="categoryTitle(item.category)"
-                                    class="absolute top-2 left-2 rounded-md border border-StrokeGray bg-black/70 px-2 py-1 text-[10px] font-bold uppercase text-TextGray"
+                                    class="absolute top-1.5 left-1.5 rounded-md border border-StrokeGray bg-black/70 px-1.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase text-TextGray"
                                 >
                                     {{ categoryTitle(item.category) }}
                                 </span>
                             </div>
 
-                            <h3 class="mb-1 min-h-[40px] overflow-hidden text-sm font-bold uppercase text-white">
+                            <h3 class="mb-1 min-h-[32px] md:min-h-[40px] overflow-hidden text-[11px] md:text-sm font-bold uppercase text-white leading-tight">
                                 {{ itemName(item) }}
                             </h3>
-                            <div class="mt-auto flex items-center justify-between gap-2 pt-2">
-                                <span class="text-base font-bold text-Orange">
+                            <div class="mt-auto flex items-center justify-between gap-1.5 pt-1.5 md:gap-2 md:pt-2">
+                                <span class="text-sm md:text-base font-bold text-Orange">
                                     {{ formatPrice(item.price) }} ₽
                                 </span>
                                 <button
                                     type="button"
                                     @click="openItemModal(item)"
-                                    class="rounded-md bg-PaleOrange px-4 py-2 text-xs font-bold uppercase text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange"
+                                    class="rounded-md bg-PaleOrange px-2.5 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs font-bold uppercase text-Orange transition-all duration-300 hover:bg-Orange hover:text-PaleOrange shrink-0"
                                 >
                                     {{ $t('shop.buy') }}
                                 </button>

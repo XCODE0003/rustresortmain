@@ -2,36 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donate;
 use App\Models\ShopPurchase;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PurchaseController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $purchases = ShopPurchase::with('shopItem', 'server')
-            ->where('user_id', auth()->id())
-            ->latest()
-            ->paginate(20)
-            ->through(fn($p) => [
-                'id'         => $p->id,
-                'count'      => $p->count,
-                'price'      => $p->shopItem?->getFinalPrice() ?? ($p->shopItem?->price ?? 0),
-                'created_at' => $p->created_at,
-                'validity'   => $p->validity,
-                'is_valid'   => $p->isValid(),
-                'server'     => $p->server ? ['name' => $p->server->name] : null,
-                'item'       => $p->shopItem ? [
-                    'name_ru' => $p->shopItem->name_ru,
-                    'name_en' => $p->shopItem->name_en,
-                    'image'   => $p->shopItem->image,
-                ] : null,
-            ]);
+        $tab = $request->get('tab', 'purchases'); // purchases | topups
+
+        if ($tab === 'topups') {
+            $items = Donate::where('user_id', auth()->id())
+                ->latest()
+                ->paginate(20)
+                ->through(fn($d) => [
+                    'id'             => $d->id,
+                    'type'           => 'topup',
+                    'amount'         => (float) $d->amount,
+                    'bonus_amount'   => (float) $d->bonus_amount,
+                    'payment_system' => $d->payment_system,
+                    'status'         => $d->status, // 0=pending, 1=completed, 2=failed
+                    'created_at'     => $d->created_at,
+                ]);
+        } else {
+            $items = ShopPurchase::with('shopItem', 'server')
+                ->where('user_id', auth()->id())
+                ->latest()
+                ->paginate(20)
+                ->through(fn($p) => [
+                    'id'         => $p->id,
+                    'type'       => 'purchase',
+                    'count'      => $p->count,
+                    'price'      => $p->shopItem?->getFinalPrice() ?? ($p->shopItem?->price ?? 0),
+                    'created_at' => $p->created_at,
+                    'validity'   => $p->validity,
+                    'is_valid'   => $p->isValid(),
+                    'server'     => $p->server ? ['name' => $p->server->name] : null,
+                    'item'       => $p->shopItem ? [
+                        'name_ru' => $p->shopItem->name_ru,
+                        'name_en' => $p->shopItem->name_en,
+                        'image'   => $p->shopItem->image,
+                    ] : null,
+                ]);
+        }
 
         return Inertia::render('Purchase/Index', [
-            'purchases' => $purchases,
+            'items' => $items,
+            'tab'   => $tab,
         ]);
     }
 
