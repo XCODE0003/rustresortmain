@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TopProductsWidget extends TableWidget
 {
-    protected static ?string $heading = 'Top Products (Last 30 Days)';
+    protected static ?string $heading = 'Топ товаров за 30 дней';
 
     public function table(Table $table): Table
     {

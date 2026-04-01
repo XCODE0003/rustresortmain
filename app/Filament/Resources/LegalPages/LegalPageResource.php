@@ -6,14 +6,14 @@ use App\Filament\Resources\LegalPages\Pages\EditLegalPage;
 use App\Filament\Resources\LegalPages\Pages\ListLegalPages;
 use App\Filament\Resources\LegalPages\Schemas\LegalPageForm;
 use App\Filament\Resources\LegalPages\Tables\LegalPagesTable;
+use App\Filament\Support\AdminResource;
 use App\Models\LegalPage;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class LegalPageResource extends Resource
+class LegalPageResource extends AdminResource
 {
     protected static ?string $model = LegalPage::class;
 
@@ -44,7 +44,7 @@ class LegalPageResource extends Resource
     {
         return [
             'index' => ListLegalPages::route('/'),
-            'edit'  => EditLegalPage::route('/{record}/edit'),
+            'edit' => EditLegalPage::route('/{record}/edit'),
         ];
     }
 }

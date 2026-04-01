@@ -7,14 +7,14 @@ use App\Filament\Resources\Donates\Pages\EditDonate;
 use App\Filament\Resources\Donates\Pages\ListDonates;
 use App\Filament\Resources\Donates\Schemas\DonateForm;
 use App\Filament\Resources\Donates\Tables\DonatesTable;
+use App\Filament\Support\AdminResource;
 use App\Models\Donate;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class DonateResource extends Resource
+class DonateResource extends AdminResource
 {
     protected static ?string $model = Donate::class;
 

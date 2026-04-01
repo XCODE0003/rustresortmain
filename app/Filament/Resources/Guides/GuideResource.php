@@ -7,14 +7,14 @@ use App\Filament\Resources\Guides\Pages\EditGuide;
 use App\Filament\Resources\Guides\Pages\ListGuides;
 use App\Filament\Resources\Guides\Schemas\GuideForm;
 use App\Filament\Resources\Guides\Tables\GuidesTable;
+use App\Filament\Support\AdminResource;
 use App\Models\Guide;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class GuideResource extends Resource
+class GuideResource extends AdminResource
 {
     protected static ?string $model = Guide::class;
 

@@ -2,15 +2,12 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Actions\BulkActionGroup;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class RecentPaymentsWidget extends TableWidget
 {
-    protected static ?string $heading = 'Recent Payments';
+    protected static ?string $heading = 'Последние платежи';
 
     public function table(Table $table): Table
     {
@@ -39,9 +36,9 @@ class RecentPaymentsWidget extends TableWidget
                         default => 'warning',
                     })
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        1 => 'Completed',
-                        2 => 'Failed',
-                        default => 'Pending',
+                        1 => 'Завершен',
+                        2 => 'Ошибка',
+                        default => 'Ожидает',
                     }),
                 \Filament\Tables\Columns\TextColumn::make('created_at')
                     ->label('Date')

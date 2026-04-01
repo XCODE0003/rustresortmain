@@ -7,14 +7,14 @@ use App\Filament\Resources\Faqs\Pages\EditFaq;
 use App\Filament\Resources\Faqs\Pages\ListFaqs;
 use App\Filament\Resources\Faqs\Schemas\FaqForm;
 use App\Filament\Resources\Faqs\Tables\FaqsTable;
+use App\Filament\Support\AdminResource;
 use App\Models\Faq;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class FaqResource extends Resource
+class FaqResource extends AdminResource
 {
     protected static ?string $model = Faq::class;
 

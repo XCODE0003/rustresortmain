@@ -7,14 +7,14 @@ use App\Filament\Resources\Servers\Pages\EditServer;
 use App\Filament\Resources\Servers\Pages\ListServers;
 use App\Filament\Resources\Servers\Schemas\ServerForm;
 use App\Filament\Resources\Servers\Tables\ServersTable;
+use App\Filament\Support\AdminResource;
 use App\Models\Server;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class ServerResource extends Resource
+class ServerResource extends AdminResource
 {
     protected static ?string $model = Server::class;
 

@@ -4,24 +4,24 @@ namespace App\Filament\Pages\Bans;
 
 use App\Services\RustApp\BansService;
 use BackedEnum;
-use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 
-class BansPage extends Page implements HasForms, HasActions
+class BansPage extends Page implements HasActions, HasForms
 {
-    use InteractsWithForms;
     use InteractsWithActions;
+    use InteractsWithForms;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNoSymbol;
 
     protected static ?string $navigationLabel = 'Баны';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'Users';
+    protected static \UnitEnum|string|null $navigationGroup = 'Пользователи';
 
     protected static ?int $navigationSort = 5;
 
@@ -31,19 +31,27 @@ class BansPage extends Page implements HasForms, HasActions
 
     // Filters
     public string $search = '';
+
     public bool $excludeStale = true;
+
     public int $currentPage = 0;
 
     // Data
     public array $bans = [];
+
     public int $totalBans = 0;
+
     public bool $loadError = false;
 
     // Ban form
     public bool $showBanForm = false;
+
     public string $banSteamId = '';
+
     public string $banReason = '';
+
     public string $banComment = '';
+
     public string $banExpiredAt = ''; // empty = permanent
 
     public function mount(): void
@@ -65,7 +73,7 @@ class BansPage extends Page implements HasForms, HasActions
         }
 
         $data = app(BansService::class)->getBans($params);
-        $this->bans      = $data['results'] ?? [];
+        $this->bans = $data['results'] ?? [];
         $this->totalBans = $data['total'] ?? count($this->bans);
 
         if (empty($data['results']) && isset($data['error'])) {
@@ -114,13 +122,14 @@ class BansPage extends Page implements HasForms, HasActions
                 ->title('Заполните Steam ID и причину')
                 ->warning()
                 ->send();
+
             return;
         }
 
         $ban = [
-            'steam_id'   => trim($this->banSteamId),
-            'reason'     => trim($this->banReason),
-            'comment'    => trim($this->banComment),
+            'steam_id' => trim($this->banSteamId),
+            'reason' => trim($this->banReason),
+            'comment' => trim($this->banComment),
             'expired_at' => $this->banExpiredAt !== ''
                 ? strtotime($this->banExpiredAt)
                 : 0,
@@ -167,9 +176,9 @@ class BansPage extends Page implements HasForms, HasActions
 
     private function resetBanForm(): void
     {
-        $this->banSteamId   = '';
-        $this->banReason    = '';
-        $this->banComment   = '';
+        $this->banSteamId = '';
+        $this->banReason = '';
+        $this->banComment = '';
         $this->banExpiredAt = '';
     }
 }

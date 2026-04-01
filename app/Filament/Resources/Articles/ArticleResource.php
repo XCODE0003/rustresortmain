@@ -7,14 +7,14 @@ use App\Filament\Resources\Articles\Pages\EditArticle;
 use App\Filament\Resources\Articles\Pages\ListArticles;
 use App\Filament\Resources\Articles\Schemas\ArticleForm;
 use App\Filament\Resources\Articles\Tables\ArticlesTable;
+use App\Filament\Support\AdminResource;
 use App\Models\Article;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class ArticleResource extends Resource
+class ArticleResource extends AdminResource
 {
     protected static ?string $model = Article::class;
 

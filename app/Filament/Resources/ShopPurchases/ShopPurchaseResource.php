@@ -7,14 +7,14 @@ use App\Filament\Resources\ShopPurchases\Pages\EditShopPurchase;
 use App\Filament\Resources\ShopPurchases\Pages\ListShopPurchases;
 use App\Filament\Resources\ShopPurchases\Schemas\ShopPurchaseForm;
 use App\Filament\Resources\ShopPurchases\Tables\ShopPurchasesTable;
+use App\Filament\Support\AdminResource;
 use App\Models\ShopPurchase;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class ShopPurchaseResource extends Resource
+class ShopPurchaseResource extends AdminResource
 {
     protected static ?string $model = ShopPurchase::class;
 

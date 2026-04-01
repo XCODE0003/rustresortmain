@@ -7,14 +7,14 @@ use App\Filament\Resources\RconTasks\Pages\EditRconTask;
 use App\Filament\Resources\RconTasks\Pages\ListRconTasks;
 use App\Filament\Resources\RconTasks\Schemas\RconTaskForm;
 use App\Filament\Resources\RconTasks\Tables\RconTasksTable;
+use App\Filament\Support\AdminResource;
 use App\Models\RconTask;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class RconTaskResource extends Resource
+class RconTaskResource extends AdminResource
 {
     protected static ?string $model = RconTask::class;
 

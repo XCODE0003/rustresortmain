@@ -10,34 +10,34 @@ class StatsOverviewWidget extends BaseStatsOverviewWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Revenue', function () {
+            Stat::make('Общая выручка', function () {
                 $total = \App\Models\Donate::where('status', 1)
                     ->sum('amount');
 
                 return '₽'.number_format($total, 2);
             })
-                ->description('All completed payments')
+                ->description('Все завершенные платежи')
                 ->descriptionIcon('heroicon-o-currency-dollar')
                 ->color('success'),
 
-            Stat::make('Active Users', function () {
+            Stat::make('Активные пользователи', function () {
                 return \App\Models\User::where('created_at', '>=', now()->subDays(30))->count();
             })
-                ->description('Last 30 days')
+                ->description('Последние 30 дней')
                 ->descriptionIcon('heroicon-o-users')
                 ->color('primary'),
 
-            Stat::make('Total Purchases', function () {
+            Stat::make('Всего покупок', function () {
                 return \App\Models\ShopPurchase::count();
             })
-                ->description('All shop purchases')
+                ->description('Все покупки магазина')
                 ->descriptionIcon('heroicon-o-shopping-cart')
                 ->color('warning'),
 
-            Stat::make('Active Servers', function () {
+            Stat::make('Активные серверы', function () {
                 return \App\Models\Server::where('status', 1)->count();
             })
-                ->description('Online now')
+                ->description('Сейчас онлайн')
                 ->descriptionIcon('heroicon-o-server-stack')
                 ->color('info'),
         ];

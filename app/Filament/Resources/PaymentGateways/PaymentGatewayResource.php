@@ -7,15 +7,15 @@ use App\Filament\Resources\PaymentGateways\Pages\EditPaymentGateway;
 use App\Filament\Resources\PaymentGateways\Pages\ListPaymentGateways;
 use App\Filament\Resources\PaymentGateways\Schemas\PaymentGatewayForm;
 use App\Filament\Resources\PaymentGateways\Tables\PaymentGatewaysTable;
+use App\Filament\Support\AdminResource;
 use App\Models\PaymentGateway;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class PaymentGatewayResource extends Resource
+class PaymentGatewayResource extends AdminResource
 {
     protected static ?string $model = PaymentGateway::class;
 

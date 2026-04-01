@@ -7,14 +7,14 @@ use App\Filament\Resources\ShopItems\Pages\EditShopItem;
 use App\Filament\Resources\ShopItems\Pages\ListShopItems;
 use App\Filament\Resources\ShopItems\Schemas\ShopItemForm;
 use App\Filament\Resources\ShopItems\Tables\ShopItemsTable;
+use App\Filament\Support\AdminResource;
 use App\Models\ShopItem;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class ShopItemResource extends Resource
+class ShopItemResource extends AdminResource
 {
     protected static ?string $model = ShopItem::class;
 

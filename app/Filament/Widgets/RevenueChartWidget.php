@@ -6,7 +6,7 @@ use Filament\Widgets\ChartWidget;
 
 class RevenueChartWidget extends ChartWidget
 {
-    protected ?string $heading = 'Revenue (Last 7 Days)';
+    protected ?string $heading = 'Выручка за 7 дней';
 
     protected function getData(): array
     {
@@ -27,7 +27,7 @@ class RevenueChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Revenue (₽)',
+                    'label' => 'Выручка (₽)',
                     'data' => $data,
                     'borderColor' => 'rgb(59, 130, 246)',
                     'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
