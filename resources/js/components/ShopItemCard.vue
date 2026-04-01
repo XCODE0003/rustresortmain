@@ -64,7 +64,7 @@
         <!-- Карточка товара -->
         <div
             @click="handleBuy"
-            class="block-black relative h-[190px] w-[155px] sm:h-[220px] sm:w-[195px] md:h-[245px] md:w-[225px] rounded-xl border border-StrokeGray transition-colors duration-200 hover:border-Orange cursor-pointer"
+            class="block-black relative h-[220px] w-[180px] cursor-pointer rounded-xl border border-StrokeGray transition-colors duration-200 hover:border-Orange sm:h-[260px] sm:w-[225px] md:h-[295px] md:w-[265px]"
             style="contain: layout style"
         >
             <img
@@ -74,7 +74,7 @@
                 decoding="async"
                 width="145"
                 height="145"
-                class="absolute top-1/2 left-1/2 z-10 h-[100px] sm:h-[120px] md:h-[145px] w-auto object-contain -translate-x-1/2 -translate-y-1/2"
+                class="absolute top-1/2 left-1/2 z-10 h-[120px] w-auto -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[145px] md:h-[175px]"
             />
 
             <div
