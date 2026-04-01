@@ -81,6 +81,87 @@ dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 dashboard.form = dashboardForm
 
 /**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+export const bansPage = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: bansPage.url(options),
+    method: 'get',
+})
+
+bansPage.definition = {
+    methods: ["get","head"],
+    url: '/admin/bans-page',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+bansPage.url = (options?: RouteQueryOptions) => {
+    return bansPage.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+bansPage.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: bansPage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+bansPage.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: bansPage.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+const bansPageForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: bansPage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+bansPageForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: bansPage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Filament\Pages\Bans\BansPage::__invoke
+* @see app/Filament/Pages/Bans/BansPage.php:7
+* @route '/admin/bans-page'
+*/
+bansPageForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: bansPage.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+bansPage.form = bansPageForm
+
+/**
 * @see \App\Filament\Pages\Settings\AuthSettings::__invoke
 * @see app/Filament/Pages/Settings/AuthSettings.php:7
 * @route '/admin/auth-settings'
@@ -730,6 +811,7 @@ steamSettings.form = steamSettingsForm
 
 const pages = {
     dashboard: Object.assign(dashboard, dashboard),
+    bansPage: Object.assign(bansPage, bansPage),
     authSettings: Object.assign(authSettings, authSettings),
     gameApiSettings: Object.assign(gameApiSettings, gameApiSettings),
     generalSettings: Object.assign(generalSettings, generalSettings),

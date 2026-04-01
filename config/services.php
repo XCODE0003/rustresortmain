@@ -35,6 +35,11 @@ return [
         ],
     ],
 
+    'rustapp' => [
+        'private_key' => env('RUSTAPP_PRIVATE_KEY'),
+        'base_url'    => 'https://court.rustapp.io',
+    ],
+
     'steam' => [
         'client_id' => null,
         'client_secret' => config('options.steam_api_key') ?: env('STEAM_API_KEY'),
