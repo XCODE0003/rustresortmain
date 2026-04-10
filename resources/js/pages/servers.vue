@@ -14,7 +14,7 @@
                         class="relative min-w-max overflow-hidden rounded-xl max-md:hidden"
                     >
                         <img
-                            :src="server.image || '/images/test-bg-server.png'"
+                            :src="'/' + server.image || '/images/test-bg-server.png'"
                             :alt="server.name"
                             class="h-[158px] w-[260px] object-cover"
                         />
@@ -58,7 +58,7 @@
                                     >
                                         {{ $t('server.connect') }}
                                     </button>
-                      
+
                                 </div>
                                 <div>
                                     <h2
