@@ -25,8 +25,7 @@ jobs:
             git reset --hard origin/main
             git clean -fd
 
-            echo "==> Installing PHP dependencies..."
-            composer install
+
 
             echo "==> Installing JS dependencies and building assets..."
             npm ci
