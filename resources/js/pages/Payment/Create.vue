@@ -24,7 +24,7 @@
                                 v-if="gateway.logo"
                                 :src="'/' + gateway.logo"
                                 :alt="gateway.name"
-                                class="h-10 object-cover"
+                                class="h-10 max-h-10 w-auto max-w-[min(100%,9rem)] object-contain"
                             />
                             <span v-else class="text-xs font-bold text-white">
                                 {{ gateway.name }}

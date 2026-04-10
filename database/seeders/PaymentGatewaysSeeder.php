@@ -258,19 +258,16 @@ class PaymentGatewaysSeeder extends Seeder
                 'logo' => 'images/payment-logos/viza_mc_rf.png',
             ],
             [
-                'code' => 'mir',
-                'name' => 'Mir',
-                'name_ru' => 'Мир',
+                'code' => 'gpay',
+                'name' => 'Google Pay',
+                'name_ru' => 'Google Pay',
                 'is_active' => false,
                 'sort' => 20,
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => [
-                    'backend' => 'pally',
-                    'payment_method' => 'SBP',
-                ],
-                'logo' => 'images/payment-logos/MIR.png',
+                'settings' => ['backend' => 'tebex'],
+                'logo' => 'images/payment-logos/google-pay.svg', // was GPAY.png in old DB
             ],
             [
                 'code' => 'viza_mc_world',
@@ -311,16 +308,19 @@ class PaymentGatewaysSeeder extends Seeder
                 'logo' => 'images/payment-logos/Alipay.png',
             ],
             [
-                'code' => 'gpay',
-                'name' => 'Google Pay',
-                'name_ru' => 'Google Pay',
+                'code' => 'mir',
+                'name' => 'Mir',
+                'name_ru' => 'Мир',
                 'is_active' => false,
                 'sort' => 60,
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'tebex'],
-                'logo' => 'images/payment-logos/GPAY.png',
+                'settings' => [
+                    'backend' => 'pally',
+                    'payment_method' => 'MIR',
+                ],
+                'logo' => 'images/payment-logos/mir.svg',
             ],
             [
                 'code' => 'jcb',
@@ -371,7 +371,7 @@ class PaymentGatewaysSeeder extends Seeder
                     'backend' => 'heleket',
                     'to_currency' => 'BTC',
                 ],
-                'logo' => 'images/payment-logos/Bitcoin.png',
+                'logo' => 'images/payment-logos/bitcoin.svg',
             ],
             [
                 'code' => 'usdt',
@@ -398,7 +398,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 10,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'heleket'],
-                'logo' => 'images/payment-logos/SBP.png',
+                'logo' => 'images/payment-logos/sbp-crypto.svg', // was SBP.png in old DB
             ],
         ];
     }
