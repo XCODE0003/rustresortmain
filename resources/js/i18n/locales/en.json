@@ -23,7 +23,11 @@
     "prev": "Previous",
     "next": "Next",
     "page_of": "Page {current} of {last}",
-    "total": "Total: {n}"
+    "total": "Total: {n}",
+    "col_player": "Player",
+    "col_reason": "Reason",
+    "col_banned_at": "Banned at",
+    "col_expires": "Expires"
   },
   "auth": {
     "login": "Sign in",

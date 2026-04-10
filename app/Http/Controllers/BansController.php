@@ -17,13 +17,13 @@ class BansController extends Controller
             'page' => $page - 1,
             'exclude_stale' => true,
             'include_total' => true,
+            'limit' => 50,
         ]);
 
         $success = $data['success'] ?? false;
         $raw = $data['results'] ?? [];
 
         $bans = array_map(fn (array $ban) => $this->mapBanForPublic($ban), $raw);
-
         $limit = (int) ($data['limit'] ?? 0);
         if ($limit < 1) {
             $limit = 20;

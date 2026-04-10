@@ -21,7 +21,8 @@ class BansService
     private function client(): PendingRequest
     {
         return Http::withHeaders([
-            'Authorization' => $this->privateKey,
+            // Court API reads the project key from X-API-Key (Authorization is ignored → 405 / "No API Key").
+            'X-API-Key' => $this->privateKey,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
         ])->baseUrl($this->baseUrl)->timeout(15);

@@ -23,7 +23,11 @@
     "prev": "Назад",
     "next": "Вперёд",
     "page_of": "Страница {current} из {last}",
-    "total": "Всего: {n}"
+    "total": "Всего: {n}",
+    "col_player": "Игрок",
+    "col_reason": "Причина",
+    "col_banned_at": "Дата бана",
+    "col_expires": "Срок"
   },
   "auth": {
     "login": "Войти",
