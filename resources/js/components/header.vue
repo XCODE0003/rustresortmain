@@ -109,6 +109,12 @@ onBeforeUnmount(() => {
 
         <div class="flex items-center gap-16 text-TextGray max-xl:hidden">
           <Link
+            href="/bans"
+            :class="{ 'text-white': $page.url.startsWith('/bans') }"
+            class="transition-colors duration-300 hover:text-white"
+            >{{ $t("nav.bans") }}</Link
+          >
+          <Link
             href="/rating"
             :class="{ 'text-white': $page.url.includes('/rating') }"
             class="transition-colors duration-300 hover:text-white"
@@ -152,7 +158,7 @@ onBeforeUnmount(() => {
               </Link>
               <Link
                 href="/profile"
-                class="relative z-10 cursor-pointer transition-opacity duration-300 hover:opacity-80"
+                class="relative z-10 cursor-pointer min-w-[50px] transition-opacity duration-300 hover:opacity-80"
               >
                 <img
                   :src="user.avatar || '/images/test-bg-server.png'"
@@ -322,6 +328,12 @@ onBeforeUnmount(() => {
           :class="{ 'text-white': $page.url.includes('/shop') }"
           class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80"
           >{{ $t("nav.shop") }}</Link
+        >
+        <Link
+          href="/bans"
+          :class="{ 'text-white': $page.url.startsWith('/bans') }"
+          class="nav-item bg-burger flex items-center gap-2 border-t border-StrokeGray px-3.5 py-3 text-TextGray duration-300 ease-in-out hover:opacity-80"
+          >{{ $t("nav.bans") }}</Link
         >
         <Link
           href="/rating"

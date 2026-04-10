@@ -19,6 +19,8 @@ Route::get('/info/{path}', [\App\Http\Controllers\ArticleController::class, 'sho
 
 Route::get('/servers', [\App\Http\Controllers\ServerController::class, 'index'])->name('servers');
 
+Route::get('/bans', [\App\Http\Controllers\BansController::class, 'index'])->name('bans.index');
+
 Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/category/{path}', [\App\Http\Controllers\ShopController::class, 'category'])->name('shop.category');
 Route::get('/shop/item/{item}', [\App\Http\Controllers\ShopController::class, 'show'])->name('shop.item.show');

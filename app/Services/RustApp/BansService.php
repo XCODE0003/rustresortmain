@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Log;
 class BansService
 {
     private string $baseUrl;
+
     private string $privateKey;
 
     public function __construct()
     {
-        $this->baseUrl    = config('services.rustapp.base_url', 'https://court.rustapp.io');
+        $this->baseUrl = config('services.rustapp.base_url', 'https://court.rustapp.io');
         $this->privateKey = config('services.rustapp.private_key', '');
     }
 
@@ -21,8 +22,8 @@ class BansService
     {
         return Http::withHeaders([
             'Authorization' => $this->privateKey,
-            'Content-Type'  => 'application/json',
-            'Accept'        => 'application/json',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
         ])->baseUrl($this->baseUrl)->timeout(15);
     }
 
@@ -33,8 +34,8 @@ class BansService
     public function getBans(array $params = []): array
     {
         $defaults = [
-            'sort_by'       => 'created',
-            'page'          => 0,
+            'sort_by' => 'created',
+            'page' => 0,
             'include_total' => true,
         ];
 
@@ -42,18 +43,27 @@ class BansService
             $response = $this->client()->get('/public/bans', array_merge($defaults, $params));
 
             if ($response->successful()) {
-                return $response->json() ?? ['results' => [], 'page' => 0, 'limit' => 0];
+                $payload = $response->json() ?? ['results' => [], 'page' => 0, 'limit' => 0];
+                $payload['success'] = true;
+
+                return $payload;
             }
 
             Log::warning('RustApp getBans failed', [
                 'status' => $response->status(),
-                'body'   => $response->body(),
+                'body' => $response->body(),
             ]);
         } catch (\Throwable $e) {
             Log::error('RustApp getBans exception', ['error' => $e->getMessage()]);
         }
 
-        return ['results' => [], 'page' => 0, 'limit' => 0];
+        return [
+            'results' => [],
+            'page' => 0,
+            'limit' => 0,
+            'total' => 0,
+            'success' => false,
+        ];
     }
 
     /**
@@ -72,12 +82,13 @@ class BansService
 
             Log::warning('RustApp ban failed', [
                 'status' => $response->status(),
-                'body'   => $response->body(),
+                'body' => $response->body(),
             ]);
 
             return ['success' => false, 'error' => $response->body()];
         } catch (\Throwable $e) {
             Log::error('RustApp ban exception', ['error' => $e->getMessage()]);
+
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
@@ -88,21 +99,22 @@ class BansService
     public function unban(string $steamId): array
     {
         try {
-            $response = $this->client()->post('/public/unban?target_steam_id=' . urlencode($steamId));
+            $response = $this->client()->post('/public/unban?target_steam_id='.urlencode($steamId));
 
             if ($response->successful()) {
                 return ['success' => true];
             }
 
             Log::warning('RustApp unban failed', [
-                'status'   => $response->status(),
-                'body'     => $response->body(),
+                'status' => $response->status(),
+                'body' => $response->body(),
                 'steam_id' => $steamId,
             ]);
 
             return ['success' => false, 'error' => $response->body()];
         } catch (\Throwable $e) {
             Log::error('RustApp unban exception', ['error' => $e->getMessage()]);
+
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }

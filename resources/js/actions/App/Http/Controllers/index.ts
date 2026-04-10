@@ -4,6 +4,7 @@ import HomeController from './HomeController'
 import LocaleController from './LocaleController'
 import ArticleController from './ArticleController'
 import ServerController from './ServerController'
+import BansController from './BansController'
 import ShopController from './ShopController'
 import PaymentController from './PaymentController'
 import BalanceController from './BalanceController'
@@ -20,6 +21,7 @@ const Controllers = {
     LocaleController: Object.assign(LocaleController, LocaleController),
     ArticleController: Object.assign(ArticleController, ArticleController),
     ServerController: Object.assign(ServerController, ServerController),
+    BansController: Object.assign(BansController, BansController),
     ShopController: Object.assign(ShopController, ShopController),
     PaymentController: Object.assign(PaymentController, PaymentController),
     BalanceController: Object.assign(BalanceController, BalanceController),

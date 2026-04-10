@@ -50,7 +50,7 @@
                             </h1>
                             <div class="flex items-center gap-3">
                                 <div class="flex flex-wrap items-center gap-1">
-                                    <div
+                                    <div v-if="user?.role === 'admin'"
                                         class="red-button px-2 py-1 text-[10px]/[15px]"
                                     >
                                         <span
@@ -59,19 +59,12 @@
                                             ADMIN
                                         </span>
                                     </div>
-                                    <div
-                                        class="green-button px-2 py-1 text-[10px]/[15px]"
-                                    >
-                                        <span
-                                            class="relative z-20 font-inter font-bold"
-                                        >
-                                            MODERATOR
-                                        </span>
-                                    </div>
+
                                 </div>
                                 <div class="flex items-center gap-1.5">
-                                    <button
+                                    <a :href="`https://steamcommunity.com/profiles/${user.steam_id}`"
                                         class="cursor-pointer rounded-md border border-StrokeGray p-1 duration-300 ease-in-out hover:opacity-80"
+                                        target="_blank"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -85,8 +78,8 @@
                                                 fill="#636363"
                                             />
                                         </svg>
-                                    </button>
-                                    <button
+                                    </a>
+                                    <!-- <button
                                         class="cursor-pointer rounded-md border border-StrokeGray p-1 duration-300 ease-in-out hover:opacity-80"
                                     >
                                         <svg
@@ -101,7 +94,7 @@
                                                 fill="#636363"
                                             />
                                         </svg>
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
 
@@ -148,6 +141,7 @@ interface User {
     steam_id?: string;
     balance: number;
     level: number;
+    role: string;
 }
 
 export default defineComponent({

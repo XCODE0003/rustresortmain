@@ -9,7 +9,21 @@
     "info": "Info",
     "contacts": "Contacts",
     "rating": "Rating",
-    "clan": "Clan"
+    "clan": "Clan",
+    "bans": "Bans"
+  },
+  "bans_page": {
+    "title": "Ban list",
+    "load_error": "Could not load the ban list. Please try again later.",
+    "empty": "There are no active bans.",
+    "banned_at": "Banned at",
+    "reason": "Reason",
+    "permanent": "Permanent",
+    "expires": "Expires",
+    "prev": "Previous",
+    "next": "Next",
+    "page_of": "Page {current} of {last}",
+    "total": "Total: {n}"
   },
   "auth": {
     "login": "Sign in",
