@@ -153,7 +153,10 @@
     "terms_policy_lead": "Я принимаю условия",
     "terms_policy_link": "соглашений о политике",
     "processing": "Обработка...",
-    "top_up_action": "Пополнить"
+    "top_up_action": "Пополнить",
+    "steam_trade_description": "Сумма пополнения зависит от общей стоимости отправленных предметов на обмен. К пополнению доступны скины Rust и Dota 2",
+    "steam_trade_button": "Пополнить баланс",
+    "steam_trade_not_configured": "Ссылка на трейд не настроена. Обратитесь к администратору."
   },
   "faq": {
     "tickets": "Тикеты",

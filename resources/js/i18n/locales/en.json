@@ -153,7 +153,10 @@
     "terms_policy_lead": "I accept the",
     "terms_policy_link": "policy agreements",
     "processing": "Processing...",
-    "top_up_action": "Top up"
+    "top_up_action": "Top up",
+    "steam_trade_description": "The top-up amount depends on the total value of items sent for trade. Available items: Rust and Dota 2 skins",
+    "steam_trade_button": "Top up balance",
+    "steam_trade_not_configured": "Trade link is not configured. Please contact an administrator."
   },
   "faq": {
     "tickets": "Tickets",

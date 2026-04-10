@@ -318,7 +318,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'commission_percent' => 0,
                 'settings' => [
                     'backend' => 'pally',
-                    'payment_method' => 'MIR',
+                    'payment_method' => 'SBP',
                 ],
                 'logo' => 'images/payment-logos/mir.svg',
             ],
@@ -355,7 +355,11 @@ class PaymentGatewaysSeeder extends Seeder
                 'currency' => 'RUB',
                 'min_amount' => 10,
                 'commission_percent' => 0,
-                'settings' => ['backend' => 'freekassa'],
+                'settings' => [
+                    'backend' => 'steam',
+                    // Ссылка на Steam-трейд. Меняется в настройках шлюза в админке.
+                    'trade_url' => '',
+                ],
                 'logo' => 'images/payment-logos/steam-logo3.png',
             ],
             [

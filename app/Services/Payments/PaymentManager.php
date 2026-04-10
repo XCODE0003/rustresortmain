@@ -14,6 +14,7 @@ use App\Services\Payments\Gateways\PallyGateway;
 use App\Services\Payments\Gateways\PayKeeperGateway;
 use App\Services\Payments\Gateways\PayPalGateway;
 use App\Services\Payments\Gateways\QiwiGateway;
+use App\Services\Payments\Gateways\SteamGateway;
 use App\Services\Payments\Gateways\TebexGateway;
 use App\Services\Payments\Gateways\UnitPayGateway;
 use App\Services\Payments\Gateways\YooKassaGateway;
@@ -45,6 +46,7 @@ class PaymentManager
             'pally' => PallyGateway::class,
             'heleket' => HeleketGateway::class,
             'paypal' => PayPalGateway::class,
+            'steam' => SteamGateway::class,
         ];
     }
 
@@ -65,7 +67,9 @@ class PaymentManager
             return PaymentGatewayModel::active()
                 ->get()
                 ->mapWithKeys(function ($gateway) {
-                    return [$gateway->code => [
+                    $isSteam = $gateway->getSetting('backend') === 'steam';
+
+                    $data = [
                         'id' => $gateway->id,
                         'name' => $gateway->name_ru,
                         'logo' => $gateway->logo,
@@ -73,7 +77,14 @@ class PaymentManager
                         'min_amount' => $gateway->min_amount,
                         'max_amount' => $gateway->max_amount,
                         'commission_percent' => $gateway->commission_percent,
-                    ]];
+                        'type' => $isSteam ? 'steam_trade' : 'default',
+                    ];
+
+                    if ($isSteam) {
+                        $data['trade_url'] = $gateway->getSetting('trade_url', '');
+                    }
+
+                    return [$gateway->code => $data];
                 })
                 ->toArray();
         });

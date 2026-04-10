@@ -39,6 +39,14 @@ class FreekassaGateway implements PaymentGatewayInterface
             'currency' => $currency,
         ];
 
+        // If the calling gateway specifies a Freekassa method ID (i), route directly to that method.
+        // Set `freekassa_method_id` in the gateway's settings (e.g. 24 for Steam trade).
+        $methodGateway = PaymentGateway::query()->where('code', $donate->payment_system)->first();
+        $methodId = $methodGateway?->getSetting('freekassa_method_id');
+        if (is_numeric($methodId) && (int) $methodId > 0) {
+            $params['i'] = (int) $methodId;
+        }
+
         Log::channel('freekassa')->info('Creating payment', [
             'donate_id' => $donate->id,
             'amount' => $amount,
