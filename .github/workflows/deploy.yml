@@ -21,7 +21,9 @@ jobs:
             cd /var/www/www-root/data/www/dev.rustresort.com
 
             echo "==> Pulling latest code..."
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
+            git clean -fd
 
             echo "==> Installing PHP dependencies..."
             composer install --no-dev --optimize-autoloader --no-interaction
