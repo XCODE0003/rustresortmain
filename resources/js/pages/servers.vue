@@ -107,6 +107,7 @@ interface Server {
     online_players?: number;
     max_players?: number;
     next_wipe?: string;
+    last_wipe?: string;
     options?: {
         ip?: string;
         port?: number;

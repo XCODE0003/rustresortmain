@@ -1,6 +1,93 @@
 <template>
     <MainLayout>
         <div class="container flex flex-col gap-8 md:gap-16 lg:gap-20">
+            <div class="home-servers-section flex w-full flex-col gap-6">
+                <h2 class="text-center text-2xl font-bold uppercase text-white md:text-3xl">
+                    {{ $t('home.our_servers') }}
+                </h2>
+
+                <div
+                    v-if="servers && servers.length > 0"
+                    class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5"
+                >
+                    <div
+                        v-for="server in servers.slice(0, 4)"
+                        :key="server.id"
+                        class="home-server-card relative overflow-hidden rounded-xl border border-StrokeGray"
+                    >
+                        <div class="flex gap-4 p-3 max-md:flex-col md:items-center md:p-5">
+                            <div class="relative overflow-hidden rounded-xl">
+                                <img
+                                    :src="server.image || '/images/test-bg-server.png'"
+                                    :alt="server.name"
+                                    loading="lazy"
+                                    decoding="async"
+                                    height="120"
+                                    class="h-[120px] w-full object-cover max-md:min-w-full max-md:w-full max-md:object-top md:w-[200px]"
+                                />
+                                <div class="absolute top-0 left-0 flex h-full w-full gap-1.5 p-1.5">
+                                    <div
+                                        v-if="server.options?.rate"
+                                        class="bg-table flex h-[26px] w-max items-center justify-center rounded-sm border border-StrokeGray px-2 py-0.5 text-[10px]/[10px] font-medium text-TextGray backdrop-blur-xs"
+                                    >
+                                        {{ server.options.rate }}
+                                    </div>
+                                    <div
+                                        v-if="server.next_wipe"
+                                        class="bg-table flex h-[26px] w-max items-center justify-center rounded-sm border border-StrokeGray px-2 py-0.5 text-[10px]/[10px] font-medium text-TextGray backdrop-blur-xs"
+                                    >
+                                        {{ formatWipeInfo(server.next_wipe) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex w-full flex-col justify-between gap-3">
+                                <div class="flex flex-col gap-2">
+                                    <h3
+                                        v-if="server.category"
+                                        class="text-[12px]/[12px] font-medium text-TextGray"
+                                    >
+                                        {{ serverCategoryLabel(server) }}
+                                    </h3>
+                                    <h3 class="text-[16px] font-bold text-white">
+                                        {{ server.name }}
+                                    </h3>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-TextGray">
+                                    <span v-if="server.online_players !== undefined" class="flex items-center gap-1">
+                                        <span class="inline-block h-1.5 w-1.5 rounded-full bg-green-400"></span>
+                                        <span class="text-white">{{ server.online_players }}</span>/{{ server.max_players || 500 }}
+                                    </span>
+                                    <span v-if="server.last_wipe" class="text-TextGray">
+                                        {{ $t('home.last_wipe') }}: <span class="text-white/70">{{ formatLastWipe(server.last_wipe) }}</span>
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <button
+                                        type="button"
+                                        @click="connectToServer(server)"
+                                        class="cursor-pointer rounded-md bg-Orange px-5 py-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
+                                    >
+                                        {{ $t('server.connect') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <Link
+                        href="/servers"
+                        class="button-black rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-TextGray duration-300 ease-in-out hover:border-Orange hover:text-Orange"
+                    >
+                        {{ $t('home.view_all_servers') }}
+                    </Link>
+                </div>
+            </div>
+
             <div class="home-shop-section flex w-full flex-col gap-6">
                 <h2 class="text-center text-3xl font-bold uppercase text-white md:text-4xl">
                     {{ $t('home.shop_section_title') }}
@@ -119,83 +206,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="home-servers-section flex w-full flex-col gap-6">
-                <h2 class="text-center text-2xl font-bold uppercase text-white md:text-3xl">
-                    {{ $t('home.our_servers') }}
-                </h2>
-
-                <div
-                    v-if="servers && servers.length > 0"
-                    class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5"
-                >
-                    <div
-                        v-for="server in servers.slice(0, 4)"
-                        :key="server.id"
-                        class="home-server-card relative overflow-hidden rounded-xl border border-StrokeGray"
-                    >
-                        <div class="flex gap-4 p-3 max-md:flex-col md:items-center md:p-5">
-                            <div class="relative overflow-hidden rounded-xl">
-                                <img
-                                    :src="server.image || '/images/test-bg-server.png'"
-                                    :alt="server.name"
-                                    loading="lazy"
-                                    decoding="async"
-                                    height="120"
-                                    class="h-[120px] w-full object-cover max-md:min-w-full max-md:w-full max-md:object-top md:w-[200px]"
-                                />
-                                <div class="absolute top-0 left-0 flex h-full w-full gap-1.5 p-1.5">
-                                    <div
-                                        v-if="server.options?.rate"
-                                        class="bg-table flex h-[26px] w-max items-center justify-center rounded-sm border border-StrokeGray px-2 py-0.5 text-[10px]/[10px] font-medium text-TextGray backdrop-blur-xs"
-                                    >
-                                        {{ server.options.rate }}
-                                    </div>
-                                    <div
-                                        v-if="server.next_wipe"
-                                        class="bg-table flex h-[26px] w-max items-center justify-center rounded-sm border border-StrokeGray px-2 py-0.5 text-[10px]/[10px] font-medium text-TextGray backdrop-blur-xs"
-                                    >
-                                        {{ formatWipeInfo(server.next_wipe) }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex w-full flex-col justify-between gap-3">
-                                <div class="flex flex-col gap-2">
-                                    <h3
-                                        v-if="server.category"
-                                        class="text-[12px]/[12px] font-medium text-TextGray"
-                                    >
-                                        {{ serverCategoryLabel(server) }}
-                                    </h3>
-                                    <h3 class="text-[16px] font-bold text-white">
-                                        {{ server.name }}
-                                    </h3>
-                                </div>
-
-                                <div class="flex items-center gap-3">
-                                    <button
-                                        type="button"
-                                        @click="connectToServer(server)"
-                                        class="cursor-pointer rounded-md bg-Orange px-5 py-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
-                                    >
-                                        {{ $t('server.connect') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center">
-                    <Link
-                        href="/servers"
-                        class="button-black rounded-lg border border-StrokeGray px-8 py-4 text-sm font-bold uppercase text-TextGray duration-300 ease-in-out hover:border-Orange hover:text-Orange"
-                    >
-                        {{ $t('home.view_all_servers') }}
-                    </Link>
-                </div>
-            </div>
         </div>
         <DescriptionModal />
     </MainLayout>
@@ -218,6 +228,9 @@ interface Server {
     name: string;
     image?: string;
     next_wipe?: string;
+    last_wipe?: string;
+    online_players?: number;
+    max_players?: number;
     options?: {
         ip?: string;
         port?: number;
@@ -271,6 +284,20 @@ const { t } = useI18n();
 const { itemName, itemDescription, categoryTitle } = useShopLocale();
 const { formatWipeInfo } = useWipeInfo();
 const modalStore = useDescriptionModalStore();
+
+const formatLastWipe = (wipeDate: string): string => {
+    try {
+        const date = new Date(wipeDate);
+        const now = new Date();
+        const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays <= 0) {
+            return t('wipe.today');
+        }
+        return t('wipe.days_ago', { n: diffDays });
+    } catch {
+        return '—';
+    }
+};
 
 const selectedShopServerId = ref<number | null>(props.servers[0]?.id ?? null);
 const selectedShopCategoryId = ref<number | null>(null);
@@ -437,12 +464,12 @@ const connectToServer = (server: Server): void => {
 
 onMounted(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-    tl.fromTo('.home-shop-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45 });
+    tl.fromTo('.home-servers-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45 });
+    tl.fromTo('.home-server-card', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.07 }, '-=0.25');
+    tl.fromTo('.home-shop-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, '-=0.2');
     tl.add(() => {
         animateShopItems();
     }, '-=0.15');
-    tl.fromTo('.home-servers-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, '-=0.2');
-    tl.fromTo('.home-server-card', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.07 }, '-=0.25');
 });
 </script>
 

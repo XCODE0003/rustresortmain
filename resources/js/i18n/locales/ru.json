@@ -27,7 +27,11 @@
     "col_player": "Игрок",
     "col_reason": "Причина",
     "col_banned_at": "Дата бана",
-    "col_expires": "Срок"
+    "col_expires": "Срок",
+    "col_server": "Сервер",
+    "all_servers": "Оба сервера",
+    "search_placeholder": "Поиск по нику...",
+    "search_label": "Поиск"
   },
   "auth": {
     "login": "Войти",
@@ -86,6 +90,8 @@
     "forward": "Вперёд",
     "our_servers": "Наши сервера",
     "view_all_servers": "Посмотреть все сервера",
+    "last_wipe": "Последний вайп",
+    "online": "Онлайн",
     "feat_perf_title": "Высокая производительность",
     "feat_perf_text": "Мощные серверы с минимальными задержками и стабильной работой",
     "feat_fair_title": "Честная игра",

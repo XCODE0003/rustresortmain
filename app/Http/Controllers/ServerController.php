@@ -16,7 +16,12 @@ class ServerController extends Controller
         $servers = Server::with('category')
             ->where('status', 1)
             ->orderBy('sort')
-            ->get();
+            ->get()
+            ->map(function (Server $server) {
+                return array_merge($server->toArray(), [
+                    'last_wipe' => $server->wipe?->toISOString(),
+                ]);
+            });
 
         return Inertia::render('servers', [
             'servers' => $servers,

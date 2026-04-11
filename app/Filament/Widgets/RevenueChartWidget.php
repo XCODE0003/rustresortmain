@@ -2,26 +2,40 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Donate;
 use Filament\Widgets\ChartWidget;
 
 class RevenueChartWidget extends ChartWidget
 {
-    protected ?string $heading = 'Выручка за 7 дней';
+    protected ?string $heading = 'Выручка по дням';
+
+    public ?string $filter = '7';
+
+    protected function getFilters(): ?array
+    {
+        return [
+            '7' => 'Последние 7 дней',
+            '14' => 'Последние 14 дней',
+            '30' => 'Последние 30 дней',
+            '90' => 'Последние 90 дней',
+        ];
+    }
 
     protected function getData(): array
     {
+        $days = max(1, (int) ($this->filter ?? 7));
         $data = [];
         $labels = [];
 
-        for ($i = 6; $i >= 0; $i--) {
+        for ($i = $days - 1; $i >= 0; $i--) {
             $date = now()->subDays($i);
-            $labels[] = $date->format('M d');
+            $labels[] = $date->format('d.m');
 
-            $revenue = \App\Models\Donate::where('status', 1)
+            $revenue = Donate::where('status', 1)
                 ->whereDate('created_at', $date)
                 ->sum('amount');
 
-            $data[] = $revenue;
+            $data[] = (float) $revenue;
         }
 
         return [
@@ -29,8 +43,10 @@ class RevenueChartWidget extends ChartWidget
                 [
                     'label' => 'Выручка (₽)',
                     'data' => $data,
-                    'borderColor' => 'rgb(59, 130, 246)',
-                    'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
+                    'borderColor' => 'rgb(251, 146, 60)',
+                    'backgroundColor' => 'rgba(251, 146, 60, 0.15)',
+                    'fill' => true,
+                    'tension' => 0.4,
                 ],
             ],
             'labels' => $labels,

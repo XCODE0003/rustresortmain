@@ -27,7 +27,11 @@
     "col_player": "Player",
     "col_reason": "Reason",
     "col_banned_at": "Banned at",
-    "col_expires": "Expires"
+    "col_expires": "Expires",
+    "col_server": "Server",
+    "all_servers": "Both servers",
+    "search_placeholder": "Search by nickname...",
+    "search_label": "Search"
   },
   "auth": {
     "login": "Sign in",
@@ -86,6 +90,8 @@
     "forward": "Next",
     "our_servers": "Our servers",
     "view_all_servers": "View all servers",
+    "last_wipe": "Last wipe",
+    "online": "Online",
     "feat_perf_title": "High performance",
     "feat_perf_text": "Powerful servers with low latency and stable uptime",
     "feat_fair_title": "Fair play",
