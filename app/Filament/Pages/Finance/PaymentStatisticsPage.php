@@ -15,11 +15,11 @@ class PaymentStatisticsPage extends Dashboard
 
     protected static ?string $navigationLabel = 'Статистика';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'Finance';
+    protected static \UnitEnum|string|null $navigationGroup = 'Финансы';
 
     protected static ?int $navigationSort = 2;
 
-    protected static string $routePath = '/finance/statistics';
+    protected static string $routePath = '/statistics';
 
     public function getWidgets(): array
     {
