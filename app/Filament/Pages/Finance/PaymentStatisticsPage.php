@@ -17,7 +17,7 @@ class PaymentStatisticsPage extends Dashboard
 
     protected static \UnitEnum|string|null $navigationGroup = 'Финансы';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     protected static string $routePath = '/statistics';
 
