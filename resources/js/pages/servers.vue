@@ -52,13 +52,20 @@
                             </div>
                             <div class="flex items-center gap-5">
                                 <div class="flex items-stretch gap-1.5">
-                                    <button
-                                        @click="connectToServer(server)"
-                                        class="cursor-pointer rounded-md bg-Orange px-6 py-3.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
+                                    <a
+                                        v-if="steamConnectHref(server)"
+                                        :href="steamConnectHref(server)"
+                                        class="inline-flex cursor-pointer items-center justify-center rounded-md bg-Orange px-6 py-3.5 text-[12px]/[12px] font-medium text-black no-underline transition-colors duration-300 hover:bg-Orange/80"
                                     >
                                         {{ $t('server.connect') }}
-                                    </button>
-
+                                    </a>
+                                    <span
+                                        v-else
+                                        class="inline-flex cursor-not-allowed items-center justify-center rounded-md bg-Orange/35 px-6 py-3.5 text-[12px]/[12px] font-medium text-black/55"
+                                        aria-disabled="true"
+                                    >
+                                        {{ $t('server.connect') }}
+                                    </span>
                                 </div>
                                 <div>
                                     <h2
@@ -154,15 +161,13 @@ const getServerIp = (server: Server): string => {
     return 'N/A';
 };
 
-const connectToServer = (server: Server) => {
-    const ip = getServerIp(server);
-    if (ip === 'N/A') {
-        return;
+const steamConnectHref = (server: Server): string => {
+    const addr = getServerIp(server);
+    if (addr === 'N/A') {
+        return '';
     }
-    const url = steamRustConnectUrl(ip);
-    if (url !== '') {
-        window.location.href = url;
-    }
+
+    return steamRustConnectUrl(addr);
 };
 
 onMounted(() => {
