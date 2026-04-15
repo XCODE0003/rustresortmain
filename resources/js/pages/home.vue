@@ -449,8 +449,16 @@ watch(totalShopPages, (lastPage) => {
 });
 
 const getServerIp = (server: Server): string => {
-    if (server.options?.ip && server.options?.port) {
-        return `${server.options.ip}:${server.options.port}`;
+    const ip = server.options?.ip;
+    if (!ip || typeof ip !== 'string') {
+        return 'N/A';
+    }
+    if (ip.includes(':')) {
+        return ip;
+    }
+    const port = server.options?.port;
+    if (port !== undefined && port !== null && port !== '') {
+        return `${ip}:${port}`;
     }
 
     return 'N/A';

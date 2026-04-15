@@ -36,7 +36,10 @@ test('serverOptionsAsArray decodes json string options', function () {
 
     $server = new class extends \App\Models\Server
     {
-        protected $casts = [];
+        protected function casts(): array
+        {
+            return [];
+        }
     };
     $server->setRawAttributes(['options' => '{"ip":"37.230.137.209:28015"}'], true);
 

@@ -137,9 +137,19 @@ const pageTitle = ref<HTMLElement | null>(null);
 const cardList = ref<HTMLElement | null>(null);
 
 const getServerIp = (server: Server): string => {
-    if (server.options?.ip && server.options?.port) {
-        return `${server.options.ip}:${server.options.port}`;
+    const ip = server.options?.ip;
+    if (!ip || typeof ip !== 'string') {
+        return 'N/A';
     }
+    // В БД часто хранят "37.230.137.209:28015" в одном поле ip
+    if (ip.includes(':')) {
+        return ip;
+    }
+    const port = server.options?.port;
+    if (port !== undefined && port !== null && port !== '') {
+        return `${ip}:${port}`;
+    }
+
     return 'N/A';
 };
 
