@@ -162,6 +162,87 @@ bansPageForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 bansPage.form = bansPageForm
 
 /**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+export const paymentStatisticsPage = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: paymentStatisticsPage.url(options),
+    method: 'get',
+})
+
+paymentStatisticsPage.definition = {
+    methods: ["get","head"],
+    url: '/admin/statistics',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+paymentStatisticsPage.url = (options?: RouteQueryOptions) => {
+    return paymentStatisticsPage.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+paymentStatisticsPage.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: paymentStatisticsPage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+paymentStatisticsPage.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: paymentStatisticsPage.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+const paymentStatisticsPageForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: paymentStatisticsPage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+paymentStatisticsPageForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: paymentStatisticsPage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Filament\Pages\Finance\PaymentStatisticsPage::__invoke
+* @see app/Filament/Pages/Finance/PaymentStatisticsPage.php:7
+* @route '/admin/statistics'
+*/
+paymentStatisticsPageForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: paymentStatisticsPage.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+paymentStatisticsPage.form = paymentStatisticsPageForm
+
+/**
 * @see \App\Filament\Pages\Settings\AuthSettings::__invoke
 * @see app/Filament/Pages/Settings/AuthSettings.php:7
 * @route '/admin/auth-settings'
@@ -812,6 +893,7 @@ steamSettings.form = steamSettingsForm
 const pages = {
     dashboard: Object.assign(dashboard, dashboard),
     bansPage: Object.assign(bansPage, bansPage),
+    paymentStatisticsPage: Object.assign(paymentStatisticsPage, paymentStatisticsPage),
     authSettings: Object.assign(authSettings, authSettings),
     gameApiSettings: Object.assign(gameApiSettings, gameApiSettings),
     generalSettings: Object.assign(generalSettings, generalSettings),
