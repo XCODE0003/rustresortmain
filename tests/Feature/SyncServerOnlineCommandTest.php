@@ -25,24 +25,23 @@ test('servers:sync-online invokes sync for all servers when service returns stat
 });
 
 test('servers:sync-online passes server id to service', function () {
-    Server::create([
+    $server = Server::create([
         'name' => 'Cmd Test',
         'status' => 1,
         'sort' => 1,
     ]);
-    $id = Server::query()->first()->id;
 
-    $this->mock(RustServerPlayerCountService::class, function ($mock) use ($id): void {
+    $this->mock(RustServerPlayerCountService::class, function ($mock) use ($server): void {
         $mock->shouldReceive('syncAllServers')
             ->once()
-            ->with($id)
+            ->with($server->id)
             ->andReturn([
                 'updated' => 0,
                 'skipped' => 1,
-                'errors' => [['server_id' => $id, 'message' => 'test']],
+                'errors' => [['server_id' => $server->id, 'message' => 'test']],
             ]);
     });
 
-    $this->artisan('servers:sync-online', ['server' => (string) $id])
+    $this->artisan('servers:sync-online', ['server' => (string) $server->id])
         ->assertSuccessful();
 });
