@@ -219,6 +219,7 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import DescriptionModal from '@/components/modals/descriptionModal.vue';
 import ShopItemCard from '@/components/ShopItemCard.vue';
+import { steamRustConnectUrl } from '@/composables/useSteamRustConnect';
 import { useShopLocale } from '@/composables/useShopLocale';
 import { useWipeInfo } from '@/composables/useWipeInfo';
 import MainLayout from '@/layouts/main.vue';
@@ -466,8 +467,12 @@ const getServerIp = (server: Server): string => {
 
 const connectToServer = (server: Server): void => {
     const ip = getServerIp(server);
-    if (ip !== 'N/A') {
-        window.location.href = `steam://connect/${ip}`;
+    if (ip === 'N/A') {
+        return;
+    }
+    const url = steamRustConnectUrl(ip);
+    if (url !== '') {
+        window.location.href = url;
     }
 };
 

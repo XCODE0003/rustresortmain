@@ -94,6 +94,7 @@ import { Link } from '@inertiajs/vue3';
 import gsap from 'gsap';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { steamRustConnectUrl } from '@/composables/useSteamRustConnect';
 import { useShopLocale } from '@/composables/useShopLocale';
 import { useWipeInfo } from '@/composables/useWipeInfo';
 import MainLayout from '@/layouts/main.vue';
@@ -155,8 +156,12 @@ const getServerIp = (server: Server): string => {
 
 const connectToServer = (server: Server) => {
     const ip = getServerIp(server);
-    if (ip !== 'N/A') {
-        window.location.href = `steam://connect/${ip}`;
+    if (ip === 'N/A') {
+        return;
+    }
+    const url = steamRustConnectUrl(ip);
+    if (url !== '') {
+        window.location.href = url;
     }
 };
 
