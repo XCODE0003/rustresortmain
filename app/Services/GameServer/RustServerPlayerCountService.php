@@ -92,4 +92,70 @@ class RustServerPlayerCountService
             $manager->disconnect($server->id);
         }
     }
+
+    /**
+     * Обновляет online_players / max_players в options для активных серверов.
+     *
+     * @return array{updated: int, skipped: int, errors: list<array{server_id: int, message: string}>}
+     */
+    public function syncAllServers(?int $onlyServerId = null): array
+    {
+        $query = Server::query();
+
+        if ($onlyServerId !== null) {
+            $query->where('id', $onlyServerId);
+        } else {
+            $query->where('status', 1);
+        }
+
+        $servers = $query->orderBy('sort')->get();
+
+        $updated = 0;
+        $skipped = 0;
+        $errors = [];
+
+        foreach ($servers as $server) {
+            try {
+                $counts = $this->syncFromRcon($server);
+
+                if ($counts === null) {
+                    $skipped++;
+                    $errors[] = [
+                        'server_id' => $server->id,
+                        'message' => 'RCON недоступен или не удалось разобрать ответ status',
+                    ];
+
+                    continue;
+                }
+
+                $options = $server->options ?? [];
+                $options['online_players'] = $counts['online'];
+                $options['max_players'] = $counts['max'];
+                $options['players_synced_at'] = now()->toIso8601String();
+                $server->options = $options;
+                $server->save();
+
+                $updated++;
+
+                Log::channel('rcon_master')->info('SyncOnlinePlayers: counts saved', [
+                    'server_id' => $server->id,
+                    'online' => $counts['online'],
+                    'max' => $counts['max'],
+                ]);
+            } catch (\Throwable $e) {
+                $skipped++;
+                $errors[] = [
+                    'server_id' => $server->id,
+                    'message' => $e->getMessage(),
+                ];
+                Log::error("Failed to sync online players for server {$server->id}: {$e->getMessage()}");
+            }
+        }
+
+        return [
+            'updated' => $updated,
+            'skipped' => $skipped,
+            'errors' => $errors,
+        ];
+    }
 }
