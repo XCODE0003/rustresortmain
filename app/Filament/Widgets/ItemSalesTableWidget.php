@@ -24,7 +24,6 @@ class ItemSalesTableWidget extends TableWidget
                     ->selectRaw('item_id, COUNT(*) as sales, SUM(price) as revenue, MIN(id) as id')
                     ->whereNotNull('item_id')
                     ->groupBy('item_id')
-                    ->orderByRaw('sales DESC')
             )
             ->columns([
                 TextColumn::make('item.name_ru')
@@ -81,6 +80,7 @@ class ItemSalesTableWidget extends TableWidget
                     }),
             ])
             ->defaultSort('sales', 'desc')
+            ->defaultKeySort(false)
             ->paginated([10, 25, 50]);
     }
 }
