@@ -183,7 +183,7 @@ category.form = categoryForm
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 export const server = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -198,7 +198,7 @@ server.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 server.url = (options?: RouteQueryOptions) => {
@@ -207,7 +207,7 @@ server.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 server.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -217,7 +217,7 @@ server.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 server.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -227,7 +227,7 @@ server.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 const serverForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -237,7 +237,7 @@ const serverForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 serverForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -247,7 +247,7 @@ serverForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 serverForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

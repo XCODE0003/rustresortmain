@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 export const shopServers = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ shopServers.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 shopServers.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ shopServers.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 shopServers.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ shopServers.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 shopServers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ shopServers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 const shopServersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const shopServersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 shopServersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ shopServersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServers
-* @see app/Http/Controllers/ServerController.php:31
+* @see app/Http/Controllers/ServerController.php:33
 * @route '/shop/server'
 */
 shopServersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ shopServers.form = shopServersForm
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 export const shopServerShow = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +178,7 @@ shopServerShow.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 shopServerShow.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -211,7 +211,7 @@ shopServerShow.url = (args: { server: number | { id: number } } | [server: numbe
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 shopServerShow.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -221,7 +221,7 @@ shopServerShow.get = (args: { server: number | { id: number } } | [server: numbe
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 shopServerShow.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -231,7 +231,7 @@ shopServerShow.head = (args: { server: number | { id: number } } | [server: numb
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 const shopServerShowForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -241,7 +241,7 @@ const shopServerShowForm = (args: { server: number | { id: number } } | [server:
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 shopServerShowForm.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -251,7 +251,7 @@ shopServerShowForm.get = (args: { server: number | { id: number } } | [server: n
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:60
+* @see app/Http/Controllers/ServerController.php:62
 * @route '/shop/server/{server}'
 */
 shopServerShowForm.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
