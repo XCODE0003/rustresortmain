@@ -28,3 +28,19 @@ test('returns null when no players line', function () {
 
     expect($svc->parsePlayersFromStatusMessage('hostname: only'))->toBeNull();
 });
+
+test('serverOptionsAsArray decodes json string options', function () {
+    $svc = new RustServerPlayerCountService;
+    $method = new ReflectionMethod(RustServerPlayerCountService::class, 'serverOptionsAsArray');
+    $method->setAccessible(true);
+
+    $server = new class extends \App\Models\Server
+    {
+        protected $casts = [];
+    };
+    $server->setRawAttributes(['options' => '{"ip":"37.230.137.209:28015"}'], true);
+
+    $out = $method->invoke($svc, $server);
+
+    expect($out)->toBeArray()->and($out['ip'])->toBe('37.230.137.209:28015');
+});

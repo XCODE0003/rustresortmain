@@ -36,6 +36,26 @@ class RustServerPlayerCountService
     }
 
     /**
+     * Текст ответа RCON на команду status (объект или массив после json_decode).
+     */
+    private function rconStatusMessage(mixed $result): string
+    {
+        if ($result === null || $result === false) {
+            return '';
+        }
+
+        if (is_object($result) && isset($result->Message)) {
+            return (string) $result->Message;
+        }
+
+        if (is_array($result)) {
+            return (string) ($result['Message'] ?? $result['message'] ?? '');
+        }
+
+        return '';
+    }
+
+    /**
      * Подключается по RCON, выполняет `status`, парсит онлайн. При ошибке — null.
      *
      * @return array{online: int, max: int}|null
@@ -56,7 +76,8 @@ class RustServerPlayerCountService
 
             $result = $manager->sendCommand($server->id, 'status', 12, $lastError);
 
-            if (! $result || ! isset($result->Message)) {
+            $message = $this->rconStatusMessage($result);
+            if ($message === '') {
                 Log::channel('rcon_master')->warning('RustServerPlayerCount: no status response', [
                     'server_id' => $server->id,
                     'error' => $lastError,
@@ -64,8 +85,6 @@ class RustServerPlayerCountService
 
                 return null;
             }
-
-            $message = (string) $result->Message;
             $parsed = $this->parsePlayersFromStatusMessage($message);
 
             if ($parsed === null) {
@@ -128,7 +147,7 @@ class RustServerPlayerCountService
                     continue;
                 }
 
-                $options = $server->options ?? [];
+                $options = $this->serverOptionsAsArray($server);
                 $options['online_players'] = $counts['online'];
                 $options['max_players'] = $counts['max'];
                 $options['players_synced_at'] = now()->toIso8601String();
@@ -157,5 +176,25 @@ class RustServerPlayerCountService
             'skipped' => $skipped,
             'errors' => $errors,
         ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function serverOptionsAsArray(Server $server): array
+    {
+        $opt = $server->options;
+
+        if (is_array($opt)) {
+            return $opt;
+        }
+
+        if (is_string($opt) && $opt !== '') {
+            $decoded = json_decode($opt, true);
+
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return [];
     }
 }
