@@ -55,9 +55,10 @@
                                 </div>
 
                                 <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-TextGray">
-                                    <span v-if="server.online_players !== undefined" class="flex items-center gap-1">
+                                    <span class="flex items-center gap-1">
                                         <span class="inline-block h-1.5 w-1.5 rounded-full bg-green-400"></span>
-                                        <span class="text-white">{{ server.online_players }}</span>/{{ server.max_players || 500 }}
+                                        <span class="text-white">{{ server.online_players ?? 0 }}</span>/<span class="text-white/80">{{ server.max_players ?? 500 }}</span>
+                                        <span class="text-TextGray">{{ $t('home.players_online') }}</span>
                                     </span>
                                     <span v-if="server.last_wipe" class="text-TextGray">
                                         {{ $t('home.last_wipe') }}: <span class="text-white/70">{{ formatLastWipe(server.last_wipe) }}</span>

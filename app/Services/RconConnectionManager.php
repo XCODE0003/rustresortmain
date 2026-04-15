@@ -40,7 +40,11 @@ class RconConnectionManager
             return false;
         }
 
-        $options = json_decode($server->options);
+        $rawOptions = $server->options;
+        $options = is_array($rawOptions)
+            ? (object) $rawOptions
+            : (json_decode((string) $rawOptions) ?? (object) []);
+
         $rcon_ip = $options->rcon_ip ?? '';
         $rcon_passw = $options->rcon_passw ?? '';
 

@@ -34,6 +34,8 @@ test('guest can open home page with shop data', function () {
     $response->assertInertia(fn ($page) => $page
         ->component('home')
         ->has('servers', 1)
+        ->where('servers.0.online_players', 0)
+        ->where('servers.0.max_players', 500)
         ->has('shopCategories', 1)
         ->has('shopItems', 1)
         ->where('shopItems.0.category_id', $category->id)

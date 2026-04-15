@@ -20,6 +20,8 @@ class ServerController extends Controller
             ->map(function (Server $server) {
                 return array_merge($server->toArray(), [
                     'last_wipe' => $server->wipe?->toISOString(),
+                    'online_players' => (int) data_get($server->options, 'online_players', 0),
+                    'max_players' => (int) data_get($server->options, 'max_players', 500),
                 ]);
             });
 
