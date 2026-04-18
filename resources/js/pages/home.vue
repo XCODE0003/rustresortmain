@@ -165,38 +165,12 @@
                         </div>
                     </div>
 
-                    <div
-                        v-if="selectedShopServerId && totalShopPages > 1"
-                        class="flex flex-wrap items-center justify-center gap-2 pt-6"
-                    >
-                        <button
-                            type="button"
-                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-                            :disabled="currentShopPage <= 1"
-                            @click="goToShopPage(currentShopPage - 1)"
-                        >
-                            {{ $t('common.back') }}
-                        </button>
+                    <!-- Infinite scroll sentinel -->
+                    <div ref="shopSentinelRef" class="h-px w-full" />
 
-                        <button
-                            v-for="page in shopPageNumbers"
-                            :key="page"
-                            type="button"
-                            class="button-black rounded-md border px-3 py-2 text-xs font-bold transition-all duration-300"
-                            :class="currentShopPage === page ? 'border-Orange text-Orange' : 'border-StrokeGray text-TextGray hover:text-white'"
-                            @click="goToShopPage(page)"
-                        >
-                            {{ page }}
-                        </button>
-
-                        <button
-                            type="button"
-                            class="button-black rounded-md border border-StrokeGray px-3 py-2 text-xs font-bold uppercase text-TextGray transition-all duration-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-                            :disabled="currentShopPage >= totalShopPages"
-                            @click="goToShopPage(currentShopPage + 1)"
-                        >
-                            {{ $t('home.forward') }}
-                        </button>
+                    <!-- Loading indicator -->
+                    <div v-if="hasMoreShopItems" class="flex justify-center py-4">
+                        <div class="h-5 w-5 animate-spin rounded-full border-2 border-Orange border-t-transparent" />
                     </div>
 
                     <div
@@ -222,7 +196,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { gsap } from 'gsap';
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import DescriptionModal from '@/components/modals/descriptionModal.vue';
 import ShopItemCard from '@/components/ShopItemCard.vue';
@@ -310,8 +284,11 @@ const formatLastWipe = (wipeDate: string): string => {
 
 const selectedShopServerId = ref<number | null>(props.servers[0]?.id ?? null);
 const selectedShopCategoryId = ref<number | null>(null);
-const currentShopPage = ref(1);
-const shopItemsPerPage = 12;
+const shopStep = 12;
+const visibleCount = ref(shopStep);
+const shopSentinelRef = ref<HTMLElement | null>(null);
+const hasMoreShopItems = computed(() => visibleCount.value < filteredShopItems.value.length);
+let shopObserver: IntersectionObserver | null = null;
 
 const serverCategoryLabel = (server: Server): string => {
     const label = categoryTitle(server.category);
@@ -360,32 +337,9 @@ const filteredShopItems = computed(() => {
     return filtered;
 });
 
-const totalShopPages = computed<number>(() => {
-    return Math.max(1, Math.ceil(filteredShopItems.value.length / shopItemsPerPage));
-});
-
 const paginatedShopItems = computed(() => {
-    const start = (currentShopPage.value - 1) * shopItemsPerPage;
-    const end = start + shopItemsPerPage;
-
-    return filteredShopItems.value.slice(start, end);
+    return filteredShopItems.value.slice(0, visibleCount.value);
 });
-
-const shopPageNumbers = computed<number[]>(() => {
-    const start = Math.max(1, currentShopPage.value - 2);
-    const end = Math.min(totalShopPages.value, currentShopPage.value + 2);
-    const pages: number[] = [];
-
-    for (let page = start; page <= end; page += 1) {
-        pages.push(page);
-    }
-
-    return pages;
-});
-
-const goToShopPage = (page: number): void => {
-    currentShopPage.value = Math.min(Math.max(page, 1), totalShopPages.value);
-};
 
 const toSafeNumber = (value: unknown, fallback = 0): number => {
     if (typeof value === 'number' && Number.isFinite(value)) {
@@ -446,14 +400,8 @@ const animateShopItems = (): void => {
 watch(filteredShopItems, animateShopItems);
 watch(selectedShopServerId, animateShopItems);
 watch(selectedShopCategoryId, animateShopItems);
-watch(currentShopPage, animateShopItems);
 watch([selectedShopServerId, selectedShopCategoryId], () => {
-    currentShopPage.value = 1;
-});
-watch(totalShopPages, (lastPage) => {
-    if (currentShopPage.value > lastPage) {
-        currentShopPage.value = lastPage;
-    }
+    visibleCount.value = shopStep;
 });
 
 const getServerIp = (server: Server): string => {
@@ -490,6 +438,39 @@ onMounted(() => {
     tl.add(() => {
         animateShopItems();
     }, '-=0.15');
+
+    // Infinite scroll — start loading 200 px before sentinel enters viewport
+    shopObserver = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting && hasMoreShopItems.value) {
+                const prevCount = visibleCount.value;
+                visibleCount.value = Math.min(
+                    visibleCount.value + shopStep,
+                    filteredShopItems.value.length,
+                );
+                // Animate only the newly visible cards
+                nextTick().then(() => {
+                    const allCards = document.querySelectorAll('.home-shop-item');
+                    const newCards = Array.from(allCards).slice(prevCount);
+                    if (newCards.length > 0) {
+                        gsap.fromTo(
+                            newCards,
+                            { y: 24, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.35, stagger: 0.04, ease: 'power2.out' },
+                        );
+                    }
+                });
+            }
+        },
+        { threshold: 0, rootMargin: '0px 0px 200px 0px' },
+    );
+    if (shopSentinelRef.value) {
+        shopObserver.observe(shopSentinelRef.value);
+    }
+});
+
+onUnmounted(() => {
+    shopObserver?.disconnect();
 });
 </script>
 
