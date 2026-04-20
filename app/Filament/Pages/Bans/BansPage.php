@@ -54,6 +54,11 @@ class BansPage extends Page implements HasActions, HasForms
 
     public string $banExpiredAt = ''; // empty = permanent
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdminOrModerator() ?? false;
+    }
+
     public function mount(): void
     {
         $this->loadBans();

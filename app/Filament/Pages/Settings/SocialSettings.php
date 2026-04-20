@@ -30,6 +30,11 @@ class SocialSettings extends Page implements HasForms
 
     public ?array $data = [];
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
     public function mount(): void
     {
         $this->form->fill($this->getSettingsData());

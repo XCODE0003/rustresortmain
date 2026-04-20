@@ -9,6 +9,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -19,43 +20,43 @@ class TicketsTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                    ->searchable(),
-                TextColumn::make('attachment')
-                    ->searchable(),
+                    ->label('Игрок')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('title')
-                    ->searchable(),
-                TextColumn::make('uuid')
-                    ->label('UUID')
-                    ->searchable(),
-                TextColumn::make('answer_user_id')
-                    ->numeric()
-                    ->sortable(),
-                IconColumn::make('is_read')
-                    ->boolean(),
-                IconColumn::make('user_is_read')
-                    ->boolean(),
-                TextColumn::make('server_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Тема')
+                    ->searchable()
+                    ->limit(40),
                 TextColumn::make('type')
+                    ->label('Тип')
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
-                TextColumn::make('char_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make('is_read')
+                    ->label('Отвечен')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-clock')
+                    ->trueColor('success')
+                    ->falseColor('warning'),
+                IconColumn::make('user_is_read')
+                    ->label('Прочитан')
+                    ->boolean()
+                    ->trueColor('success')
+                    ->falseColor('gray'),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Дата')
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
+                SelectFilter::make('is_read')
+                    ->label('Статус')
+                    ->options([
+                        '1' => 'Отвеченные',
+                        '0' => 'Без ответа',
+                    ]),
                 TrashedFilter::make(),
             ])
             ->recordActions([

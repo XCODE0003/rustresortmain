@@ -14,25 +14,28 @@ class ShopPurchasesTable
     {
         return $table
             ->columns([
-                TextColumn::make('item.id')
-                    ->searchable(),
+                TextColumn::make('shopItem.name_ru')
+                    ->label('Товар')
+                    ->searchable()
+                    ->limit(35),
                 TextColumn::make('user.name')
+                    ->label('Игрок')
                     ->searchable(),
-                TextColumn::make('validity')
-                    ->dateTime()
+                TextColumn::make('count')
+                    ->label('Кол-во')
                     ->sortable(),
+                TextColumn::make('validity')
+                    ->label('Действителен до')
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable()
+                    ->placeholder('Без срока'),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Куплено')
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->defaultSort('created_at', 'desc')
+            ->filters([])
             ->recordActions([
                 EditAction::make(),
             ])

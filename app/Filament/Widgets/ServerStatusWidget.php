@@ -9,6 +9,8 @@ class ServerStatusWidget extends Widget
 {
     protected string $view = 'filament.widgets.server-status-widget';
 
+    protected static ?int $sort = 5;
+
     protected int|string|array $columnSpan = 'full';
 
     public function getServers(): \Illuminate\Support\Collection

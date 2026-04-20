@@ -7,6 +7,12 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverviewWidget extends BaseStatsOverviewWidget
 {
+    protected static ?int $sort = 1;
+
+    protected int|string|array $columnSpan = 'full';
+
+    protected static bool $isLazy = false;
+
     protected function getStats(): array
     {
         return [

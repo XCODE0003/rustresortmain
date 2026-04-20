@@ -7,6 +7,10 @@ use Filament\Widgets\TableWidget;
 
 class RecentPaymentsWidget extends TableWidget
 {
+    protected static ?int $sort = 3;
+
+    protected int|string|array $columnSpan = 1;
+
     protected static ?string $heading = 'Последние платежи';
 
     public function table(Table $table): Table

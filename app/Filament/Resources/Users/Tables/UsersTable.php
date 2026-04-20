@@ -5,8 +5,10 @@ namespace App\Filament\Resources\Users\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -16,57 +18,64 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Игрок')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Email')
                     ->searchable(),
                 TextColumn::make('steam_id')
-                    ->searchable(),
+                    ->label('Steam ID')
+                    ->searchable()
+                    ->copyable(),
                 TextColumn::make('balance')
-                    ->numeric()
+                    ->label('Баланс')
+                    ->money('RUB', locale: 'ru')
                     ->sortable(),
                 TextColumn::make('role')
+                    ->label('Роль')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'admin'     => 'danger',
+                        'moderator' => 'warning',
+                        default     => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'admin'     => 'Администратор',
+                        'moderator' => 'Модератор',
+                        default     => 'Пользователь',
+                    })
                     ->searchable(),
                 IconColumn::make('mute')
-                    ->boolean(),
+                    ->label('Мут')
+                    ->boolean()
+                    ->trueColor('danger')
+                    ->falseColor('gray'),
                 TextColumn::make('mute_date')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('online_time')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('online_time_monday')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('online_time_thursday')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('online_time_eumain')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('steam_trade_url')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('pin')
-                    ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('two_factor_confirmed_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('До')
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable()
+                    ->placeholder('—'),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Регистрация')
+                    ->dateTime('d.m.Y')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('role')
+                    ->label('Роль')
+                    ->options([
+                        'admin'     => 'Администратор',
+                        'moderator' => 'Модератор',
+                        'user'      => 'Пользователь',
+                    ]),
+                SelectFilter::make('mute')
+                    ->label('Мут')
+                    ->options([
+                        '1' => 'Только замученные',
+                        '0' => 'Без мута',
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),

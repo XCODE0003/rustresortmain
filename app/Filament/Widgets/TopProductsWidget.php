@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class TopProductsWidget extends TableWidget
 {
+    protected static ?int $sort = 4;
+
+    protected int|string|array $columnSpan = 1;
+
     protected static ?string $heading = 'Топ товаров за 30 дней';
 
     public function table(Table $table): Table

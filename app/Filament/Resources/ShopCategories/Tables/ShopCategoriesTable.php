@@ -14,40 +14,24 @@ class ShopCategoriesTable
     {
         return $table
             ->columns([
-                TextColumn::make('path')
-                    ->searchable(),
-                TextColumn::make('sort')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('discount_percent')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('title_ru')
-                    ->searchable(),
-                TextColumn::make('title_en')
-                    ->searchable(),
-                TextColumn::make('title_de')
-                    ->searchable(),
-                TextColumn::make('title_fr')
-                    ->searchable(),
-                TextColumn::make('title_it')
-                    ->searchable(),
-                TextColumn::make('title_es')
-                    ->searchable(),
-                TextColumn::make('title_uk')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Название')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('path')
+                    ->label('Путь')
+                    ->searchable()
+                    ->copyable(),
+                TextColumn::make('discount_percent')
+                    ->label('Скидка')
+                    ->formatStateUsing(fn ($state) => $state ? "{$state}%" : '—')
+                    ->sortable(),
+                TextColumn::make('sort')
+                    ->label('Сорт.')
+                    ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->defaultSort('sort')
+            ->filters([])
             ->recordActions([
                 EditAction::make(),
             ])

@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ArticlesTable
@@ -15,98 +16,44 @@ class ArticlesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label('')
+                    ->size(40),
+                TextColumn::make('title_ru')
+                    ->label('Заголовок')
+                    ->searchable()
+                    ->limit(45),
                 TextColumn::make('type')
-                    ->searchable(),
-                TextColumn::make('path')
+                    ->label('Тип')
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
                 TextColumn::make('status')
-                    ->numeric()
+                    ->label('Статус')
+                    ->badge()
+                    ->color(fn ($state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn ($state): string => $state ? 'Опубликован' : 'Скрыт')
                     ->sortable(),
                 TextColumn::make('sort')
-                    ->numeric()
+                    ->label('Сорт.')
                     ->sortable(),
-                TextColumn::make('title_en')
-                    ->searchable(),
-                TextColumn::make('meta_title_en')
-                    ->searchable(),
-                TextColumn::make('meta_h1_en')
-                    ->searchable(),
-                TextColumn::make('meta_h2_en')
-                    ->searchable(),
-                TextColumn::make('meta_h3_en')
-                    ->searchable(),
-                TextColumn::make('title_ru')
-                    ->searchable(),
-                TextColumn::make('meta_title_ru')
-                    ->searchable(),
-                TextColumn::make('meta_h1_ru')
-                    ->searchable(),
-                TextColumn::make('meta_h2_ru')
-                    ->searchable(),
-                TextColumn::make('meta_h3_ru')
-                    ->searchable(),
-                TextColumn::make('title_de')
-                    ->searchable(),
-                TextColumn::make('meta_title_de')
-                    ->searchable(),
-                TextColumn::make('meta_h1_de')
-                    ->searchable(),
-                TextColumn::make('meta_h2_de')
-                    ->searchable(),
-                TextColumn::make('meta_h3_de')
-                    ->searchable(),
-                TextColumn::make('title_fr')
-                    ->searchable(),
-                TextColumn::make('meta_title_fr')
-                    ->searchable(),
-                TextColumn::make('meta_h1_fr')
-                    ->searchable(),
-                TextColumn::make('meta_h2_fr')
-                    ->searchable(),
-                TextColumn::make('meta_h3_fr')
-                    ->searchable(),
-                TextColumn::make('title_it')
-                    ->searchable(),
-                TextColumn::make('meta_title_it')
-                    ->searchable(),
-                TextColumn::make('meta_h1_it')
-                    ->searchable(),
-                TextColumn::make('meta_h2_it')
-                    ->searchable(),
-                TextColumn::make('meta_h3_it')
-                    ->searchable(),
-                TextColumn::make('title_es')
-                    ->searchable(),
-                TextColumn::make('meta_title_es')
-                    ->searchable(),
-                TextColumn::make('meta_h1_es')
-                    ->searchable(),
-                TextColumn::make('meta_h2_es')
-                    ->searchable(),
-                TextColumn::make('meta_h3_es')
-                    ->searchable(),
-                TextColumn::make('title_uk')
-                    ->searchable(),
-                TextColumn::make('meta_title_uk')
-                    ->searchable(),
-                TextColumn::make('meta_h1_uk')
-                    ->searchable(),
-                TextColumn::make('meta_h2_uk')
-                    ->searchable(),
-                TextColumn::make('meta_h3_uk')
-                    ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Создан')
+                    ->dateTime('d.m.Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('sort')
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Статус')
+                    ->options([
+                        '1' => 'Опубликован',
+                        '0' => 'Скрыт',
+                    ]),
+                SelectFilter::make('type')
+                    ->label('Тип')
+                    ->searchable(),
             ])
             ->recordActions([
                 EditAction::make(),

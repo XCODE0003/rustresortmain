@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ShopItemsTable
@@ -16,75 +17,50 @@ class ShopItemsTable
     {
         return $table
             ->columns([
-                TextColumn::make('rs_id')
-                    ->numeric()
+                ImageColumn::make('image')
+                    ->label('')
+                    ->size(40),
+                TextColumn::make('name_ru')
+                    ->label('Название')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('item_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('category.id')
-                    ->searchable(),
-                TextColumn::make('server')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('category.title_ru')
+                    ->label('Категория')
+                    ->searchable()
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('price')
-                    ->money()
-                    ->sortable(),
-                TextColumn::make('price_usd')
-                    ->numeric()
+                    ->label('Цена')
+                    ->money('RUB', locale: 'ru')
                     ->sortable(),
                 TextColumn::make('discount_percent')
-                    ->numeric()
+                    ->label('Скидка')
+                    ->formatStateUsing(fn ($state) => $state ? "{$state}%" : '—')
                     ->sortable(),
-                IconColumn::make('disable_category_discount')
-                    ->boolean(),
                 TextColumn::make('amount')
-                    ->numeric()
+                    ->label('Кол-во')
                     ->sortable(),
-                IconColumn::make('is_blueprint')
-                    ->boolean(),
-                IconColumn::make('is_command')
-                    ->boolean(),
-                IconColumn::make('is_item')
-                    ->boolean(),
-                IconColumn::make('wipe_block')
-                    ->boolean(),
                 TextColumn::make('status')
-                    ->numeric()
+                    ->label('Статус')
+                    ->badge()
+                    ->color(fn ($state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn ($state): string => $state ? 'Активен' : 'Скрыт')
                     ->sortable(),
-                ImageColumn::make('image'),
                 TextColumn::make('sort')
-                    ->numeric()
+                    ->label('Сорт.')
                     ->sortable(),
-                IconColumn::make('can_gift')
-                    ->boolean(),
-                TextColumn::make('name_ru')
-                    ->searchable(),
-                TextColumn::make('name_en')
-                    ->searchable(),
-                TextColumn::make('name_de')
-                    ->searchable(),
-                TextColumn::make('name_fr')
-                    ->searchable(),
-                TextColumn::make('name_it')
-                    ->searchable(),
-                TextColumn::make('name_es')
-                    ->searchable(),
-                TextColumn::make('name_uk')
-                    ->searchable(),
-                TextColumn::make('short_name')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('sort')
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Статус')
+                    ->options([
+                        '1' => 'Активен',
+                        '0' => 'Скрыт',
+                    ]),
+                SelectFilter::make('category_id')
+                    ->label('Категория')
+                    ->relationship('category', 'title_ru'),
             ])
             ->recordActions([
                 EditAction::make(),

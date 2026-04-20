@@ -5,9 +5,9 @@ namespace App\Filament\Resources\ShopSets\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ShopSetsTable
@@ -16,59 +16,43 @@ class ShopSetsTable
     {
         return $table
             ->columns([
-                TextColumn::make('status')
-                    ->numeric()
+                ImageColumn::make('image')
+                    ->label('')
+                    ->size(40),
+                TextColumn::make('name_ru')
+                    ->label('Название')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('category.id')
-                    ->searchable(),
-                TextColumn::make('server')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('category.title_ru')
+                    ->label('Категория')
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('price')
-                    ->money()
+                    ->label('Цена')
+                    ->money('RUB', locale: 'ru')
                     ->sortable(),
-                TextColumn::make('price_usd')
-                    ->numeric()
+                TextColumn::make('discount_percent')
+                    ->label('Скидка')
+                    ->formatStateUsing(fn ($state) => $state ? "{$state}%" : '—')
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->label('Статус')
+                    ->badge()
+                    ->color(fn ($state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn ($state): string => $state ? 'Активен' : 'Скрыт')
                     ->sortable(),
                 TextColumn::make('sort')
-                    ->numeric()
+                    ->label('Сорт.')
                     ->sortable(),
-                TextColumn::make('amount')
-                    ->numeric()
-                    ->sortable(),
-                IconColumn::make('can_gift')
-                    ->boolean(),
-                TextColumn::make('discount_percent')
-                    ->numeric()
-                    ->sortable(),
-                IconColumn::make('disable_category_discount')
-                    ->boolean(),
-                ImageColumn::make('image'),
-                TextColumn::make('name_ru')
-                    ->searchable(),
-                TextColumn::make('name_en')
-                    ->searchable(),
-                TextColumn::make('name_de')
-                    ->searchable(),
-                TextColumn::make('name_fr')
-                    ->searchable(),
-                TextColumn::make('name_it')
-                    ->searchable(),
-                TextColumn::make('name_es')
-                    ->searchable(),
-                TextColumn::make('name_uk')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('sort')
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Статус')
+                    ->options([
+                        '1' => 'Активен',
+                        '0' => 'Скрыт',
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),

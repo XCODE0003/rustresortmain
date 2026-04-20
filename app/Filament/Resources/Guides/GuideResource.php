@@ -10,6 +10,7 @@ use App\Filament\Resources\Guides\Tables\GuidesTable;
 use App\Filament\Support\AdminResource;
 use App\Models\Guide;
 use BackedEnum;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
@@ -19,6 +20,26 @@ class GuideResource extends AdminResource
     protected static ?string $model = Guide::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->isAdminOrModerator() ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->isAdminOrModerator() ?? false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()?->isAdminOrModerator() ?? false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
 
     public static function form(Schema $schema): Schema
     {

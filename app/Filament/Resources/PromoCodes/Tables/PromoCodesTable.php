@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class PromoCodesTable
@@ -15,59 +16,49 @@ class PromoCodesTable
     {
         return $table
             ->columns([
-                TextColumn::make('public_uuid')
-                    ->searchable(),
-                TextColumn::make('title')
-                    ->searchable(),
                 TextColumn::make('code')
-                    ->searchable(),
+                    ->label('Код')
+                    ->searchable()
+                    ->copyable()
+                    ->weight('bold'),
+                TextColumn::make('title')
+                    ->label('Название')
+                    ->searchable()
+                    ->limit(35),
                 TextColumn::make('type')
-                    ->searchable(),
-                TextColumn::make('type_reward')
-                    ->searchable(),
-                TextColumn::make('user.name')
+                    ->label('Тип')
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
                 TextColumn::make('bonus_amount')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('premium_period')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('case.id')
-                    ->searchable(),
-                TextColumn::make('bonus_case_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('server_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('date_start')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('date_end')
-                    ->dateTime()
+                    ->label('Бонус')
+                    ->formatStateUsing(fn ($state) => $state ? "₽{$state}" : '—')
                     ->sortable(),
                 TextColumn::make('max_activations')
-                    ->numeric()
+                    ->label('Лимит')
+                    ->formatStateUsing(fn ($state) => $state ?? '∞')
                     ->sortable(),
-                TextColumn::make('shopItem.id')
-                    ->searchable(),
-                TextColumn::make('variation_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('date_start')
+                    ->label('Начало')
+                    ->dateTime('d.m.Y')
+                    ->sortable()
+                    ->placeholder('—'),
+                TextColumn::make('date_end')
+                    ->label('Конец')
+                    ->dateTime('d.m.Y')
+                    ->sortable()
+                    ->placeholder('—'),
                 IconColumn::make('is_created_bot')
-                    ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Бот')
+                    ->boolean()
+                    ->trueColor('info')
+                    ->falseColor('gray'),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('type')
+                    ->label('Тип')
+                    ->searchable(),
             ])
             ->recordActions([
                 EditAction::make(),

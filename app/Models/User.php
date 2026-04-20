@@ -74,7 +74,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role === 'admin';
+        return in_array($this->role, ['admin', 'moderator']);
     }
 
     public function isAdmin(): bool
@@ -82,9 +82,19 @@ class User extends Authenticatable implements FilamentUser
         return $this->role === 'admin';
     }
 
+    public function isModerator(): bool
+    {
+        return $this->role === 'moderator';
+    }
+
+    public function isAdminOrModerator(): bool
+    {
+        return in_array($this->role, ['admin', 'moderator']);
+    }
+
     public function isSupport(): bool
     {
-        return in_array($this->role, ['admin', 'support']);
+        return in_array($this->role, ['admin', 'support', 'moderator']);
     }
 
     public function isInvestor(): bool

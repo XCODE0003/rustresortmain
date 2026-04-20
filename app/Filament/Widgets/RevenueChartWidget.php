@@ -7,6 +7,10 @@ use Filament\Widgets\ChartWidget;
 
 class RevenueChartWidget extends ChartWidget
 {
+    protected static ?int $sort = 2;
+
+    protected int|string|array $columnSpan = 'full';
+
     protected ?string $heading = 'Выручка по дням';
 
     public ?string $filter = '7';
