@@ -15,31 +15,38 @@ class ServersTable
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Фото')
+                    ->circular(),
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Название')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('category.title_ru')
+                    ->label('Категория')
+                    ->badge()
+                    ->color('gray')
+                    ->placeholder('—'),
                 TextColumn::make('status')
-                    ->numeric()
+                    ->label('Статус')
+                    ->badge()
+                    ->color(fn (int $state): string => $state === 1 ? 'success' : 'danger')
+                    ->formatStateUsing(fn (int $state): string => $state === 1 ? 'Активен' : 'Скрыт')
                     ->sortable(),
                 TextColumn::make('sort')
+                    ->label('Сортировка')
                     ->numeric()
                     ->sortable(),
-                ImageColumn::make('image'),
                 TextColumn::make('wipe')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Последний вайп')
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable()
+                    ->placeholder('—'),
                 TextColumn::make('next_wipe')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('category.id')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Следующий вайп')
+                    ->dateTime('d.m.Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->placeholder('—'),
             ])
             ->filters([
                 //

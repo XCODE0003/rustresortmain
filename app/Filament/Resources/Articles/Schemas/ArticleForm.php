@@ -19,11 +19,6 @@ class ArticleForm
         $languages = [
             'ru' => '🇷🇺 RU',
             'en' => '🇬🇧 EN',
-            'de' => '🇩🇪 DE',
-            'fr' => '🇫🇷 FR',
-            'it' => '🇮🇹 IT',
-            'es' => '🇪🇸 ES',
-            'uk' => '🇺🇦 UK',
         ];
 
         $tabs = [];

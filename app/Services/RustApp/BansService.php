@@ -4,7 +4,6 @@ namespace App\Services\RustApp;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class BansService
 {
@@ -21,7 +20,6 @@ class BansService
     private function client(): PendingRequest
     {
         return Http::withHeaders([
-            // Court API reads the project key from X-API-Key (Authorization is ignored → 405 / "No API Key").
             'X-API-Key' => $this->privateKey,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
@@ -30,7 +28,6 @@ class BansService
 
     /**
      * GET /public/bans
-     * Params: sort_by, page, exclude_stale, steam_id, search, include_total, ban_ids, ban_group_uuid
      */
     public function getBans(array $params = []): array
     {
@@ -49,13 +46,8 @@ class BansService
 
                 return $payload;
             }
-
-            Log::warning('RustApp getBans failed', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-        } catch (\Throwable $e) {
-            Log::error('RustApp getBans exception', ['error' => $e->getMessage()]);
+        } catch (\Throwable) {
+            // silent
         }
 
         return [
@@ -69,8 +61,6 @@ class BansService
 
     /**
      * POST /public/bans
-     * Body: { bans: [{ steam_id, reason, comment, expired_at, ban_ip, ban_ip_active, server_ids, proofs }] }
-     * expired_at = 0 → permanent
      */
     public function ban(array $bans): array
     {
@@ -81,15 +71,8 @@ class BansService
                 return ['success' => true];
             }
 
-            Log::warning('RustApp ban failed', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-
             return ['success' => false, 'error' => $response->body()];
         } catch (\Throwable $e) {
-            Log::error('RustApp ban exception', ['error' => $e->getMessage()]);
-
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
@@ -106,16 +89,8 @@ class BansService
                 return ['success' => true];
             }
 
-            Log::warning('RustApp unban failed', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-                'steam_id' => $steamId,
-            ]);
-
             return ['success' => false, 'error' => $response->body()];
         } catch (\Throwable $e) {
-            Log::error('RustApp unban exception', ['error' => $e->getMessage()]);
-
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }

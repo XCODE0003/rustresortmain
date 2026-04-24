@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Faqs\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class FaqForm
@@ -12,49 +14,34 @@ class FaqForm
     {
         return $schema
             ->components([
-                Textarea::make('question_ru')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('question_en')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('question_de')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('question_fr')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('question_it')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('question_es')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('question_uk')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_ru')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_en')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_de')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_fr')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_it')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_es')
-                    ->default(null)
-                    ->columnSpanFull(),
-                Textarea::make('answer_uk')
-                    ->default(null)
+                Tabs::make('Языки')
+                    ->tabs([
+                        Tab::make('🇷🇺 RU')
+                            ->schema([
+                                Textarea::make('question_ru')
+                                    ->label('Вопрос')
+                                    ->default(null)
+                                    ->columnSpanFull(),
+                                Textarea::make('answer_ru')
+                                    ->label('Ответ')
+                                    ->default(null)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('🇬🇧 EN')
+                            ->schema([
+                                Textarea::make('question_en')
+                                    ->label('Question')
+                                    ->default(null)
+                                    ->columnSpanFull(),
+                                Textarea::make('answer_en')
+                                    ->label('Answer')
+                                    ->default(null)
+                                    ->columnSpanFull(),
+                            ]),
+                    ])
                     ->columnSpanFull(),
                 TextInput::make('sort')
+                    ->label('Сортировка')
                     ->required()
                     ->numeric()
                     ->default(0),
