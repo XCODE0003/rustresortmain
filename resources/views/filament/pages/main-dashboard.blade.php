@@ -50,6 +50,10 @@
                     class="text-xs px-3 py-1.5 rounded-lg {{ $this->startDate === now()->startOfMonth()->toDateString() && $this->endDate === now()->toDateString() ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700' }} transition">
                 Месяц
             </button>
+            <button wire:click="setAllTime"
+                    class="text-xs px-3 py-1.5 rounded-lg {{ $this->startDate === '2000-01-01' ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700' }} transition">
+                Всё время
+            </button>
         </div>
 
         <p class="text-xs text-gray-400 pb-1 ml-auto">{{ $days }} {{ $days === 1 ? 'день' : ($days < 5 ? 'дня' : 'дней') }}</p>

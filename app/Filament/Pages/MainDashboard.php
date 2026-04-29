@@ -50,6 +50,13 @@ class MainDashboard extends Page
         $this->endDate = now()->toDateString();
     }
 
+    /** Sets the date range to "all time" — from 2000-01-01 to today. */
+    public function setAllTime(): void
+    {
+        $this->startDate = '2000-01-01';
+        $this->endDate = now()->toDateString();
+    }
+
     /** Bust cache when the date range changes. */
     public function updatedStartDate(): void
     {
@@ -170,7 +177,7 @@ class MainDashboard extends Page
             function (): array {
                 [$start, $end] = $this->periodBounds();
 
-                return ShopStatistic::query()
+                $rows = ShopStatistic::query()
                     ->selectRaw('item_id, COUNT(*) as sales, SUM(price) as revenue')
                     ->whereNotNull('item_id')
                     ->whereBetween('created_at', [$start, $end])
@@ -178,9 +185,24 @@ class MainDashboard extends Page
                     ->orderByDesc('sales')
                     ->limit(8)
                     ->with('item:id,name_ru,short_name')
-                    ->get()
+                    ->get();
+
+                if ($rows->isEmpty()) {
+                    $rows = Donate::query()
+                        ->where('status', 1)
+                        ->whereNotNull('item_id')
+                        ->whereBetween('created_at', [$start, $end])
+                        ->selectRaw('item_id, COUNT(*) as sales, SUM(amount) as revenue')
+                        ->groupBy('item_id')
+                        ->orderByDesc('sales')
+                        ->limit(8)
+                        ->with('item:id,name_ru,short_name')
+                        ->get();
+                }
+
+                return $rows
                     ->map(fn ($r) => [
-                        'name' => $r->item?->name_ru ?? $r->item?->short_name ?? '—',
+                        'name' => $r->item?->name_ru ?? $r->item?->short_name ?? ('Item #'.$r->item_id),
                         'sales' => (int) $r->sales,
                         'revenue' => (float) $r->revenue,
                     ])
