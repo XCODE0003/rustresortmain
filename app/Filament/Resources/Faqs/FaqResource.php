@@ -10,13 +10,18 @@ use App\Filament\Resources\Faqs\Tables\FaqsTable;
 use App\Filament\Support\AdminResource;
 use App\Models\Faq;
 use BackedEnum;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class FaqResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = Faq::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

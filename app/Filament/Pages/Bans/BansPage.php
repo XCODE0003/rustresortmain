@@ -59,6 +59,11 @@ class BansPage extends Page implements HasActions, HasForms
         return auth()->user()?->isAdminOrModerator() ?? false;
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public function mount(): void
     {
         $this->loadBans();

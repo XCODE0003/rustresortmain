@@ -16,6 +16,11 @@ use Filament\Tables\Table;
 
 class ShopItemResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = ShopItem::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -23,6 +28,10 @@ class ShopItemResource extends AdminResource
     protected static \UnitEnum|string|null $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 1;
+
+    protected static ?string $permissionView = 'shop.items.view';
+
+    protected static ?string $permissionEdit = 'shop.items.edit';
 
     public static function form(Schema $schema): Schema
     {

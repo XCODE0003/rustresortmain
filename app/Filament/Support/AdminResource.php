@@ -10,29 +10,56 @@ use UnitEnum;
 
 abstract class AdminResource extends Resource
 {
+    /**
+     * Permission key required to view this resource.
+     * Override in subclasses; null = admin-only.
+     */
+    protected static ?string $permissionView = null;
+
+    /** Permission for create/edit/delete; falls back to view permission. */
+    protected static ?string $permissionEdit = null;
+
+    protected static function permissionAllowed(?string $key): bool
+    {
+        $user = auth()->user();
+        if (! $user) {
+            return false;
+        }
+        if ($key === null) {
+            return $user->isAdmin();
+        }
+
+        return $user->hasPermission($key);
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::permissionAllowed(static::$permissionView);
+    }
+
     public static function canViewAny(): bool
     {
-        return auth()->user()?->isAdmin() ?? false;
+        return static::permissionAllowed(static::$permissionView);
     }
 
     public static function canCreate(): bool
     {
-        return auth()->user()?->isAdmin() ?? false;
+        return static::permissionAllowed(static::$permissionEdit ?? static::$permissionView);
     }
 
     public static function canEdit(Model $record): bool
     {
-        return auth()->user()?->isAdmin() ?? false;
+        return static::permissionAllowed(static::$permissionEdit ?? static::$permissionView);
     }
 
     public static function canDelete(Model $record): bool
     {
-        return auth()->user()?->isAdmin() ?? false;
+        return static::permissionAllowed(static::$permissionEdit ?? static::$permissionView);
     }
 
     public static function canDeleteAny(): bool
     {
-        return auth()->user()?->isAdmin() ?? false;
+        return static::permissionAllowed(static::$permissionEdit ?? static::$permissionView);
     }
 
     protected static function getTranslationKey(): string

@@ -16,6 +16,11 @@ use Filament\Tables\Table;
 
 class ShopSetResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = ShopSet::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
@@ -23,6 +28,8 @@ class ShopSetResource extends AdminResource
     protected static \UnitEnum|string|null $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 3;
+
+    protected static ?string $permissionView = 'shop.sets.edit';
 
     public static function form(Schema $schema): Schema
     {

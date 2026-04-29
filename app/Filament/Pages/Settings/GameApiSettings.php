@@ -3,29 +3,29 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Models\Option;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Cache;
-use BackedEnum;
 
 class GameApiSettings extends Page implements HasForms
 {
     use InteractsWithForms;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCommandLine;
-    
+
     protected static ?string $navigationLabel = 'Game API';
-    
+
     protected static \UnitEnum|string|null $navigationGroup = 'Настройки';
-    
+
     protected static ?int $navigationSort = 8;
-    
+
     protected string $view = 'filament.pages.settings.game-api-settings';
 
     public ?array $data = [];
@@ -33,6 +33,11 @@ class GameApiSettings extends Page implements HasForms
     public static function canAccess(): bool
     {
         return auth()->user()?->isAdmin() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
     }
 
     public function mount(): void
@@ -59,7 +64,7 @@ class GameApiSettings extends Page implements HasForms
     protected function getSettingsData(): array
     {
         $settings = Option::all()->pluck('value', 'key')->toArray();
-        
+
         return [
             'game_api_key' => $settings['game_api_key'] ?? '',
         ];

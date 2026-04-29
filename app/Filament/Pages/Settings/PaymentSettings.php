@@ -3,30 +3,30 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Models\Option;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
-use Filament\Notifications\Notification;
-use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Cache;
-use BackedEnum;
 
 class PaymentSettings extends Page implements HasForms
 {
     use InteractsWithForms;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
-    
+
     protected static ?string $navigationLabel = 'Платежные системы';
-    
+
     protected static \UnitEnum|string|null $navigationGroup = 'Настройки';
-    
+
     protected static ?int $navigationSort = 3;
-    
+
     protected string $view = 'filament.pages.settings.payment-settings';
 
     public ?array $data = [];
@@ -34,6 +34,11 @@ class PaymentSettings extends Page implements HasForms
     public static function canAccess(): bool
     {
         return auth()->user()?->isAdmin() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
     }
 
     public function mount(): void
@@ -116,7 +121,7 @@ class PaymentSettings extends Page implements HasForms
     protected function getSettingsData(): array
     {
         $settings = Option::all()->pluck('value', 'key')->toArray();
-        
+
         return [
             'enot_merchant_id' => $settings['enot_merchant_id'] ?? '',
             'enot_secret_word' => $settings['enot_secret_word'] ?? '',

@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Users\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -36,14 +35,18 @@ class UsersTable
                     ->label('Роль')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'admin'     => 'danger',
+                        'admin' => 'danger',
                         'moderator' => 'warning',
-                        default     => 'gray',
+                        'support' => 'info',
+                        'investor' => 'success',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'admin'     => 'Администратор',
+                        'admin' => 'Администратор',
                         'moderator' => 'Модератор',
-                        default     => 'Пользователь',
+                        'support' => 'Поддержка',
+                        'investor' => 'Инвестор',
+                        default => 'Пользователь',
                     })
                     ->searchable(),
                 IconColumn::make('mute')
@@ -66,9 +69,11 @@ class UsersTable
                 SelectFilter::make('role')
                     ->label('Роль')
                     ->options([
-                        'admin'     => 'Администратор',
+                        'admin' => 'Администратор',
                         'moderator' => 'Модератор',
-                        'user'      => 'Пользователь',
+                        'support' => 'Поддержка',
+                        'investor' => 'Инвестор',
+                        'user' => 'Пользователь',
                     ]),
                 SelectFilter::make('mute')
                     ->label('Мут')

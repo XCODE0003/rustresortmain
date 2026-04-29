@@ -15,11 +15,11 @@ class SocialLinkForm
             Select::make('platform')
                 ->label('Платформа')
                 ->options([
-                    'youtube'   => 'YouTube',
-                    'discord'   => 'Discord',
-                    'vk'        => 'ВКонтакте',
-                    'telegram'  => 'Telegram',
-                    'twitch'    => 'Twitch',
+                    'youtube' => 'YouTube',
+                    'discord' => 'Discord',
+                    'vk' => 'ВКонтакте',
+                    'telegram' => 'Telegram',
+                    'twitch' => 'Twitch',
                     'instagram' => 'Instagram',
                 ])
                 ->required(),

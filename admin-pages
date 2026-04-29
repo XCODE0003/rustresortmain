@@ -1,0 +1,244 @@
+ 1. Авторизация и роли
+
+  - Логин: /backend_uc7BgHFmw32FDIEp/login — отдельная страница входа для админки
+  (BackendLoginController).
+  - Роли (через Gate): admin, support, investor, user. Пункты меню фильтруются через
+  @can('admin'|'support'|'investor'). У BackendController стоит can:investor — то есть все роли
+  админки видят дашборд.
+  - Назначение ролей: users/admin/{user}, users/support/{user}, users/user/{user},
+  users/investor/{user} — мгновенное переключение роли пользователя с алертом.
+
+  ---
+  2. Дашборд (Главная)
+
+  URL: / админки → BackendController@index
+  Доступ: investor+
+  Кэш на 1 час (dashboard:statistics, dashboard:payments, dashboard:registrations).
+
+  Выводит:
+  - Статистика посещений за месяц: total_visits, total_visitors + Chart.js график.
+  - Статистика регистраций за всё время.
+  - Статистика платежей за месяц.
+
+  ---
+  3. Пользователи (admin)
+
+  3.1 Список пользователей /users
+
+  UserController@index → backend.pages.users.list
+  - Фильтры: search (по name/email/phone/steam_id), mute_status, role
+  (all/admin/support/user/investor/analyst).
+  - Пагинация. Колонки: имя, email/Steam, роль, mute, баланс.
+
+  3.2 Карточка пользователя /users/details/{user}
+
+  UserController@details → backend.pages.users.info
+  - Выводит данные пользователя + по каждому игровому серверу пустые блоки accounts/characters (для
+  интеграций).
+
+  3.3 Действия над пользователем (POST)
+
+  - users/setbalance — установить баланс.
+  - users/mute / users/unmute/{user} — мут/размут.
+  - users/getUserByName — поиск по имени (AJAX).
+  - users/{role}/{user} — смена роли.
+  - users/warehouse/{user} (admin) — склад игрока (просмотр/редактирование Warehouse-предметов).
+
+  ---
+  4. Кейсы (admin)
+
+  4.1 Сами кейсы
+
+  - /cases (cases.index) — обычные кейсы (kind != 2). Поиск по title_<locale>, latest+paginate.
+  - /shop/cases (cases.shop_list) — кейсы для магазина (kind = 2).
+  - /cases/create, /cases/{case}/edit, /cases/{case}/duplicate — форма (backend.pages.cases.form):
+  загрузка картинки, до 200 предметов с параметрами (var, item_id, type, drop_percent, available,
+  image, vip_period, deposit_bonus, balance, shop_id, shop_var min/max), список серверов для подсчёта
+   онлайна.
+  - DELETE — удаление со снятием изображения.
+
+  4.2 Предметы кейсов /casesitems (CasesItemController)
+
+  Resource — список/создание/редактирование/удаление предметов.
+
+  4.3 Список выигрышей /bonuses
+
+  BonusesController@index → backend.pages.wonitems.index
+  - Список WonItem где issued = 0, фильтр поиска по CasesItem.title/item_id.
+  - bonuses/{wonitem}/issued — пометить как выданный.
+
+  4.4 Бесплатные открытия /caseopen_history
+
+  CaseopenHistoryController (роль support+)
+  - Просто список CaseopenHistory отсортированный по дате.
+
+  ---
+  5. Магазин (admin)
+
+  5.1 Предметы /shopitems
+
+  ShopItemController — CRUD предметов магазина. Доп. экшены: shopitems/{shopitem}/duplicate,
+  shopitems/getVariations (AJAX), shopitems/resetCache.
+
+  5.2 Сеты /shopsets
+
+  ShopSetController — наборы предметов (как кейсы, но без рандома). Поиск по title_, до 200 предметов
+   в форме.
+
+  5.3 Категории /shopcategories
+
+  ShopCategoryController — CRUD категорий магазина.
+
+  5.4 Купоны /shopcoupons
+
+  ShopCouponController — CRUD скидочных купонов.
+
+  5.5 Магазин-кейсы /shop/cases (см. 4.1).
+
+  5.6 Настройки услуг /settings/services.
+
+  ---
+  6. Промокоды (admin)
+
+  /promocodes (PromoCodeController)
+
+  сгенерированные (type=2). Признак promocodes_file для скачивания списка.
+  - Show /promocodes/{promocode} — детали + список использованных пользователей.
+  - Create/Edit: форма с привязкой к Cases и ShopItems.
+  - Generate /promocodes/generate — массовая генерация (тип награды, сумма бонуса, кейс,
+  премиум-период, shop-item, диапазон дат, количество).
+  - Template — шаблонный промокод по уровню рефлинка (40/70/75/80/85).
+  - Все действия логируются в канал adminlog.
+
+  ---
+  7. Пожертвования (admin)
+
+  - /settings/payments — настройки платёжных систем.
+  - /settings/donat?server=<id> — настройки курса валют per-сервер.
+
+  ---
+  8. Тикеты / Обращения (support+)
+
+  - /tickets (tickets.all) — список тикетов с фильтром status: 0=все, 1=открытые, 2=закрытые,
+  3=удалённые, 4=непрочитанные открытые.
+  - /tickets/{ticket} — детали тикета.
+  - /tickets/{ticket}/answer — ответить.
+  - /tickets/{ticket}/isread — пометить прочитанным.
+  - /tickets/{ticket}/close — закрыть.
+  - /tickets/{ticket}/update_reply, /update_question — править сообщения.
+
+  ---
+  9. Заявки на вывод (admin/support)
+
+  /delivery_requests (DeliveryRequestsController)
+  - Index: фильтры по status, поиску (по CasesItem.title/item_id или имени user). Сортировка по
+  date_request.
+  - Установка цены: delivery_requests/set_pricecap/{id}.
+  - Смена статуса (URL-экшены): inprocessing (1), completed (2), canceled (3, с возвратом предмета в
+  инвентарь), waxpeer_api (4), skinsback_api (8).
+
+  ---
+  10. Игровые сервера (admin)
+
+  - /servers — CRUD (ServerController): name, category_id, status, sort, next_wipe, image,
+  options(ip/rcon_ip/rcon_passw/rsworld_db_type/api_url/api_key).
+  - /servers/{id}/settings — карточка с настройками.
+  - /servercategories — категории серверов (CRUD).
+  - В сайдбаре отдельная секция «Статус серверов»: каждый сервер с бейджем Online/Offline + текущий
+  онлайн.
+
+  ---
+  11. Логин и API (admin)
+
+  - /settings/login, /settings/login_steam, /settings/login_2fa — настройки авторизации (Steam,
+  Google Authenticator с QR через authenticatorapi.com).
+  - Настройки APIs: /settings/waxpeer_api, /settings/skinsback_api, /settings/game_api.
+
+  ---
+  12. Контент сайта (admin)
+
+  12.1 Настройки сайта (раздел Settings)
+
+  Все ниже — SettingsController@*, view backend.pages.settings.<name>:
+  - project_name, robots, sitemap, langs, analitics, recaptcha, smtp, falling_snow (падающий снег),
+  site (главная), policy (соглашение), forum, social (соцсети), download, about, sms, streams,
+  bonuses, bonuses_monday, bonuses_thursday.
+  - POST /settings — сохранение значений в Option (key/value).
+
+  12.2 Баннеры /banners — BannerController CRUD.
+
+  12.3 Новости /articles — ArticleController CRUD: title/path/image/контент с поиском и фильтром по
+  дате.
+
+  12.4 Гайды /guides + /guidecategories — CRUD гайдов и их категорий.
+
+  12.5 FAQ /faqs — CRUD частых вопросов.
+
+  12.6 Стримы — управляются через /settings/streams (StreamController, отдельные экшены).
+
+  ---
+  13. Логи и статистика (investor+)
+
+  Backend\LogController, view backend.pages.logs.*:
+
+  ┌────────────────┬──────────────────────────────┬──────────────────────────────────────────────┐
+  │      URL       │        Что показывает        │                   Фильтры                    │
+  ├─────────────────────┼──────────────────────────────┼─────────────────────────────────────────┤
+  │                     │ Платежи через                │ type (период), payment_system,          │
+  │ /logs/payments      │ Statistics::getPayments      │ server_id, status, date_start/end,      │
+  │                     │                              │ date_type, user_id                      │
+  ├─────────────────────┼──────────────────────────────┼─────────────────────────────────────────┤
+  │ /logs/shop             │ Покупки в магазине + список  │ type, server_id, item_id             │
+  │                        │ ShopItem                     │                                      │
+  ├────────────────────────┼──────────────────────────────┼──────────────────────────────────────┤
+  │ /logs/visits           │ Посещения сайта              │ type                                 │
+  ├────────────────────────┼──────────────────────────────┼──────────────────────────────────────┤
+  │ /logs/registrations    │ Регистрации                  │ server_id                            │
+  ├────────────────────────┼──────────────────────────────┼──────────────────────────────────────┤
+  ├────────────────────────┼────────────────────────────────────┼────────────────────────────────┤
+  │ /logs/gamecurrencylogs │ Сырой storage/logs/payments.log    │ —                              │
+  ├────────────────────────┼────────────────────────────────────┼────────────────────────────────┤
+  │ /logs/adminlogs        │ Сырой storage/logs/admin.log       │ —                              │
+  ├─────────────────────────────┼──────────────────────────────────┼─────────────────────────────┤
+  │ /logs/servererrors          │ storage/logs/laravel.log         │ —                           │
+  ├─────────────────────────────┼──────────────────────────────────┼─────────────────────────────┤
+  │                             │ Отфильтрованные строки           │                             │
+  │ /logs/userlogs/{user}       │ admin/payments логов по          │ —                           │
+  │                             │ конкретному юзеру                │                             │
+  ├─────────────────────────────┼──────────────────────────────────┼─────────────────────────────┤
+  │ /logs/statistics_game_items │ Статистика по игровым предметам  │ type, server_id, item_id    │
+  └─────────────────────────────┴──────────────────────────────────┴─────────────────────────────┘
+
+  ---
+  14. Аккаунт (admin)
+
+  Backend\UserSettingsController:
+  - /settings/profile — настройки профиля (GET/PATCH).
+  - /settings/security — пароль/2FA (GET/PATCH).
+  - /settings/activity — активные сессии/устройства; /settings/activity/{id} — удалить.
+
+  ---
+  15. Прочее
+
+  - /updateitems — UpdateitemsController (синхронизация предметов).
+  - Меню (partials/main-menu.blade.php) показывает счётчики (хелперы users_count, сases_count,
+  shopitems_count, promocodes_count, tickets_count, deliveries_count, servers_count, articles_count,
+  guides_count, faqs_count, banners_count).
+  - Логирование критичных действий идёт в канал adminlog (storage/logs/admin.log).
+  - Многие сущности имеют image (хранятся в storage/public/images), title_<locale> для
+  мультиязычности и поиск/пагинацию через paginate().
+
+  ---
+  Сводно по разделам сайдбара
+
+  1. Администрирование (admin): Пользователи, Кейсы (Кейсы/Предметы/Выигрыши/Бесплатные открытия),
+  Пожертвования (Платёжки/Курс валют), Магазин (Предметы/Сеты/Кейсы/Категории/Услуги), Промокоды.
+  2. Поддержка (support): Обращения, Заявки на вывод.
+  3. Игровые сервера (admin): Сервера, Категории + APIs (Waxpeer/Skinsback/Game RestAPI), Логин
+  Steam.
+  4. Контент сайта (admin): Настройки сайта (имя/robots/sitemap/языки/аналитика/recaptcha/SMTP/снег),
+   Главная, Баннеры, Новости, Гайды, FAQ, Соцсети, Форум, Соглашение.
+  5. Статус серверов (admin): онлайн каждого сервера.
+  6. Логи и статистика (investor): Платежи, Магазин, Регистрации, Посещения, Игровая валюта,
+  Админлоги, Ошибки сервера.
+  7. Аккаунт (admin): Профиль, Активные устройства, Безопасность.

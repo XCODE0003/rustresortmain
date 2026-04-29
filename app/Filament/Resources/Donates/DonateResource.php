@@ -24,6 +24,8 @@ class DonateResource extends AdminResource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $permissionView = 'payments.view';
+
     public static function form(Schema $schema): Schema
     {
         return DonateForm::configure($schema);

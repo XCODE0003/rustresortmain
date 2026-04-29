@@ -3,29 +3,29 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Models\Option;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Cache;
-use BackedEnum;
 
 class RecaptchaSettings extends Page implements HasForms
 {
     use InteractsWithForms;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
-    
+
     protected static ?string $navigationLabel = 'Google reCAPTCHA';
-    
+
     protected static \UnitEnum|string|null $navigationGroup = 'Настройки';
-    
+
     protected static ?int $navigationSort = 6;
-    
+
     protected string $view = 'filament.pages.settings.recaptcha-settings';
 
     public ?array $data = [];
@@ -33,6 +33,11 @@ class RecaptchaSettings extends Page implements HasForms
     public static function canAccess(): bool
     {
         return auth()->user()?->isAdmin() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
     }
 
     public function mount(): void
@@ -63,7 +68,7 @@ class RecaptchaSettings extends Page implements HasForms
     protected function getSettingsData(): array
     {
         $settings = Option::all()->pluck('value', 'key')->toArray();
-        
+
         return [
             'recaptcha_sitekey' => $settings['recaptcha_sitekey'] ?? '',
             'recaptcha_secret' => $settings['recaptcha_secret'] ?? '',

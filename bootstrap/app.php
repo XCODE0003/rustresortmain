@@ -26,5 +26,30 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $denyToAdmin = function (\Illuminate\Http\Request $request) {
+            if (! $request->is('admin*')) {
+                return null;
+            }
+
+            \Filament\Notifications\Notification::make()
+                ->title('Доступ запрещён')
+                ->body('У вашей роли нет прав для этого раздела.')
+                ->danger()
+                ->persistent()
+                ->send();
+
+            return redirect()->to('/admin');
+        };
+
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $e, \Illuminate\Http\Request $request) use ($denyToAdmin) {
+            if ($e->getStatusCode() === 403) {
+                return $denyToAdmin($request);
+            }
+
+            return null;
+        });
+
+        $exceptions->render(function (\Illuminate\Auth\Access\AuthorizationException $e, \Illuminate\Http\Request $request) use ($denyToAdmin) {
+            return $denyToAdmin($request);
+        });
     })->create();

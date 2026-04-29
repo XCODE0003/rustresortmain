@@ -15,6 +15,11 @@ use Filament\Tables\Table;
 
 class LegalPageResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = LegalPage::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;

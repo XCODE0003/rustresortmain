@@ -182,4 +182,83 @@
             @endforelse
         </div>
     </div>
+
+    @php
+        $visits = $this->getVisitStats();
+        $regs = $this->getRegistrationStats();
+        $maxVisits = max(1, collect($visits['chart'])->max('visits'));
+        $maxRegs = max(1, collect($regs['chart'])->max('total'));
+    @endphp
+
+    {{-- Посещения --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
+        <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5">
+            <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wide">Всего посещений</p>
+            <p class="text-3xl font-bold text-gray-900 dark:text-gray-50 mt-1">{{ number_format($visits['total_visits'], 0, '.', ' ') }}</p>
+            <p class="text-xs text-gray-500 mt-2">за выбранный период</p>
+        </div>
+        <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5">
+            <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wide">Уникальных посетителей</p>
+            <p class="text-3xl font-bold text-gray-900 dark:text-gray-50 mt-1">{{ number_format($visits['total_visitors'], 0, '.', ' ') }}</p>
+            <p class="text-xs text-gray-500 mt-2">по уникальным IP</p>
+        </div>
+        <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5">
+            <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wide">Среднее посещений / день</p>
+            <p class="text-3xl font-bold text-gray-900 dark:text-gray-50 mt-1">
+                {{ number_format($visits['total_visits'] / max(1, count($visits['chart'])), 0, '.', ' ') }}
+            </p>
+            <p class="text-xs text-gray-500 mt-2">в выбранном периоде</p>
+        </div>
+    </div>
+
+    <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5 mt-4">
+        <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Посещения по дням</p>
+        <div class="flex items-end gap-1 h-32">
+            @foreach ($visits['chart'] as $row)
+                <div class="flex-1 group relative">
+                    <div class="bg-blue-500/70 dark:bg-blue-400/70 rounded-t hover:bg-blue-500 transition"
+                         style="height: {{ max(2, round(($row['visits'] / $maxVisits) * 100)) }}%"></div>
+                    <div class="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 hidden group-hover:block whitespace-nowrap text-[10px] bg-gray-900 text-white px-1.5 py-0.5 rounded">
+                        {{ $row['label'] }}: {{ $row['visits'] }} ({{ $row['visitors'] }} уник.)
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    {{-- Регистрации --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
+        <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5">
+            <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wide">Регистраций за всё время</p>
+            <p class="text-3xl font-bold text-gray-900 dark:text-gray-50 mt-1">{{ number_format($regs['all_time'], 0, '.', ' ') }}</p>
+            <p class="text-xs text-gray-500 mt-2">общее количество пользователей</p>
+        </div>
+        <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5">
+            <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wide">Регистраций за период</p>
+            <p class="text-3xl font-bold text-gray-900 dark:text-gray-50 mt-1">{{ number_format($regs['in_period'], 0, '.', ' ') }}</p>
+            <p class="text-xs text-gray-500 mt-2">в выбранном диапазоне</p>
+        </div>
+        <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5">
+            <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wide">Среднее в день</p>
+            <p class="text-3xl font-bold text-gray-900 dark:text-gray-50 mt-1">
+                {{ number_format($regs['in_period'] / max(1, count($regs['chart'])), 1, '.', ' ') }}
+            </p>
+            <p class="text-xs text-gray-500 mt-2">за период</p>
+        </div>
+    </div>
+
+    <div class="rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 p-5 mt-4">
+        <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Регистрации по дням</p>
+        <div class="flex items-end gap-1 h-32">
+            @foreach ($regs['chart'] as $row)
+                <div class="flex-1 group relative">
+                    <div class="bg-orange-500/70 dark:bg-orange-400/70 rounded-t hover:bg-orange-500 transition"
+                         style="height: {{ max(2, round(($row['total'] / $maxRegs) * 100)) }}%"></div>
+                    <div class="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 hidden group-hover:block whitespace-nowrap text-[10px] bg-gray-900 text-white px-1.5 py-0.5 rounded">
+                        {{ $row['label'] }}: {{ $row['total'] }}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 </x-filament-panels::page>

@@ -24,6 +24,10 @@ class PromoCodeResource extends AdminResource
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $permissionView = 'promocodes.view';
+
+    protected static ?string $permissionEdit = 'promocodes.edit';
+
     public static function form(Schema $schema): Schema
     {
         return PromoCodeForm::configure($schema);

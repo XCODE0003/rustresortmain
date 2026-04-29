@@ -102,6 +102,33 @@ class User extends Authenticatable implements FilamentUser
         return in_array($this->role, ['admin', 'investor']);
     }
 
+    public function roleModel(): ?Role
+    {
+        if ($this->role === null) {
+            return null;
+        }
+
+        return cache()->remember(
+            "role.slug.{$this->role}",
+            now()->addMinutes(10),
+            fn () => Role::where('slug', $this->role)->first()
+        );
+    }
+
+    public function hasPermission(string $key): bool
+    {
+        if ($this->role === 'admin') {
+            return true;
+        }
+
+        $role = $this->roleModel();
+        if (! $role) {
+            return false;
+        }
+
+        return $role->hasPermission($key);
+    }
+
     public function shopPurchases(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ShopPurchase::class);

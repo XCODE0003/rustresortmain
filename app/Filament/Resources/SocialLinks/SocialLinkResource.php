@@ -16,6 +16,11 @@ use Filament\Tables\Table;
 
 class SocialLinkResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = SocialLink::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedLink;
@@ -23,6 +28,8 @@ class SocialLinkResource extends AdminResource
     protected static \UnitEnum|string|null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 6;
+
+    protected static ?string $permissionView = 'settings.communications';
 
     protected static ?string $navigationLabel = 'Соц. сети';
 

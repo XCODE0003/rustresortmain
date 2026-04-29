@@ -5,8 +5,8 @@ namespace App\Filament\Resources\Users\Schemas;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
@@ -36,13 +36,13 @@ class UserForm
                             ->disabled(! $isAdmin),
                         Select::make('role')
                             ->label('Роль')
-                            ->options([
-                                'user' => 'Пользователь',
-                                'moderator' => 'Модератор',
-                                'admin' => 'Администратор',
-                            ])
+                            ->options(fn () => \App\Models\Role::query()
+                                ->orderBy('sort')
+                                ->pluck('name', 'slug')
+                                ->toArray())
                             ->required()
                             ->default('user')
+                            ->searchable()
                             ->visible($isAdmin),
                         TextInput::make('balance')
                             ->label('Баланс (₽)')

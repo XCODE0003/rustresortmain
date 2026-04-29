@@ -78,6 +78,7 @@ class AdminPanelProvider extends PanelProvider
                 'Контент',
                 'Поддержка',
                 'Пользователи',
+                'Логи и статистика',
                 'Настройки',
             ]);
     }

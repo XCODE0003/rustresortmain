@@ -3,29 +3,29 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Models\Option;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Cache;
-use BackedEnum;
 
 class SteamSettings extends Page implements HasForms
 {
     use InteractsWithForms;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
-    
+
     protected static ?string $navigationLabel = 'Настройки Steam';
-    
+
     protected static \UnitEnum|string|null $navigationGroup = 'Настройки';
-    
+
     protected static ?int $navigationSort = 2;
-    
+
     protected string $view = 'filament.pages.settings.steam-settings';
 
     public ?array $data = [];
@@ -33,6 +33,11 @@ class SteamSettings extends Page implements HasForms
     public static function canAccess(): bool
     {
         return auth()->user()?->isAdmin() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
     }
 
     public function mount(): void
@@ -60,7 +65,7 @@ class SteamSettings extends Page implements HasForms
     protected function getSettingsData(): array
     {
         $settings = Option::all()->pluck('value', 'key')->toArray();
-        
+
         return [
             'steam_api_key' => $settings['steam_api_key'] ?? '',
         ];

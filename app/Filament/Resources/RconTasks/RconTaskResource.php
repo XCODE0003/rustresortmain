@@ -24,6 +24,11 @@ class RconTaskResource extends AdminResource
 
     protected static ?int $navigationSort = 2;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return RconTaskForm::configure($schema);

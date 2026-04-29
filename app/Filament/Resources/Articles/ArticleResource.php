@@ -10,13 +10,17 @@ use App\Filament\Resources\Articles\Tables\ArticlesTable;
 use App\Filament\Support\AdminResource;
 use App\Models\Article;
 use BackedEnum;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ArticleResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = Article::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
@@ -25,25 +29,7 @@ class ArticleResource extends AdminResource
 
     protected static ?int $navigationSort = 1;
 
-    public static function canViewAny(): bool
-    {
-        return auth()->user()?->isAdminOrModerator() ?? false;
-    }
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()?->isAdminOrModerator() ?? false;
-    }
-
-    public static function canEdit(Model $record): bool
-    {
-        return auth()->user()?->isAdminOrModerator() ?? false;
-    }
-
-    public static function canDelete(Model $record): bool
-    {
-        return auth()->user()?->isAdmin() ?? false;
-    }
+    protected static ?string $permissionView = 'content.articles';
 
     public static function form(Schema $schema): Schema
     {

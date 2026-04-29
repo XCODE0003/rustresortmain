@@ -29,13 +29,13 @@ class RconTasksTable
                     ->label('Статус')
                     ->badge()
                     ->color(fn ($state): string => match ((int) $state) {
-                        1       => 'success',
-                        0       => 'warning',
+                        1 => 'success',
+                        0 => 'warning',
                         default => 'danger',
                     })
                     ->formatStateUsing(fn ($state): string => match ((int) $state) {
-                        1       => 'Выполнено',
-                        0       => 'Ожидает',
+                        1 => 'Выполнено',
+                        0 => 'Ожидает',
                         default => 'Ошибка',
                     })
                     ->sortable(),

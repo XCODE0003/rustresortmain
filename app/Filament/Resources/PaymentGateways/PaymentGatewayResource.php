@@ -31,6 +31,8 @@ class PaymentGatewayResource extends AdminResource
 
     protected static ?int $navigationSort = 10;
 
+    protected static ?string $permissionView = 'payments.gateways';
+
     public static function form(Schema $schema): Schema
     {
         return PaymentGatewayForm::configure($schema);

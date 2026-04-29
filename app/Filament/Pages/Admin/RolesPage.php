@@ -10,6 +10,11 @@ use Filament\Support\Icons\Heroicon;
 
 class RolesPage extends Page
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
 
     protected static ?string $navigationLabel = 'Роли и доступы';
@@ -33,10 +38,10 @@ class RolesPage extends Page
             ->toArray();
 
         return [
-            'admin'     => (int) ($counts['admin'] ?? 0),
+            'admin' => (int) ($counts['admin'] ?? 0),
             'moderator' => (int) ($counts['moderator'] ?? 0),
-            'user'      => (int) ($counts['user'] ?? 0),
-            'other'     => (int) array_sum(array_filter(
+            'user' => (int) ($counts['user'] ?? 0),
+            'other' => (int) array_sum(array_filter(
                 $counts,
                 fn ($k) => ! in_array($k, ['admin', 'moderator', 'user']),
                 ARRAY_FILTER_USE_KEY
@@ -48,10 +53,10 @@ class RolesPage extends Page
     {
         return [
             [
-                'key'         => 'admin',
-                'label'       => 'Администратор',
-                'color'       => 'red',
-                'icon'        => 'heroicon-o-shield-exclamation',
+                'key' => 'admin',
+                'label' => 'Администратор',
+                'color' => 'red',
+                'icon' => 'heroicon-o-shield-exclamation',
                 'description' => 'Полный доступ ко всем разделам панели.',
                 'permissions' => [
                     'Все разделы: финансы, магазин, серверы',
@@ -64,10 +69,10 @@ class RolesPage extends Page
                 ],
             ],
             [
-                'key'         => 'moderator',
-                'label'       => 'Модератор',
-                'color'       => 'blue',
-                'icon'        => 'heroicon-o-shield-check',
+                'key' => 'moderator',
+                'label' => 'Модератор',
+                'color' => 'blue',
+                'icon' => 'heroicon-o-shield-check',
                 'description' => 'Управление игроками и контентом. Нет доступа к финансам и настройкам.',
                 'permissions' => [
                     'Просмотр пользователей, выдача мута',
@@ -78,10 +83,10 @@ class RolesPage extends Page
                 ],
             ],
             [
-                'key'         => 'user',
-                'label'       => 'Пользователь',
-                'color'       => 'gray',
-                'icon'        => 'heroicon-o-user',
+                'key' => 'user',
+                'label' => 'Пользователь',
+                'color' => 'gray',
+                'icon' => 'heroicon-o-user',
                 'description' => 'Обычный пользователь сайта. Доступ к панели администратора закрыт.',
                 'permissions' => [
                     'Доступ к сайту (магазин, профиль)',
@@ -115,7 +120,7 @@ class RolesPage extends Page
         $user->update(['role' => $newRole]);
 
         Notification::make()
-            ->title('Роль изменена: ' . $user->name . ' → ' . $newRole)
+            ->title('Роль изменена: '.$user->name.' → '.$newRole)
             ->success()
             ->send();
     }

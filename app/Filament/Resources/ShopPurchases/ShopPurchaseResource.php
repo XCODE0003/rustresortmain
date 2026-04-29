@@ -16,9 +16,16 @@ use Filament\Tables\Table;
 
 class ShopPurchaseResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = ShopPurchase::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $permissionView = 'logs.shop';
 
     public static function form(Schema $schema): Schema
     {

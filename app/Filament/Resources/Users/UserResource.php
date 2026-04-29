@@ -10,7 +10,6 @@ use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Filament\Support\AdminResource;
 use App\Models\User;
 use BackedEnum;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
@@ -25,25 +24,9 @@ class UserResource extends AdminResource
 
     protected static ?int $navigationSort = 1;
 
-    public static function canViewAny(): bool
-    {
-        return auth()->user()?->isAdminOrModerator() ?? false;
-    }
+    protected static ?string $permissionView = 'users.view';
 
-    public static function canCreate(): bool
-    {
-        return auth()->user()?->isAdmin() ?? false;
-    }
-
-    public static function canEdit(Model $record): bool
-    {
-        return auth()->user()?->isAdminOrModerator() ?? false;
-    }
-
-    public static function canDelete(Model $record): bool
-    {
-        return auth()->user()?->isAdmin() && auth()->id() !== $record->id;
-    }
+    protected static ?string $permissionEdit = 'users.edit';
 
     public static function form(Schema $schema): Schema
     {

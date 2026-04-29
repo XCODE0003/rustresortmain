@@ -16,6 +16,11 @@ use Filament\Tables\Table;
 
 class ServerResource extends AdminResource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = Server::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedServerStack;

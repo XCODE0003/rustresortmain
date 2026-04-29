@@ -26,31 +26,31 @@ class PaymentGatewayForm
                             ->unique(ignoreRecord: true)
                             ->maxLength(50)
                             ->columnSpan(1),
-                        
+
                         TextInput::make('name')
                             ->label('Название (EN)')
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(1),
-                        
+
                         TextInput::make('name_ru')
                             ->label('Название (RU)')
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(1),
-                        
+
                         Toggle::make('is_active')
                             ->label('Активна')
                             ->helperText('Отображать пользователям при оплате')
                             ->inline(false)
                             ->columnSpan(1),
-                        
+
                         TextInput::make('sort')
                             ->label('Сортировка')
                             ->numeric()
                             ->default(0)
                             ->columnSpan(1),
-                        
+
                         FileUpload::make('logo')
                             ->label('Логотип')
                             ->image()
@@ -59,7 +59,7 @@ class PaymentGatewayForm
                             ->columnSpan(1),
                     ])
                     ->columns(2),
-                
+
                 Section::make('Настройки платежной системы')
                     ->schema([
                         KeyValue::make('settings')
@@ -69,13 +69,13 @@ class PaymentGatewayForm
                             ->valueLabel('Значение')
                             ->reorderable(false)
                             ->columnSpanFull(),
-                        
+
                         Textarea::make('description')
                             ->label('Описание')
                             ->rows(3)
                             ->columnSpanFull(),
                     ]),
-                
+
                 Section::make('Финансовые настройки')
                     ->schema([
                         Select::make('currency')
@@ -93,20 +93,20 @@ class PaymentGatewayForm
                             ->default('RUB')
                             ->required()
                             ->columnSpan(1),
-                        
+
                         TextInput::make('min_amount')
                             ->label('Минимальная сумма')
                             ->numeric()
                             ->default(10)
                             ->required()
                             ->columnSpan(1),
-                        
+
                         TextInput::make('max_amount')
                             ->label('Максимальная сумма')
                             ->helperText('Оставьте пустым для неограниченной суммы')
                             ->numeric()
                             ->columnSpan(1),
-                        
+
                         TextInput::make('commission_percent')
                             ->label('Комиссия (%)')
                             ->numeric()
