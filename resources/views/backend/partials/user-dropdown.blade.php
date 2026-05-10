@@ -40,7 +40,7 @@
 
         <div class="dropdown-inner">
             <ul class="link-list">
-                <li><a href="{{ route('logout') }}"><em class="icon ni ni-signout"></em><span>{{ __('Выход') }}</span></a></li>
+                <li><a href="{{ route('backend.logout') }}"><em class="icon ni ni-signout"></em><span>{{ __('Выход') }}</span></a></li>
             </ul>
         </div>
     </div>

@@ -2,7 +2,7 @@
     <ShopLayout>
         <div class="flex w-full flex-col items-center gap-6 md:gap-8 lg:gap-10">
             <div class="grid w-full gap-6 lg:grid-cols-2">
-                <div class="show-image-block block-black overflow-hidden rounded-xl border border-StrokeGray ">
+                <div class="show-image-block block-black overflow-hidden rounded-xl border border-StrokeGray " style="opacity: 0">
                     <div class="aspect-square w-full overflow-hidden">
                         <img
                             :src="item.image || '/images/ak.png'"
@@ -12,7 +12,7 @@
                     </div>
                 </div>
 
-                <div class="show-details-block flex flex-col gap-6">
+                <div class="show-details-block flex flex-col gap-6" style="opacity: 0">
                     <div class="block-black flex flex-col gap-4 rounded-xl border border-StrokeGray p-6 ">
                         <div class="flex items-center justify-between">
                             <h1 class="text-2xl font-bold text-white">

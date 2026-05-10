@@ -24,6 +24,7 @@
             <div ref="bannersRef" class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
                 <div
                     class="relative h-[180px] overflow-hidden rounded-xl border border-StrokeGray md:h-[220px] lg:h-[260px]"
+                    style="opacity: 0"
                 >
                     <img
                         src="/images/banner-1.png"
@@ -49,6 +50,7 @@
 
                 <div
                     class="relative h-[180px] overflow-hidden rounded-xl border border-StrokeGray md:h-[220px] lg:h-[260px]"
+                    style="opacity: 0"
                 >
                     <img
                         src="/images/banner-2.png"
@@ -77,6 +79,7 @@
             <div
                 ref="serverBlockRef"
                 class="relative w-full rounded-xl border border-StrokeGray p-5 md:p-6 lg:p-8"
+                style="opacity: 0"
             >
                 <div class="flex flex-col gap-4">
                     <h3 class="text-base font-bold text-white uppercase md:text-lg">
@@ -117,7 +120,7 @@
             </div>
 
             <!-- Поиск товаров -->
-            <div ref="searchRef" class="w-full">
+            <div ref="searchRef" class="w-full" style="opacity: 0">
                 <div class="relative">
                     <input
                         v-model="searchQuery"
@@ -156,6 +159,7 @@
                 <div ref="categoriesRef" class="flex w-full flex-wrap items-center justify-center gap-1.5">
                         <button
                             @click="selectCategory(null)"
+                            style="opacity: 0"
                             :class="[
                                 'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
                                 selectedCategory === null ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
@@ -167,6 +171,7 @@
                         v-for="category in categories"
                         :key="category.id"
                         @click="selectCategory(category.id)"
+                        style="opacity: 0"
                         :class="[
                             'button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
                             selectedCategory === category.id ? 'text-Orange border-Orange' : 'text-TextGray hover:text-white'
@@ -186,6 +191,7 @@
                     v-for="item in filteredItems"
                     :key="item.id"
                     class="shop-card"
+                    style="opacity: 0"
                 >
                     <ShopItemCard
                         :item="item"

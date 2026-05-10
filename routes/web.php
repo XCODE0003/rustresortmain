@@ -108,6 +108,13 @@ use App\Http\Controllers\Backend;
 Route::middleware('backend')
     ->prefix(config('backend.url_slug'))
     ->group(function () {
+        Route::get('/logout', function (\Illuminate\Http\Request $request) {
+            \Illuminate\Support\Facades\Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/');
+        })->name('backend.logout');
+
         Route::get('/', [Backend\BackendController::class, 'index'])->name('backend');
 
         Route::get('/updateitems', [Backend\UpdateitemsController::class, 'index']);

@@ -6,10 +6,10 @@
                 <!-- Выбор сервера -->
 
                 <div class="flex w-full flex-col gap-6">
-                    <h2 class="srv-title text-white text-center text-4xl font-bold uppercase">
+                    <h2 class="srv-title text-white text-center text-4xl font-bold uppercase" style="opacity: 0">
                         {{ $t('shop.title') }}
                     </h2>
-                    <div class="srv-filters flex w-full flex-wrap items-center justify-center gap-1.5">
+                    <div class="srv-filters flex w-full flex-wrap items-center justify-center gap-1.5" style="opacity: 0">
                         <button v-for="server in servers" :key="server.id" @click="selectedServerId = server.id" :class="[
                             'button-black rounded-lg border px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
                             selectedServerId === server.id
@@ -49,7 +49,7 @@
                     v-if="selectedServerId"
                     class="flex flex-wrap justify-center gap-y-16 gap-x-2 md:gap-y-20 lg:gap-x-2.5 lg:gap-y-24"
                 >
-                    <div class="srv-card" v-for="item in filteredItems" :key="item.id">
+                    <div class="srv-card" v-for="item in filteredItems" :key="item.id" style="opacity: 0">
                         <ShopItemCard :item="item" @buy="handleBuyItem" />
                     </div>
                 </div>

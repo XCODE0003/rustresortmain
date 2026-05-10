@@ -3,6 +3,80 @@ import tickets from './tickets'
 import user from './user'
 import users from './users'
 /**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+export const logout = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: logout.url(options),
+    method: 'get',
+})
+
+logout.definition = {
+    methods: ["get","head"],
+    url: '/backend_uc7BgHFmw32FDIEp/logout',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+logout.url = (options?: RouteQueryOptions) => {
+    return logout.definition.url + queryParams(options)
+}
+
+/**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+logout.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: logout.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+logout.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: logout.url(options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: logout.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+logoutForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: logout.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:111
+* @route '/backend_uc7BgHFmw32FDIEp/logout'
+*/
+logoutForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: logout.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+logout.form = logoutForm
+
+/**
 * @see \App\Http\Controllers\Backend\SettingsController::settings
 * @see app/Http/Controllers/Backend/SettingsController.php:31
 * @route '/backend_uc7BgHFmw32FDIEp/settings'

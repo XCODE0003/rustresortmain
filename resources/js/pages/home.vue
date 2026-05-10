@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <div class="container flex flex-col gap-8 md:gap-16 lg:gap-20">
-            <div class="home-servers-section flex w-full flex-col gap-6">
+            <div class="home-servers-section flex w-full flex-col gap-6" style="opacity: 0">
                 <h2 class="text-center text-2xl font-bold uppercase text-white md:text-3xl">
                     {{ $t('home.our_servers') }}
                 </h2>
@@ -14,6 +14,7 @@
                         v-for="server in servers.slice(0, 4)"
                         :key="server.id"
                         class="home-server-card relative overflow-hidden rounded-xl border border-StrokeGray"
+                        style="opacity: 0"
                     >
                         <div class="flex gap-4 p-3 max-md:flex-col md:items-center md:p-5">
                             <div class="relative overflow-hidden rounded-xl">
@@ -96,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="home-shop-section flex w-full flex-col gap-6">
+            <div class="home-shop-section flex w-full flex-col gap-6" style="opacity: 0">
                 <h2 class="text-center text-3xl font-bold uppercase text-white md:text-4xl">
                     {{ $t('home.shop_section_title') }}
                 </h2>
@@ -160,6 +161,7 @@
                             v-for="item in paginatedShopItems"
                             :key="item.id"
                             class="home-shop-item"
+                            style="opacity: 0"
                         >
                             <ShopItemCard :item="item" @buy="handleBuyItem" />
                         </div>

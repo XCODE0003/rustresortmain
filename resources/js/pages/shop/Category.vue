@@ -12,6 +12,7 @@
                     >
                         <Link
                             href="/shop"
+                            style="opacity: 0"
                             class="cat-back-btn button-black rounded-lg border border-StrokeGray px-6 py-3.5 text-sm font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white"
                         >
                             {{ $t('shop.back_to_categories') }}
@@ -21,7 +22,7 @@
                 <div
                     class="flex flex-wrap justify-center gap-1 gap-y-12 md:gap-y-14 lg:gap-2.5"
                 >
-                    <div class="shop-card-item" v-for="item in category.items" :key="item.id">
+                    <div class="shop-card-item" v-for="item in category.items" :key="item.id" style="opacity: 0">
                         <ShopItemCard
                             :item="item"
                             @buy="handleBuyItem"
