@@ -13,6 +13,7 @@ import PurchaseController from './PurchaseController'
 import ProfileController from './ProfileController'
 import FaqController from './FaqController'
 import LegalPageController from './LegalPageController'
+import Backend from './Backend'
 
 const Controllers = {
     Auth: Object.assign(Auth, Auth),
@@ -30,6 +31,7 @@ const Controllers = {
     ProfileController: Object.assign(ProfileController, ProfileController),
     FaqController: Object.assign(FaqController, FaqController),
     LegalPageController: Object.assign(LegalPageController, LegalPageController),
+    Backend: Object.assign(Backend, Backend),
 }
 
 export default Controllers

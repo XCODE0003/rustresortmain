@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../wayfinder'
 /**
 * @see \App\Http\Controllers\Auth\SteamAuthController::login
 * @see app/Http/Controllers/Auth/SteamAuthController.php:18
@@ -297,6 +297,190 @@ homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 home.form = homeForm
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+export const setlocale = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: setlocale.url(args, options),
+    method: 'get',
+})
+
+setlocale.definition = {
+    methods: ["get","head"],
+    url: '/setlocale/{locale}',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+setlocale.url = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { locale: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            locale: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        locale: args.locale,
+    }
+
+    return setlocale.definition.url
+            .replace('{locale}', parsedArgs.locale.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+setlocale.get = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: setlocale.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+setlocale.head = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: setlocale.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+const setlocaleForm = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: setlocale.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+setlocaleForm.get = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: setlocale.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:11
+* @route '/setlocale/{locale}'
+*/
+setlocaleForm.head = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: setlocale.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+setlocale.form = setlocaleForm
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+export const settheme = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: settheme.url(args, options),
+    method: 'get',
+})
+
+settheme.definition = {
+    methods: ["get","head"],
+    url: '/settheme/{theme}',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+settheme.url = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { theme: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            theme: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        theme: args.theme,
+    }
+
+    return settheme.definition.url
+            .replace('{theme}', parsedArgs.theme.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+settheme.get = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: settheme.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+settheme.head = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: settheme.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+const setthemeForm = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settheme.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+setthemeForm.get = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settheme.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:20
+* @route '/settheme/{theme}'
+*/
+setthemeForm.head = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settheme.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+settheme.form = setthemeForm
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
@@ -1107,3 +1291,246 @@ compediumForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 compedium.form = compediumForm
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+export const backend = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: backend.url(options),
+    method: 'get',
+})
+
+backend.definition = {
+    methods: ["get","head"],
+    url: '/backend_uc7BgHFmw32FDIEp',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+backend.url = (options?: RouteQueryOptions) => {
+    return backend.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+backend.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: backend.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+backend.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: backend.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+const backendForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: backend.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+backendForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: backend.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BackendController::backend
+* @see app/Http/Controllers/Backend/BackendController.php:26
+* @route '/backend_uc7BgHFmw32FDIEp'
+*/
+backendForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: backend.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+backend.form = backendForm
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: users.url(options),
+    method: 'get',
+})
+
+users.definition = {
+    methods: ["get","head"],
+    url: '/backend_uc7BgHFmw32FDIEp/users',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+users.url = (options?: RouteQueryOptions) => {
+    return users.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: users.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: users.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: users.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: users.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\UserController::users
+* @see app/Http/Controllers/Backend/UserController.php:18
+* @route '/backend_uc7BgHFmw32FDIEp/users'
+*/
+usersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: users.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+users.form = usersForm
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+export const bonuses = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: bonuses.url(options),
+    method: 'get',
+})
+
+bonuses.definition = {
+    methods: ["get","head"],
+    url: '/backend_uc7BgHFmw32FDIEp/bonuses',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+bonuses.url = (options?: RouteQueryOptions) => {
+    return bonuses.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+bonuses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: bonuses.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+bonuses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: bonuses.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+const bonusesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: bonuses.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+bonusesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: bonuses.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Backend\BonusesController::bonuses
+* @see app/Http/Controllers/Backend/BonusesController.php:27
+* @route '/backend_uc7BgHFmw32FDIEp/bonuses'
+*/
+bonusesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: bonuses.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+bonuses.form = bonusesForm

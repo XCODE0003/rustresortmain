@@ -24,6 +24,10 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        $middleware->alias([
+            'backend' => \App\Http\Middleware\Backend::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Option;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -32,14 +34,24 @@ class AppServiceProvider extends ServiceProvider
         $this->registerObservers();
         $this->configureSocialite();
         $this->loadOptionsFromDatabase();
+        $this->registerBackendGates();
+    }
+
+    protected function registerBackendGates(): void
+    {
+        Gate::define('admin', fn (User $u): bool => $u->isAdmin());
+        Gate::define('moderator', fn (User $u): bool => $u->isAdminOrModerator());
+        Gate::define('support', fn (User $u): bool => $u->isSupport());
+        Gate::define('investor', fn (User $u): bool => $u->isInvestor());
     }
 
     protected function configureSocialite(): void
     {
         $socialite = $this->app->make(SocialiteFactory::class);
-        
+
         $socialite->extend('steam', function ($app) use ($socialite) {
             $config = $app['config']['services.steam'];
+
             return $socialite->buildProvider(
                 \SocialiteProviders\Steam\Provider::class,
                 $config
@@ -66,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
         try {
             DB::connection()->getPdo();
 
-            if (!Schema::hasTable('options')) {
+            if (! Schema::hasTable('options')) {
                 return;
             }
         } catch (Throwable $e) {

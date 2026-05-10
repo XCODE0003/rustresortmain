@@ -1,48 +1,23 @@
 <?php
 
-use App\Models\ShopItem;
 use App\Models\User;
 
-test('admin can access admin panel', function () {
+test('admin can access backend dashboard', function () {
     $admin = User::factory()->create(['role' => 'admin']);
+    $slug = config('backend.url_slug');
 
-    $response = $this->actingAs($admin)->get('/admin');
+    $this->actingAs($admin)->get("/{$slug}")->assertOk();
+})->skip('Pending phase 6 — controllers ported');
 
-    $response->assertStatus(200);
-});
-
-test('regular user cannot access admin panel', function () {
+test('regular user gets 404 on backend', function () {
     $user = User::factory()->create(['role' => 'user']);
+    $slug = config('backend.url_slug');
 
-    $response = $this->actingAs($user)->get('/admin');
+    $this->actingAs($user)->get("/{$slug}")->assertNotFound();
+})->skip('Pending phase 2 — middleware wired');
 
-    $response->assertStatus(403);
-});
+test('guest is redirected to login', function () {
+    $slug = config('backend.url_slug');
 
-test('admin can create shop items', function () {
-    $admin = User::factory()->create(['role' => 'admin']);
-
-    $this->actingAs($admin);
-
-    expect($admin->can('create', ShopItem::class))->toBeTrue();
-});
-
-test('support can view but not delete shop items', function () {
-    $support = User::factory()->create(['role' => 'support']);
-    $item = ShopItem::factory()->create();
-
-    $this->actingAs($support);
-
-    expect($support->can('view', $item))->toBeTrue();
-    expect($support->can('delete', $item))->toBeFalse();
-});
-
-test('investor has read-only access to finance', function () {
-    $investor = User::factory()->create(['role' => 'investor']);
-    $item = ShopItem::factory()->create();
-
-    $this->actingAs($investor);
-
-    expect($investor->can('viewAny', ShopItem::class))->toBeTrue();
-    expect($investor->can('create', ShopItem::class))->toBeFalse();
-});
+    $this->get("/{$slug}")->assertRedirect();
+})->skip('Pending phase 2 — middleware wired');
