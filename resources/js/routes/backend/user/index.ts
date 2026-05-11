@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-export const details = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const details = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: details.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ details.definition = {
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-details.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+details.url = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
@@ -52,7 +52,7 @@ details.url = (args: { user: number | { id: number } } | [user: number | { id: n
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-details.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+details.get = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: details.url(args, options),
     method: 'get',
 })
@@ -62,7 +62,7 @@ details.get = (args: { user: number | { id: number } } | [user: number | { id: n
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-details.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+details.head = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: details.url(args, options),
     method: 'head',
 })
@@ -72,7 +72,7 @@ details.head = (args: { user: number | { id: number } } | [user: number | { id: 
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-const detailsForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const detailsForm = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: details.url(args, options),
     method: 'get',
 })
@@ -82,7 +82,7 @@ const detailsForm = (args: { user: number | { id: number } } | [user: number | {
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-detailsForm.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+detailsForm.get = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: details.url(args, options),
     method: 'get',
 })
@@ -92,7 +92,7 @@ detailsForm.get = (args: { user: number | { id: number } } | [user: number | { i
 * @see app/Http/Controllers/Backend/UserController.php:48
 * @route '/backend_uc7BgHFmw32FDIEp/users/details/{user}'
 */
-detailsForm.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+detailsForm.head = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: details.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

@@ -85,7 +85,7 @@ support.form = supportForm
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-export const show = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -100,7 +100,7 @@ show.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-show.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -133,7 +133,7 @@ show.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: 
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-show.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -143,7 +143,7 @@ show.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: 
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-show.head = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -153,7 +153,7 @@ show.head = (args: { ticket: number | { id: number } } | [ticket: number | { id:
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-const showForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const showForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -163,7 +163,7 @@ const showForm = (args: { ticket: number | { id: number } } | [ticket: number | 
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-showForm.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.get = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -173,7 +173,7 @@ showForm.get = (args: { ticket: number | { id: number } } | [ticket: number | { 
 * @see app/Http/Controllers/Backend/TicketController.php:36
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}'
 */
-showForm.head = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.head = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -190,7 +190,7 @@ show.form = showForm
 * @see app/Http/Controllers/Backend/TicketController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/answer'
 */
-export const update = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const update = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(args, options),
     method: 'post',
 })
@@ -205,7 +205,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/answer'
 */
-update.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -238,7 +238,7 @@ update.url = (args: { ticket: number | { id: number } } | [ticket: number | { id
 * @see app/Http/Controllers/Backend/TicketController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/answer'
 */
-update.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+update.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(args, options),
     method: 'post',
 })
@@ -248,7 +248,7 @@ update.post = (args: { ticket: number | { id: number } } | [ticket: number | { i
 * @see app/Http/Controllers/Backend/TicketController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/answer'
 */
-const updateForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, options),
     method: 'post',
 })
@@ -258,7 +258,7 @@ const updateForm = (args: { ticket: number | { id: number } } | [ticket: number 
 * @see app/Http/Controllers/Backend/TicketController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/answer'
 */
-updateForm.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, options),
     method: 'post',
 })
@@ -270,7 +270,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/TicketController.php:73
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/isread'
 */
-export const isread = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const isread = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: isread.url(args, options),
     method: 'post',
 })
@@ -285,7 +285,7 @@ isread.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:73
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/isread'
 */
-isread.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+isread.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -318,7 +318,7 @@ isread.url = (args: { ticket: number | { id: number } } | [ticket: number | { id
 * @see app/Http/Controllers/Backend/TicketController.php:73
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/isread'
 */
-isread.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+isread.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: isread.url(args, options),
     method: 'post',
 })
@@ -328,7 +328,7 @@ isread.post = (args: { ticket: number | { id: number } } | [ticket: number | { i
 * @see app/Http/Controllers/Backend/TicketController.php:73
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/isread'
 */
-const isreadForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const isreadForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: isread.url(args, options),
     method: 'post',
 })
@@ -338,7 +338,7 @@ const isreadForm = (args: { ticket: number | { id: number } } | [ticket: number 
 * @see app/Http/Controllers/Backend/TicketController.php:73
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/isread'
 */
-isreadForm.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+isreadForm.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: isread.url(args, options),
     method: 'post',
 })
@@ -350,7 +350,7 @@ isread.form = isreadForm
 * @see app/Http/Controllers/Backend/TicketController.php:81
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/close'
 */
-export const close = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const close = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: close.url(args, options),
     method: 'post',
 })
@@ -365,7 +365,7 @@ close.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:81
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/close'
 */
-close.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+close.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -398,7 +398,7 @@ close.url = (args: { ticket: number | { id: number } } | [ticket: number | { id:
 * @see app/Http/Controllers/Backend/TicketController.php:81
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/close'
 */
-close.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+close.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: close.url(args, options),
     method: 'post',
 })
@@ -408,7 +408,7 @@ close.post = (args: { ticket: number | { id: number } } | [ticket: number | { id
 * @see app/Http/Controllers/Backend/TicketController.php:81
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/close'
 */
-const closeForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const closeForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: close.url(args, options),
     method: 'post',
 })
@@ -418,7 +418,7 @@ const closeForm = (args: { ticket: number | { id: number } } | [ticket: number |
 * @see app/Http/Controllers/Backend/TicketController.php:81
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/close'
 */
-closeForm.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+closeForm.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: close.url(args, options),
     method: 'post',
 })
@@ -430,7 +430,7 @@ close.form = closeForm
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-export const updateReply = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const updateReply = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: updateReply.url(args, options),
     method: 'post',
 })
@@ -445,7 +445,7 @@ updateReply.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-updateReply.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+updateReply.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -478,7 +478,7 @@ updateReply.url = (args: { ticket: number | { id: number } } | [ticket: number |
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-updateReply.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+updateReply.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: updateReply.url(args, options),
     method: 'post',
 })
@@ -488,7 +488,7 @@ updateReply.post = (args: { ticket: number | { id: number } } | [ticket: number 
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-const updateReplyForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateReplyForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateReply.url(args, options),
     method: 'post',
 })
@@ -498,7 +498,7 @@ const updateReplyForm = (args: { ticket: number | { id: number } } | [ticket: nu
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-updateReplyForm.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateReplyForm.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateReply.url(args, options),
     method: 'post',
 })
@@ -510,7 +510,7 @@ updateReply.form = updateReplyForm
 * @see app/Http/Controllers/Backend/TicketController.php:111
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_question'
 */
-export const updateQuestion = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const updateQuestion = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: updateQuestion.url(args, options),
     method: 'post',
 })
@@ -525,7 +525,7 @@ updateQuestion.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:111
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_question'
 */
-updateQuestion.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+updateQuestion.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -558,7 +558,7 @@ updateQuestion.url = (args: { ticket: number | { id: number } } | [ticket: numbe
 * @see app/Http/Controllers/Backend/TicketController.php:111
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_question'
 */
-updateQuestion.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+updateQuestion.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: updateQuestion.url(args, options),
     method: 'post',
 })
@@ -568,7 +568,7 @@ updateQuestion.post = (args: { ticket: number | { id: number } } | [ticket: numb
 * @see app/Http/Controllers/Backend/TicketController.php:111
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_question'
 */
-const updateQuestionForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateQuestionForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateQuestion.url(args, options),
     method: 'post',
 })
@@ -578,7 +578,7 @@ const updateQuestionForm = (args: { ticket: number | { id: number } } | [ticket:
 * @see app/Http/Controllers/Backend/TicketController.php:111
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_question'
 */
-updateQuestionForm.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateQuestionForm.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateQuestion.url(args, options),
     method: 'post',
 })
@@ -590,7 +590,7 @@ updateQuestion.form = updateQuestionForm
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-export const destroy = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const destroy = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: destroy.url(args, options),
     method: 'get',
 })
@@ -605,7 +605,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-destroy.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -638,7 +638,7 @@ destroy.url = (args: { ticket: number | { id: number } } | [ticket: number | { i
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-destroy.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+destroy.get = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: destroy.url(args, options),
     method: 'get',
 })
@@ -648,7 +648,7 @@ destroy.get = (args: { ticket: number | { id: number } } | [ticket: number | { i
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-destroy.head = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+destroy.head = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: destroy.url(args, options),
     method: 'head',
 })
@@ -658,7 +658,7 @@ destroy.head = (args: { ticket: number | { id: number } } | [ticket: number | { 
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-const destroyForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const destroyForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: destroy.url(args, options),
     method: 'get',
 })
@@ -668,7 +668,7 @@ const destroyForm = (args: { ticket: number | { id: number } } | [ticket: number
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-destroyForm.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+destroyForm.get = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: destroy.url(args, options),
     method: 'get',
 })
@@ -678,7 +678,7 @@ destroyForm.get = (args: { ticket: number | { id: number } } | [ticket: number |
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-destroyForm.head = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+destroyForm.head = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

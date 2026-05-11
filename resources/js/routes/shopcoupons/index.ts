@@ -222,7 +222,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-export const edit = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -237,7 +237,7 @@ edit.definition = {
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-edit.url = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopcoupon: args }
     }
@@ -270,7 +270,7 @@ edit.url = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number 
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-edit.get = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -280,7 +280,7 @@ edit.get = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number 
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-edit.head = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -290,7 +290,7 @@ edit.head = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-const editForm = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const editForm = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -300,7 +300,7 @@ const editForm = (args: { shopcoupon: number | { id: number } } | [shopcoupon: n
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-editForm.get = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.get = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -310,7 +310,7 @@ editForm.get = (args: { shopcoupon: number | { id: number } } | [shopcoupon: num
 * @see app/Http/Controllers/Backend/ShopCouponController.php:79
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}/edit'
 */
-editForm.head = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.head = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -327,7 +327,7 @@ edit.form = editForm
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-export const update = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -342,7 +342,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-update.url = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopcoupon: args }
     }
@@ -375,7 +375,7 @@ update.url = (args: { shopcoupon: number | { id: number } } | [shopcoupon: numbe
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-update.put = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -385,7 +385,7 @@ update.put = (args: { shopcoupon: number | { id: number } } | [shopcoupon: numbe
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-update.patch = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -395,7 +395,7 @@ update.patch = (args: { shopcoupon: number | { id: number } } | [shopcoupon: num
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-const updateForm = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -410,7 +410,7 @@ const updateForm = (args: { shopcoupon: number | { id: number } } | [shopcoupon:
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-updateForm.put = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -425,7 +425,7 @@ updateForm.put = (args: { shopcoupon: number | { id: number } } | [shopcoupon: n
 * @see app/Http/Controllers/Backend/ShopCouponController.php:87
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-updateForm.patch = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -442,7 +442,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/ShopCouponController.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-export const destroy = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -457,7 +457,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/ShopCouponController.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-destroy.url = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopcoupon: args }
     }
@@ -490,7 +490,7 @@ destroy.url = (args: { shopcoupon: number | { id: number } } | [shopcoupon: numb
 * @see app/Http/Controllers/Backend/ShopCouponController.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-destroy.delete = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -500,7 +500,7 @@ destroy.delete = (args: { shopcoupon: number | { id: number } } | [shopcoupon: n
 * @see app/Http/Controllers/Backend/ShopCouponController.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-const destroyForm = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -515,7 +515,7 @@ const destroyForm = (args: { shopcoupon: number | { id: number } } | [shopcoupon
 * @see app/Http/Controllers/Backend/ShopCouponController.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/shopcoupons/{shopcoupon}'
 */
-destroyForm.delete = (args: { shopcoupon: number | { id: number } } | [shopcoupon: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { shopcoupon: string | number | { id: string | number } } | [shopcoupon: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

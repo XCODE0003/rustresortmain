@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-export const duplicate = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const duplicate = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: duplicate.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ duplicate.definition = {
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-duplicate.url = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+duplicate.url = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopitem: args }
     }
@@ -52,7 +52,7 @@ duplicate.url = (args: { shopitem: number | { id: number } } | [shopitem: number
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-duplicate.get = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+duplicate.get = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: duplicate.url(args, options),
     method: 'get',
 })
@@ -62,7 +62,7 @@ duplicate.get = (args: { shopitem: number | { id: number } } | [shopitem: number
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-duplicate.head = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+duplicate.head = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: duplicate.url(args, options),
     method: 'head',
 })
@@ -72,7 +72,7 @@ duplicate.head = (args: { shopitem: number | { id: number } } | [shopitem: numbe
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-const duplicateForm = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const duplicateForm = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: duplicate.url(args, options),
     method: 'get',
 })
@@ -82,7 +82,7 @@ const duplicateForm = (args: { shopitem: number | { id: number } } | [shopitem: 
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-duplicateForm.get = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+duplicateForm.get = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: duplicate.url(args, options),
     method: 'get',
 })
@@ -92,7 +92,7 @@ duplicateForm.get = (args: { shopitem: number | { id: number } } | [shopitem: nu
 * @see app/Http/Controllers/Backend/ShopItemController.php:122
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/duplicate'
 */
-duplicateForm.head = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+duplicateForm.head = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: duplicate.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -464,7 +464,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-export const edit = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -479,7 +479,7 @@ edit.definition = {
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-edit.url = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopitem: args }
     }
@@ -512,7 +512,7 @@ edit.url = (args: { shopitem: number | { id: number } } | [shopitem: number | { 
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-edit.get = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -522,7 +522,7 @@ edit.get = (args: { shopitem: number | { id: number } } | [shopitem: number | { 
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-edit.head = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -532,7 +532,7 @@ edit.head = (args: { shopitem: number | { id: number } } | [shopitem: number | {
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-const editForm = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const editForm = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -542,7 +542,7 @@ const editForm = (args: { shopitem: number | { id: number } } | [shopitem: numbe
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-editForm.get = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.get = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -552,7 +552,7 @@ editForm.get = (args: { shopitem: number | { id: number } } | [shopitem: number 
 * @see app/Http/Controllers/Backend/ShopItemController.php:134
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}/edit'
 */
-editForm.head = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.head = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -569,7 +569,7 @@ edit.form = editForm
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-export const update = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -584,7 +584,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-update.url = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopitem: args }
     }
@@ -617,7 +617,7 @@ update.url = (args: { shopitem: number | { id: number } } | [shopitem: number | 
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-update.put = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -627,7 +627,7 @@ update.put = (args: { shopitem: number | { id: number } } | [shopitem: number | 
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-update.patch = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -637,7 +637,7 @@ update.patch = (args: { shopitem: number | { id: number } } | [shopitem: number 
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-const updateForm = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -652,7 +652,7 @@ const updateForm = (args: { shopitem: number | { id: number } } | [shopitem: num
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-updateForm.put = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -667,7 +667,7 @@ updateForm.put = (args: { shopitem: number | { id: number } } | [shopitem: numbe
 * @see app/Http/Controllers/Backend/ShopItemController.php:143
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-updateForm.patch = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -684,7 +684,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/ShopItemController.php:209
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-export const destroy = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -699,7 +699,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/ShopItemController.php:209
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-destroy.url = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shopitem: args }
     }
@@ -732,7 +732,7 @@ destroy.url = (args: { shopitem: number | { id: number } } | [shopitem: number |
 * @see app/Http/Controllers/Backend/ShopItemController.php:209
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-destroy.delete = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -742,7 +742,7 @@ destroy.delete = (args: { shopitem: number | { id: number } } | [shopitem: numbe
 * @see app/Http/Controllers/Backend/ShopItemController.php:209
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-const destroyForm = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -757,7 +757,7 @@ const destroyForm = (args: { shopitem: number | { id: number } } | [shopitem: nu
 * @see app/Http/Controllers/Backend/ShopItemController.php:209
 * @route '/backend_uc7BgHFmw32FDIEp/shopitems/{shopitem}'
 */
-destroyForm.delete = (args: { shopitem: number | { id: number } } | [shopitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { shopitem: string | number | { id: string | number } } | [shopitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

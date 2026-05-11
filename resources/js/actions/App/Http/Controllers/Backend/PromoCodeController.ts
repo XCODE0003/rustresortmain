@@ -359,7 +359,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-export const show = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -374,7 +374,7 @@ show.definition = {
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-show.url = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show.url = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { promocode: args }
     }
@@ -407,7 +407,7 @@ show.url = (args: { promocode: number | { id: number } } | [promocode: number | 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-show.get = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -417,7 +417,7 @@ show.get = (args: { promocode: number | { id: number } } | [promocode: number | 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-show.head = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -427,7 +427,7 @@ show.head = (args: { promocode: number | { id: number } } | [promocode: number |
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-const showForm = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const showForm = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -437,7 +437,7 @@ const showForm = (args: { promocode: number | { id: number } } | [promocode: num
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-showForm.get = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.get = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -447,7 +447,7 @@ showForm.get = (args: { promocode: number | { id: number } } | [promocode: numbe
 * @see app/Http/Controllers/Backend/PromoCodeController.php:64
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-showForm.head = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.head = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -464,7 +464,7 @@ show.form = showForm
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-export const edit = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -479,7 +479,7 @@ edit.definition = {
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-edit.url = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { promocode: args }
     }
@@ -512,7 +512,7 @@ edit.url = (args: { promocode: number | { id: number } } | [promocode: number | 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-edit.get = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -522,7 +522,7 @@ edit.get = (args: { promocode: number | { id: number } } | [promocode: number | 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-edit.head = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -532,7 +532,7 @@ edit.head = (args: { promocode: number | { id: number } } | [promocode: number |
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-const editForm = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const editForm = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -542,7 +542,7 @@ const editForm = (args: { promocode: number | { id: number } } | [promocode: num
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-editForm.get = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.get = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -552,7 +552,7 @@ editForm.get = (args: { promocode: number | { id: number } } | [promocode: numbe
 * @see app/Http/Controllers/Backend/PromoCodeController.php:226
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}/edit'
 */
-editForm.head = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.head = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -569,7 +569,7 @@ edit.form = editForm
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-export const update = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -584,7 +584,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-update.url = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { promocode: args }
     }
@@ -617,7 +617,7 @@ update.url = (args: { promocode: number | { id: number } } | [promocode: number 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-update.put = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -627,7 +627,7 @@ update.put = (args: { promocode: number | { id: number } } | [promocode: number 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-update.patch = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -637,7 +637,7 @@ update.patch = (args: { promocode: number | { id: number } } | [promocode: numbe
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-const updateForm = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -652,7 +652,7 @@ const updateForm = (args: { promocode: number | { id: number } } | [promocode: n
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-updateForm.put = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -667,7 +667,7 @@ updateForm.put = (args: { promocode: number | { id: number } } | [promocode: num
 * @see app/Http/Controllers/Backend/PromoCodeController.php:238
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-updateForm.patch = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -684,7 +684,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/PromoCodeController.php:253
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-export const destroy = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -699,7 +699,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/PromoCodeController.php:253
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-destroy.url = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { promocode: args }
     }
@@ -732,7 +732,7 @@ destroy.url = (args: { promocode: number | { id: number } } | [promocode: number
 * @see app/Http/Controllers/Backend/PromoCodeController.php:253
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-destroy.delete = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -742,7 +742,7 @@ destroy.delete = (args: { promocode: number | { id: number } } | [promocode: num
 * @see app/Http/Controllers/Backend/PromoCodeController.php:253
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-const destroyForm = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -757,7 +757,7 @@ const destroyForm = (args: { promocode: number | { id: number } } | [promocode: 
 * @see app/Http/Controllers/Backend/PromoCodeController.php:253
 * @route '/backend_uc7BgHFmw32FDIEp/promocodes/{promocode}'
 */
-destroyForm.delete = (args: { promocode: number | { id: number } } | [promocode: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { promocode: string | number | { id: string | number } } | [promocode: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
