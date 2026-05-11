@@ -10,7 +10,7 @@
 
 @php
     if(isset($shopitem->variations)) {
-        $variations = json_decode($shopitem->variations);
+        $variations = is_array($shopitem->variations) ? json_decode(json_encode($shopitem->variations)) : json_decode($shopitem->variations ?? '[]');
     } else {
         $variations = [];
     }

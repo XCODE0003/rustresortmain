@@ -103,7 +103,7 @@ class BannerController extends Controller
         );
 
 
-        $banners_old = json_decode($banner->banners);
+        $banners_old = is_array($banner->banners) ? json_decode(json_encode($banner->banners)) : json_decode($banner->banners ?? '[]');
         $banners = [];
 
         for($i=0;$i<100;$i++) {
@@ -156,7 +156,7 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
-        $banners_old = json_decode($banner->banners);
+        $banners_old = is_array($banner->banners) ? json_decode(json_encode($banner->banners)) : json_decode($banner->banners ?? '[]');
         //Удаляем старые фото из баннера
         foreach ($banners_old as $banner_old) {
             Storage::disk('public')->delete($banner_old->image);

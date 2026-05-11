@@ -92,8 +92,8 @@ class ShopSetController extends Controller
      */
     public function edit(ShopSet $shopset)
     {
-        $items = json_decode($shopset->items);
-        $servers = json_decode($shopset->servers);
+        $items = is_array($shopset->items) ? json_decode(json_encode($shopset->items)) : json_decode($shopset->items ?? '[]');
+        $servers = is_array($shopset->servers) ? json_decode(json_encode($shopset->servers)) : json_decode($shopset->servers ?? '[]');
 
         $shopitems = ShopItem::query()->where('is_command', 0)->get();
 

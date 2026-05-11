@@ -133,7 +133,8 @@ class ShopItemController extends Controller
      */
     public function edit(ShopItem $shopitem)
     {
-        $servers = json_decode($shopitem->servers);
+        // ShopItem.servers is array-cast in target; legacy code expected JSON string.
+        $servers = is_array($shopitem->servers) ? $shopitem->servers : json_decode($shopitem->servers ?? '[]', true);
         return view('backend.pages.shop.form', compact('shopitem', 'servers'));
     }
 
@@ -221,7 +222,9 @@ class ShopItemController extends Controller
         $shopitem = ShopItem::find($request->shopitem_id);
 
         if($shopitem && isset($shopitem->variations)) {
-            $variations = json_decode($shopitem->variations);
+            $variations = is_array($shopitem->variations)
+                ? json_decode(json_encode($shopitem->variations))
+                : json_decode($shopitem->variations ?? '[]');
         } else {
             $variations = [];
         }

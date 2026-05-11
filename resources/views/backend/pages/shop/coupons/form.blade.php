@@ -6,7 +6,7 @@
 
     @php
         if(isset($shopcoupon) && $shopcoupon->items !== NULL) {
-            $items = json_decode($shopcoupon->items);
+            $items = is_array($shopcoupon->items) ? json_decode(json_encode($shopcoupon->items)) : json_decode($shopcoupon->items ?? '[]');
             $item = $items[0];
         }
     @endphp

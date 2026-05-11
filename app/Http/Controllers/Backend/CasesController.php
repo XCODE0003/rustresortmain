@@ -165,8 +165,8 @@ class CasesController extends Controller
      */
     public function edit(Cases $case)
     {
-        $items = json_decode($case->items);
-        $servers = json_decode($case->servers);
+        $items = is_array($case->items) ? $case->items : json_decode($case->items ?? '[]', true);
+        $servers = is_array($case->servers) ? $case->servers : json_decode($case->servers ?? '[]', true);
 
         $shopitems = ShopItem::query()->get();
 
@@ -185,8 +185,8 @@ class CasesController extends Controller
 
         $case = $copiedCase;
 
-        $items = json_decode($case->items);
-        $servers = json_decode($case->servers);
+        $items = is_array($case->items) ? $case->items : json_decode($case->items ?? '[]', true);
+        $servers = is_array($case->servers) ? $case->servers : json_decode($case->servers ?? '[]', true);
 
         $shopitems = ShopItem::query()->get();
 

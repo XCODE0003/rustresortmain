@@ -5,7 +5,7 @@
     @section('headerDesc', __('Редактирование баннера.'))
 
 @php
-    $banners = json_decode($banner->banners);
+    $banners = is_array($banner->banners) ? json_decode(json_encode($banner->banners)) : json_decode($banner->banners ?? '[]');
 @endphp
 @else
     @section('title', __('Панель управления') . ' - ' . __('Добавить баннер'))

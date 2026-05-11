@@ -85,7 +85,7 @@
                                 <div class="nk-tb-col tb-col-md">
                                     <span class="tb-sub">
                                         @php
-                                            $used_users = json_decode($promocode->users);
+                                            $used_users = is_array($promocode->users) ? $promocode->users : json_decode($promocode->users ?? '[]', true);
                                             $current_activations = ($used_users !== NULL && !empty($used_users)) ? count($used_users) : 0;
                                         @endphp
                                         @if($promocode->max_activations !== NULL && $promocode->max_activations > 0)

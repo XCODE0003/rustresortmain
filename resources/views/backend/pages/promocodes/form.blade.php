@@ -6,7 +6,7 @@
 
     @php
         if(isset($promocode) && $promocode->items !== NULL) {
-            $items = json_decode($promocode->items);
+            $items = is_array($promocode->items) ? json_decode(json_encode($promocode->items)) : json_decode($promocode->items ?? '[]');
             if(isset($items[0])) {
                 $item = $items[0];
             }

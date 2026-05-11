@@ -64,7 +64,7 @@ class PromoCodeController extends Controller
     public function show(PromoCode $promocode)
     {
         $used_count = 0;
-        $used_users = json_decode($promocode->users);
+        $used_users = is_array($promocode->users) ? $promocode->users : json_decode($promocode->users ?? '[]', true);
         if ($used_users !== NULL || !empty($used_users)) {
             $used_count = count($used_users);
         }
