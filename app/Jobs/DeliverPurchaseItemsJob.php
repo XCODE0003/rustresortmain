@@ -59,6 +59,9 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             'validity' => $validityDate,
         ]);
 
+        // Не ждём следующий тик планировщика — пытаемся выдать сразу.
+        ProcessShoppingQueueJob::dispatchSync();
+
         Log::info("Item delivered for donate {$this->donate->id}, command queued in shopping table");
     }
 
