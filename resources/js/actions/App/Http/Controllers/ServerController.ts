@@ -163,10 +163,10 @@ shopServers.form = shopServersForm
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-export const shopServerShow = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const shopServerShow = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: shopServerShow.url(args, options),
     method: 'get',
 })
@@ -178,10 +178,10 @@ shopServerShow.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-shopServerShow.url = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+shopServerShow.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { server: args }
     }
@@ -211,50 +211,50 @@ shopServerShow.url = (args: { server: string | number | { id: string | number } 
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-shopServerShow.get = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+shopServerShow.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: shopServerShow.url(args, options),
     method: 'get',
 })
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-shopServerShow.head = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+shopServerShow.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: shopServerShow.url(args, options),
     method: 'head',
 })
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-const shopServerShowForm = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const shopServerShowForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: shopServerShow.url(args, options),
     method: 'get',
 })
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-shopServerShowForm.get = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+shopServerShowForm.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: shopServerShow.url(args, options),
     method: 'get',
 })
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:62
+* @see app/Http/Controllers/ServerController.php:64
 * @route '/shop/server/{server}'
 */
-shopServerShowForm.head = (args: { server: string | number | { id: string | number } } | [server: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+shopServerShowForm.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: shopServerShow.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

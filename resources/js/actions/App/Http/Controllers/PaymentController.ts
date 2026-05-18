@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-export const success = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const success = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: success.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ success.definition = {
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-success.url = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+success.url = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { donate: args }
     }
@@ -52,7 +52,7 @@ success.url = (args: { donate: string | number | { id: string | number } } | [do
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-success.get = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+success.get = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: success.url(args, options),
     method: 'get',
 })
@@ -62,7 +62,7 @@ success.get = (args: { donate: string | number | { id: string | number } } | [do
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-success.head = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+success.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: success.url(args, options),
     method: 'head',
 })
@@ -72,7 +72,7 @@ success.head = (args: { donate: string | number | { id: string | number } } | [d
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-const successForm = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const successForm = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: success.url(args, options),
     method: 'get',
 })
@@ -82,7 +82,7 @@ const successForm = (args: { donate: string | number | { id: string | number } }
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-successForm.get = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+successForm.get = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: success.url(args, options),
     method: 'get',
 })
@@ -92,7 +92,7 @@ successForm.get = (args: { donate: string | number | { id: string | number } } |
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
-successForm.head = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+successForm.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: success.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -109,7 +109,7 @@ success.form = successForm
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-export const cancel = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const cancel = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cancel.url(args, options),
     method: 'get',
 })
@@ -124,7 +124,7 @@ cancel.definition = {
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-cancel.url = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+cancel.url = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { donate: args }
     }
@@ -157,7 +157,7 @@ cancel.url = (args: { donate: string | number | { id: string | number } } | [don
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-cancel.get = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+cancel.get = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cancel.url(args, options),
     method: 'get',
 })
@@ -167,7 +167,7 @@ cancel.get = (args: { donate: string | number | { id: string | number } } | [don
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-cancel.head = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+cancel.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: cancel.url(args, options),
     method: 'head',
 })
@@ -177,7 +177,7 @@ cancel.head = (args: { donate: string | number | { id: string | number } } | [do
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-const cancelForm = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const cancelForm = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: cancel.url(args, options),
     method: 'get',
 })
@@ -187,7 +187,7 @@ const cancelForm = (args: { donate: string | number | { id: string | number } } 
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-cancelForm.get = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+cancelForm.get = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: cancel.url(args, options),
     method: 'get',
 })
@@ -197,7 +197,7 @@ cancelForm.get = (args: { donate: string | number | { id: string | number } } | 
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
-cancelForm.head = (args: { donate: string | number | { id: string | number } } | [donate: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+cancelForm.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: cancel.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

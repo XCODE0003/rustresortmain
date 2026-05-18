@@ -85,7 +85,7 @@ index.form = indexForm
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-export const setPricecap = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const setPricecap = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: setPricecap.url(args, options),
     method: 'post',
 })
@@ -100,7 +100,7 @@ setPricecap.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-setPricecap.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+setPricecap.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -133,7 +133,7 @@ setPricecap.url = (args: { deliveryrequest: string | number | { id: string | num
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-setPricecap.post = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+setPricecap.post = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: setPricecap.url(args, options),
     method: 'post',
 })
@@ -143,7 +143,7 @@ setPricecap.post = (args: { deliveryrequest: string | number | { id: string | nu
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-const setPricecapForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const setPricecapForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: setPricecap.url(args, options),
     method: 'post',
 })
@@ -153,7 +153,7 @@ const setPricecapForm = (args: { deliveryrequest: string | number | { id: string
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-setPricecapForm.post = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+setPricecapForm.post = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: setPricecap.url(args, options),
     method: 'post',
 })
@@ -165,7 +165,7 @@ setPricecap.form = setPricecapForm
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-export const setStatusInprocessing = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const setStatusInprocessing = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusInprocessing.url(args, options),
     method: 'get',
 })
@@ -180,7 +180,7 @@ setStatusInprocessing.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-setStatusInprocessing.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+setStatusInprocessing.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -213,7 +213,7 @@ setStatusInprocessing.url = (args: { deliveryrequest: string | number | { id: st
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-setStatusInprocessing.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+setStatusInprocessing.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusInprocessing.url(args, options),
     method: 'get',
 })
@@ -223,7 +223,7 @@ setStatusInprocessing.get = (args: { deliveryrequest: string | number | { id: st
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-setStatusInprocessing.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+setStatusInprocessing.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: setStatusInprocessing.url(args, options),
     method: 'head',
 })
@@ -233,7 +233,7 @@ setStatusInprocessing.head = (args: { deliveryrequest: string | number | { id: s
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-const setStatusInprocessingForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const setStatusInprocessingForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusInprocessing.url(args, options),
     method: 'get',
 })
@@ -243,7 +243,7 @@ const setStatusInprocessingForm = (args: { deliveryrequest: string | number | { 
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-setStatusInprocessingForm.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusInprocessingForm.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusInprocessing.url(args, options),
     method: 'get',
 })
@@ -253,7 +253,7 @@ setStatusInprocessingForm.get = (args: { deliveryrequest: string | number | { id
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:56
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/inprocessing/{deliveryrequest}'
 */
-setStatusInprocessingForm.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusInprocessingForm.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusInprocessing.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -270,7 +270,7 @@ setStatusInprocessing.form = setStatusInprocessingForm
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-export const setStatusCompleted = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const setStatusCompleted = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusCompleted.url(args, options),
     method: 'get',
 })
@@ -285,7 +285,7 @@ setStatusCompleted.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-setStatusCompleted.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+setStatusCompleted.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -318,7 +318,7 @@ setStatusCompleted.url = (args: { deliveryrequest: string | number | { id: strin
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-setStatusCompleted.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+setStatusCompleted.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusCompleted.url(args, options),
     method: 'get',
 })
@@ -328,7 +328,7 @@ setStatusCompleted.get = (args: { deliveryrequest: string | number | { id: strin
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-setStatusCompleted.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+setStatusCompleted.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: setStatusCompleted.url(args, options),
     method: 'head',
 })
@@ -338,7 +338,7 @@ setStatusCompleted.head = (args: { deliveryrequest: string | number | { id: stri
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-const setStatusCompletedForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const setStatusCompletedForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusCompleted.url(args, options),
     method: 'get',
 })
@@ -348,7 +348,7 @@ const setStatusCompletedForm = (args: { deliveryrequest: string | number | { id:
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-setStatusCompletedForm.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusCompletedForm.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusCompleted.url(args, options),
     method: 'get',
 })
@@ -358,7 +358,7 @@ setStatusCompletedForm.get = (args: { deliveryrequest: string | number | { id: s
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:116
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/completed/{deliveryrequest}'
 */
-setStatusCompletedForm.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusCompletedForm.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusCompleted.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -375,7 +375,7 @@ setStatusCompleted.form = setStatusCompletedForm
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-export const setStatusCanceled = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const setStatusCanceled = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusCanceled.url(args, options),
     method: 'get',
 })
@@ -390,7 +390,7 @@ setStatusCanceled.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-setStatusCanceled.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+setStatusCanceled.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -423,7 +423,7 @@ setStatusCanceled.url = (args: { deliveryrequest: string | number | { id: string
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-setStatusCanceled.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+setStatusCanceled.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusCanceled.url(args, options),
     method: 'get',
 })
@@ -433,7 +433,7 @@ setStatusCanceled.get = (args: { deliveryrequest: string | number | { id: string
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-setStatusCanceled.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+setStatusCanceled.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: setStatusCanceled.url(args, options),
     method: 'head',
 })
@@ -443,7 +443,7 @@ setStatusCanceled.head = (args: { deliveryrequest: string | number | { id: strin
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-const setStatusCanceledForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const setStatusCanceledForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusCanceled.url(args, options),
     method: 'get',
 })
@@ -453,7 +453,7 @@ const setStatusCanceledForm = (args: { deliveryrequest: string | number | { id: 
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-setStatusCanceledForm.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusCanceledForm.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusCanceled.url(args, options),
     method: 'get',
 })
@@ -463,7 +463,7 @@ setStatusCanceledForm.get = (args: { deliveryrequest: string | number | { id: st
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:132
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/canceled/{deliveryrequest}'
 */
-setStatusCanceledForm.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusCanceledForm.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusCanceled.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -480,7 +480,7 @@ setStatusCanceled.form = setStatusCanceledForm
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-export const setStatusWaxpeerAPI = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const setStatusWaxpeerAPI = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusWaxpeerAPI.url(args, options),
     method: 'get',
 })
@@ -495,7 +495,7 @@ setStatusWaxpeerAPI.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-setStatusWaxpeerAPI.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+setStatusWaxpeerAPI.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -528,7 +528,7 @@ setStatusWaxpeerAPI.url = (args: { deliveryrequest: string | number | { id: stri
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-setStatusWaxpeerAPI.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+setStatusWaxpeerAPI.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusWaxpeerAPI.url(args, options),
     method: 'get',
 })
@@ -538,7 +538,7 @@ setStatusWaxpeerAPI.get = (args: { deliveryrequest: string | number | { id: stri
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-setStatusWaxpeerAPI.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+setStatusWaxpeerAPI.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: setStatusWaxpeerAPI.url(args, options),
     method: 'head',
 })
@@ -548,7 +548,7 @@ setStatusWaxpeerAPI.head = (args: { deliveryrequest: string | number | { id: str
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-const setStatusWaxpeerAPIForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const setStatusWaxpeerAPIForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusWaxpeerAPI.url(args, options),
     method: 'get',
 })
@@ -558,7 +558,7 @@ const setStatusWaxpeerAPIForm = (args: { deliveryrequest: string | number | { id
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-setStatusWaxpeerAPIForm.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusWaxpeerAPIForm.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusWaxpeerAPI.url(args, options),
     method: 'get',
 })
@@ -568,7 +568,7 @@ setStatusWaxpeerAPIForm.get = (args: { deliveryrequest: string | number | { id: 
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:86
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/waxpeer_api/{deliveryrequest}'
 */
-setStatusWaxpeerAPIForm.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusWaxpeerAPIForm.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusWaxpeerAPI.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -585,7 +585,7 @@ setStatusWaxpeerAPI.form = setStatusWaxpeerAPIForm
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-export const setStatusSkinsbackAPI = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const setStatusSkinsbackAPI = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusSkinsbackAPI.url(args, options),
     method: 'get',
 })
@@ -600,7 +600,7 @@ setStatusSkinsbackAPI.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-setStatusSkinsbackAPI.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+setStatusSkinsbackAPI.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -633,7 +633,7 @@ setStatusSkinsbackAPI.url = (args: { deliveryrequest: string | number | { id: st
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-setStatusSkinsbackAPI.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+setStatusSkinsbackAPI.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: setStatusSkinsbackAPI.url(args, options),
     method: 'get',
 })
@@ -643,7 +643,7 @@ setStatusSkinsbackAPI.get = (args: { deliveryrequest: string | number | { id: st
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-setStatusSkinsbackAPI.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+setStatusSkinsbackAPI.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: setStatusSkinsbackAPI.url(args, options),
     method: 'head',
 })
@@ -653,7 +653,7 @@ setStatusSkinsbackAPI.head = (args: { deliveryrequest: string | number | { id: s
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-const setStatusSkinsbackAPIForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const setStatusSkinsbackAPIForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusSkinsbackAPI.url(args, options),
     method: 'get',
 })
@@ -663,7 +663,7 @@ const setStatusSkinsbackAPIForm = (args: { deliveryrequest: string | number | { 
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-setStatusSkinsbackAPIForm.get = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusSkinsbackAPIForm.get = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusSkinsbackAPI.url(args, options),
     method: 'get',
 })
@@ -673,7 +673,7 @@ setStatusSkinsbackAPIForm.get = (args: { deliveryrequest: string | number | { id
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:101
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/skinsback_api/{deliveryrequest}'
 */
-setStatusSkinsbackAPIForm.head = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+setStatusSkinsbackAPIForm.head = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: setStatusSkinsbackAPI.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

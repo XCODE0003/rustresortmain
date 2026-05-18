@@ -733,7 +733,7 @@ statistics_game_items.form = statistics_game_itemsForm
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-export const userlogs = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const userlogs = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: userlogs.url(args, options),
     method: 'get',
 })
@@ -748,7 +748,7 @@ userlogs.definition = {
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-userlogs.url = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+userlogs.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
@@ -781,7 +781,7 @@ userlogs.url = (args: { user: string | number | { id: string | number } } | [use
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-userlogs.get = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+userlogs.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: userlogs.url(args, options),
     method: 'get',
 })
@@ -791,7 +791,7 @@ userlogs.get = (args: { user: string | number | { id: string | number } } | [use
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-userlogs.head = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+userlogs.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: userlogs.url(args, options),
     method: 'head',
 })
@@ -801,7 +801,7 @@ userlogs.head = (args: { user: string | number | { id: string | number } } | [us
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-const userlogsForm = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const userlogsForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: userlogs.url(args, options),
     method: 'get',
 })
@@ -811,7 +811,7 @@ const userlogsForm = (args: { user: string | number | { id: string | number } } 
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-userlogsForm.get = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+userlogsForm.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: userlogs.url(args, options),
     method: 'get',
 })
@@ -821,7 +821,7 @@ userlogsForm.get = (args: { user: string | number | { id: string | number } } | 
 * @see app/Http/Controllers/Backend/LogController.php:117
 * @route '/backend_uc7BgHFmw32FDIEp/logs/userlogs/{user}'
 */
-userlogsForm.head = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+userlogsForm.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: userlogs.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

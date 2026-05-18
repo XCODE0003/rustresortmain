@@ -251,6 +251,7 @@ interface ShopItem {
     description_ru?: string;
     description_en?: string | null;
     category_id: number;
+    server?: number | string | null;
     servers?: unknown;
     variations?: ShopItemVariation[];
     category?: {
@@ -299,15 +300,18 @@ const serverCategoryLabel = (server: Server): string => {
 };
 
 const normalizeServerIds = (value: unknown): string[] => {
+    const toIds = (arr: unknown[]): string[] =>
+        arr.filter((entry) => entry !== null && entry !== undefined && entry !== '').map((entry) => String(entry));
+
     if (Array.isArray(value)) {
-        return value.map((entry) => String(entry));
+        return toIds(value);
     }
 
     if (typeof value === 'string') {
         try {
             const parsed = JSON.parse(value);
             if (Array.isArray(parsed)) {
-                return parsed.map((entry) => String(entry));
+                return toIds(parsed);
             }
         } catch {
             return [];
@@ -321,6 +325,7 @@ const normalizedShopItems = computed(() => {
     return props.shopItems.map((item) => ({
         ...item,
         serverIds: normalizeServerIds(item.servers),
+        serverField: item.server === null || item.server === undefined ? null : Number(item.server),
     }));
 });
 
@@ -329,7 +334,12 @@ const filteredShopItems = computed(() => {
 
     if (selectedShopServerId.value !== null) {
         const targetId = String(selectedShopServerId.value);
-        filtered = filtered.filter((item) => item.serverIds.includes(targetId));
+        const targetNum = Number(selectedShopServerId.value);
+        filtered = filtered.filter((item) => {
+            if (item.serverField === targetNum) return true;
+            if (item.serverField === 0 || item.serverField === null) return true;
+            return item.serverIds.includes(targetId);
+        });
     }
 
     if (selectedShopCategoryId.value !== null) {

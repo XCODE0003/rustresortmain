@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-export const duplicate = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const duplicate = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: duplicate.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ duplicate.definition = {
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-duplicate.url = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+duplicate.url = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { case: args }
     }
@@ -52,7 +52,7 @@ duplicate.url = (args: { case: string | number | { id: string | number } } | [ca
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-duplicate.get = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+duplicate.get = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: duplicate.url(args, options),
     method: 'get',
 })
@@ -62,7 +62,7 @@ duplicate.get = (args: { case: string | number | { id: string | number } } | [ca
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-duplicate.head = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+duplicate.head = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: duplicate.url(args, options),
     method: 'head',
 })
@@ -72,7 +72,7 @@ duplicate.head = (args: { case: string | number | { id: string | number } } | [c
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-const duplicateForm = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const duplicateForm = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: duplicate.url(args, options),
     method: 'get',
 })
@@ -82,7 +82,7 @@ const duplicateForm = (args: { case: string | number | { id: string | number } }
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-duplicateForm.get = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+duplicateForm.get = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: duplicate.url(args, options),
     method: 'get',
 })
@@ -92,7 +92,7 @@ duplicateForm.get = (args: { case: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Backend/CasesController.php:179
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/duplicate'
 */
-duplicateForm.head = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+duplicateForm.head = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: duplicate.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -408,7 +408,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-export const edit = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -423,7 +423,7 @@ edit.definition = {
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-edit.url = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+edit.url = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { case: args }
     }
@@ -456,7 +456,7 @@ edit.url = (args: { case: string | number | { id: string | number } } | [casePar
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-edit.get = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -466,7 +466,7 @@ edit.get = (args: { case: string | number | { id: string | number } } | [casePar
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-edit.head = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -476,7 +476,7 @@ edit.head = (args: { case: string | number | { id: string | number } } | [casePa
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-const editForm = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const editForm = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -486,7 +486,7 @@ const editForm = (args: { case: string | number | { id: string | number } } | [c
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-editForm.get = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.get = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -496,7 +496,7 @@ editForm.get = (args: { case: string | number | { id: string | number } } | [cas
 * @see app/Http/Controllers/Backend/CasesController.php:166
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}/edit'
 */
-editForm.head = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.head = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -513,7 +513,7 @@ edit.form = editForm
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-export const update = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -528,7 +528,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-update.url = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { case: args }
     }
@@ -561,7 +561,7 @@ update.url = (args: { case: string | number | { id: string | number } } | [caseP
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-update.put = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -571,7 +571,7 @@ update.put = (args: { case: string | number | { id: string | number } } | [caseP
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-update.patch = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -581,7 +581,7 @@ update.patch = (args: { case: string | number | { id: string | number } } | [cas
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-const updateForm = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -596,7 +596,7 @@ const updateForm = (args: { case: string | number | { id: string | number } } | 
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-updateForm.put = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -611,7 +611,7 @@ updateForm.put = (args: { case: string | number | { id: string | number } } | [c
 * @see app/Http/Controllers/Backend/CasesController.php:199
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-updateForm.patch = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -628,7 +628,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/CasesController.php:302
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-export const destroy = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -643,7 +643,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/CasesController.php:302
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-destroy.url = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { case: args }
     }
@@ -676,7 +676,7 @@ destroy.url = (args: { case: string | number | { id: string | number } } | [case
 * @see app/Http/Controllers/Backend/CasesController.php:302
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-destroy.delete = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -686,7 +686,7 @@ destroy.delete = (args: { case: string | number | { id: string | number } } | [c
 * @see app/Http/Controllers/Backend/CasesController.php:302
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-const destroyForm = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -701,7 +701,7 @@ const destroyForm = (args: { case: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Backend/CasesController.php:302
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
-destroyForm.delete = (args: { case: string | number | { id: string | number } } | [caseParam: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

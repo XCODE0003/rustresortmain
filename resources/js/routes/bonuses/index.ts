@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-export const issued = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const issued = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: issued.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ issued.definition = {
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-issued.url = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+issued.url = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { wonitem: args }
     }
@@ -52,7 +52,7 @@ issued.url = (args: { wonitem: string | number | { id: string | number } } | [wo
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-issued.get = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+issued.get = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: issued.url(args, options),
     method: 'get',
 })
@@ -62,7 +62,7 @@ issued.get = (args: { wonitem: string | number | { id: string | number } } | [wo
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-issued.head = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+issued.head = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: issued.url(args, options),
     method: 'head',
 })
@@ -72,7 +72,7 @@ issued.head = (args: { wonitem: string | number | { id: string | number } } | [w
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-const issuedForm = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const issuedForm = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: issued.url(args, options),
     method: 'get',
 })
@@ -82,7 +82,7 @@ const issuedForm = (args: { wonitem: string | number | { id: string | number } }
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-issuedForm.get = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+issuedForm.get = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: issued.url(args, options),
     method: 'get',
 })
@@ -92,7 +92,7 @@ issuedForm.get = (args: { wonitem: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Backend/BonusesController.php:44
 * @route '/backend_uc7BgHFmw32FDIEp/bonuses/{wonitem}/issued'
 */
-issuedForm.head = (args: { wonitem: string | number | { id: string | number } } | [wonitem: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+issuedForm.head = (args: { wonitem: number | { id: number } } | [wonitem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: issued.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

@@ -30,11 +30,13 @@ class HomeController extends Controller
             ->get();
 
         $shopItemsQuery = ShopItem::query()
-            ->select(['id', 'name_ru', 'name_en', 'price', 'image', 'category_id', 'servers', 'sort', 'description_ru', 'description_en', 'variations'])
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
             ->with('category:id,title_ru,title_en')
-            ->where('status', 1)
-            ->whereNotNull('category_id')
-            ->orderBy('sort');
+            ->join('shop_categories', 'shop_categories.id', '=', 'shop_items.category_id')
+            ->where('shop_items.status', 1)
+            ->whereNotNull('shop_items.category_id')
+            ->orderBy('shop_categories.sort')
+            ->orderBy('shop_items.sort');
 
         $shopItems = $shopItemsQuery->get();
 

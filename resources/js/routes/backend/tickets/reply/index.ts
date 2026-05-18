@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-export const update = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const update = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-update.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -52,7 +52,7 @@ update.url = (args: { ticket: string | number | { id: string | number } } | [tic
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-update.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+update.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ update.post = (args: { ticket: string | number | { id: string | number } } | [ti
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-const updateForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, options),
     method: 'post',
 })
@@ -72,7 +72,7 @@ const updateForm = (args: { ticket: string | number | { id: string | number } } 
 * @see app/Http/Controllers/Backend/TicketController.php:89
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/update_reply'
 */
-updateForm.post = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.post = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, options),
     method: 'post',
 })

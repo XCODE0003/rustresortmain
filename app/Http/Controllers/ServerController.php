@@ -45,10 +45,12 @@ class ServerController extends Controller
         $shopCategories = ShopCategory::orderBy('sort')->get();
 
         $items = ShopItem::with('category:id,path,title_ru,title_en')
-            ->select(['id', 'name_ru', 'name_en', 'price', 'image', 'category_id', 'servers', 'variations', 'sort', 'amount', 'description_ru', 'description_en'])
-            ->where('status', 1)
-            ->whereNotNull('category_id')
-            ->orderBy('sort')
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.image', 'shop_items.category_id', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.description_ru', 'shop_items.description_en'])
+            ->join('shop_categories', 'shop_categories.id', '=', 'shop_items.category_id')
+            ->where('shop_items.status', 1)
+            ->whereNotNull('shop_items.category_id')
+            ->orderBy('shop_categories.sort')
+            ->orderBy('shop_items.sort')
             ->get();
 
         return Inertia::render('shop/server/list', [

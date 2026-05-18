@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-export const set = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const set = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: set.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ set.definition = {
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-set.url = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+set.url = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { deliveryrequest: args }
     }
@@ -52,7 +52,7 @@ set.url = (args: { deliveryrequest: string | number | { id: string | number } } 
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-set.post = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+set.post = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: set.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ set.post = (args: { deliveryrequest: string | number | { id: string | number } }
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-const setForm = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const setForm = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: set.url(args, options),
     method: 'post',
 })
@@ -72,7 +72,7 @@ const setForm = (args: { deliveryrequest: string | number | { id: string | numbe
 * @see app/Http/Controllers/Backend/DeliveryRequestsController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/delivery_requests/set_pricecap/{deliveryrequest}'
 */
-setForm.post = (args: { deliveryrequest: string | number | { id: string | number } } | [deliveryrequest: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+setForm.post = (args: { deliveryrequest: number | { id: number } } | [deliveryrequest: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: set.url(args, options),
     method: 'post',
 })
