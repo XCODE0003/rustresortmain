@@ -64,19 +64,31 @@ class DeliverPurchaseItemsJob implements ShouldQueue
 
     protected function generateCommand(ShopItem $item, Donate $donate): string
     {
-        $command = $item->command;
+        $command = (string) ($item->command ?? '');
         $amount = $item->amount;
+        $varValue = $donate->var_id;
 
         if ($donate->var_id !== null && is_array($item->variations)) {
-            $variation = collect($item->variations)->firstWhere('id', $donate->var_id);
+            $variation = collect($item->variations)
+                ->firstWhere(fn ($v) => (string) ($v['id'] ?? $v['variation_id'] ?? '') === (string) $donate->var_id);
             if ($variation) {
-                $amount = $variation['amount'] ?? $amount;
+                $amount = $variation['amount'] ?? $variation['quantity'] ?? $amount;
+                $varValue = $variation['variation_id'] ?? $variation['id'] ?? $varValue;
             }
         }
 
-        $command = str_replace('{steamid}', $donate->steam_id ?? $donate->user->steam_id, $command);
-        $command = str_replace('{amount}', $amount, $command);
+        $steamId = (string) ($donate->steam_id ?? $donate->user?->steam_id ?? '');
+        $amountStr = (string) ($amount ?? '');
+        $varStr = (string) ($varValue ?? '');
 
-        return $command;
+        // Поддерживаем оба стиля placeholder'ов: {steamid} (новый) и %steamid% (старая БД).
+        return strtr($command, [
+            '{steamid}' => $steamId,
+            '{amount}' => $amountStr,
+            '{var}' => $varStr,
+            '%steamid%' => $steamId,
+            '%amount%' => $amountStr,
+            '%var%' => $varStr,
+        ]);
     }
 }

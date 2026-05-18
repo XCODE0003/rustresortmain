@@ -1,0 +1,141 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Jobs;
+
+use App\Models\Server;
+use App\Models\Shopping;
+use App\Services\RconConnectionManager;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
+/**
+ * Реализует поведение старого Console\Kernel из rustresortOld: каждую минуту
+ * сканирует таблицу shopping и для каждой непогашенной записи отправляет
+ * команду на игровой сервер по RCON. При успешном ответе записывает
+ * status=1.
+ */
+class ProcessShoppingQueueJob implements ShouldQueue
+{
+    use Queueable;
+
+    public int $tries = 1;
+
+    private const SUCCESS_PHRASES = [
+        'Added to group',
+        'added to group',
+        'time extended',
+        'ermission granted',
+        'granted permission',
+        'успешно',
+    ];
+
+    public function __construct()
+    {
+        $this->onQueue('default');
+    }
+
+    public function handle(): void
+    {
+        $servers = Server::query()->where('status', 1)->get();
+        if ($servers->isEmpty()) {
+            return;
+        }
+
+        $manager = RconConnectionManager::getInstance();
+
+        foreach ($servers as $server) {
+            $tasks = Shopping::query()
+                ->where('status', 0)
+                ->whereIn('server', [$server->id, 0])
+                ->orderBy('id')
+                ->limit(50)
+                ->get();
+
+            foreach ($tasks as $task) {
+                $command = trim((string) $task->command);
+                if ($command === '' || $command === '0') {
+                    $task->status = 1;
+                    $task->save();
+                    continue;
+                }
+
+                $lock = Cache::lock("shopping:lock:{$task->id}", 30);
+                if (! $lock->get()) {
+                    continue;
+                }
+
+                try {
+                    if (! $manager->connect($server->id)) {
+                        Log::channel('rcon_master')->warning('ProcessShoppingQueueJob: connect failed', [
+                            'server_id' => $server->id,
+                            'shopping_id' => $task->id,
+                        ]);
+                        continue;
+                    }
+
+                    $lastError = null;
+                    $result = $manager->sendCommand($server->id, $command, 10, $lastError);
+                    $message = is_object($result) && isset($result->Message) ? (string) $result->Message : '';
+
+                    if ($result !== false && $this->looksSuccessful($message, $command)) {
+                        $task->status = 1;
+                        $task->save();
+
+                        Log::channel('rcon_master')->info('ProcessShoppingQueueJob: delivered', [
+                            'shopping_id' => $task->id,
+                            'server_id' => $server->id,
+                            'command' => $command,
+                            'response' => $message,
+                        ]);
+                    } else {
+                        Log::channel('rcon_master')->warning('ProcessShoppingQueueJob: command unconfirmed', [
+                            'shopping_id' => $task->id,
+                            'server_id' => $server->id,
+                            'command' => $command,
+                            'response' => $message,
+                            'error' => $lastError,
+                        ]);
+                    }
+                } catch (\Throwable $e) {
+                    Log::channel('rcon_master')->error('ProcessShoppingQueueJob: exception', [
+                        'shopping_id' => $task->id,
+                        'server_id' => $server->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                } finally {
+                    $lock->release();
+                }
+            }
+        }
+    }
+
+    private function looksSuccessful(string $response, string $command): bool
+    {
+        if ($response === '') {
+            // Часть Rust-команд (например, `inventory.giveto`) на успех молчат.
+            // Считаем успехом отсутствие ошибки в логе и непустой ответ RCON.
+            return str_starts_with($command, 'inventory.giveto') || str_starts_with($command, 'give');
+        }
+
+        $lower = mb_strtolower($response);
+        foreach (self::SUCCESS_PHRASES as $phrase) {
+            if (mb_stripos($lower, mb_strtolower($phrase)) !== false) {
+                return true;
+            }
+        }
+
+        // Никаких "error"/"failed"/"unknown" — тоже считаем выданным.
+        $failureMarkers = ['error', 'failed', 'unknown command', 'not found'];
+        foreach ($failureMarkers as $marker) {
+            if (str_contains($lower, $marker)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

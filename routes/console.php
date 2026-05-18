@@ -13,6 +13,11 @@ Schedule::job(\App\Jobs\ProcessRconQueueJob::class)
     ->name('process-rcon-queue')
     ->withoutOverlapping();
 
+Schedule::job(\App\Jobs\ProcessShoppingQueueJob::class)
+    ->everyMinute()
+    ->name('process-shopping-queue')
+    ->withoutOverlapping();
+
 Schedule::job(\App\Jobs\SyncOnlinePlayersJob::class)
     ->everyMinute()
     ->name('sync-online-players')
