@@ -18,7 +18,7 @@ Schedule::job(\App\Jobs\SyncOnlinePlayersJob::class)
     ->name('sync-online-players')
     ->withoutOverlapping();
 
-Schedule::command('queue:work --stop-when-empty --tries=3 --timeout=120')
+Schedule::command('queue:work --queue=rcon,default --stop-when-empty --tries=3 --timeout=120')
     ->everyMinute()
     ->name('queue-worker-tick')
     ->withoutOverlapping()
