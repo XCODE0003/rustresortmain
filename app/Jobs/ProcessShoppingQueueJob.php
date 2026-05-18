@@ -139,7 +139,10 @@ class ProcessShoppingQueueJob implements ShouldQueue
         }
 
         // Никаких "error"/"failed"/"unknown" — тоже считаем выданным.
-        $failureMarkers = ['error', 'failed', 'unknown command', 'not found'];
+        $failureMarkers = [
+            'error', 'failed', 'unknown command', 'not found', 'unrecognised',
+            'не существует', 'не существуют', 'не найден', 'ошибка', 'неверн',
+        ];
         foreach ($failureMarkers as $marker) {
             if (str_contains($lower, $marker)) {
                 return false;
