@@ -14,9 +14,15 @@ Schedule::job(\App\Jobs\ProcessRconQueueJob::class)
     ->withoutOverlapping();
 
 Schedule::job(\App\Jobs\SyncOnlinePlayersJob::class)
-    ->everyFiveMinutes()
+    ->everyMinute()
     ->name('sync-online-players')
     ->withoutOverlapping();
+
+Schedule::command('queue:work --stop-when-empty --tries=3 --timeout=120')
+    ->everyMinute()
+    ->name('queue-worker-tick')
+    ->withoutOverlapping()
+    ->runInBackground();
 
 Schedule::job(\App\Jobs\UpdateWipeDatesJob::class)
     ->daily()

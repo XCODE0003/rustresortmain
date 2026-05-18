@@ -1,0 +1,7 @@
+MAILTO=""
+
+# Новый сайт — schedule:run каждую минуту
+* * * * * cd /var/www/www-root/data/www/dev.rustresort.com && /usr/local/bin/php artisan schedule:run >> storage/logs/schedule.log 2>&1
+
+# Старый сайт (оставить, пока он используется)
+* * * * * cd /var/www/www-root/data/www/rustresort.com && /usr/local/bin/php artisan schedule:run >> storage/logs/schedule.log 2>&1
