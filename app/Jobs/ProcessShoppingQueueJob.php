@@ -63,6 +63,16 @@ class ProcessShoppingQueueJob implements ShouldQueue
                     continue;
                 }
 
+                // Защита от старых записей с незаменёнными плейсхолдерами —
+                // RCON их выполнит с мусором, а пользователь не получит товар.
+                if (preg_match('/%(steamid|amount|var)%|\{(steamid|amount|var)\}/u', $command)) {
+                    Log::channel('rcon_master')->warning('ProcessShoppingQueueJob: skipping unresolved placeholders', [
+                        'shopping_id' => $task->id,
+                        'command' => $command,
+                    ]);
+                    continue;
+                }
+
                 $lock = Cache::lock("shopping:lock:{$task->id}", 30);
                 if (! $lock->get()) {
                     continue;
