@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Server;
 use App\Models\ShopCategory;
 use App\Models\ShopItem;
+use App\Models\ShopSet;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,21 +30,34 @@ class HomeController extends Controller
             ->orderBy('sort')
             ->get();
 
-        $shopItemsQuery = ShopItem::query()
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
-            ->with('category:id,title_ru,title_en')
-            ->join('shop_categories', 'shop_categories.id', '=', 'shop_items.category_id')
+        $shopItems = ShopItem::query()
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
+            ->with('category:id,title_ru,title_en,sort,discount_percent')
             ->where('shop_items.status', 1)
             ->whereNotNull('shop_items.category_id')
-            ->orderBy('shop_categories.sort')
-            ->orderBy('shop_items.sort');
+            ->get()
+            ->map(fn ($item) => array_merge($item->toArray(), ['kind' => 'item']));
 
-        $shopItems = $shopItemsQuery->get();
+        $shopSets = ShopSet::query()
+            ->select(['shop_sets.id', 'shop_sets.name_ru', 'shop_sets.name_en', 'shop_sets.price', 'shop_sets.image', 'shop_sets.category_id', 'shop_sets.server', 'shop_sets.servers', 'shop_sets.sort', 'shop_sets.discount_percent', 'shop_sets.disable_category_discount', 'shop_sets.description_ru', 'shop_sets.description_en', 'shop_sets.items'])
+            ->with('category:id,title_ru,title_en,sort,discount_percent')
+            ->where('shop_sets.status', 1)
+            ->whereNotNull('shop_sets.category_id')
+            ->get()
+            ->map(fn ($set) => array_merge($set->toArray(), ['kind' => 'set']));
+
+        $shopEntries = $shopItems->concat($shopSets)
+            ->sortBy([
+                fn ($a, $b) => ($a['category']['sort'] ?? 0) <=> ($b['category']['sort'] ?? 0),
+                fn ($a, $b) => ($a['kind'] === $b['kind'] ? 0 : ($a['kind'] === 'item' ? -1 : 1)),
+                fn ($a, $b) => ($a['sort'] ?? 0) <=> ($b['sort'] ?? 0),
+            ])
+            ->values();
 
         return Inertia::render('home', [
             'servers' => $servers,
             'shopCategories' => $shopCategories,
-            'shopItems' => $shopItems,
+            'shopItems' => $shopEntries,
         ]);
     }
 }
