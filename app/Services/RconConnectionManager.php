@@ -54,22 +54,6 @@ class RconConnectionManager
             return false;
         }
 
-        // Pre-flight TCP probe с коротким таймаутом — чтобы мёртвый сервер не висел воркер на 10+ секунд.
-        if (! config('rcon.proxy')) {
-            [$probeHost, $probePort] = array_pad(explode(':', $rcon_ip, 2), 2, '');
-            if ($probeHost !== '' && $probePort !== '') {
-                $errno = 0;
-                $errstr = '';
-                $probe = @fsockopen($probeHost, (int) $probePort, $errno, $errstr, 2.0);
-                if (! is_resource($probe)) {
-                    Log::channel('rcon_master')->warning("RCON pre-flight failed for server {$server_id}: {$errstr}");
-
-                    return false;
-                }
-                fclose($probe);
-            }
-        }
-
         try {
             config(['server_api.ip' => $options->ip ?? '']);
             config(['server_api.rcon_ip' => $rcon_ip]);
@@ -79,14 +63,19 @@ class RconConnectionManager
 
             $wsUrl = "ws://{$rcon_ip}/{$rcon_passw}";
             $proxy = config('rcon.proxy', '');
+            // Короткий connect-timeout: stream_socket_client получит его и не зависнет на 5+ секунд на мёртвом порту.
+            // Старый проект использовал дефолт 5 — для broadcast-выдачи через несколько серверов он суммировался.
+            $connectTimeout = (int) config('rcon.connect_timeout', 3);
 
             if (! empty($proxy)) {
                 $this->connections[$server_id] = new Socks5WebSocketClient($wsUrl, [
-                    'timeout' => 5,
+                    'timeout' => $connectTimeout,
                     'proxy' => $proxy,
                 ]);
             } else {
-                $this->connections[$server_id] = new Client($wsUrl);
+                $this->connections[$server_id] = new Client($wsUrl, [
+                    'timeout' => $connectTimeout,
+                ]);
             }
 
             $this->lastActivity[$server_id] = time();

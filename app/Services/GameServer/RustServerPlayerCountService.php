@@ -107,9 +107,9 @@ class RustServerPlayerCountService
             ]);
 
             return null;
-        } finally {
-            $manager->disconnect($server->id);
         }
+        // Соединение НЕ закрываем — пусть его переиспользует следующий тик и DeliverPurchaseItemsJob.
+        // Если оно мертво, getConnection() сам сделает reconnect через isConnectionAlive().
     }
 
     /**
