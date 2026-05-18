@@ -46,8 +46,13 @@ class ProcessShoppingQueueJob implements ShouldQueue
         }
 
         $manager = RconConnectionManager::getInstance();
+        $deadServers = []; // server_id => true — больше не пытаемся в этом цикле
 
         foreach ($servers as $server) {
+            if (isset($deadServers[$server->id])) {
+                continue;
+            }
+
             $tasks = Shopping::query()
                 ->where('status', 0)
                 ->whereIn('server', [$server->id, 0])
@@ -56,6 +61,9 @@ class ProcessShoppingQueueJob implements ShouldQueue
                 ->get();
 
             foreach ($tasks as $task) {
+                if (isset($deadServers[$server->id])) {
+                    break; // сервер сдох в середине цикла — выходим
+                }
                 $command = trim((string) $task->command);
                 if ($command === '' || $command === '0') {
                     $task->status = 1;
@@ -80,16 +88,28 @@ class ProcessShoppingQueueJob implements ShouldQueue
 
                 try {
                     if (! $manager->connect($server->id)) {
-                        Log::channel('rcon_master')->warning('ProcessShoppingQueueJob: connect failed', [
+                        $deadServers[$server->id] = true;
+                        Log::channel('rcon_master')->warning('ProcessShoppingQueueJob: connect failed, marking server dead for this cycle', [
                             'server_id' => $server->id,
                             'shopping_id' => $task->id,
                         ]);
-                        continue;
+                        break;
                     }
 
                     $lastError = null;
-                    $result = $manager->sendCommand($server->id, $command, 10, $lastError);
+                    $result = $manager->sendCommand($server->id, $command, 5, $lastError);
                     $message = is_object($result) && isset($result->Message) ? (string) $result->Message : '';
+
+                    // Соединение упало посреди команды — больше не пытаемся в этом цикле.
+                    if ($result === false && $lastError && str_contains($lastError, 'Could not open socket')) {
+                        $deadServers[$server->id] = true;
+                        Log::channel('rcon_master')->warning('ProcessShoppingQueueJob: socket dead mid-cycle', [
+                            'server_id' => $server->id,
+                            'shopping_id' => $task->id,
+                            'error' => $lastError,
+                        ]);
+                        break;
+                    }
 
                     if ($result !== false && $this->looksSuccessful($message, $command)) {
                         $task->status = 1;

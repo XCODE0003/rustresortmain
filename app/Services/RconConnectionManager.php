@@ -54,6 +54,22 @@ class RconConnectionManager
             return false;
         }
 
+        // Pre-flight TCP probe с коротким таймаутом — чтобы мёртвый сервер не висел воркер на 10+ секунд.
+        if (! config('rcon.proxy')) {
+            [$probeHost, $probePort] = array_pad(explode(':', $rcon_ip, 2), 2, '');
+            if ($probeHost !== '' && $probePort !== '') {
+                $errno = 0;
+                $errstr = '';
+                $probe = @fsockopen($probeHost, (int) $probePort, $errno, $errstr, 2.0);
+                if (! is_resource($probe)) {
+                    Log::channel('rcon_master')->warning("RCON pre-flight failed for server {$server_id}: {$errstr}");
+
+                    return false;
+                }
+                fclose($probe);
+            }
+        }
+
         try {
             config(['server_api.ip' => $options->ip ?? '']);
             config(['server_api.rcon_ip' => $rcon_ip]);
