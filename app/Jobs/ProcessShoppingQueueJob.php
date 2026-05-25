@@ -146,9 +146,9 @@ class ProcessShoppingQueueJob implements ShouldQueue
     private function looksSuccessful(string $response, string $command): bool
     {
         if ($response === '') {
-            // Часть Rust-команд (например, `inventory.giveto`) на успех молчат.
-            // Считаем успехом отсутствие ошибки в логе и непустой ответ RCON.
-            return str_starts_with($command, 'inventory.giveto') || str_starts_with($command, 'give');
+            // Пустой ответ от RCON = команда выполнена без ошибки.
+            // Rust/Oxide при успехе молчат; ошибка всегда сопровождается текстом.
+            return true;
         }
 
         $lower = mb_strtolower($response);
