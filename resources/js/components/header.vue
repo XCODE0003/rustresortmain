@@ -124,138 +124,97 @@ onBeforeUnmount(() => {
           >
         </div>
       </div>
-      <div class="flex items-center gap-6">
-        <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3 md:gap-6">
+        <div class="flex items-center gap-2 md:gap-4">
           <!-- Селектор языка -->
           <LanguageSelector
             :current-locale="($page.props as any).locale || 'ru'"
             class="max-md:hidden"
           />
 
-          <div class="flex items-center gap-6">
+          <div class="flex items-center gap-2 md:gap-4 lg:gap-6">
             <NotificationDropdown v-if="user" />
 
             <!-- Авторизация / Профиль -->
-            <div v-if="user" class="flex items-center gap-2">
-            <div
-              class="button-black relative flex w-[160px] items-center justify-end gap-2 overflow-hidden rounded-lg border border-StrokeGray p-2.5"
-            >
+            <template v-if="user">
+
+              <!-- Компактная пилюля баланса (только мобила) -->
               <Link
                 href="/payment"
-                class="relative z-10 flex flex-col items-end cursor-pointer transition-opacity duration-300 hover:opacity-80"
+                class="button-black flex items-center gap-1.5 rounded-lg border border-StrokeGray px-2.5 py-1.5 transition-all duration-300 hover:border-Orange md:hidden"
               >
-                <h1 class="text-[10px] font-medium text-TextGray">
-                  {{ user.name || $t("auth.player_default") }}
-                </h1>
-                <h2 class="text-sm font-bold text-Orange">
-                  {{ user.balance || 0 }} ₽
-                </h2>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-4 shrink-0 text-Orange"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                </svg>
+                <span class="text-xs font-bold whitespace-nowrap text-Orange">{{ user.balance || 0 }} ₽</span>
               </Link>
-              <Link
-                href="/profile"
-                class="relative z-10 cursor-pointer min-w-[50px] transition-opacity duration-300 hover:opacity-80"
-              >
-                <img
-                  :src="user.avatar || '/images/test-bg-server.png'"
-                  alt="Profile"
-                  class="h-12 w-12 rounded-[10px] object-cover"
-                />
-              </Link>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="145"
-                height="68"
-                viewBox="0 0 145 68"
-                fill="none"
-                class="absolute right-0 bottom-0 h-full w-full"
-              >
-                <g filter="url(#filter0_f_1_27432)">
-                  <circle
-                    cx="134"
-                    cy="58"
-                    r="10"
-                    fill="#F3A45D"
-                    fill-opacity="0.4"
-                  />
-                </g>
-                <g filter="url(#filter1_f_1_27432)">
-                  <circle
-                    cx="47.5"
-                    cy="30.5"
-                    r="7.5"
-                    fill="white"
-                    fill-opacity="0.4"
-                  />
-                </g>
-                <defs>
-                  <filter
-                    id="filter0_f_1_27432"
-                    x="84"
-                    y="8"
-                    width="100"
-                    height="100"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feGaussianBlur
-                      stdDeviation="20"
-                      result="effect1_foregroundBlur_1_27432"
-                    />
-                  </filter>
-                  <filter
-                    id="filter1_f_1_27432"
-                    x="0"
-                    y="-17"
-                    width="95"
-                    height="95"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feGaussianBlur
-                      stdDeviation="20"
-                      result="effect1_foregroundBlur_1_27432"
-                    />
-                  </filter>
-                </defs>
-              </svg>
-            </div>
 
-            <!-- Кнопка выхода (десктоп) -->
-            <button
-              @click="logout"
-              title="Выйти"
-              class="button-black flex items-center justify-center rounded-lg border border-StrokeGray p-2.5 text-TextGray transition-all duration-300 hover:border-red-500 hover:text-red-400"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-5"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
-                />
-              </svg>
-            </button>
-            </div>
+              <!-- Полный набор пилюль (десктоп и таблет) -->
+              <div class="hidden items-center gap-2 md:flex">
+
+                <!-- Кнопка баланса -->
+                <Link
+                  href="/payment"
+                  class="button-black flex items-center gap-2 rounded-lg border border-StrokeGray px-3 py-2 transition-all duration-300 hover:border-Orange"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-5 shrink-0 text-Orange"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                  </svg>
+                  <span class="text-sm font-bold whitespace-nowrap text-Orange">{{ user.balance || 0 }} ₽</span>
+                </Link>
+
+                <!-- Кнопка профиля -->
+                <Link
+                  href="/profile"
+                  class="button-black flex items-center gap-2 rounded-lg border border-StrokeGray px-2.5 py-1.5 transition-all duration-300 hover:border-white/40"
+                >
+                  <img
+                    :src="user.avatar || '/images/test-bg-server.png'"
+                    alt="Profile"
+                    class="h-7 w-7 shrink-0 rounded-md object-cover"
+                  />
+                  <span class="max-w-[110px] truncate text-sm font-medium text-white max-lg:hidden">
+                    {{ user.name || $t("auth.player_default") }}
+                  </span>
+                </Link>
+
+                <!-- Кнопка выхода -->
+                <button
+                  @click="logout"
+                  :title="$t('common.logout')"
+                  class="button-black flex items-center justify-center rounded-lg border border-StrokeGray p-2.5 text-TextGray transition-all duration-300 hover:border-red-500 hover:text-red-400"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </template>
 
             <!-- Кнопка входа через Steam -->
             <a

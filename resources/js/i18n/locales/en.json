@@ -75,7 +75,10 @@
     "duration_prefix": "Duration - ",
     "quantity_label": "Qty:",
     "gift_hint": "You are gifting this user",
-    "back_to_categories": "Back to categories"
+    "back_to_categories": "Back to categories",
+    "server_label": "Server:",
+    "no_server_selected": "No server selected — pick a server before buying",
+    "item_unavailable_on_server": "Item not available on this server"
   },
   "home": {
     "tagline": "Top Rust servers with unique features",

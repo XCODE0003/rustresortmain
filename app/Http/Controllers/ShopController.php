@@ -59,10 +59,16 @@ class ShopController extends Controller
 
         $selectedServer = $selectedServerId ? Server::find($selectedServerId) : null;
 
+        $servers = Server::query()
+            ->where('status', 1)
+            ->orderBy('sort')
+            ->get(['id', 'name']);
+
         return Inertia::render('shop/Index', [
             'categories' => $categories,
             'items' => $items,
             'selectedServer' => $selectedServer,
+            'servers' => $servers,
             'categorySlug' => $categorySlug,
         ]);
     }

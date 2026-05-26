@@ -75,7 +75,10 @@
     "duration_prefix": "Срок - ",
     "quantity_label": "Кол-во:",
     "gift_hint": "Вы сделаете подарок этому пользователю",
-    "back_to_categories": "Назад к категориям"
+    "back_to_categories": "Назад к категориям",
+    "server_label": "Сервер:",
+    "no_server_selected": "Сервер не выбран — выберите сервер перед покупкой",
+    "item_unavailable_on_server": "Товар недоступен на этом сервере"
   },
   "home": {
     "tagline": "Лучшие сервера Rust с уникальными возможностями",

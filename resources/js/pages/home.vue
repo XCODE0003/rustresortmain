@@ -380,6 +380,11 @@ const openItemModal = (item: ShopItem): void => {
         }))
         : undefined;
 
+    const itemServerField = item.server === null || item.server === undefined
+        ? null
+        : Number(item.server);
+    const itemServerIds = normalizeServerIds(item.servers);
+
     modalStore.open({
         itemId: item.id,
         title: itemName(item),
@@ -388,6 +393,11 @@ const openItemModal = (item: ShopItem): void => {
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations: mappedVariations,
         defaultAmount: 1,
+        serverId: selectedShopServerId.value,
+        serverName: props.servers.find((s) => s.id === selectedShopServerId.value)?.name ?? null,
+        availableServers: props.servers.map((s) => ({ id: s.id, name: s.name })),
+        itemServerField,
+        itemServerIds,
     });
 };
 

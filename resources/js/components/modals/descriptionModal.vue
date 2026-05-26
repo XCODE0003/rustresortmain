@@ -32,6 +32,109 @@
                 <h1 v-html="description" class="text-xs/[30px] max-h-[400px] overflow-y-auto description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
+                <!-- Server selector dropdown -->
+                <div ref="serverDropdownRef" class="relative">
+                    <button
+                        type="button"
+                        @click="toggleServerDropdown"
+                        :disabled="!availableServers.length"
+                        :class="[
+                            'flex w-full items-center gap-3 rounded-lg border px-4 py-2.5 transition-all duration-300',
+                            isServerDropdownOpen
+                                ? 'border-Orange/70'
+                                : serverId
+                                    ? 'button-black border-StrokeGray hover:border-white/30'
+                                    : 'border-yellow-500/50 bg-yellow-500/5 hover:border-yellow-400',
+                            !availableServers.length ? 'cursor-default' : 'cursor-pointer',
+                        ]"
+                    >
+                        <template v-if="serverId">
+                            <span class="size-2 shrink-0 rounded-full bg-green-400"></span>
+                            <span class="text-xs font-medium text-TextGray">{{ $t('shop.server_label') }}</span>
+                            <span class="flex-1 truncate text-left text-xs font-bold text-white">{{ serverName }}</span>
+                        </template>
+                        <template v-else>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 shrink-0 text-yellow-400">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                            </svg>
+                            <span class="flex-1 text-left text-xs font-medium text-yellow-400">{{ $t('shop.no_server_selected') }}</span>
+                        </template>
+                        <svg
+                            v-if="availableServers.length"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            :class="['size-4 shrink-0 text-TextGray transition-transform duration-200', isServerDropdownOpen ? 'rotate-180' : '']"
+                        >
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </button>
+
+                    <Transition name="server-dropdown">
+                        <div
+                            v-if="isServerDropdownOpen && availableServers.length"
+                            class="server-dropdown-panel absolute top-full left-0 right-0 z-20 mt-2 max-h-60 overflow-y-auto rounded-lg border border-StrokeGray shadow-2xl"
+                        >
+                            <button
+                                v-for="server in availableServers"
+                                :key="server.id"
+                                type="button"
+                                @click="selectServer(server)"
+                                :disabled="!isItemAvailableOnServer(server.id)"
+                                :class="[
+                                    'flex w-full items-center gap-3 px-4 py-2.5 text-left text-xs transition-colors duration-200',
+                                    isItemAvailableOnServer(server.id)
+                                        ? 'cursor-pointer hover:bg-white/5'
+                                        : 'cursor-not-allowed opacity-40',
+                                    server.id === serverId ? 'bg-Orange/10' : '',
+                                ]"
+                            >
+                                <span
+                                    :class="[
+                                        'size-2 shrink-0 rounded-full',
+                                        isItemAvailableOnServer(server.id) ? 'bg-green-400' : 'bg-TextGray',
+                                    ]"
+                                ></span>
+                                <span :class="['flex-1 truncate font-medium', server.id === serverId ? 'text-Orange' : 'text-white']">
+                                    {{ server.name }}
+                                </span>
+                                <svg
+                                    v-if="server.id === serverId"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="size-4 shrink-0 text-Orange"
+                                >
+                                    <path d="M20 6 9 17l-5-5"/>
+                                </svg>
+                                <svg
+                                    v-else-if="!isItemAvailableOnServer(server.id)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="size-3.5 shrink-0 text-TextGray"
+                                    :aria-label="$t('shop.item_unavailable_on_server')"
+                                >
+                                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </Transition>
+                </div>
+
                 <Transition
                     @before-enter="onGiftBeforeEnter"
                     @enter="onGiftEnter"
@@ -117,11 +220,11 @@
 
 <script setup lang="ts">
 import { router, usePage } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 import AppSelect from '@/components/select.vue';
 import Toggle from '@/components/toggle.vue';
-import { useDescriptionModalStore } from '@/stores/descriptionModal';
+import { useDescriptionModalStore, type ServerOption } from '@/stores/descriptionModal';
 
 const {
     itemId,
@@ -136,11 +239,45 @@ const {
     selectedVariation,
     amount,
     currentPrice,
+    serverId,
+    serverName,
+    availableServers,
     close,
     setGift,
+    setServer,
+    isItemAvailableOnServer,
     incrementAmount,
     decrementAmount,
 } = useDescriptionModalStore();
+
+const isServerDropdownOpen = ref(false);
+const serverDropdownRef = ref<HTMLElement | null>(null);
+
+const toggleServerDropdown = (): void => {
+    if (!availableServers.value.length) return;
+    isServerDropdownOpen.value = !isServerDropdownOpen.value;
+};
+
+const selectServer = (server: ServerOption): void => {
+    if (!isItemAvailableOnServer(server.id)) return;
+    setServer(server);
+    isServerDropdownOpen.value = false;
+};
+
+const onServerDropdownPointerDown = (event: PointerEvent): void => {
+    if (!isServerDropdownOpen.value) return;
+    const root = serverDropdownRef.value;
+    const target = event.target as Node | null;
+    if (!root || !target) return;
+    if (!root.contains(target)) {
+        isServerDropdownOpen.value = false;
+    }
+};
+
+// Закрываем дропдаун при закрытии модалки
+watch(isOpen, (value) => {
+    if (!value) isServerDropdownOpen.value = false;
+});
 
 const giftState = computed({
     get() {
@@ -163,6 +300,7 @@ const handleBuy = (): void => {
             item_id: itemId.value,
             count: hasVariations.value ? 1 : amount.value,
             var_id: hasVariations.value ? (selectedVariation.value?.variationId ?? null) : null,
+            server_id: serverId.value,
         }, {
             preserveScroll: true,
             onSuccess: () => close(),
@@ -227,16 +365,23 @@ const onGiftLeave = (element: Element, done: () => void): void => {
 
 const onKeyDown = (event: KeyboardEvent): void => {
     if (event.key === 'Escape') {
-        close();
+        // Сначала гасим вложенный дропдаун, и только потом — модалку
+        if (isServerDropdownOpen.value) {
+            isServerDropdownOpen.value = false;
+        } else {
+            close();
+        }
     }
 };
 
 onMounted(() => {
     window.addEventListener('keydown', onKeyDown);
+    document.addEventListener('pointerdown', onServerDropdownPointerDown);
 });
 
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', onKeyDown);
+    document.removeEventListener('pointerdown', onServerDropdownPointerDown);
 });
 </script>
 
@@ -297,5 +442,24 @@ onBeforeUnmount(() => {
         opacity: 0;
         transform: scale(0.98);
     }
+}
+
+.server-dropdown-panel {
+    background: rgba(14, 16, 18, 0.97);
+    backdrop-filter: blur(24px);
+}
+
+.server-dropdown-enter-active,
+.server-dropdown-leave-active {
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+    transform-origin: top center;
+}
+
+.server-dropdown-enter-from,
+.server-dropdown-leave-to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
 }
 </style>

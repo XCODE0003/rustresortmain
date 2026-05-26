@@ -250,6 +250,8 @@ interface ShopItem {
     price: number;
     image?: string;
     category_id: number;
+    server?: number | string | null;
+    servers?: unknown;
     variations?: any[];
 }
 
@@ -257,8 +259,27 @@ const props = defineProps<{
     categories: Category[];
     items: ShopItem[];
     selectedServer?: Server | null;
+    servers?: Server[];
     categorySlug?: string | null;
 }>();
+
+const normalizeServerIds = (value: unknown): string[] => {
+    const toIds = (arr: unknown[]): string[] =>
+        arr
+            .filter((entry) => entry !== null && entry !== undefined && entry !== '')
+            .map((entry) => String(entry));
+
+    if (Array.isArray(value)) return toIds(value);
+    if (typeof value === 'string') {
+        try {
+            const parsed = JSON.parse(value);
+            if (Array.isArray(parsed)) return toIds(parsed);
+        } catch {
+            return [];
+        }
+    }
+    return [];
+};
 
 const { itemName, itemDescription, categoryTitle } = useShopLocale();
 
@@ -416,6 +437,11 @@ const handleBuyItem = (payload: any) => {
         }))
         : undefined;
 
+    const itemServerField = item.server === null || item.server === undefined
+        ? null
+        : Number(item.server);
+    const itemServerIds = normalizeServerIds(item.servers);
+
     modalStore.open({
         itemId: item.id,
         title: itemName(item),
@@ -424,6 +450,11 @@ const handleBuyItem = (payload: any) => {
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,
+        serverId: props.selectedServer?.id ?? null,
+        serverName: props.selectedServer?.name ?? null,
+        availableServers: (props.servers ?? []).map((s) => ({ id: s.id, name: s.name })),
+        itemServerField,
+        itemServerIds,
     });
 };
 </script>

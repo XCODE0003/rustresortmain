@@ -7,6 +7,11 @@ export type VariationOption = {
     variationId: number;
 };
 
+export type ServerOption = {
+    id: number;
+    name: string;
+};
+
 type DescriptionModalPayload = {
     itemId?: number;
     title?: string;
@@ -15,6 +20,11 @@ type DescriptionModalPayload = {
     imageSrc?: string;
     variations?: VariationOption[];
     defaultAmount?: number;
+    serverId?: number | null;
+    serverName?: string | null;
+    availableServers?: ServerOption[];
+    itemServerField?: number | null;
+    itemServerIds?: string[];
 };
 
 let pendingAmount: number | null = null;
@@ -33,6 +43,11 @@ const state = reactive({
     amount: 1,
     isGift: false,
     giftSteamId: '',
+    serverId: null as number | null,
+    serverName: null as string | null,
+    availableServers: [] as ServerOption[],
+    itemServerField: null as number | null,
+    itemServerIds: [] as string[],
 });
 
 const defaultVariations: VariationOption[] = [
@@ -104,12 +119,42 @@ export function useDescriptionModalStore() {
             state.variations = [];
         }
 
+        if (payload.serverId !== undefined) {
+            state.serverId = payload.serverId;
+        }
+        if (payload.serverName !== undefined) {
+            state.serverName = payload.serverName;
+        }
+        state.availableServers = payload.availableServers ?? [];
+        state.itemServerField = payload.itemServerField ?? null;
+        state.itemServerIds = payload.itemServerIds ?? [];
+
         state.isOpen = true;
     };
 
     const close = (): void => {
         state.isOpen = false;
         state.itemId = null;
+        state.serverId = null;
+        state.serverName = null;
+        state.availableServers = [];
+        state.itemServerField = null;
+        state.itemServerIds = [];
+    };
+
+    const setServer = (server: ServerOption | null): void => {
+        state.serverId = server?.id ?? null;
+        state.serverName = server?.name ?? null;
+    };
+
+    const isItemAvailableOnServer = (serverId: number): boolean => {
+        const field = state.itemServerField;
+        // Item without server constraint (field is 0 or null) — available everywhere
+        if (field === null || field === 0) return true;
+        // Exact match
+        if (field === serverId) return true;
+        // Listed in additional servers array
+        return state.itemServerIds.includes(String(serverId));
     };
 
     const toggleGift = (): void => {
@@ -157,6 +202,8 @@ export function useDescriptionModalStore() {
         incrementAmount,
         decrementAmount,
         setAmount,
+        setServer,
+        isItemAvailableOnServer,
     };
 }
 
