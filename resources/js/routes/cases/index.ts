@@ -625,7 +625,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Backend\CasesController::destroy
-* @see app/Http/Controllers/Backend/CasesController.php:302
+* @see app/Http/Controllers/Backend/CasesController.php:301
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
 export const destroy = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -640,7 +640,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Backend\CasesController::destroy
-* @see app/Http/Controllers/Backend/CasesController.php:302
+* @see app/Http/Controllers/Backend/CasesController.php:301
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
 destroy.url = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -673,7 +673,7 @@ destroy.url = (args: { case: number | { id: number } } | [caseParam: number | { 
 
 /**
 * @see \App\Http\Controllers\Backend\CasesController::destroy
-* @see app/Http/Controllers/Backend/CasesController.php:302
+* @see app/Http/Controllers/Backend/CasesController.php:301
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
 destroy.delete = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -683,7 +683,7 @@ destroy.delete = (args: { case: number | { id: number } } | [caseParam: number |
 
 /**
 * @see \App\Http\Controllers\Backend\CasesController::destroy
-* @see app/Http/Controllers/Backend/CasesController.php:302
+* @see app/Http/Controllers/Backend/CasesController.php:301
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
 const destroyForm = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -698,7 +698,7 @@ const destroyForm = (args: { case: number | { id: number } } | [caseParam: numbe
 
 /**
 * @see \App\Http\Controllers\Backend\CasesController::destroy
-* @see app/Http/Controllers/Backend/CasesController.php:302
+* @see app/Http/Controllers/Backend/CasesController.php:301
 * @route '/backend_uc7BgHFmw32FDIEp/cases/{case}'
 */
 destroyForm.delete = (args: { case: number | { id: number } } | [caseParam: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -117,8 +117,6 @@ Route::middleware('backend')
 
         Route::get('/', [Backend\BackendController::class, 'index'])->name('backend');
 
-        Route::get('/updateitems', [Backend\UpdateitemsController::class, 'index']);
-
         Route::get('/settings/security', [Backend\UserSettingsController::class, 'security'])->name('backend.settings.security');
         Route::patch('/settings/security', [Backend\UserSettingsController::class, 'security_store']);
 

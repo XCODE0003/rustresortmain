@@ -48,19 +48,13 @@
                     </svg>
                 </div>
             </div> -->
-            <!-- Player ID badge (name + level) -->
+            <!-- Player nameplate: project-style dark pill with bullet separator -->
             <div
-                class="absolute -top-7 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-xl border border-Orange/40 bg-gradient-to-br from-[#1a1c1e] via-[#0e1012] to-[#0b0d0f] px-5 py-2.5 text-nowrap shadow-[0_4px_24px_rgba(0,0,0,0.55),0_0_18px_rgba(243,164,93,0.22)] backdrop-blur-xl"
+                class="button-black absolute -top-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 rounded-lg border border-StrokeGray px-6 py-3.5 text-xs font-bold text-nowrap"
             >
-                <span class="size-1.5 shrink-0 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)]"></span>
-                <span class="text-[13px] font-bold uppercase text-white tracking-wide">
-                    {{ playerName }}
-                </span>
-                <span class="h-3 w-px bg-StrokeGray"></span>
-                <span class="flex items-center gap-1 text-[11px] font-bold uppercase">
-                    <span class="text-TextGray">LVL</span>
-                    <span class="text-Orange">{{ playerLevel }}</span>
-                </span>
+                <span class="text-white uppercase">{{ playerName }}</span>
+                <span class="text-TextGray">•</span>
+                <span class="text-Orange">{{ playerLevel }} LVL</span>
             </div>
         </div>
         <Transition

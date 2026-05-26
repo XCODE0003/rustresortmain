@@ -29,7 +29,7 @@
                 {{ title }}
             </div>
             <div class="flex flex-col gap-8 text-center">
-                <h1 v-html="description" class="text-xs/[30px] max-h-[400px] overflow-y-auto description-modal-text font-medium text-white rounded-lg">
+                <h1 v-html="cleanedDescription" class="text-xs/[30px] max-h-[400px] overflow-y-auto description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
                 <!-- Server selector dropdown -->
@@ -277,6 +277,46 @@ const onServerDropdownPointerDown = (event: PointerEvent): void => {
 // Закрываем дропдаун при закрытии модалки
 watch(isOpen, (value) => {
     if (!value) isServerDropdownOpen.value = false;
+});
+
+/**
+ * Вырезаем мусорный блок «Дополнительные услуги» / «Additional services» из описания товара.
+ * Эти секции остались от legacy-импорта где в описание VIP-паков копировали список других услуг (Rate, SkinBox, Stamina и т.д.) —
+ * показывать их пользователю при покупке КОНКРЕТНОГО товара неправильно (вводит в заблуждение).
+ * Стрим — самый дешёвый фикс: данные в БД не трогаем, только рендер.
+ */
+const DESCRIPTION_CUTOFF_MARKERS = [
+    'Дополнительные услуги',
+    'Дополнительные  услуги',
+    'дополнительные услуги',
+    'Additional services',
+    'additional services',
+];
+
+const cleanedDescription = computed<string>(() => {
+    const raw = String(description.value ?? '');
+    if (!raw) return '';
+
+    // Найдём самую раннюю позицию любого маркера и обрежем по ней
+    let cutAt = -1;
+    for (const marker of DESCRIPTION_CUTOFF_MARKERS) {
+        const pos = raw.indexOf(marker);
+        if (pos !== -1 && (cutAt === -1 || pos < cutAt)) {
+            cutAt = pos;
+        }
+    }
+
+    if (cutAt === -1) return raw;
+
+    // Если маркер сидит внутри HTML-тега — поднимемся к началу тега, чтобы не оставить «огрызок»
+    let cleanCut = cutAt;
+    const lastTagStart = raw.lastIndexOf('<', cutAt);
+    const lastTagEnd = raw.lastIndexOf('>', cutAt);
+    if (lastTagStart > lastTagEnd) {
+        cleanCut = lastTagStart;
+    }
+
+    return raw.slice(0, cleanCut).trimEnd();
 });
 
 const giftState = computed({

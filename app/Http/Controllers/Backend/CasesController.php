@@ -269,7 +269,6 @@ class CasesController extends Controller
                 ];
             }
         }
-        //dd($items);
 
         $data['items'] = json_encode($items);
 

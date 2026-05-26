@@ -1,5 +1,4 @@
 import BackendController from './BackendController'
-import UpdateitemsController from './UpdateitemsController'
 import UserSettingsController from './UserSettingsController'
 import SettingsController from './SettingsController'
 import TicketController from './TicketController'
@@ -25,7 +24,6 @@ import CasesItemController from './CasesItemController'
 
 const Backend = {
     BackendController: Object.assign(BackendController, BackendController),
-    UpdateitemsController: Object.assign(UpdateitemsController, UpdateitemsController),
     UserSettingsController: Object.assign(UserSettingsController, UserSettingsController),
     SettingsController: Object.assign(SettingsController, SettingsController),
     TicketController: Object.assign(TicketController, TicketController),

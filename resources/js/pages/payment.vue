@@ -42,16 +42,6 @@
                                 : 'border-StrokeGray bg-[#0e1012]/60 hover:border-Orange/60 hover:bg-Orange/[0.04] hover:shadow-[0_0_16px_rgba(243,164,93,0.18)]',
                         ]"
                     >
-                        <!-- Active dot -->
-                        <span
-                            v-if="selectedGateway === code"
-                            class="pointer-events-none absolute -top-1 -right-1 flex size-2.5"
-                            aria-hidden="true"
-                        >
-                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-Orange opacity-60"></span>
-                            <span class="relative inline-flex size-2.5 rounded-full bg-Orange ring-2 ring-[#0b0d0f]"></span>
-                        </span>
-
                         <!-- Currency chip -->
                         <span
                             :class="[
@@ -64,13 +54,21 @@
                             {{ gateway.currency }}
                         </span>
 
-                        <!-- Logo: uniform bounding box for every provider -->
+                        <!-- Logo: uniform bounding box for every provider.
+                             Some PNG/SVG assets ship with internal padding (visa, mir/СБП, heleket-crypto),
+                             so we give those a larger max-h/max-w to compensate visually. -->
                         <div class="flex h-full w-full items-center justify-center px-2 pt-3">
                             <img
                                 v-if="gateway.logo"
                                 :src="'/' + gateway.logo"
                                 :alt="gateway.name"
-                                class="max-h-12 max-w-[88%] object-contain transition-transform duration-300 group-hover:scale-[1.04] md:max-h-14"
+                                :data-code="String(code)"
+                                :class="[
+                                    'object-contain transition-transform duration-300 group-hover:scale-[1.04]',
+                                    isOversizeLogo(String(code))
+                                        ? 'max-h-[68px] max-w-[96%] md:max-h-[84px]'
+                                        : 'max-h-12 max-w-[86%] md:max-h-14',
+                                ]"
                             />
                             <span
                                 v-else
@@ -301,6 +299,19 @@ export default {
             return props.gateways[selectedGateway.value].type === 'steam_trade';
         });
 
+        // Шлюзы с внутренним padding в исходных лого (визуально кажутся мельче).
+        // Им увеличиваем bounding box, чтобы выровнять с остальными.
+        const OVERSIZE_LOGO_CODES = new Set([
+            'viza_mc_rf',      // VISA RU PNG c полями
+            'viza_mc_world',   // VISA WORLD PNG c полями
+            'mir',             // СБП (mir.svg)
+            'heleket',         // Heleket (parent)
+            'tinkoff_crypto',  // Heleket CRYPTO (sbp-crypto.svg c полями)
+            'sbp',             // защитный alias на будущее
+        ]);
+
+        const isOversizeLogo = (code) => OVERSIZE_LOGO_CODES.has(String(code).toLowerCase());
+
         const submitPayment = () => {
             if (!selectedGateway.value || !agreeTerms.value || !agreePolicy.value) {
                 return;
@@ -327,6 +338,7 @@ export default {
             agreePolicy,
             processing,
             isSteamGateway,
+            isOversizeLogo,
             submitPayment,
         };
     },
