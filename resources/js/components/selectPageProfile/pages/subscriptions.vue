@@ -58,6 +58,7 @@ interface ShopItem {
     name_ru: string;
     name_en?: string | null;
     image?: string;
+    is_command?: boolean | number;
 }
 
 interface Server {
@@ -78,8 +79,14 @@ const page = usePage();
 const { locale, t } = useI18n();
 const { itemName } = useShopLocale();
 const user = computed(() => (page.props as any).user);
+
+// Подписки = ТОЛЬКО командные товары (VIP, Rate, привилегии) с validity.
+// Физические айтемы (kits, оружие) с validity = wipe_block, не подписки —
+// они теперь в Маркете.
 const purchases = computed(() =>
-    (user.value?.shop_purchases || []).filter((p: Purchase) => !!p.validity)
+    (user.value?.shop_purchases || []).filter(
+        (p: Purchase) => !!p.validity && !!p.shop_item?.is_command,
+    ),
 );
 
 // Tick every minute to update countdowns

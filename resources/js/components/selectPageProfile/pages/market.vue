@@ -63,6 +63,7 @@ interface ShopItem {
     name_en?: string | null;
     image?: string;
     price?: number;
+    is_command?: boolean | number;
 }
 
 interface Server {
@@ -83,8 +84,11 @@ interface Purchase {
 const page = usePage();
 const user = computed(() => (page.props as any).user);
 
+// Маркет показывает ФИЗИЧЕСКИЕ товары (киты, оружие, ресурсы, скины) —
+// всё, что не is_command. Validity на них стоит только из-за wipe_block
+// («сгорает на вайпе»), но к подпискам они не относятся.
 const purchases = computed(() =>
-    (user.value?.shop_purchases || []).filter((p: Purchase) => !p.validity)
+    (user.value?.shop_purchases || []).filter((p: Purchase) => !p.shop_item?.is_command)
 );
 
 const getItemImage = (purchase: Purchase): string => {
