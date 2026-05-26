@@ -29,32 +29,57 @@
             <div
                 class="payment-section relative flex w-full items-stretch lg:items-start gap-2.5 max-lg:flex-col md:gap-5 lg:gap-8"
             >
-                <div class="grid w-full grid-cols-3 gap-2.5 lg:grid-cols-4">
-                    <div
+                <div class="grid w-full grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
+                    <button
                         v-for="(gateway, code) in gateways"
                         :key="code"
+                        type="button"
                         @click="selectedGateway = code"
-                        class="black-button relative flex h-[84px] cursor-pointer items-center justify-center rounded-xl border px-5 py-4 duration-300 ease-in-out md:h-[95px] lg:h-[130px]"
-                        :class="{
-                            'border-Orange bg-PaleOrange': selectedGateway === code,
-                            'border-StrokeGray hover:border-Orange hover:bg-PaleOrange hover:opacity-80': selectedGateway !== code
-                        }"
+                        :class="[
+                            'gateway-card group relative flex aspect-[5/4] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border p-3 transition-all duration-300 ease-out md:p-4',
+                            selectedGateway === code
+                                ? 'border-Orange bg-gradient-to-br from-Orange/18 via-Orange/8 to-transparent shadow-[0_0_28px_rgba(243,164,93,0.4),inset_0_1px_0_rgba(255,255,255,0.08)]'
+                                : 'border-StrokeGray bg-[#0e1012]/60 hover:border-Orange/60 hover:bg-Orange/[0.04] hover:shadow-[0_0_16px_rgba(243,164,93,0.18)]',
+                        ]"
                     >
-                        <img
-                            v-if="gateway.logo"
-                            :src="'/' + gateway.logo"
-                            :alt="gateway.name"
-                            class="h-10 object-contain"
-                        />
-                        <span v-else class="text-xs font-bold text-white">
-                            {{ gateway.name }}
+                        <!-- Active dot -->
+                        <span
+                            v-if="selectedGateway === code"
+                            class="pointer-events-none absolute -top-1 -right-1 flex size-2.5"
+                            aria-hidden="true"
+                        >
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-Orange opacity-60"></span>
+                            <span class="relative inline-flex size-2.5 rounded-full bg-Orange ring-2 ring-[#0b0d0f]"></span>
                         </span>
-                        <div
-                            class="button-black absolute top-1.5 right-1.5 rounded-md border border-StrokeGray px-2 py-1 text-[10px] font-bold text-TextGray uppercase"
+
+                        <!-- Currency chip -->
+                        <span
+                            :class="[
+                                'absolute top-2 left-2 rounded-md border px-1.5 py-0.5 text-[9px] font-bold uppercase backdrop-blur-md transition-colors duration-300',
+                                selectedGateway === code
+                                    ? 'border-Orange/40 bg-[#0E1012]/80 text-Orange'
+                                    : 'border-StrokeGray bg-[#0E1012]/80 text-TextGray group-hover:text-white',
+                            ]"
                         >
                             {{ gateway.currency }}
+                        </span>
+
+                        <!-- Logo: uniform bounding box for every provider -->
+                        <div class="flex h-full w-full items-center justify-center px-2 pt-3">
+                            <img
+                                v-if="gateway.logo"
+                                :src="'/' + gateway.logo"
+                                :alt="gateway.name"
+                                class="max-h-12 max-w-[88%] object-contain transition-transform duration-300 group-hover:scale-[1.04] md:max-h-14"
+                            />
+                            <span
+                                v-else
+                                class="text-center text-sm font-bold text-white uppercase tracking-wide"
+                            >
+                                {{ gateway.name }}
+                            </span>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div
                     class="flex flex-col gap-4 md:min-w-[569px] lg:min-w-[589px]"
@@ -308,4 +333,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.gateway-card {
+    background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(9, 11, 13, 0.6) 0%, rgba(9, 11, 13, 0.6) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gateway-card img {
+        transition: none !important;
+    }
+    .gateway-card:hover img {
+        transform: none !important;
+    }
+}
+</style>
