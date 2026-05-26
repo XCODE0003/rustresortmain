@@ -103,19 +103,28 @@
                 </h2>
 
                 <div class="flex w-full flex-col gap-8">
-                    <div class="flex w-full flex-wrap items-center justify-center gap-1.5">
+                    <div class="flex w-full flex-wrap items-center justify-center gap-2">
                         <button
                             v-for="server in servers"
                             :key="server.id"
                             type="button"
                             @click="selectedShopServerId = server.id"
                             :class="[
-                                'button-black rounded-lg border px-6 py-3.5 text-sm font-bold uppercase duration-300 ease-in-out',
+                                'group relative cursor-pointer rounded-lg border px-7 py-4 text-sm font-bold uppercase transition-all duration-300 ease-out',
                                 selectedShopServerId === server.id
-                                    ? 'text-Orange! border-Orange bg-Orange/10 shadow-[0_0_12px_rgba(255,140,0,0.3)]'
-                                    : 'border-StrokeGray text-TextGray hover:border-white/40 hover:text-white',
+                                    ? 'border-Orange text-white bg-gradient-to-bl from-Orange/35 via-Orange/15 to-Orange/[0.02] shadow-[0_0_32px_rgba(243,164,93,0.55),inset_0_1px_0_rgba(255,255,255,0.1)]'
+                                    : 'border-Orange/30 text-white bg-Orange/[0.04] backdrop-blur-sm hover:border-Orange/60 hover:bg-Orange/[0.08] hover:shadow-[0_0_18px_rgba(243,164,93,0.25)]',
                             ]"
                         >
+                            <!-- Active pulse dot -->
+                            <span
+                                v-if="selectedShopServerId === server.id"
+                                class="pointer-events-none absolute -top-1 -right-1 flex size-2.5"
+                                aria-hidden="true"
+                            >
+                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-Orange opacity-60"></span>
+                                <span class="relative inline-flex size-2.5 rounded-full bg-Orange ring-2 ring-[#0b0d0f]"></span>
+                            </span>
                             {{ server.name }}
                         </button>
                     </div>
