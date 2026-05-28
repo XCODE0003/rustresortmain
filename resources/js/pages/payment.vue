@@ -65,11 +65,9 @@
                                 :data-code="String(code)"
                                 :class="[
                                     'object-contain transition-transform duration-300 group-hover:scale-[1.04]',
-                                    isExtraOversizeLogo(String(code))
-                                        ? 'max-h-[88px] max-w-full md:max-h-[112px]'
-                                        : isOversizeLogo(String(code))
-                                            ? 'max-h-[68px] max-w-[96%] md:max-h-[84px]'
-                                            : 'max-h-12 max-w-[86%] md:max-h-14',
+                                    isOversizeLogo(String(code))
+                                        ? 'max-h-16 max-w-[96%] md:max-h-20'
+                                        : 'max-h-12 max-w-[86%] md:max-h-14',
                                 ]"
                             />
                             <span
@@ -301,23 +299,17 @@ export default {
             return props.gateways[selectedGateway.value].type === 'steam_trade';
         });
 
-        // Шлюзы с внутренним padding в исходных лого — увеличенный bounding box.
+        // Composite/wide логотипы (Visa+Mastercard, Heleket) — широкие по форме,
+        // им нужен больший bounding box чтобы не казаться мелкими рядом с одиночными.
         const OVERSIZE_LOGO_CODES = new Set([
-            'viza_mc_rf',      // VISA RU PNG c полями
-            'viza_mc_world',   // VISA WORLD PNG c полями
-            'mir',             // СБП (mir.svg)
-            'sbp',             // защитный alias на будущее
-        ]);
-
-        // Heleket-семейство: лого сидят с ЕЩЁ большими внутренними полями
-        // (внутри ~50% самой картинки прозрачно). Дополнительный тир сверху.
-        const EXTRA_OVERSIZE_LOGO_CODES = new Set([
+            'viza_mc_rf',
+            'viza_mc_world',
             'heleket',
-            'tinkoff_crypto',  // Heleket CRYPTO
+            'tinkoff_crypto',
         ]);
 
         const isOversizeLogo = (code) => OVERSIZE_LOGO_CODES.has(String(code).toLowerCase());
-        const isExtraOversizeLogo = (code) => EXTRA_OVERSIZE_LOGO_CODES.has(String(code).toLowerCase());
+
 
         const submitPayment = () => {
             if (!selectedGateway.value || !agreeTerms.value || !agreePolicy.value) {
@@ -346,7 +338,6 @@ export default {
             processing,
             isSteamGateway,
             isOversizeLogo,
-            isExtraOversizeLogo,
             submitPayment,
         };
     },

@@ -64,6 +64,7 @@ interface ShopItem {
     image?: string;
     price?: number;
     is_command?: boolean | number;
+    wipe_block?: boolean | number;
 }
 
 interface Server {
@@ -84,11 +85,18 @@ interface Purchase {
 const page = usePage();
 const user = computed(() => (page.props as any).user);
 
-// Маркет показывает ФИЗИЧЕСКИЕ товары (киты, оружие, ресурсы, скины) —
-// всё, что не is_command. Validity на них стоит только из-за wipe_block
-// («сгорает на вайпе»), но к подпискам они не относятся.
+const toBool = (v: unknown): boolean => v === true || v === 1 || v === '1';
+
+// Маркет = физические товары (которые выдаются один раз и могут сгорать на вайпе):
+//   - НЕ является командной привилегией (!is_command), ИЛИ
+//   - является командой, но привязан к вайпу (wipe_block — кит/набор/оружие,
+//     которое исчезает на следующем вайпе, не подписка)
 const purchases = computed(() =>
-    (user.value?.shop_purchases || []).filter((p: Purchase) => !p.shop_item?.is_command)
+    (user.value?.shop_purchases || []).filter((p: Purchase) => {
+        const isCommand = toBool(p.shop_item?.is_command);
+        const wipeBlock = toBool(p.shop_item?.wipe_block);
+        return !isCommand || wipeBlock;
+    }),
 );
 
 const getItemImage = (purchase: Purchase): string => {

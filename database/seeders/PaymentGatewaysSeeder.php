@@ -255,7 +255,7 @@ class PaymentGatewaysSeeder extends Seeder
                     'backend' => 'pally',
                     'payment_method' => 'BANK_CARD',
                 ],
-                'logo' => 'images/payment-logos/viza_mc_rf.png',
+                'logo' => 'images/payment-logos/v2/visa_mastercard.svg',
             ],
             [
                 'code' => 'gpay',
@@ -267,7 +267,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 10,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'tebex'],
-                'logo' => 'images/payment-logos/google-pay.svg', // was GPAY.png in old DB
+                'logo' => 'images/payment-logos/v2/gpay.svg',
             ],
             [
                 'code' => 'viza_mc_world',
@@ -279,7 +279,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 1,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'tebex'],
-                'logo' => 'images/payment-logos/viza_mc_world.png',
+                'logo' => 'images/payment-logos/v2/visa_mastercard.svg',
             ],
             [
                 'code' => 'paypal',
@@ -293,7 +293,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'settings' => [
                     'backend' => 'tebex',
                 ],
-                'logo' => 'images/payment-logos/PayPal.png',
+                'logo' => 'images/payment-logos/v2/paypal.svg',
             ],
             [
                 'code' => 'alipay',
@@ -305,7 +305,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 10,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'tebex'],
-                'logo' => 'images/payment-logos/Alipay.png',
+                'logo' => 'images/payment-logos/v2/alipay.svg',
             ],
             [
                 'code' => 'mir',
@@ -320,7 +320,9 @@ class PaymentGatewaysSeeder extends Seeder
                     'backend' => 'pally',
                     'payment_method' => 'SBP',
                 ],
-                'logo' => 'images/payment-logos/mir.svg',
+                // Gateway labeled 'mir' but actually represents СБП (Russian fast-payment system).
+                // Backend method is 'SBP', so we show the СБП logo instead of Mir card mark.
+                'logo' => 'images/payment-logos/v2/sbp.svg',
             ],
             [
                 'code' => 'jcb',
@@ -332,7 +334,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 10,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'tebex'],
-                'logo' => 'images/payment-logos/JCB_logo.svg.png',
+                'logo' => 'images/payment-logos/v2/jcb.svg',
             ],
             [
                 'code' => 'american_express',
@@ -344,7 +346,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 10,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'tebex'],
-                'logo' => 'images/payment-logos/AmericanExpress_.png',
+                'logo' => 'images/payment-logos/v2/amex.svg',
             ],
             [
                 'code' => 'steam',
@@ -360,7 +362,7 @@ class PaymentGatewaysSeeder extends Seeder
                     // Ссылка на Steam-трейд. Меняется в настройках шлюза в админке.
                     'trade_url' => '',
                 ],
-                'logo' => 'images/payment-logos/steam-logo3.png',
+                'logo' => 'images/payment-logos/v2/steam.svg',
             ],
             [
                 'code' => 'bitcoin',
@@ -375,7 +377,7 @@ class PaymentGatewaysSeeder extends Seeder
                     'backend' => 'heleket',
                     'to_currency' => 'BTC',
                 ],
-                'logo' => 'images/payment-logos/bitcoin.svg',
+                'logo' => 'images/payment-logos/v2/bitcoin.svg',
             ],
             [
                 'code' => 'usdt',
@@ -390,7 +392,7 @@ class PaymentGatewaysSeeder extends Seeder
                     'backend' => 'heleket',
                     'to_currency' => 'USDT',
                 ],
-                'logo' => 'images/payment-logos/USDT.png',
+                'logo' => 'images/payment-logos/v2/tether.svg',
             ],
             [
                 'code' => 'tinkoff_crypto',
@@ -402,7 +404,7 @@ class PaymentGatewaysSeeder extends Seeder
                 'min_amount' => 10,
                 'commission_percent' => 0,
                 'settings' => ['backend' => 'heleket'],
-                'logo' => 'images/payment-logos/sbp-crypto.svg', // was SBP.png in old DB
+                'logo' => 'images/payment-logos/v2/heleket.svg',
             ],
         ];
     }

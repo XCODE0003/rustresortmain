@@ -59,6 +59,7 @@ interface ShopItem {
     name_en?: string | null;
     image?: string;
     is_command?: boolean | number;
+    wipe_block?: boolean | number;
 }
 
 interface Server {
@@ -80,13 +81,17 @@ const { locale, t } = useI18n();
 const { itemName } = useShopLocale();
 const user = computed(() => (page.props as any).user);
 
-// Подписки = ТОЛЬКО командные товары (VIP, Rate, привилегии) с validity.
-// Физические айтемы (kits, оружие) с validity = wipe_block, не подписки —
-// они теперь в Маркете.
+const toBool = (v: unknown): boolean => v === true || v === 1 || v === '1';
+
+// Подписки = ТОЛЬКО командные привилегии БЕЗ wipe_block (VIP, Rate, права)
+// и с активной/истёкшей validity. Wipe-bound kits/оружие отсюда исключаются —
+// они в Маркете.
 const purchases = computed(() =>
-    (user.value?.shop_purchases || []).filter(
-        (p: Purchase) => !!p.validity && !!p.shop_item?.is_command,
-    ),
+    (user.value?.shop_purchases || []).filter((p: Purchase) => {
+        const isCommand = toBool(p.shop_item?.is_command);
+        const wipeBlock = toBool(p.shop_item?.wipe_block);
+        return !!p.validity && isCommand && !wipeBlock;
+    }),
 );
 
 // Tick every minute to update countdowns
