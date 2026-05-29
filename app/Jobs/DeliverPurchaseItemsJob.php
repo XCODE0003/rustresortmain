@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Models\BucketItem;
 use App\Models\Donate;
+use App\Models\Server;
 use App\Models\ShopItem;
 use App\Models\Shopping;
 use App\Models\ShopPurchase;
@@ -30,7 +32,37 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             return;
         }
 
+        // Две разные схемы выдачи:
+        //  - Услуги/привилегии/рейты/изучения (is_command=1) — RCON-команда через
+        //    таблицу shopping (addgroup / grantperm ...).
+        //  - Обычные товары (оружие, ресурсы, патроны...) — кладём в bucket, их
+        //    выдаёт внутриигровой плагин по short_name. RCON не используется,
+        //    т.к. у таких предметов нет команды (а у части в БД лежит мусор 0/1).
+        if ($item->is_command) {
+            $this->deliverViaRcon($item);
+        } else {
+            $this->deliverToBucket($item);
+        }
+
+        $this->recordPurchase($item);
+
+        Log::info("Item delivered for donate {$this->donate->id} (".($item->is_command ? 'rcon' : 'bucket').')');
+    }
+
+    /**
+     * Услуга: формируем команду и кладём в очередь shopping, выдаём сразу.
+     */
+    protected function deliverViaRcon(ShopItem $item): void
+    {
         $command = $this->generateCommand($item, $this->donate);
+
+        // Не создаём пустых записей — пустая команда ничего не выдаёт, а очередь
+        // помечает её как доставленную, маскируя проблему.
+        if (trim($command) === '' || $command === '0') {
+            Log::warning("Empty command for is_command item {$item->id}, donate {$this->donate->id} — nothing to deliver");
+
+            return;
+        }
 
         Shopping::create([
             'user_id' => $this->donate->user_id,
@@ -39,9 +71,45 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             'server' => $this->donate->server ?? $item->server ?? 0,
         ]);
 
+        // Не ждём следующий тик планировщика — пытаемся выдать сразу.
+        ProcessShoppingQueueJob::dispatchSync();
+    }
+
+    /**
+     * Обычный товар: создаём записи в bucket (по одной на каждую купленную штуку),
+     * откуда их заберёт игровой плагин.
+     */
+    protected function deliverToBucket(ShopItem $item): void
+    {
+        $steamId = (string) ($this->donate->steam_id ?? $this->donate->user?->steam_id ?? '');
+        $serverId = $this->donate->server ?? $item->server ?? null;
+        $server = $serverId ? Server::find($serverId) : null;
+        $amount = $this->resolveAmount($item, $this->donate);
+        $count = max(1, (int) ($this->donate->count ?? 1));
+
+        for ($i = 0; $i < $count; $i++) {
+            BucketItem::create([
+                'user_id' => $this->donate->user_id,
+                'shop_item_id' => $item->id,
+                'rust_id' => (int) ($item->item_id ?? 0),
+                'var_id' => $this->donate->var_id,
+                'price' => $item->price,
+                'quantity' => $amount,
+                'wipe_block' => (int) $item->wipe_block,
+                'steam_id' => $steamId,
+                'server_name' => $server?->name,
+                'server_id' => $serverId,
+            ]);
+        }
+
+        Log::info("Bucket: {$count}x{$amount} {$item->short_name} for donate {$this->donate->id}");
+    }
+
+    protected function recordPurchase(ShopItem $item): void
+    {
         $validityDate = null;
         if ($item->wipe_block) {
-            $server = \App\Models\Server::find($this->donate->server);
+            $server = Server::find($this->donate->server);
             $validityDate = $server?->next_wipe;
         } elseif ($item->is_command && $this->donate->var_id) {
             // variation_id = количество дней (например VIP 6д, 30д)
@@ -58,11 +126,24 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             'server_id' => $this->donate->server,
             'validity' => $validityDate,
         ]);
+    }
 
-        // Не ждём следующий тик планировщика — пытаемся выдать сразу.
-        ProcessShoppingQueueJob::dispatchSync();
+    /**
+     * Итоговое количество предмета с учётом выбранной вариации.
+     */
+    protected function resolveAmount(ShopItem $item, Donate $donate): int
+    {
+        $amount = $item->amount;
 
-        Log::info("Item delivered for donate {$this->donate->id}, command queued in shopping table");
+        if ($donate->var_id !== null && is_array($item->variations)) {
+            $variation = collect($item->variations)
+                ->firstWhere(fn ($v) => (string) ($v['id'] ?? $v['variation_id'] ?? '') === (string) $donate->var_id);
+            if ($variation) {
+                $amount = $variation['amount'] ?? $variation['quantity'] ?? $amount;
+            }
+        }
+
+        return max(1, (int) $amount);
     }
 
     protected function generateCommand(ShopItem $item, Donate $donate): string
