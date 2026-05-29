@@ -197,9 +197,12 @@ class HeleketGateway implements PaymentGatewayInterface
 
     protected function mapStatus(string $status): string
     {
+        // Финальные статусы Heleket/Cryptomus: paid (точная оплата) и paid_over
+        // (переплата — для крипты норма, тоже успех). Промежуточные (process,
+        // check, confirm_check) → pending, ждём финальный вебхук.
         return match (strtolower($status)) {
-            'success', 'completed', 'paid' => 'success',
-            'failed', 'cancelled', 'rejected' => 'failed',
+            'success', 'completed', 'paid', 'paid_over' => 'success',
+            'failed', 'fail', 'cancelled', 'cancel', 'rejected', 'system_fail' => 'failed',
             default => 'pending',
         };
     }
