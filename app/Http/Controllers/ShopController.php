@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\DeliverPurchaseItemsJob;
-use App\Notifications\PurchaseComplete;
 use App\Models\Donate;
 use App\Models\Server;
 use App\Models\ShopCategory;
 use App\Models\ShopItem;
 use App\Models\ShopSet;
+use App\Notifications\PurchaseComplete;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,12 +34,12 @@ class ShopController extends Controller
         };
 
         $itemsQuery = ShopItem::with('category:id,path,title_ru,title_en,sort,discount_percent')
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
             ->where('shop_items.status', 1)
             ->whereNotNull('shop_items.category_id');
 
         $setsQuery = ShopSet::with('category:id,path,title_ru,title_en,sort,discount_percent')
-            ->select(['shop_sets.id', 'shop_sets.name_ru', 'shop_sets.name_en', 'shop_sets.price', 'shop_sets.image', 'shop_sets.category_id', 'shop_sets.server', 'shop_sets.servers', 'shop_sets.sort', 'shop_sets.amount', 'shop_sets.discount_percent', 'shop_sets.disable_category_discount', 'shop_sets.description_ru', 'shop_sets.description_en', 'shop_sets.items'])
+            ->select(['shop_sets.id', 'shop_sets.name_ru', 'shop_sets.name_en', 'shop_sets.price', 'shop_sets.price_usd', 'shop_sets.image', 'shop_sets.category_id', 'shop_sets.server', 'shop_sets.servers', 'shop_sets.sort', 'shop_sets.amount', 'shop_sets.discount_percent', 'shop_sets.disable_category_discount', 'shop_sets.description_ru', 'shop_sets.description_en', 'shop_sets.items'])
             ->where('shop_sets.status', 1)
             ->whereNotNull('shop_sets.category_id');
 

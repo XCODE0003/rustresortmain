@@ -256,6 +256,7 @@ interface ShopItem {
     name_ru: string;
     name_en?: string | null;
     price: number;
+    price_usd?: number | null;
     image?: string;
     description_ru?: string;
     description_en?: string | null;
@@ -399,6 +400,7 @@ const openItemModal = (item: ShopItem): void => {
         title: itemName(item),
         description: itemDescription(item),
         priceRub: fallbackItemPrice,
+        priceUsd: item.price_usd ?? null,
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations: mappedVariations,
         defaultAmount: 1,

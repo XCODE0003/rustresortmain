@@ -29,10 +29,10 @@
 
                         <div class="flex items-center gap-4">
                             <div v-if="item.discount" class="text-xl text-TextGray line-through">
-                                {{ item.price }} {{ currencySymbol }}
+                                {{ displayPrice(item.price, item.price_usd) }}
                             </div>
                             <div class="text-3xl font-bold text-Orange">
-                                {{ finalPrice }} {{ currencySymbol }}
+                                {{ displayPrice(finalPrice, finalPriceUsd) }}
                             </div>
                         </div>
 
@@ -79,6 +79,7 @@ interface ShopItemShow {
     description_ru?: string | null;
     description_en?: string | null;
     price: number;
+    price_usd?: number | null;
     discount?: number;
     image?: string;
     type?: string;
@@ -101,7 +102,7 @@ const props = defineProps<{
 }>();
 
 const { itemName, itemDescription, categoryTitle } = useShopLocale();
-const { currencySymbol } = useCurrency();
+const { displayPrice } = useCurrency();
 const modalStore = useDescriptionModalStore();
 
 onMounted(() => {
@@ -114,6 +115,7 @@ const displayName = computed(() => itemName(props.item));
 const displayDesc = computed(() => itemDescription(props.item));
 const displayCategory = computed(() => categoryTitle(props.item.category ?? undefined));
 const finalPrice = computed(() => props.item.price - (props.item.discount || 0));
+const finalPriceUsd = computed(() => props.item.price_usd ?? null);
 
 const openBuyModal = (): void => {
     const item = props.item;
@@ -132,6 +134,7 @@ const openBuyModal = (): void => {
         title: itemName(item),
         description: itemDescription(item),
         priceRub: finalPrice.value,
+        priceUsd: finalPriceUsd.value,
         imageSrc: item.image ? `/${item.image}` : '/images/ak.png',
         variations,
         defaultAmount: 1,

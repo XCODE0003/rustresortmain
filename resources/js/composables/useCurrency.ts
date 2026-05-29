@@ -8,10 +8,17 @@ export function useCurrency() {
 
     const currencySymbol = computed(() => (isEn.value ? '$' : '₽'));
 
-    const formatCurrency = (amount: number | string): string => {
-        const num = Number(amount);
-        return isEn.value ? `$${num}` : `${num} ₽`;
+    /**
+     * Выбирает и форматирует цену в зависимости от локали.
+     * Если локаль — English и есть price_usd, показывает USD.
+     * Иначе показывает рублёвую цену.
+     */
+    const displayPrice = (priceRub: number | string | null | undefined, priceUsd?: number | string | null): string => {
+        if (isEn.value && priceUsd != null && Number(priceUsd) > 0) {
+            return `$${Number(priceUsd).toFixed(2)}`;
+        }
+        return `${Number(priceRub ?? 0).toFixed(2)} ₽`;
     };
 
-    return { currencySymbol, formatCurrency, isEn };
+    return { currencySymbol, displayPrice, isEn };
 }

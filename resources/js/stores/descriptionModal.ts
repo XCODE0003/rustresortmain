@@ -17,6 +17,7 @@ type DescriptionModalPayload = {
     title?: string;
     description?: string;
     priceRub?: number;
+    priceUsd?: number | null;
     imageSrc?: string;
     variations?: VariationOption[];
     defaultAmount?: number;
@@ -36,6 +37,7 @@ const state = reactive({
     description:
         'Рейты действуют только на добычу ресурсов: дерево, камень, железо, сера (добытые инструментами). Количество получаемых ресурсов инструментами: Камень(3000), Металл(1800), Сера(900). Не влияют на компоненты, ящики, дизель и другие...',
     priceRub: 599,
+    priceUsd: null as number | null,
     imageSrc: '/images/subscriptions/elete-pack.png',
 
     variations: [] as VariationOption[],
@@ -107,6 +109,9 @@ export function useDescriptionModalStore() {
         }
         if (payload.priceRub !== undefined) {
             state.priceRub = payload.priceRub;
+        }
+        if (payload.priceUsd !== undefined) {
+            state.priceUsd = payload.priceUsd ?? null;
         }
         if (payload.imageSrc !== undefined) {
             state.imageSrc = payload.imageSrc;

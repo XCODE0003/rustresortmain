@@ -89,7 +89,7 @@
                     @click.stop="handleBuy"
                     class="cursor-pointer rounded-md bg-PaleOrange px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-xs sm:text-sm font-bold text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange"
                 >
-                    {{ item.price }} {{ currencySymbol }}
+                    {{ displayPrice(item.price, item.price_usd) }}
                 </button>
             </div>
         </div>
@@ -106,6 +106,7 @@ interface ShopItem {
     name_ru: string;
     name_en?: string | null;
     price: number;
+    price_usd?: number | null;
     image?: string;
     variations?: any[];
 }
@@ -115,7 +116,7 @@ const props = defineProps<{
 }>();
 
 const { itemName } = useShopLocale();
-const { currencySymbol } = useCurrency();
+const { displayPrice } = useCurrency();
 const displayName = computed(() => itemName(props.item));
 
 const emit = defineEmits<{

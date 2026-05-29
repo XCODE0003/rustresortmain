@@ -52,6 +52,7 @@ defineProps<{
             description_ru?: string;
             description_en?: string | null;
             price: number;
+            price_usd?: number | null;
             image?: string;
             variations?: any[];
             amount?: number;
@@ -93,6 +94,7 @@ const handleBuyItem = (payload: any): void => {
         title: itemName(item),
         description: itemDescription(item),
         priceRub: item.price,
+        priceUsd: item.price_usd ?? null,
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations,
         defaultAmount: selectedQuantity,

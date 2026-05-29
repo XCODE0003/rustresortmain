@@ -159,6 +159,7 @@ const handleBuyItem = (payload) => {
         title: itemName(item),
         description: itemDescription(item),
         priceRub: item.price,
+        priceUsd: item.price_usd ?? null,
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,

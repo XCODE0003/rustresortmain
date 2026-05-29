@@ -166,7 +166,7 @@
                         :disabled="itemId == null"
                         class="rounded-lg bg-Orange px-6 py-3.5 text-sm font-bold text-black duration-300 ease-in-out hover:bg-PaleOrange hover:text-Orange disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {{ $t('shop.buy_for', { price: currentPrice }) }}
+                        {{ $t('shop.buy_for', { price: displayCurrentPrice }) }}
                     </button>
 
                     <AppSelect
@@ -225,6 +225,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import AppSelect from '@/components/select.vue';
 import Toggle from '@/components/toggle.vue';
 import { useDescriptionModalStore, type ServerOption } from '@/stores/descriptionModal';
+import { useCurrency } from '@/composables/useCurrency';
 
 const {
     itemId,
@@ -232,6 +233,7 @@ const {
     title,
     description,
     imageSrc,
+    priceUsd,
     isGift,
     giftSteamId,
     hasVariations,
@@ -249,6 +251,15 @@ const {
     incrementAmount,
     decrementAmount,
 } = useDescriptionModalStore();
+
+const { displayPrice, isEn } = useCurrency();
+
+const displayCurrentPrice = computed(() => {
+    if (isEn.value && priceUsd.value != null && Number(priceUsd.value) > 0) {
+        return `$${Number(priceUsd.value).toFixed(2)}`;
+    }
+    return `${Number(currentPrice.value).toFixed(2)} ₽`;
+});
 
 const isServerDropdownOpen = ref(false);
 const serverDropdownRef = ref<HTMLElement | null>(null);
