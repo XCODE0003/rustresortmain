@@ -69,13 +69,28 @@ class PaymentManager
                 ->mapWithKeys(function ($gateway) {
                     $isSteam = $gateway->getSetting('backend') === 'steam';
 
+                    // Пользователь всегда вводит рубли. У крипто-шлюзов лимиты
+                    // заданы в USD — переводим их в рубли для отображения и
+                    // валидации, чтобы UI был единообразным (ввод и минималка в ₽).
+                    $currency = $gateway->currency;
+                    $minAmount = $gateway->min_amount;
+                    $maxAmount = $gateway->max_amount;
+                    if (is_string($currency) && strtoupper($currency) === 'USD') {
+                        $rate = app(\App\Services\ExchangeRateService::class)->usdToRub();
+                        $minAmount = (int) ceil(((float) $minAmount) * $rate);
+                        if ($maxAmount) {
+                            $maxAmount = (int) floor(((float) $maxAmount) * $rate);
+                        }
+                        $currency = 'RUB';
+                    }
+
                     $data = [
                         'id' => $gateway->id,
                         'name' => $gateway->name_ru,
                         'logo' => $gateway->logo,
-                        'currency' => $gateway->currency,
-                        'min_amount' => $gateway->min_amount,
-                        'max_amount' => $gateway->max_amount,
+                        'currency' => $currency,
+                        'min_amount' => $minAmount,
+                        'max_amount' => $maxAmount,
                         'commission_percent' => $gateway->commission_percent,
                         'type' => $isSteam ? 'steam_trade' : 'default',
                     ];

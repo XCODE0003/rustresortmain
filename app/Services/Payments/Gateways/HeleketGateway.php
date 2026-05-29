@@ -40,17 +40,20 @@ class HeleketGateway implements PaymentGatewayInterface
         $methodGateway = PaymentGateway::query()->where('code', $donate->payment_system)->first();
         $methodCode = $methodGateway?->code ?? $donate->payment_system;
         $methodToCurrency = $methodGateway?->getSetting('to_currency');
-        // Баланс/сумма доната — в РУБЛЯХ. Фиатная валюта счёта = RUB, Heleket сам
-        // конвертирует в крипту (to_currency). Иначе 100₽ создавало счёт на 100 USD.
-        $currency = 'RUB';
 
         if (empty($paymentKey) || empty($merchantUuid)) {
             throw new \Exception('Heleket не настроен: укажите merchant_uuid и payment_key');
         }
 
+        // Баланс/ввод — в рублях, но Heleket для крипты (to_currency) игнорирует
+        // currency=RUB и выставляет счёт в USD (100₽ → счёт на 100 USD). Поэтому
+        // сами переводим рубли в доллары по курсу CoinGecko и шлём счёт в USD.
+        // Баланс при этом зачисляется в рублях 1:1 (см. ProcessPaymentWebhookJob).
+        $amountUsd = app(\App\Services\ExchangeRateService::class)->rubToUsd((float) $donate->amount);
+
         $payload = [
-            'amount' => (string) $donate->amount,
-            'currency' => $currency,
+            'amount' => (string) $amountUsd,
+            'currency' => 'USD',
             'order_id' => (string) $donate->id,
             'url_return' => $this->publicRouteUrl('payment.success', $donate->id),
             'url_callback' => $this->publicRouteUrl('api.payments.webhook', ['gateway' => 'heleket']),
