@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
       <div
         class="flex items-center gap-24 text-xs font-medium uppercase md:absolute md:left-1/2 md:-translate-x-1/2"
       >
-        <div class="flex items-center gap-16 text-TextGray max-xl:hidden">
+        <div class="flex items-center gap-16 text-TextGray max-2xl:hidden">
           <Link
             href="/servers/"
             :class="{ 'text-white': $page.url.includes('/servers') }"
@@ -107,7 +107,7 @@ onBeforeUnmount(() => {
           />
         </div>
 
-        <div class="flex items-center gap-16 text-TextGray max-xl:hidden">
+        <div class="flex items-center gap-16 text-TextGray max-2xl:hidden">
 
           <Link
             href="/rating"
@@ -249,7 +249,7 @@ onBeforeUnmount(() => {
               ? 'opacity-100 hover:opacity-50'
               : 'opacity-50 hover:opacity-100'
           "
-          class="cursor-pointer transition-opacity duration-300 xl:hidden"
+          class="cursor-pointer transition-opacity duration-300 2xl:hidden"
         >
           <svg
             width="22"
