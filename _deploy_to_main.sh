@@ -37,10 +37,15 @@ grep -E '^(APP_ENV|APP_DEBUG|APP_URL|DB_DATABASE|QUEUE_CONNECTION|CACHE_STORE)' 
 echo "--- cron (rustresort) ---"
 crontab -l 2>/dev/null | grep -i rustresort | sed 's/^/  /'
 
-# Build the proposed nginx config in-memory
+# Build the proposed nginx config in-memory.
+# ВАЖНО: в ISPmanager-конфиге ДВЕ "set $root_path" — одна с /public, вторая БЕЗ.
+# Обе должны указывать на $NEW/public, иначе вторая (без /public) перекроет первую
+# и nginx будет искать индекс в каталоге проекта → 403 forbidden.
+# Порядок sed важен: сначала длинный паттерн (.../rustresort.com/public),
+# потом короткий (.../rustresort.com;) → оба дают $NEW/public.
 PROPOSED=$(sed \
   -e 's#/var/www/www-root/data/www/rustresort.com/public#'"$NEW"'/public#g' \
-  -e 's#/var/www/www-root/data/www/rustresort.com;#'"$NEW"';#g' \
+  -e 's#/var/www/www-root/data/www/rustresort.com;#'"$NEW"'/public;#g' \
   -e 's#unix:/var/www/php-fpm/1.sock#unix:/var/www/php-fpm/2.sock#g' \
   "$VHOST")
 
@@ -118,8 +123,25 @@ line "4/4 cron → каждую минуту, новый проект"
 echo "  Новый crontab:"; crontab -l | grep -i schedule:run | sed 's/^/    /'
 ok "cron обновлён"
 
+# 5) smoke test через РЕАЛЬНЫЙ vhost (не localhost — он слушает только на IP)
+line "SMOKE TEST"
+IP=$(grep -oE 'listen [0-9.]+' "$VHOST" | head -1 | awk '{print $2}')
+IP=${IP:-217.26.30.24}
+echo "  Проверяю https://rustresort.com через $IP ..."
+CODE=$(curl -s -o /tmp/smoke.html -w '%{http_code}' https://rustresort.com --resolve rustresort.com:443:"$IP" 2>/dev/null)
+SIZE=$(wc -c < /tmp/smoke.html 2>/dev/null)
+echo "  HTTP $CODE, тело $SIZE байт"
+if [ "$CODE" = "200" ] && [ "${SIZE:-0}" -gt 500 ]; then
+  ok "Сайт отвечает 200 и отдаёт контент"
+  grep -qiE 'app|inertia|vite|<div id="app"|rustresort' /tmp/smoke.html && ok "Похоже на новый Vue/Inertia сайт"
+else
+  warn "Подозрительный ответ (код $CODE, размер $SIZE). Проверь tail error.log ниже:"
+  tail -5 /var/www/httpd-logs/rustresort.com.error.log | sed 's/^/    /'
+  warn "Если 403/пусто — откатись командами ниже и пришли вывод."
+fi
+
 line "DONE ✅"
-echo "  Открой https://rustresort.com — должен открыться новый сайт."
+echo "  Открой https://rustresort.com в ИНКОГНИТО (Ctrl+Shift+R) — должен открыться новый сайт."
 echo "  Бэкапы: $BACKUP"
 echo ""
 echo "  ОТКАТ (если что-то не так):"
