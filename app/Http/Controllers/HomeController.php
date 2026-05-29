@@ -31,7 +31,7 @@ class HomeController extends Controller
             ->get();
 
         $shopItems = ShopItem::query()
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
             ->with('category:id,title_ru,title_en,sort,discount_percent')
             ->where('shop_items.status', 1)
             ->whereNotNull('shop_items.category_id')
@@ -39,7 +39,7 @@ class HomeController extends Controller
             ->map(fn ($item) => array_merge($item->toArray(), ['kind' => 'item']));
 
         $shopSets = ShopSet::query()
-            ->select(['shop_sets.id', 'shop_sets.name_ru', 'shop_sets.name_en', 'shop_sets.price', 'shop_sets.image', 'shop_sets.category_id', 'shop_sets.server', 'shop_sets.servers', 'shop_sets.sort', 'shop_sets.discount_percent', 'shop_sets.disable_category_discount', 'shop_sets.description_ru', 'shop_sets.description_en', 'shop_sets.items'])
+            ->select(['shop_sets.id', 'shop_sets.name_ru', 'shop_sets.name_en', 'shop_sets.price', 'shop_sets.price_usd', 'shop_sets.image', 'shop_sets.category_id', 'shop_sets.server', 'shop_sets.servers', 'shop_sets.sort', 'shop_sets.discount_percent', 'shop_sets.disable_category_discount', 'shop_sets.description_ru', 'shop_sets.description_en', 'shop_sets.items'])
             ->with('category:id,title_ru,title_en,sort,discount_percent')
             ->where('shop_sets.status', 1)
             ->whereNotNull('shop_sets.category_id')

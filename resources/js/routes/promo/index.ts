@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 export const publicMethod = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ publicMethod.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 publicMethod.url = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -40,7 +40,7 @@ publicMethod.url = (args: { uuid: string | number } | [uuid: string | number ] |
 }
 
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 publicMethod.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -49,7 +49,7 @@ publicMethod.get = (args: { uuid: string | number } | [uuid: string | number ] |
 })
 
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 publicMethod.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -58,7 +58,7 @@ publicMethod.head = (args: { uuid: string | number } | [uuid: string | number ] 
 })
 
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 const publicMethodForm = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -67,7 +67,7 @@ const publicMethodForm = (args: { uuid: string | number } | [uuid: string | numb
 })
 
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 publicMethodForm.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -76,7 +76,7 @@ publicMethodForm.get = (args: { uuid: string | number } | [uuid: string | number
 })
 
 /**
-* @see routes/web.php:96
+* @see routes/web.php:97
 * @route '/p/{uuid}'
 */
 publicMethodForm.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

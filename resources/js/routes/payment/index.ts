@@ -10,9 +10,9 @@ export const success = (args: { donate: number | { id: number } } | [donate: num
 })
 
 success.definition = {
-    methods: ["get","head"],
+    methods: ["get","post","head"],
     url: '/payment/{donate}/success',
-} satisfies RouteDefinition<["get","head"]>
+} satisfies RouteDefinition<["get","post","head"]>
 
 /**
 * @see \App\Http\Controllers\PaymentController::success
@@ -62,6 +62,16 @@ success.get = (args: { donate: number | { id: number } } | [donate: number | { i
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
+success.post = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: success.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\PaymentController::success
+* @see app/Http/Controllers/PaymentController.php:93
+* @route '/payment/{donate}/success'
+*/
 success.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: success.url(args, options),
     method: 'head',
@@ -92,6 +102,16 @@ successForm.get = (args: { donate: number | { id: number } } | [donate: number |
 * @see app/Http/Controllers/PaymentController.php:93
 * @route '/payment/{donate}/success'
 */
+successForm.post = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: success.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\PaymentController::success
+* @see app/Http/Controllers/PaymentController.php:93
+* @route '/payment/{donate}/success'
+*/
 successForm.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: success.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
@@ -115,9 +135,9 @@ export const cancel = (args: { donate: number | { id: number } } | [donate: numb
 })
 
 cancel.definition = {
-    methods: ["get","head"],
+    methods: ["get","post","head"],
     url: '/payment/{donate}/cancel',
-} satisfies RouteDefinition<["get","head"]>
+} satisfies RouteDefinition<["get","post","head"]>
 
 /**
 * @see \App\Http\Controllers\PaymentController::cancel
@@ -167,6 +187,16 @@ cancel.get = (args: { donate: number | { id: number } } | [donate: number | { id
 * @see app/Http/Controllers/PaymentController.php:123
 * @route '/payment/{donate}/cancel'
 */
+cancel.post = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: cancel.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\PaymentController::cancel
+* @see app/Http/Controllers/PaymentController.php:123
+* @route '/payment/{donate}/cancel'
+*/
 cancel.head = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: cancel.url(args, options),
     method: 'head',
@@ -190,6 +220,16 @@ const cancelForm = (args: { donate: number | { id: number } } | [donate: number 
 cancelForm.get = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: cancel.url(args, options),
     method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PaymentController::cancel
+* @see app/Http/Controllers/PaymentController.php:123
+* @route '/payment/{donate}/cancel'
+*/
+cancelForm.post = (args: { donate: number | { id: number } } | [donate: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: cancel.url(args, options),
+    method: 'post',
 })
 
 /**

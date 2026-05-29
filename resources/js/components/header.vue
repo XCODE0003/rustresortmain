@@ -98,9 +98,9 @@ onBeforeUnmount(() => {
               class="animate-spin-slow fire-mask absolute top-0 left-1/2 h-[87px] w-[120px] -translate-x-1/2 -translate-y-1/2"
             ></div>
             <img
-              src="/images/logo.png"
+              src="/assets/images/logo.png"
               alt="Logo"
-              class="relative z-10 h-11 min-h-11 w-11 min-w-11 transition-opacity duration-300 group-hover:opacity-80"
+              class="relative z-10 h-auto w-[120px] min-w-[120px] object-contain transition-opacity duration-300 group-hover:opacity-80 md:w-[140px]"
             />
           </Link>
           <LanguageSelector

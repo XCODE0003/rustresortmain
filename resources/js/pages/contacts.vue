@@ -64,7 +64,34 @@ import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';
 
 const page = usePage();
-const socialLinks = computed(() => (page.props as any).social_links ?? []);
+type SocialPlatform = 'discord' | 'vk' | 'telegram' | 'youtube' | 'twitch' | 'instagram';
+type SocialLink = { platform: SocialPlatform; url: string };
+
+const fixedLinks: Record<'discord' | 'vk' | 'telegram', string> = {
+    discord: 'https://discord.gg/rustresort',
+    vk: 'https://vk.com/rustresort',
+    telegram: 'https://t.me/rustresort',
+};
+
+const socialLinks = computed<SocialLink[]>(() => {
+    const fromProps = ((page.props as any).social_links ?? []) as Array<{ platform?: string; url?: string }>;
+
+    const normalized = fromProps
+        .map((link) => ({
+            platform: String(link.platform ?? '').toLowerCase() as SocialPlatform,
+            url: String(link.url ?? ''),
+        }))
+        .filter((link) => link.platform && link.url.startsWith('http'));
+
+    const merged = normalized.filter((link) => !['discord', 'vk', 'telegram'].includes(link.platform));
+
+    return [
+        { platform: 'discord', url: fixedLinks.discord },
+        { platform: 'vk', url: fixedLinks.vk },
+        { platform: 'telegram', url: fixedLinks.telegram },
+        ...merged,
+    ];
+});
 
 const svgMap: Record<string, string> = {
     youtube: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.8 3.01985C19.8 3.01985 19.6044 1.6482 19.005 1.04429C18.2444 0.25123 17.3919 0.247524 17.0013 0.201509C14.2025 5.21541e-08 10.0044 0 10.0044 0H9.99563C9.99563 0 5.7975 5.21541e-08 2.99875 0.201509C2.6075 0.247524 1.75563 0.25123 0.994375 1.04429C0.395 1.64836 0.2 3.01985 0.2 3.01985C0.2 3.01985 0 4.631 0 6.24137V7.75168C0 9.36267 0.2 10.9732 0.2 10.9732C0.2 10.9732 0.395 12.3448 0.994375 12.9488C1.75563 13.7418 2.755 13.717 3.2 13.7997C4.8 13.9527 10 14 10 14C10 14 14.2025 13.9938 17.0013 13.7923C17.3919 13.7457 18.2444 13.742 19.005 12.9489C19.6044 12.3448 19.8 10.9734 19.8 10.9734C19.8 10.9734 20 9.36283 20 7.75168V6.24137C20 4.631 19.8 3.01985 19.8 3.01985ZM7.935 9.58178L7.93438 3.9891L13.3381 6.79509L7.935 9.58178Z"/></svg>`,

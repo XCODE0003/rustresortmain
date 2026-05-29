@@ -1,10 +1,17 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { usePage } from '@inertiajs/vue3';
 
 export function useCurrency() {
     const { locale } = useI18n();
+    const page = usePage();
 
-    const isEn = computed(() => locale.value === 'en');
+    const currentLocale = computed(() => {
+        const pageLocale = (page.props as any)?.locale;
+        return String(pageLocale ?? locale.value ?? 'ru').toLowerCase();
+    });
+
+    const isEn = computed(() => currentLocale.value.startsWith('en'));
 
     const currencySymbol = computed(() => (isEn.value ? '$' : '₽'));
 
