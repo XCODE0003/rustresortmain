@@ -565,7 +565,7 @@ info.form = infoForm
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 export const servers = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -580,7 +580,7 @@ servers.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 servers.url = (options?: RouteQueryOptions) => {
@@ -589,7 +589,7 @@ servers.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 servers.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -599,7 +599,7 @@ servers.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 servers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -609,7 +609,7 @@ servers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 const serversForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -619,7 +619,7 @@ const serversForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 serversForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -629,7 +629,7 @@ serversForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\ServerController::servers
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 serversForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

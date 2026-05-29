@@ -3,7 +3,7 @@ import tickets from './tickets'
 import user from './user'
 import users from './users'
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 export const logout = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ logout.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 logout.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ logout.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 logout.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ logout.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 logout.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -43,7 +43,7 @@ logout.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -52,7 +52,7 @@ const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 logoutForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -61,7 +61,7 @@ logoutForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:112
+* @see routes/web.php:113
 * @route '/backend_uc7BgHFmw32FDIEp/logout'
 */
 logoutForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

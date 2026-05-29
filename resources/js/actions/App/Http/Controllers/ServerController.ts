@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ServerController::index
-* @see app/Http/Controllers/ServerController.php:14
+* @see app/Http/Controllers/ServerController.php:12
 * @route '/servers'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -162,8 +162,89 @@ shopServersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 shopServers.form = shopServersForm
 
 /**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+export const shopServerReset = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: shopServerReset.url(options),
+    method: 'get',
+})
+
+shopServerReset.definition = {
+    methods: ["get","head"],
+    url: '/shop/server-reset',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+shopServerReset.url = (options?: RouteQueryOptions) => {
+    return shopServerReset.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+shopServerReset.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: shopServerReset.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+shopServerReset.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: shopServerReset.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+const shopServerResetForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: shopServerReset.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+shopServerResetForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: shopServerReset.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::shopServerReset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+shopServerResetForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: shopServerReset.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+shopServerReset.form = shopServerResetForm
+
+/**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 export const shopServerShow = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +259,7 @@ shopServerShow.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 shopServerShow.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -211,7 +292,7 @@ shopServerShow.url = (args: { server: number | { id: number } } | [server: numbe
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 shopServerShow.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -221,7 +302,7 @@ shopServerShow.get = (args: { server: number | { id: number } } | [server: numbe
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 shopServerShow.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -231,7 +312,7 @@ shopServerShow.head = (args: { server: number | { id: number } } | [server: numb
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 const shopServerShowForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -241,7 +322,7 @@ const shopServerShowForm = (args: { server: number | { id: number } } | [server:
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 shopServerShowForm.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -251,7 +332,7 @@ shopServerShowForm.get = (args: { server: number | { id: number } } | [server: n
 
 /**
 * @see \App\Http\Controllers\ServerController::shopServerShow
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 shopServerShowForm.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -266,6 +347,6 @@ shopServerShowForm.head = (args: { server: number | { id: number } } | [server: 
 
 shopServerShow.form = shopServerShowForm
 
-const ServerController = { index, shopServers, shopServerShow }
+const ServerController = { index, shopServers, shopServerReset, shopServerShow }
 
 export default ServerController

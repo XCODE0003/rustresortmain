@@ -1,7 +1,88 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+export const reset = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: reset.url(options),
+    method: 'get',
+})
+
+reset.definition = {
+    methods: ["get","head"],
+    url: '/shop/server-reset',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+reset.url = (options?: RouteQueryOptions) => {
+    return reset.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+reset.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: reset.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+reset.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: reset.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+const resetForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: reset.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+resetForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: reset.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ServerController::reset
+* @see app/Http/Controllers/ServerController.php:45
+* @route '/shop/server-reset'
+*/
+resetForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: reset.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+reset.form = resetForm
+
+/**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 export const show = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +97,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 show.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +130,7 @@ show.url = (args: { server: number | { id: number } } | [server: number | { id: 
 
 /**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 show.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +140,7 @@ show.get = (args: { server: number | { id: number } } | [server: number | { id: 
 
 /**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 show.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +150,7 @@ show.head = (args: { server: number | { id: number } } | [server: number | { id:
 
 /**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 const showForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +160,7 @@ const showForm = (args: { server: number | { id: number } } | [server: number | 
 
 /**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 showForm.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +170,7 @@ showForm.get = (args: { server: number | { id: number } } | [server: number | { 
 
 /**
 * @see \App\Http\Controllers\ServerController::show
-* @see app/Http/Controllers/ServerController.php:64
+* @see app/Http/Controllers/ServerController.php:38
 * @route '/shop/server/{server}'
 */
 showForm.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -105,6 +186,7 @@ showForm.head = (args: { server: number | { id: number } } | [server: number | {
 show.form = showForm
 
 const server = {
+    reset: Object.assign(reset, reset),
     show: Object.assign(show, show),
 }
 
