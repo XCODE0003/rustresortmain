@@ -67,15 +67,17 @@ class PaymentManager
             return PaymentGatewayModel::active()
                 ->get()
                 ->mapWithKeys(function ($gateway) {
-                    $isSteam = $gateway->getSetting('backend') === 'steam';
+                    $backend = $gateway->getSetting('backend');
+                    $isSteam = $backend === 'steam';
 
-                    // Пользователь всегда вводит рубли. У крипто-шлюзов лимиты
-                    // заданы в USD — переводим их в рубли для отображения и
-                    // валидации, чтобы UI был единообразным (ввод и минималка в ₽).
+                    // Крипто-шлюзы Heleket: пользователь платит с рублёвого баланса,
+                    // но лимиты заданы в USD — переводим их в рубли для отображения.
+                    // ВАЖНО: трогаем ТОЛЬКО Heleket. Tebex/Steam и прочие реально в USD,
+                    // их валюту/лимиты не меняем (иначе бейдж ошибочно станет RUB).
                     $currency = $gateway->currency;
                     $minAmount = $gateway->min_amount;
                     $maxAmount = $gateway->max_amount;
-                    if (is_string($currency) && strtoupper($currency) === 'USD') {
+                    if ($backend === 'heleket' && is_string($currency) && strtoupper($currency) === 'USD') {
                         $rate = app(\App\Services\ExchangeRateService::class)->usdToRub();
                         $minAmount = (int) ceil(((float) $minAmount) * $rate);
                         if ($maxAmount) {
