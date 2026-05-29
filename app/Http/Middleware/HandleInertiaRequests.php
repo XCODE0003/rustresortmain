@@ -40,6 +40,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => session('locale', 'ru'),
+            // Курс USD→RUB для отображения сумм в английской локали (баланс/цены
+            // без price_usd делятся на курс). Кэшируется в сервисе на час.
+            'usd_rate' => app(\App\Services\ExchangeRateService::class)->usdToRub(),
             'auth' => [
                 'user' => $request->user() ? [
                     'id' => $request->user()->id,
@@ -53,21 +56,21 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'social_links' => SocialLink::where('active', true)->orderBy('sort')->get()
-                ->map(fn($s) => ['platform' => $s->platform, 'url' => $s->url])
+                ->map(fn ($s) => ['platform' => $s->platform, 'url' => $s->url])
                 ->toArray(),
             'notifications' => $request->user()
                 ? $request->user()->notifications()
                     ->latest()
                     ->limit(20)
                     ->get()
-                    ->map(fn($n) => [
-                        'id'         => $n->id,
-                        'type'       => $n->data['type'] ?? 'unknown',
-                        'title'      => $n->data['title'] ?? '',
-                        'message'    => $n->data['message'] ?? '',
-                        'amount'     => $n->data['amount'] ?? null,
-                        'action'     => $n->data['action'] ?? null,
-                        'read'       => ! is_null($n->read_at),
+                    ->map(fn ($n) => [
+                        'id' => $n->id,
+                        'type' => $n->data['type'] ?? 'unknown',
+                        'title' => $n->data['title'] ?? '',
+                        'message' => $n->data['message'] ?? '',
+                        'amount' => $n->data['amount'] ?? null,
+                        'action' => $n->data['action'] ?? null,
+                        'read' => ! is_null($n->read_at),
                         'created_at' => $n->created_at,
                     ])
                 : [],

@@ -22,7 +22,7 @@ interface Notification {
 
 const page = usePage();
 const notifications = computed(() => (page.props as any).notifications as Notification[] ?? []);
-const { currencySymbol } = useCurrency();
+const { isEn, usdRate } = useCurrency();
 const unreadCount = computed(() => notifications.value.filter((n) => !n.read).length);
 
 const isOpen = ref(false);
@@ -99,8 +99,13 @@ function formatDate(dateStr: string): string {
 }
 
 function formatAmount(amount: number): string {
-    const formatted = new Intl.NumberFormat('ru-RU').format(amount);
-    return `${formatted} ${currencySymbol.value}`;
+    // Суммы хранятся в рублях. В английской локали конвертируем по курсу в $.
+    const value = isEn.value ? amount / usdRate.value : amount;
+    const formatted = new Intl.NumberFormat(isEn.value ? 'en-US' : 'ru-RU', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(value);
+    return isEn.value ? `$${formatted}` : `${formatted} ₽`;
 }
 </script>
 

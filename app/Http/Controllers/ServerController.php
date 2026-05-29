@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Server;
-use App\Models\ServerCategory;
-use App\Models\ShopCategory;
-use App\Models\ShopItem;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,42 +28,23 @@ class ServerController extends Controller
         ]);
     }
 
-    public function shopServers(): Response
+    // Отдельная страница выбора сервера не нужна: выбор делается прямо в /shop
+    // (инлайн-кнопки серверов) и в модалке покупки. Старый URL редиректим в магазин.
+    public function shopServers(): RedirectResponse
     {
-        $categories = ServerCategory::with(['servers' => function ($query) {
-            $query->where('status', 1)->orderBy('sort');
-        }])
-            ->orderBy('sort')
-            ->get();
-
-        $servers = Server::where('status', 1)
-            ->orderBy('sort')
-            ->get();
-
-        $shopCategories = ShopCategory::orderBy('sort')->get();
-
-        $items = ShopItem::with('category:id,path,title_ru,title_en')
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.description_ru', 'shop_items.description_en'])
-            ->join('shop_categories', 'shop_categories.id', '=', 'shop_items.category_id')
-            ->where('shop_items.status', 1)
-            ->whereNotNull('shop_items.category_id')
-            ->orderBy('shop_categories.sort')
-            ->orderBy('shop_items.sort')
-            ->get();
-
-        return Inertia::render('shop/server/list', [
-            'servers' => $servers,
-            'categories' => $categories,
-            'shopCategories' => $shopCategories,
-            'items' => $items,
-        ]);
+        return redirect()->route('shop.index');
     }
 
-    public function shopServerShow(Server $server)
+    public function shopServerShow(Server $server): RedirectResponse
     {
-        $server->load('category');
-
         session(['selected_server_id' => $server->id]);
+
+        return redirect()->route('shop.index');
+    }
+
+    public function shopServerReset(): RedirectResponse
+    {
+        session()->forget('selected_server_id');
 
         return redirect()->route('shop.index');
     }

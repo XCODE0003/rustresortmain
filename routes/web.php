@@ -41,6 +41,7 @@ Route::get('/shop/category/{path}', [\App\Http\Controllers\ShopController::class
 Route::get('/shop/item/{item}', [\App\Http\Controllers\ShopController::class, 'show'])->name('shop.item.show');
 
 Route::get('/shop/server', [\App\Http\Controllers\ServerController::class, 'shopServers'])->name('shop.server');
+Route::get('/shop/server-reset', [\App\Http\Controllers\ServerController::class, 'shopServerReset'])->name('shop.server.reset');
 Route::get('/shop/server/{server}', [\App\Http\Controllers\ServerController::class, 'shopServerShow'])->name('shop.server.show');
 Route::inertia('/shop/other', 'shop/other', [])->name('shop.other');
 

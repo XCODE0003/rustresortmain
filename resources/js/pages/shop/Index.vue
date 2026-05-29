@@ -87,40 +87,32 @@
                     </h3>
                     <div class="flex flex-wrap gap-2">
                         <Link
-                            v-if="selectedServer"
-                            href="/shop/server"
-                            class="group relative flex items-center gap-2 rounded-lg border border-Orange bg-gradient-to-br from-Orange/30 via-Orange/12 to-transparent px-5 py-3 text-sm font-bold text-white uppercase shadow-[0_0_28px_rgba(243,164,93,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 ease-out hover:border-PaleOrange hover:shadow-[0_0_36px_rgba(243,164,93,0.6),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                            href="/shop/server-reset"
+                            :class="[
+                                'rounded-lg border px-5 py-3 text-sm font-bold uppercase transition-all duration-300 ease-out',
+                                !selectedServer
+                                    ? 'border-Orange text-Orange bg-Orange/10 shadow-[0_0_18px_rgba(243,164,93,0.3)]'
+                                    : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40',
+                            ]"
                         >
-                            <!-- Pulse status dot -->
-                            <span class="pointer-events-none absolute -top-1 -right-1 flex size-2.5" aria-hidden="true">
-                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-Orange opacity-60"></span>
-                                <span class="relative inline-flex size-2.5 rounded-full bg-Orange ring-2 ring-[#0b0d0f]"></span>
-                            </span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                                class="text-Orange"
-                            >
-                                <path
-                                    d="M8 1C8.78793 1 9.56815 1.15519 10.2961 1.45672C11.0241 1.75825 11.6855 2.20021 12.2426 2.75736C12.7998 3.31451 13.2417 3.97595 13.5433 4.70392C13.8448 5.43189 14 6.21207 14 7C14 8.5913 13.3679 10.1174 12.2426 11.2426C11.1174 12.3679 9.5913 13 8 13C5.24 13 2.93 11.152 2.216 8.638L4.514 9.586C4.67 10.36 5.36 10.948 6.182 10.948C7.118 10.948 7.88 10.186 7.88 9.25V9.172L9.92 7.714H9.968C11.216 7.714 12.23 6.7 12.23 5.452C12.23 4.204 11.216 3.19 9.968 3.19C8.72 3.19 7.7 4.204 7.7 5.452V5.482L6.278 7.558L6.182 7.552C5.828 7.552 5.498 7.66 5.228 7.846L2 6.52C2.258 3.43 4.838 1 8 1ZM5.768 9.769C6.248 9.97 6.8 9.745 6.998 9.265C7.196 8.785 6.968 8.239 6.5 8.041L5.732 7.723C6.026 7.615 6.356 7.609 6.668 7.741C6.986 7.867 7.232 8.113 7.358 8.431C7.49 8.743 7.49 9.091 7.358 9.403C7.1 9.917 6.338 10.229 5.824 9.959C5.523 9.8 5.295 9.572 5.169 9.302L5.768 9.769ZM11.48 5.452C11.48 6.286 10.802 6.964 9.968 6.964C9.14 6.964 8.462 6.286 8.462 5.452C8.46119 5.25401 8.49958 5.05782 8.57499 4.87474C8.6504 4.69167 8.76133 4.52533 8.90132 4.38533C9.04132 4.24533 9.20767 4.13441 9.39074 4.059C9.57382 3.98358 9.77001 3.9452 9.968 3.946C10.802 3.946 11.48 4.624 11.48 5.452ZM8.84 5.452C8.84 6.076 9.344 6.586 9.974 6.586C10.598 6.586 11.102 6.076 11.102 5.452C11.102 4.828 10.598 4.318 9.974 4.318C9.344 4.318 8.84 4.828 8.84 5.452Z"
-                                    fill="currentColor"
-                                />
-                            </svg>
-                            {{ selectedServer.name }}
+                            {{ $t('shop.all_servers') }}
                         </Link>
                         <Link
-                            v-else
-                            href="/shop/server"
-                            class="server-cta-attention flex items-center gap-2 rounded-lg border border-Orange/60 bg-Orange/[0.06] px-5 py-3 text-sm font-bold text-Orange uppercase shadow-[0_0_18px_rgba(243,164,93,0.25)] transition-all duration-300 ease-out hover:border-Orange hover:bg-Orange/10 hover:text-PaleOrange hover:shadow-[0_0_28px_rgba(243,164,93,0.45)]"
+                            v-for="server in (servers ?? [])"
+                            :key="server.id"
+                            :href="`/shop/server/${server.id}`"
+                            :class="[
+                                'flex items-center gap-2 rounded-lg border px-5 py-3 text-sm font-bold uppercase transition-all duration-300 ease-out',
+                                selectedServer && selectedServer.id === server.id
+                                    ? 'border-Orange text-Orange bg-Orange/10 shadow-[0_0_18px_rgba(243,164,93,0.3)]'
+                                    : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40',
+                            ]"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
                                 <path d="M12 22s-8-4.5-8-12a8 8 0 0 1 16 0c0 7.5-8 12-8 12Z"/>
                                 <circle cx="12" cy="10" r="3"/>
                             </svg>
-                            {{ $t('shop.pick_server') }}
+                            {{ server.name }}
                         </Link>
                     </div>
                     <p class="text-xs text-TextGray">
