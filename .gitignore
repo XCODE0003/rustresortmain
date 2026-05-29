@@ -32,30 +32,8 @@
 /public/hot
 /public/storage
 
-# Загружаемые картинки товаров/новостей (хеш-имена) НЕ тащим в git.
-# Дизайн-ассеты (logo, hero, bg-*, флаги) и подпапки (rustitems, payment-logos,
-# coupons, subscriptions) — оставляем.
-/public/images/*
-!/public/images/*/
-!/public/images/ak.png
-!/public/images/bg-green-btn.png
-!/public/images/bg-main.png
-!/public/images/bg-personage.png
-!/public/images/bg-profile.png
-!/public/images/bg-red-btn.png
-!/public/images/coupon-icon.png
-!/public/images/coupon-icon-2.png
-!/public/images/en.svg
-!/public/images/fireAnimate.gif
-!/public/images/glow-hero.png
-!/public/images/hero.png
-!/public/images/icon.png
-!/public/images/lattice.png
-!/public/images/logo.png
-!/public/images/ru.svg
-!/public/images/spb.png
-!/public/images/test-bg-server.png
-!/public/images/vip.png
+# Картинки товаров/новостей храним В git (скачиваются через shop:download-images
+# / news:fetch-images --from-url и коммитятся, чтобы деплой и локалка были полными).
 /storage/*.key
 /storage/pail
 /vendor

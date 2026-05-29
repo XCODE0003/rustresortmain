@@ -126,7 +126,10 @@ const filteredItems = computed(() => {
 
     if (selectedServerId.value !== null) {
         const targetId = String(selectedServerId.value);
-        filtered = filtered.filter((item) => item.serverIds.includes(targetId));
+        // Товар без привязки к серверам (пустой servers) доступен на всех серверах.
+        filtered = filtered.filter(
+            (item) => item.serverIds.length === 0 || item.serverIds.includes(targetId)
+        );
     }
 
     if (selectedCategoryId.value !== null) {

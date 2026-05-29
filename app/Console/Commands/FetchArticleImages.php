@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Article;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 /**
  * Выкачивает ВСЕ картинки новостей: и главную (колонка image), и встроенные
@@ -21,6 +22,7 @@ use Illuminate\Console\Command;
 class FetchArticleImages extends Command
 {
     protected $signature = 'news:fetch-images
+        {--from-url= : Базовый URL для HTTP-загрузки (напр. https://rustresort.com)}
         {--from-dir= : Папки-источники через запятую (по умолчанию — старый проект)}
         {--dry : Preview без копирования}
         {--force : Перезаписать существующие}';
@@ -31,29 +33,35 @@ class FetchArticleImages extends Command
     {
         $isDry = (bool) $this->option('dry');
         $force = (bool) $this->option('force');
+        $fromUrl = trim((string) $this->option('from-url'));
+        $httpMode = $fromUrl !== '';
 
-        $sibling = dirname(base_path()).'/rustresort.com';
-        $default = implode(',', [
-            $sibling.'/storage/app/public',
-            $sibling.'/public/images',
-            $sibling.'/public',
-        ]);
-        $dirs = array_values(array_filter(array_map('trim', explode(',', $this->option('from-dir') ?: $default))));
+        $index = [];
+        if ($httpMode) {
+            $fromUrl = rtrim($fromUrl, '/');
+            $this->info("=== Источник: HTTP {$fromUrl} ===");
+        } else {
+            $sibling = dirname(base_path()).'/rustresort.com';
+            $default = implode(',', [
+                $sibling.'/storage/app/public',
+                $sibling.'/public/images',
+                $sibling.'/public',
+            ]);
+            $dirs = array_values(array_filter(array_map('trim', explode(',', $this->option('from-dir') ?: $default))));
+            $validDirs = array_values(array_filter($dirs, 'is_dir'));
+            $this->info('=== Источники: папки ===');
+            foreach ($dirs as $d) {
+                $this->line((is_dir($d) ? '  ✅ ' : '  ✗ ').$d);
+            }
+            if (empty($validDirs)) {
+                $this->error('Нет валидных папок. Укажи --from-dir=/путь или --from-url=https://...');
 
-        $validDirs = array_values(array_filter($dirs, 'is_dir'));
-        $this->info('=== Источники ===');
-        foreach ($dirs as $d) {
-            $this->line((is_dir($d) ? '  ✅ ' : '  ✗ ').$d);
+                return self::FAILURE;
+            }
+            $this->info('Индексирую файлы…');
+            $index = $this->buildIndex($validDirs);
+            $this->info('Файлов в источниках: '.count($index));
         }
-        if (empty($validDirs)) {
-            $this->error('Нет валидных папок-источников.');
-
-            return self::FAILURE;
-        }
-
-        $this->info('Индексирую файлы…');
-        $index = $this->buildIndex($validDirs);
-        $this->info('Файлов в источниках: '.count($index));
         $this->line('');
 
         // Собираем все ссылки на картинки из всех новостей
@@ -96,7 +104,7 @@ class FetchArticleImages extends Command
                 continue;
             }
 
-            $src = $index[$base] ?? null;
+            $src = $httpMode ? ($fromUrl.'/'.$rel) : ($index[$base] ?? null);
             if ($src === null) {
                 $missingSrc[] = $rel;
                 continue;
@@ -112,10 +120,12 @@ class FetchArticleImages extends Command
             if (! is_dir($dir)) {
                 @mkdir($dir, 0755, true);
             }
-            if (@copy($src, $target)) {
+
+            $ok = $httpMode ? $this->fetchHttp($src, $target) : @copy($src, $target);
+            if ($ok) {
                 $copied++;
             } else {
-                $missingSrc[] = $rel.' (ошибка copy)';
+                $missingSrc[] = $rel.($httpMode ? ' (HTTP не скачалось)' : ' (ошибка copy)');
             }
         }
 
@@ -189,6 +199,31 @@ class FetchArticleImages extends Command
         }
 
         return $u;
+    }
+
+    private function fetchHttp(string $url, string $target): bool
+    {
+        try {
+            // путь может содержать пробелы/кириллицу → кодируем сегменты
+            $parts = explode('/', $url);
+            $encoded = array_map(fn ($p) => str_contains($p, '://') || $p === '' ? $p : rawurlencode($p), $parts);
+            $resp = Http::timeout(30)->withOptions(['allow_redirects' => true])->get(implode('/', $encoded));
+            if (! $resp->ok()) {
+                return false;
+            }
+            $body = $resp->body();
+            if (strlen($body) < 50) {
+                return false;
+            }
+            $head = strtolower(substr($body, 0, 200));
+            if (str_contains($head, '<!doctype') || str_contains($head, '<html')) {
+                return false;
+            }
+
+            return file_put_contents($target, $body) !== false;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     private function buildIndex(array $dirs): array
