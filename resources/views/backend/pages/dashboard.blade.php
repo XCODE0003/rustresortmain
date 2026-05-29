@@ -179,7 +179,7 @@
                                                     <span class="tb-sub tb-amount">{{ $transaction->amount }} <span>{{ __('руб.') }}</span></span>
                                                 </div>
                                                 <div class="nk-tb-col">
-                                                    <span class="badge badge-dot">{{ $transaction->payment_system }}</span>
+                                                    <span class="badge badge-dot">{{ \App\Models\PaymentGateway::labelFor($transaction->payment_system) }}</span>
                                                 </div>
                                                 <div class="nk-tb-col">
                                                     @if ($transaction->status == 1)

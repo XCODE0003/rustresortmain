@@ -109,7 +109,7 @@
                                 <td><span class="tb-sub">{{ $transaction->created_at }}</span>
                                 <td><span class="tb-sub tb-amount">{{ $transaction->amount }} <span>{{ __('руб.') }}</span></span>
                                 <td><span class="tb-sub tb-amount">{{ $transaction->bonus_amount }} <span>{{ __('руб.') }}</span></span>
-                                <td><span class="badge badge-dot"><a href="{{ route('logs.payments') }}/?type=month&server_id=0&status=1&payment_system={{ $transaction->payment_system }}">{{ $transaction->payment_system }}</a></span>
+                                <td><span class="badge badge-dot"><a href="{{ route('logs.payments') }}/?type=month&server_id=0&status=1&payment_system={{ $transaction->payment_system }}">{{ \App\Models\PaymentGateway::labelFor($transaction->payment_system) }}</a></span>
                                 <td><span class="badge badge-dot">{{ $transaction->server_name }}</span>
                                 <td>@if ($transaction->status == 1) <span class="badge badge-dot badge-dot-xs badge-success">{{ __('Успешно') }} </span> @else <span class="badge badge-dot badge-dot-xs badge-danger">{{ __('Не успешно') }} </span> @endif
                             @endforeach
