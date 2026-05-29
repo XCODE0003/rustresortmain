@@ -175,6 +175,68 @@ class ShopController extends Controller
     }
 
     /**
+     * Список URL иконок всех товаров — плагин подгружает их для отрисовки.
+     * POST /api/shop/getImageUrls  { api_key }
+     */
+    public function getImageUrls(Request $request): JsonResponse
+    {
+        $data = $this->payload($request);
+
+        if (($data['api_key'] ?? null) !== $this->apiKey()) {
+            return $this->error('API key is invalid.');
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'result' => $this->imageList(),
+        ], 200, [], JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Тот же список иконок, GET-вариант.
+     * GET /api/v2/shop/getImageUrls?api_key=...
+     */
+    public function getImageUrlsV2(Request $request): JsonResponse
+    {
+        if ($error = $this->guard($request)) {
+            return $error;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'result' => $this->imageList(),
+        ], 200, [], JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * @return list<array{ShortName: ?string, ImageUrl: ?string}>
+     */
+    protected function imageList(): array
+    {
+        return ShopItem::query()
+            ->select(['short_name', 'image'])
+            ->get()
+            ->map(fn (ShopItem $item) => [
+                'ShortName' => $item->short_name,
+                'ImageUrl' => $this->imageUrl($item->image),
+            ])
+            ->all();
+    }
+
+    /**
+     * Абсолютный URL иконки. Картинки лежат в public/images, домен берём из
+     * app.url (валидный сертификат), чтобы плагин гарантированно их скачал.
+     */
+    protected function imageUrl(?string $image): ?string
+    {
+        if ($image === null || $image === '') {
+            return null;
+        }
+
+        return rtrim((string) config('app.url'), '/').'/'.ltrim($image, '/');
+    }
+
+    /**
      * Представление товара bucket в формате, ожидаемом плагином.
      */
     protected function presentBucketItem(BucketItem $bucket): ?array
@@ -200,7 +262,7 @@ class ShopController extends Controller
             'ShortName' => $item->short_name,
             'Command' => (string) ($item->command ?? ''),
             'WipeBlock' => (int) $item->wipe_block,
-            'ImageUrl' => $item->image,
+            'ImageUrl' => $this->imageUrl($item->image),
             'IsBlueprint' => $isBlueprint,
             'IsCommand' => false,
             'IsItem' => ! $isBlueprint,

@@ -120,6 +120,31 @@ test('getUser отдаёт bucket игрока при верном api_key', fun
     expect($res->json('result.bucket'))->toHaveCount(1);
     expect($res->json('result.bucket.0.ShortName'))->toBe('smg.thompson');
     expect($res->json('result.bucket.0.IsItem'))->toBeTrue();
+    expect($res->json('result.bucket.0.Amount'))->toBe(1);
+    expect($res->json('result.bucket.0.ImageUrl'))->toStartWith('http');
+});
+
+test('getImageUrlsV2 отдаёт абсолютные URL иконок', function () {
+    Option::create(['key' => 'game_api_key', 'value' => 'secret-key', 'server' => null]);
+    config(['app.url' => 'https://rustresort.com']);
+
+    makeItem(['short_name' => 'rifle.ak', 'image' => 'images/ak.png']);
+
+    $res = $this->getJson('/api/v2/shop/getImageUrls?api_key=secret-key');
+
+    $res->assertOk()->assertJsonPath('status', 'success');
+    expect($res->json('result.0.ImageUrl'))->toBe('https://rustresort.com/images/ak.png');
+    expect($res->json('result.0.ShortName'))->toBe('rifle.ak');
+});
+
+test('товар с amount=3 кладёт в bucket количество 3', function () {
+    $user = User::factory()->create(['steam_id' => '76561190000000007']);
+    $item = makeItem(['is_command' => false, 'short_name' => 'riflebody', 'amount' => 3, 'command' => null]);
+
+    (new DeliverPurchaseItemsJob(makeDonate($item, $user, ['server' => null])))->handle();
+
+    expect(BucketItem::where('user_id', $user->id)->count())->toBe(1);
+    expect(BucketItem::where('user_id', $user->id)->first()->quantity)->toBe(3);
 });
 
 test('getUser отклоняет неверный api_key', function () {
