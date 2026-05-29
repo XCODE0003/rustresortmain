@@ -1,16 +1,17 @@
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { usePage } from '@inertiajs/vue3';
 
 export function useCurrency() {
-    const { locale } = useI18n();
+    const page = usePage();
 
-    const isEn = computed(() => locale.value === 'en');
+    // Читаем локаль из page.props — она реактивна при любом Inertia-переходе
+    const isEn = computed(() => (page.props as any).locale === 'en');
 
     const currencySymbol = computed(() => (isEn.value ? '$' : '₽'));
 
     /**
      * Выбирает и форматирует цену в зависимости от локали.
-     * Если локаль — English и есть price_usd, показывает USD.
+     * Если локаль — English и есть price_usd > 0, показывает USD.
      * Иначе показывает рублёвую цену.
      */
     const displayPrice = (priceRub: number | string | null | undefined, priceUsd?: number | string | null): string => {
