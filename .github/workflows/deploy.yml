@@ -32,15 +32,15 @@ jobs:
             npm run build
 
             echo "==> Running migrations..."
-            php artisan migrate --force
+            /opt/php84/bin/php artisan migrate --force
 
             echo "==> Caching config, routes, views..."
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-            php artisan event:cache
+            /opt/php84/bin/php artisan config:cache
+            /opt/php84/bin/php artisan route:cache
+            /opt/php84/bin/php artisan view:cache
+            /opt/php84/bin/php artisan event:cache
 
             echo "==> Restarting queue workers..."
-            php artisan queue:restart
+            /opt/php84/bin/php artisan queue:restart
 
             echo "==> Done!"

@@ -77,7 +77,7 @@ class PaymentManager
                     $currency = $gateway->currency;
                     $minAmount = $gateway->min_amount;
                     $maxAmount = $gateway->max_amount;
-                    if ($backend === 'heleket' && is_string($currency) && strtoupper($currency) === 'USD') {
+                    if (($backend === 'heleket' || $gateway->code === 'heleket') && is_string($currency) && strtoupper($currency) === 'USD') {
                         $rate = app(\App\Services\ExchangeRateService::class)->usdToRub();
                         $minAmount = (int) ceil(((float) $minAmount) * $rate);
                         if ($maxAmount) {
