@@ -44,8 +44,9 @@ Route::get('/shop/server', [\App\Http\Controllers\ServerController::class, 'shop
 Route::get('/shop/server/{server}', [\App\Http\Controllers\ServerController::class, 'shopServerShow'])->name('shop.server.show');
 Route::inertia('/shop/other', 'shop/other', [])->name('shop.other');
 
-Route::get('/payment/{donate}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
-Route::get('/payment/{donate}/cancel', [\App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
+// match get+post: некоторые шлюзы (Pally) делают POST-redirect на success/fail → иначе 405
+Route::match(['get', 'post'], '/payment/{donate}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
+Route::match(['get', 'post'], '/payment/{donate}/cancel', [\App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
 Route::get('/balance/tebex', [\App\Http\Controllers\BalanceController::class, 'tebex'])->name('balance.tebex');
 
 Route::middleware('auth')->group(function () {

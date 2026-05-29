@@ -147,12 +147,13 @@ class PallyGateway implements PaymentGatewayInterface
     {
         $orderId = $request->input('InvId');
         $amount = $request->input('OutSum');
-        $type = $request->input('type', 'payment');
+        // Pally присылает статус в поле Status: SUCCESS / FAIL (а не type).
+        $status = $request->input('Status', $request->input('type', ''));
 
         return new PaymentData(
             orderId: $orderId,
             amount: (float) $amount,
-            status: $this->mapStatus($type),
+            status: $this->mapStatus($status),
             transactionId: $request->input('TrsId'),
         );
     }
@@ -179,8 +180,8 @@ class PallyGateway implements PaymentGatewayInterface
     protected function mapStatus(string $status): string
     {
         return match (strtolower($status)) {
-            'payment', 'success', 'paid' => 'success',
-            'refund', 'chargeback', 'cancelled' => 'failed',
+            'success', 'payment', 'paid' => 'success',
+            'fail', 'refund', 'chargeback', 'cancelled' => 'failed',
             default => 'pending',
         };
     }

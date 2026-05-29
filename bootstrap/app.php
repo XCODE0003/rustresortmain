@@ -18,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
+        // Платёжные шлюзы (Pally) делают POST-redirect сюда без CSRF-токена
+        $middleware->validateCsrfTokens(except: [
+            'payment/*/success',
+            'payment/*/cancel',
+        ]);
+
         $middleware->web(append: [
             SetLocale::class,
             HandleAppearance::class,

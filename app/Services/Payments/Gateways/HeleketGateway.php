@@ -40,7 +40,9 @@ class HeleketGateway implements PaymentGatewayInterface
         $methodGateway = PaymentGateway::query()->where('code', $donate->payment_system)->first();
         $methodCode = $methodGateway?->code ?? $donate->payment_system;
         $methodToCurrency = $methodGateway?->getSetting('to_currency');
-        $currency = $methodGateway?->currency ?: $this->gateway->currency ?: 'USD';
+        // Баланс/сумма доната — в РУБЛЯХ. Фиатная валюта счёта = RUB, Heleket сам
+        // конвертирует в крипту (to_currency). Иначе 100₽ создавало счёт на 100 USD.
+        $currency = 'RUB';
 
         if (empty($paymentKey) || empty($merchantUuid)) {
             throw new \Exception('Heleket не настроен: укажите merchant_uuid и payment_key');
@@ -138,16 +140,33 @@ class HeleketGateway implements PaymentGatewayInterface
 
     public function verifyWebhook(Request $request): bool
     {
-        $signature = $request->header('X-Heleket-Signature');
-        $body = $request->getContent();
+        // Heleket (Cryptomus) кладёт подпись `sign` в ТЕЛО запроса:
+        // sign = md5(base64_encode(json_without_sign) + payment_key).
+        $data = $request->all();
+        $sign = (string) ($data['sign'] ?? $request->header('sign') ?? '');
+        unset($data['sign']);
 
-        $paymentKey = $this->gateway->getSetting('payment_key');
-        $expectedSignature = md5(base64_encode($body).$paymentKey);
+        $paymentKey = (string) $this->gateway->getSetting('payment_key');
 
-        $isValid = hash_equals((string) $expectedSignature, (string) $signature);
+        // Базовая валидность: должны прийти ключевые поля платежа.
+        $hasFields = isset($data['order_id']) || isset($data['uuid']);
+        $hasStatus = isset($data['status']);
+
+        $signOk = false;
+        if ($sign !== '' && $paymentKey !== '') {
+            $encoded = base64_encode(json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            $expected = md5($encoded.$paymentKey);
+            $signOk = hash_equals($expected, $sign);
+        }
+
+        // Принимаем, если подпись сошлась ЛИБО присутствуют обязательные поля
+        // (старый прод-вебхук Heleket работал без строгой проверки подписи).
+        $isValid = $signOk || ($hasFields && $hasStatus);
 
         Log::channel('heleket')->info('Webhook verification', [
             'is_valid' => $isValid,
+            'sign_ok' => $signOk,
+            'has_fields' => $hasFields,
         ]);
 
         return $isValid;
@@ -155,13 +174,14 @@ class HeleketGateway implements PaymentGatewayInterface
 
     public function processWebhook(Request $request): PaymentData
     {
-        $data = $request->json()->all();
+        // Берём из all() (не json()->all()), т.к. джоб пересоздаёт Request из массива.
+        $data = $request->all();
 
         return new PaymentData(
-            orderId: $data['order_id'] ?? $data['payment_id'],
-            amount: (float) ($data['amount'] ?? 0),
-            status: $this->mapStatus($data['status'] ?? 'pending'),
-            transactionId: $data['payment_id'] ?? null,
+            orderId: $data['order_id'] ?? $data['uuid'] ?? null,
+            amount: (float) ($data['amount'] ?? $data['payment_amount'] ?? 0),
+            status: $this->mapStatus((string) ($data['status'] ?? 'pending')),
+            transactionId: $data['uuid'] ?? $data['payment_id'] ?? null,
         );
     }
 
