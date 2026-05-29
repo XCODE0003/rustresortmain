@@ -169,6 +169,9 @@ class FetchArticleImages extends Command
             $u = $path ?: '';
         }
 
+        // %20/%D0%91… → реальное имя (nginx ищет на диске декодированное имя)
+        $u = rawurldecode($u);
+
         $u = ltrim($u, '/');
 
         if ($u === '' || str_contains($u, '..')) {
