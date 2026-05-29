@@ -29,10 +29,10 @@
 
                         <div class="flex items-center gap-4">
                             <div v-if="item.discount" class="text-xl text-TextGray line-through">
-                                {{ item.price }} ₽
+                                {{ item.price }} {{ currencySymbol }}
                             </div>
                             <div class="text-3xl font-bold text-Orange">
-                                {{ finalPrice }} ₽
+                                {{ finalPrice }} {{ currencySymbol }}
                             </div>
                         </div>
 
@@ -69,6 +69,7 @@ import { computed, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import ShopLayout from '@/layouts/shop.vue';
 import { useShopLocale } from '@/composables/useShopLocale';
+import { useCurrency } from '@/composables/useCurrency';
 import { useDescriptionModalStore } from '@/stores/descriptionModal';
 
 interface ShopItemShow {
@@ -100,6 +101,7 @@ const props = defineProps<{
 }>();
 
 const { itemName, itemDescription, categoryTitle } = useShopLocale();
+const { currencySymbol } = useCurrency();
 const modalStore = useDescriptionModalStore();
 
 onMounted(() => {

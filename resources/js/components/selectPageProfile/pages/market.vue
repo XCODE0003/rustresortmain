@@ -23,7 +23,7 @@
 
                 <!-- Price + count row -->
                 <div class="flex items-baseline gap-1.5">
-                    <span class="text-sm font-bold text-Orange">{{ formatPrice(purchase) }} ₽</span>
+                    <span class="text-sm font-bold text-Orange">{{ formatPrice(purchase) }} {{ currencySymbol }}</span>
                     <span class="text-[10px] font-bold text-TextGray">×{{ purchase.count }}</span>
                 </div>
 
@@ -52,10 +52,12 @@ import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import { useShopLocale } from '@/composables/useShopLocale';
+import { useCurrency } from '@/composables/useCurrency';
 import ContentPageProfile from '../content.vue';
 
 const { itemName, t } = useShopLocale();
 const { locale } = useI18n();
+const { currencySymbol } = useCurrency();
 
 interface ShopItem {
     id: number;

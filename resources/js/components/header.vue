@@ -3,9 +3,11 @@ import { Link, usePage, router } from "@inertiajs/vue3";
 import { onBeforeUnmount, onMounted, ref, computed } from "vue";
 import LanguageSelector from "@/components/LanguageSelector.vue";
 import NotificationDropdown from "@/components/NotificationDropdown.vue";
+import { useCurrency } from "@/composables/useCurrency";
 
 const page = usePage();
 const user = computed(() => (page.props.auth as any)?.user);
+const { currencySymbol } = useCurrency();
 
 const NavActive = ref(false);
 const headerRef = ref<HTMLElement | null>(null);
@@ -138,6 +140,18 @@ onBeforeUnmount(() => {
             <!-- Авторизация / Профиль -->
             <template v-if="user">
 
+              <!-- Аватар → профиль (только мобила) -->
+              <Link
+                href="/profile"
+                class="button-black flex items-center justify-center rounded-lg border border-StrokeGray p-1.5 transition-all duration-300 hover:border-white/40 md:hidden"
+              >
+                <img
+                  :src="user.avatar || '/images/test-bg-server.png'"
+                  alt="Profile"
+                  class="h-8 w-8 shrink-0 rounded-md object-cover"
+                />
+              </Link>
+
               <!-- Компактная пилюля баланса (только мобила) -->
               <Link
                 href="/payment"
@@ -153,7 +167,7 @@ onBeforeUnmount(() => {
                 >
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
                 </svg>
-                <span class="text-xs font-bold whitespace-nowrap text-Orange">{{ user.balance || 0 }} ₽</span>
+                <span class="text-xs font-bold whitespace-nowrap text-Orange">{{ user.balance || 0 }} {{ currencySymbol }}</span>
               </Link>
 
               <!-- Полный набор пилюль (десктоп и таблет) -->
@@ -174,7 +188,7 @@ onBeforeUnmount(() => {
                   >
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
                   </svg>
-                  <span class="text-sm font-bold whitespace-nowrap text-Orange">{{ user.balance || 0 }} ₽</span>
+                  <span class="text-sm font-bold whitespace-nowrap text-Orange">{{ user.balance || 0 }} {{ currencySymbol }}</span>
                 </Link>
 
                 <!-- Кнопка профиля -->

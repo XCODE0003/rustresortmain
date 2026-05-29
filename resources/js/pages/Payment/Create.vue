@@ -55,12 +55,12 @@
                             class="flex items-center justify-between text-sm"
                         >
                             <span class="text-TextGray">{{ itemName(item.item) }} x{{ item.count }}</span>
-                            <span class="text-white font-bold">{{ ((item.item.price || 0) - (item.item.discount || 0)) * item.count }} ₽</span>
+                            <span class="text-white font-bold">{{ ((item.item.price || 0) - (item.item.discount || 0)) * item.count }} {{ currencySymbol }}</span>
                         </div>
                         <div class="border-t border-StrokeGray pt-3">
                             <div class="flex items-center justify-between">
                                 <span class="text-base font-bold text-white">{{ $t('payment.total') }}</span>
-                                <span class="text-2xl font-bold text-Orange">{{ total }} ₽</span>
+                                <span class="text-2xl font-bold text-Orange">{{ total }} {{ currencySymbol }}</span>
                             </div>
                         </div>
                     </div>
@@ -75,8 +75,10 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { useShopLocale } from '@/composables/useShopLocale';
 import ShopLayout from '@/layouts/shop.vue';
+import { useCurrency } from '@/composables/useCurrency';
 
 const { itemName } = useShopLocale();
+const { currencySymbol } = useCurrency();
 
 const props = defineProps({
     cart: Array,

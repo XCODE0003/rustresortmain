@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import { usePage, router } from '@inertiajs/vue3';
 import { gsap } from 'gsap';
+import { useCurrency } from '@/composables/useCurrency';
 
 interface NotificationAction {
     label: string;
@@ -21,6 +22,7 @@ interface Notification {
 
 const page = usePage();
 const notifications = computed(() => (page.props as any).notifications as Notification[] ?? []);
+const { currencySymbol } = useCurrency();
 const unreadCount = computed(() => notifications.value.filter((n) => !n.read).length);
 
 const isOpen = ref(false);
@@ -97,7 +99,8 @@ function formatDate(dateStr: string): string {
 }
 
 function formatAmount(amount: number): string {
-    return new Intl.NumberFormat('ru-RU').format(amount) + ' ₽';
+    const formatted = new Intl.NumberFormat('ru-RU').format(amount);
+    return `${formatted} ${currencySymbol.value}`;
 }
 </script>
 

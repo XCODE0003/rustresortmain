@@ -89,7 +89,7 @@
                     @click.stop="handleBuy"
                     class="cursor-pointer rounded-md bg-PaleOrange px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-xs sm:text-sm font-bold text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange"
                 >
-                    {{ item.price }} ₽
+                    {{ item.price }} {{ currencySymbol }}
                 </button>
             </div>
         </div>
@@ -99,6 +99,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useShopLocale } from '@/composables/useShopLocale';
+import { useCurrency } from '@/composables/useCurrency';
 
 interface ShopItem {
     id: number;
@@ -114,6 +115,7 @@ const props = defineProps<{
 }>();
 
 const { itemName } = useShopLocale();
+const { currencySymbol } = useCurrency();
 const displayName = computed(() => itemName(props.item));
 
 const emit = defineEmits<{

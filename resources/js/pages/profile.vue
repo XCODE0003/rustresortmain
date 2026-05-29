@@ -101,7 +101,7 @@
                         </div>
                         <div class="flex items-center gap-3.5">
                             <h1 class="text-sm text-nowrap text-Orange">
-                                {{ user.balance || 0 }} ₽
+                                {{ user.balance || 0 }} {{ currencySymbol }}
                             </h1>
                             <Link
                                 href="/payment"
@@ -131,6 +131,7 @@ import { Link } from '@inertiajs/vue3';
 import Personage from '@/components/personage.vue';
 import MainLayout from '@/layouts/main.vue';
 import PagesProfile from '@/layouts/pagesProfile.vue';
+import { useCurrency } from '@/composables/useCurrency';
 
 type ProfilePageKey = 'market' | 'subscriptions';
 
@@ -159,6 +160,7 @@ export default defineComponent({
     },
     setup(props) {
         const activePage = ref<ProfilePageKey>('market');
+        const { currencySymbol } = useCurrency();
         const profilePagesRow = ref<HTMLElement | null>(null);
         const profileCard = ref<HTMLElement | null>(null);
 
@@ -206,6 +208,7 @@ export default defineComponent({
             activePage,
             profileCard,
             profilePagesRow,
+            currencySymbol,
         };
     },
 });

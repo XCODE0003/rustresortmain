@@ -78,11 +78,11 @@
                         </div>
                         <div class="flex items-center justify-between border-b border-StrokeGray/50 pb-3">
                             <span class="text-sm text-TextGray">{{ $t('purchase.unit_price') }}</span>
-                            <span class="text-sm font-bold text-white">{{ formatPrice(purchase.price) }} ₽</span>
+                            <span class="text-sm font-bold text-white">{{ formatPrice(purchase.price) }} {{ currencySymbol }}</span>
                         </div>
                         <div class="flex items-center justify-between border-b border-StrokeGray/50 pb-3">
                             <span class="text-sm text-TextGray">{{ $t('purchase.total_price') }}</span>
-                            <span class="text-lg font-bold text-Orange">{{ formatPrice(purchase.price * purchase.count) }} ₽</span>
+                            <span class="text-lg font-bold text-Orange">{{ formatPrice(purchase.price * purchase.count) }} {{ currencySymbol }}</span>
                         </div>
                         <div v-if="purchase.server" class="flex items-center justify-between border-b border-StrokeGray/50 pb-3">
                             <span class="text-sm text-TextGray">{{ $t('purchase.server') }}</span>
@@ -109,6 +109,7 @@ import { onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { useI18n } from 'vue-i18n';
 import { useShopLocale } from '@/composables/useShopLocale';
+import { useCurrency } from '@/composables/useCurrency';
 import MainLayout from '@/layouts/main.vue';
 
 defineProps<{
@@ -132,6 +133,7 @@ defineProps<{
 
 const { locale } = useI18n();
 const { itemName, itemDescription } = useShopLocale();
+const { currencySymbol } = useCurrency();
 
 const decodeHtml = (html: string): string => {
     const txt = document.createElement('textarea');

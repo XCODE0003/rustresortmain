@@ -215,7 +215,7 @@
                                 <p
                                     class="text-base font-bold text-Orange uppercase"
                                 >
-                                    {{ amount || 0 }} ₽
+                                    {{ amount || 0 }} {{ currencySymbol }}
                                 </p>
                             </div>
                             <div class="flex flex-col gap-2.5">
@@ -265,6 +265,7 @@ import { computed, onMounted, ref } from 'vue';
 import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';
 import Toggle from '../components/toggle.vue';
+import { useCurrency } from '@/composables/useCurrency';
 
 export default {
     components: {
@@ -279,6 +280,8 @@ export default {
         },
     },
     setup(props) {
+        const { currencySymbol } = useCurrency();
+
         onMounted(() => {
             gsap.fromTo(
                 '.payment-section',
@@ -339,6 +342,7 @@ export default {
             isSteamGateway,
             isOversizeLogo,
             submitPayment,
+            currencySymbol,
         };
     },
 };

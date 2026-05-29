@@ -22,7 +22,7 @@
                     </div>
                     <div class="flex justify-between text-sm">
                         <span class="text-TextGray">{{ $t('payment.amount') }}</span>
-                        <span class="font-bold text-Orange">{{ payment.amount }} ₽</span>
+                        <span class="font-bold text-Orange">{{ payment.amount }} {{ currencySymbol }}</span>
                     </div>
                 </div>
 
@@ -45,11 +45,12 @@
     </ShopLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import ShopLayout from '@/layouts/shop.vue';
+import { useCurrency } from '@/composables/useCurrency';
 
-defineProps({
-    payment: Object,
-});
+defineProps<{ payment: Record<string, any> }>();
+
+const { currencySymbol } = useCurrency();
 </script>

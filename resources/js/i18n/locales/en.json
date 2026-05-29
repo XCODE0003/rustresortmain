@@ -51,7 +51,7 @@
     "no_description": "Item description",
     "price": "Price",
     "buy": "Buy",
-    "buy_for": "Buy for {price} ₽",
+    "buy_for": "Buy for ${price}",
     "buy_as_gift": "Buy as gift",
     "items_for_selected_server": "Showing items for the selected server",
     "pick_server_to_filter": "Select a server to filter items",

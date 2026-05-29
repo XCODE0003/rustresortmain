@@ -121,7 +121,7 @@
                 <div class="flex items-center gap-3 md:gap-5 shrink-0">
                   <div class="text-right">
                     <div class="text-base font-bold text-Orange">
-                      {{ formatPrice(purchase.price * purchase.count) }} ₽
+                      {{ formatPrice(purchase.price * purchase.count) }} {{ currencySymbol }}
                     </div>
                     <div class="text-xs text-TextGray">x{{ purchase.count }}</div>
                   </div>
@@ -204,13 +204,13 @@
                 </div>
                 <div class="text-right shrink-0">
                   <div class="text-base font-bold text-[#64CE82]">
-                    +{{ formatPrice(topup.amount) }} ₽
+                    +{{ formatPrice(topup.amount) }} {{ currencySymbol }}
                   </div>
                   <div
                     v-if="topup.bonus_amount > 0"
                     class="text-xs text-TextGray"
                   >
-                    +{{ formatPrice(topup.bonus_amount) }} ₽ бонус
+                    +{{ formatPrice(topup.bonus_amount) }} {{ currencySymbol }} бонус
                   </div>
                 </div>
               </div>
@@ -242,6 +242,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { gsap } from "gsap";
 import { useI18n } from "vue-i18n";
 import { useShopLocale } from "@/composables/useShopLocale";
+import { useCurrency } from "@/composables/useCurrency";
 import MainLayout from "@/layouts/main.vue";
 
 interface PurchaseItem {
@@ -283,6 +284,7 @@ const props = defineProps<{
 
 const { locale } = useI18n();
 const { itemName } = useShopLocale();
+const { currencySymbol } = useCurrency();
 
 const formatDate = (value: string): string =>
   new Date(value).toLocaleDateString(locale.value === "en" ? "en-US" : "ru-RU");
