@@ -4,34 +4,69 @@ namespace App\Console\Commands;
 
 use App\Models\ShopItem;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 /**
- * Скачивает недостающие картинки товаров с production (rustresort.com).
+ * Восстанавливает недостающие картинки товаров из ЛОКАЛЬНОЙ папки.
  *
- * Проходит по всем активным shop_items, проверяет наличие файла в public/,
- * и если файла нет — скачивает с MAIN по тому же хешу.
+ * Проходит по shop_items, проверяет наличие файла в public/{image}, и если
+ * файла нет — ищет файл с тем же именем (basename) в указанных папках-источниках
+ * (рекурсивно) и копирует. По умолчанию источник — старый проект rustresort.com,
+ * где лежат все картинки (storage/app/public + public/images).
  *
- *   php artisan shop:download-images              # apply
- *   php artisan shop:download-images --dry        # preview без скачивания
- *   php artisan shop:download-images --include-hidden  # включая status=0
- *   php artisan shop:download-images --source=https://rustresort.com/storage/
+ *   php artisan shop:download-images            # копирует из старого проекта
+ *   php artisan shop:download-images --dry      # превью без копирования
+ *   php artisan shop:download-images --include-hidden
+ *   php artisan shop:download-images --from-dir=/path/a,/path/b
+ *   php artisan shop:download-images --force    # перезаписать существующие
  */
 class DownloadMissingImages extends Command
 {
     protected $signature = 'shop:download-images
-        {--source=https://rustresort.com/storage/ : URL prefix where images live on MAIN}
-        {--dry : Preview without downloading}
-        {--include-hidden : Also process status=0 items}
-        {--force : Re-download even if file exists locally}';
+        {--from-dir= : Папки-источники через запятую (по умолчанию — старый проект rustresort.com)}
+        {--dry : Preview без копирования}
+        {--include-hidden : Также обрабатывать status=0}
+        {--force : Перезаписать даже если файл уже есть}';
 
-    protected $description = 'Скачивает недостающие картинки товаров с production сервера';
+    protected $description = 'Восстанавливает недостающие картинки товаров из локальной папки';
 
     public function handle(): int
     {
-        $source = rtrim($this->option('source'), '/').'/';
         $isDry = (bool) $this->option('dry');
         $force = (bool) $this->option('force');
+
+        // Папки-источники: по умолчанию старый проект (сосед по каталогу)
+        $sibling = dirname(base_path()).'/rustresort.com';
+        $default = implode(',', [
+            $sibling.'/storage/app/public',
+            $sibling.'/public/images',
+            $sibling.'/public',
+        ]);
+        $dirsOption = $this->option('from-dir') ?: $default;
+        $dirs = array_values(array_filter(array_map('trim', explode(',', $dirsOption))));
+
+        $this->info('=== Источники (папки) ===');
+        $validDirs = [];
+        foreach ($dirs as $d) {
+            if (is_dir($d)) {
+                $this->line("  ✅ {$d}");
+                $validDirs[] = $d;
+            } else {
+                $this->warn("  ✗ нет каталога: {$d}");
+            }
+        }
+        $this->line('');
+
+        if (empty($validDirs)) {
+            $this->error('Ни одной валидной папки-источника. Укажи --from-dir=/путь');
+
+            return self::FAILURE;
+        }
+
+        // Индекс basename → полный путь (первое совпадение выигрывает)
+        $this->info('Индексирую файлы в источниках…');
+        $index = $this->buildIndex($validDirs);
+        $this->info('Найдено файлов в источниках: '.count($index));
+        $this->line('');
 
         $query = ShopItem::query()
             ->whereNotNull('image')
@@ -42,10 +77,6 @@ class DownloadMissingImages extends Command
         }
 
         $items = $query->get(['id', 'name_ru', 'image']);
-
-        $this->info('=== Audit ===');
-        $this->info("Checking {$items->count()} items, source: {$source}");
-        $this->line('');
 
         $missing = [];
         $existing = 0;
@@ -69,26 +100,30 @@ class DownloadMissingImages extends Command
                 'item' => $item,
                 'local' => $localPath,
                 'relative' => $relativePath,
+                'basename' => basename($relativePath),
             ];
         }
 
-        $this->info("Already present: {$existing}");
+        $this->info('=== Audit ===');
+        $this->info("Проверено товаров: {$items->count()}");
+        $this->info("Уже на месте: {$existing}");
         if ($invalidPath > 0) {
-            $this->warn("Invalid paths (skipped): {$invalidPath}");
+            $this->warn("Кривые пути (пропущены): {$invalidPath}");
         }
-        $this->info('Missing (will download): '.count($missing));
+        $this->info('Недостающих: '.count($missing));
         $this->line('');
 
         if (empty($missing)) {
-            $this->info('✅ Nothing to download.');
+            $this->info('✅ Всё на месте, копировать нечего.');
 
             return self::SUCCESS;
         }
 
         if ($isDry) {
             foreach ($missing as $m) {
-                $url = $source.$m['relative'];
-                $this->line(sprintf('  [DRY] %-30s ← %s', $m['item']->name_ru, $url));
+                $src = $index[$m['basename']] ?? null;
+                $mark = $src ? "← {$src}" : '✗ НЕ найдено в источниках';
+                $this->line(sprintf('  [DRY] %-28s %s', $m['item']->name_ru, $mark));
             }
 
             return self::SUCCESS;
@@ -96,95 +131,76 @@ class DownloadMissingImages extends Command
 
         $bar = $this->output->createProgressBar(count($missing));
         $bar->setFormat(' %current%/%max% [%bar%] %percent:3s%% — %message%');
-        $bar->setMessage('starting…');
+        $bar->setMessage('старт…');
         $bar->start();
 
-        $downloaded = 0;
+        $copied = 0;
         $failed = [];
 
         foreach ($missing as $m) {
             $bar->setMessage($m['item']->name_ru);
 
-            // Try primary URL first, then fallback without "images/" segment
-            $candidates = [
-                $source.$m['relative'],                            // .../storage/images/HASH.png
-                $source.basename($m['relative']),                  // .../storage/HASH.png
-                'https://rustresort.com/'.$m['relative'],          // direct (no /storage/)
-            ];
+            $src = $index[$m['basename']] ?? null;
 
-            $ok = false;
-            $lastError = '';
-
-            foreach ($candidates as $url) {
-                try {
-                    $response = Http::timeout(30)
-                        ->withOptions(['allow_redirects' => true])
-                        ->get($url);
-
-                    if (! $response->ok()) {
-                        $lastError = "HTTP {$response->status()}";
-                        continue;
-                    }
-
-                    $body = $response->body();
-                    if (strlen($body) < 100) {
-                        $lastError = 'body too small ('.strlen($body).' bytes)';
-                        continue;
-                    }
-
-                    // Reject HTML error pages
-                    $head = substr($body, 0, 200);
-                    if (str_contains(strtolower($head), '<!doctype') || str_contains(strtolower($head), '<html')) {
-                        $lastError = 'got HTML page, not image';
-                        continue;
-                    }
-
-                    // Ensure dir exists
-                    $dir = dirname($m['local']);
-                    if (! is_dir($dir)) {
-                        mkdir($dir, 0755, true);
-                    }
-
-                    file_put_contents($m['local'], $body);
-                    $downloaded++;
-                    $ok = true;
-                    break;
-                } catch (\Throwable $e) {
-                    $lastError = $e->getMessage();
-                }
+            if ($src === null || ! is_file($src) || filesize($src) <= 100) {
+                $failed[] = ['item' => $m['item'], 'basename' => $m['basename'], 'reason' => 'не найдено в источниках'];
+                $bar->advance();
+                continue;
             }
 
-            if (! $ok) {
-                $failed[] = [
-                    'item' => $m['item'],
-                    'tried' => $candidates,
-                    'error' => $lastError,
-                ];
+            $dir = dirname($m['local']);
+            if (! is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+
+            if (@copy($src, $m['local'])) {
+                $copied++;
+            } else {
+                $failed[] = ['item' => $m['item'], 'basename' => $m['basename'], 'reason' => 'ошибка copy()'];
             }
 
             $bar->advance();
         }
 
-        $bar->setMessage('done');
+        $bar->setMessage('готово');
         $bar->finish();
         $this->line('');
         $this->line('');
 
-        $this->info("✅ Downloaded: {$downloaded} / ".count($missing));
+        $this->info("✅ Скопировано: {$copied} / ".count($missing));
 
         if (! empty($failed)) {
-            $this->warn('❌ Failed: '.count($failed));
-            $this->line('');
+            $this->warn('❌ Не найдено/ошибка: '.count($failed));
             foreach ($failed as $f) {
-                $this->line("  id={$f['item']->id} {$f['item']->name_ru}");
-                $this->line("    last error: {$f['error']}");
-                $this->line('    tried URLs:');
-                foreach ($f['tried'] as $u) {
-                    $this->line("      • {$u}");
-                }
+                $this->line("  id={$f['item']->id} {$f['item']->name_ru} ({$f['basename']}) — {$f['reason']}");
             }
         }
 
         return empty($failed) ? self::SUCCESS : self::FAILURE;
+    }
+
+    /**
+     * Рекурсивно индексирует файлы в папках: basename → первый найденный путь.
+     */
+    private function buildIndex(array $dirs): array
+    {
+        $index = [];
+        foreach ($dirs as $dir) {
+            $it = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+            foreach ($it as $file) {
+                if (! $file->isFile()) {
+                    continue;
+                }
+                $name = $file->getFilename();
+                if (! isset($index[$name])) {
+                    $index[$name] = $file->getPathname();
+                }
+            }
+        }
+
+        return $index;
     }
 }
