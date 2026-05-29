@@ -30,7 +30,7 @@ Schedule::command('queue:work --queue=rcon,payments,default --stop-when-empty --
     ->runInBackground();
 
 Schedule::job(\App\Jobs\UpdateWipeDatesJob::class)
-    ->daily()
+->hourly()
     ->name('update-wipe-dates');
 
 Schedule::command('model:prune', [

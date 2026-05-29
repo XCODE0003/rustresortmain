@@ -32,7 +32,10 @@ class ServerRequest extends FormRequest
             'category_id' => ['required', 'string', 'max:20'],
             'image' => ['required_without:edit', 'image'],
             'rsworld_db_type' => ['required', 'string'],
-            'next_wipe' => [''],
+            'next_wipe' => ['nullable', 'date'],
+            'wipe_schedule_days' => ['nullable', 'array'],
+            'wipe_schedule_days.*' => ['integer', 'between:0,6'],
+            'wipe_schedule_time' => ['nullable', 'date_format:H:i'],
             'rcon_passw' => [''],
         ];
     }

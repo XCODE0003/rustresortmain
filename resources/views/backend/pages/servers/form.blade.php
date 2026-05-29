@@ -3,6 +3,12 @@
         // Server.options is array-cast via ServerOptionsCast; legacy code expected JSON string.
         $options = is_array($server->options) ? (object) $server->options : json_decode($server->options);
     }
+    $selectedWipeDays = collect(old('wipe_schedule_days', isset($server) ? ($server->wipe_schedule_days ?? []) : []))
+        ->map(fn($day) => (int) $day)
+        ->all();
+    $wipeScheduleTime = old('wipe_schedule_time', isset($server->wipe_schedule_time) ? $server->wipe_schedule_time : '12:00');
+    $nextWipeValue = old('next_wipe', isset($server->next_wipe) ? optional($server->next_wipe)->format('Y-m-d\TH:i') : '');
+    $lastWipeValue = isset($server->wipe) ? optional($server->wipe)->format('Y-m-d\TH:i') : '';
 @endphp
 
 @extends('backend.layouts.backend')
@@ -188,13 +194,76 @@
                                         <label class="form-label" for="next_wipe">{{ __('Дата следующего вайпа') }}</label>
                                         <div class="form-control-wrap">
                                             <input type="datetime-local" class="form-control" id="next_wipe" name="next_wipe"
-                                                   @isset($server->next_wipe) value="{{ $server->next_wipe }}" @else value="0" @endisset required>
+                                                   value="{{ $nextWipeValue }}">
                                             @error('next_wipe')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                             @enderror
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="last_wipe">{{ __('Дата последнего вайпа') }}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="datetime-local" class="form-control" id="last_wipe" value="{{ $lastWipeValue }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="wipe_schedule_time">{{ __('Время еженедельного вайпа') }}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="time" class="form-control" id="wipe_schedule_time" name="wipe_schedule_time" value="{{ $wipeScheduleTime }}">
+                                            @error('wipe_schedule_time')
+                                            <div class="invalid-feedback d-block">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-label d-block">{{ __('Дни недели для вайпа') }}</label>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            @foreach([
+                                                0 => __('Вс'),
+                                                1 => __('Пн'),
+                                                2 => __('Вт'),
+                                                3 => __('Ср'),
+                                                4 => __('Чт'),
+                                                5 => __('Пт'),
+                                                6 => __('Сб'),
+                                            ] as $dayValue => $dayLabel)
+                                                <div class="custom-control custom-checkbox mr-3 mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        class="custom-control-input"
+                                                        id="wipe_schedule_day_{{ $dayValue }}"
+                                                        name="wipe_schedule_days[]"
+                                                        value="{{ $dayValue }}"
+                                                        @if(in_array($dayValue, $selectedWipeDays, true)) checked @endif
+                                                    >
+                                                    <label class="custom-control-label" for="wipe_schedule_day_{{ $dayValue }}">{{ $dayLabel }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <small class="text-muted d-block mt-1">{{ __('Если выбраны дни, система автоматически рассчитывает последний и следующий вайп.') }}</small>
+                                        @error('wipe_schedule_days')
+                                        <div class="invalid-feedback d-block">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                        @error('wipe_schedule_days.*')
+                                        <div class="invalid-feedback d-block">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 

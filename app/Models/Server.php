@@ -17,6 +17,8 @@ class Server extends Model
         'options',
         'wipe',
         'next_wipe',
+        'wipe_schedule_days',
+        'wipe_schedule_time',
         'category_id',
     ];
 
@@ -26,6 +28,8 @@ class Server extends Model
             'options' => ServerOptionsCast::class,
             'wipe' => 'datetime',
             'next_wipe' => 'datetime',
+            'wipe_schedule_days' => 'array',
+            'wipe_schedule_time' => 'string',
         ];
     }
 

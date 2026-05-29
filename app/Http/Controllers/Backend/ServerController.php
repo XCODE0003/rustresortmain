@@ -2,29 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ServerRequest;
 use App\Models\Server;
-use App\Models\Option;
-use App\Http\Controllers\Controller;
+use App\Services\WipeScheduleService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ServerController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(private readonly WipeScheduleService $wipeScheduleService)
     {
         // $this->middleware('can:admin'); // gated by route-level Backend middleware
     }
 
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
+     *
+     * @return void
      */
     public function index()
     {
@@ -54,29 +50,33 @@ class ServerController extends Controller
     public function store(ServerRequest $request): RedirectResponse
     {
         $req = $request->validated();
-        $options = array(
-            "ip" => $req["ip"],
-            "rcon_ip" => $req["rcon_ip"],
-            "rsworld_db_type" => $req["rsworld_db_type"],
-            "api_url" => '',
-            "api_key" => '',
-            "rcon_passw" => $req["rcon_passw"],
-        );
-        $data = array(
-            "name" => $req["name"],
-            "category_id" => $req["category_id"],
-            "status" => $req["status"],
-            "sort" => $req["sort"],
-            "next_wipe" => $req["next_wipe"],
-            "options"=> json_encode($options),
-        );
+        $options = [
+            'ip' => $req['ip'],
+            'rcon_ip' => $req['rcon_ip'],
+            'rsworld_db_type' => $req['rsworld_db_type'],
+            'api_url' => '',
+            'api_key' => '',
+            'rcon_passw' => $req['rcon_passw'],
+        ];
+        $data = [
+            'name' => $req['name'],
+            'category_id' => $req['category_id'],
+            'status' => $req['status'],
+            'sort' => $req['sort'],
+            'next_wipe' => $req['next_wipe'],
+            'wipe_schedule_days' => $req['wipe_schedule_days'] ?? [],
+            'wipe_schedule_time' => $req['wipe_schedule_time'] ?? null,
+            'options' => json_encode($options),
+        ];
 
         $data['image'] = $request->image->store('images', 'public');
 
         $this->alert('success', __('Сервер успешно добавлен'));
-        Log::channel('adminlog')->info('Admin ' . auth()->user()->name . ': Server added successfully. Parameters: ' . json_encode($request->all()));
+        Log::channel('adminlog')->info('Admin '.auth()->user()->name.': Server added successfully. Parameters: '.json_encode($request->all()));
 
-        Server::create($data);
+        $server = Server::create($data);
+        $this->applyScheduleDates($server);
+
         return redirect()->route('servers.index');
     }
 
@@ -91,8 +91,10 @@ class ServerController extends Controller
     public function settings($id)
     {
         $server = Server::where('id', $id)->first();
+
         return view('backend.pages.servers.settings', compact('server'));
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -100,23 +102,25 @@ class ServerController extends Controller
     {
         $req = $request->validated();
 
-        $options = array(
-            "ip" => $req["ip"],
-            "rcon_ip" => $req["rcon_ip"],
-            "rsworld_db_type" => $req["rsworld_db_type"],
-            "api_url" => (isset($req["api_url"])) ? $req["api_url"] : '',
-            "api_key" => (isset($req["api_key"])) ? $req["api_key"] : '',
-            "rcon_passw" => (isset($req["rcon_passw"])) ? $req["rcon_passw"] : '',
-        );
+        $options = [
+            'ip' => $req['ip'],
+            'rcon_ip' => $req['rcon_ip'],
+            'rsworld_db_type' => $req['rsworld_db_type'],
+            'api_url' => (isset($req['api_url'])) ? $req['api_url'] : '',
+            'api_key' => (isset($req['api_key'])) ? $req['api_key'] : '',
+            'rcon_passw' => (isset($req['rcon_passw'])) ? $req['rcon_passw'] : '',
+        ];
 
-        $data = array(
-            "name" => $req["name"],
-            "category_id" => $req["category_id"],
-            "status" => $req["status"],
-            "sort" => $req["sort"],
-            "next_wipe" => $req["next_wipe"],
-            "options"=> json_encode($options),
-        );
+        $data = [
+            'name' => $req['name'],
+            'category_id' => $req['category_id'],
+            'status' => $req['status'],
+            'sort' => $req['sort'],
+            'next_wipe' => $req['next_wipe'],
+            'wipe_schedule_days' => $req['wipe_schedule_days'] ?? [],
+            'wipe_schedule_time' => $req['wipe_schedule_time'] ?? null,
+            'options' => json_encode($options),
+        ];
 
         if (isset($data['image'])) {
             Storage::disk('public')->delete($server->image);
@@ -126,9 +130,11 @@ class ServerController extends Controller
         }
 
         $this->alert('success', __('Сервер успешно обновлен'));
-        Log::channel('adminlog')->info('Admin ' . auth()->user()->name . ': The server has been successfully updated. Parameters: ' . json_encode($request->all(), JSON_UNESCAPED_UNICODE));
+        Log::channel('adminlog')->info('Admin '.auth()->user()->name.': The server has been successfully updated. Parameters: '.json_encode($request->all(), JSON_UNESCAPED_UNICODE));
 
         $server->update($data);
+        $this->applyScheduleDates($server->refresh());
+
         return back();
     }
 
@@ -141,8 +147,18 @@ class ServerController extends Controller
         $server->delete();
 
         $this->alert('success', __('Сервер успешно удален'));
-        Log::channel('adminlog')->info('Admin ' . auth()->user()->name . ': The server was successfully removed. Parameters:' . json_encode($server->name));
+        Log::channel('adminlog')->info('Admin '.auth()->user()->name.': The server was successfully removed. Parameters:'.json_encode($server->name));
 
         return back();
+    }
+
+    private function applyScheduleDates(Server $server): void
+    {
+        $schedule = $this->wipeScheduleService->calculate($server);
+
+        $server->forceFill([
+            'wipe' => $schedule['last_wipe'],
+            'next_wipe' => $schedule['next_wipe'],
+        ])->save();
     }
 }

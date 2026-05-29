@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('servers', function (Blueprint $table) {
-            //
+            $table->json('wipe_schedule_days')->nullable()->after('next_wipe');
+            $table->time('wipe_schedule_time')->nullable()->after('wipe_schedule_days');
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('servers', function (Blueprint $table) {
-            //
+            $table->dropColumn(['wipe_schedule_days', 'wipe_schedule_time']);
         });
     }
 };
