@@ -202,7 +202,12 @@ class PallyGateway implements PaymentGatewayInterface
             return true;
         }
 
-        if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) {
+        // Доменное имя (не IP) — публичный адрес. Приватным помечаем ТОЛЬКО IP из
+        // приватных/зарезервированных диапазонов. Раньше filter_var(IP) для домена
+        // возвращал false и любой домен ошибочно считался приватным → success_url
+        // обнулялся, и Pally редиректил на корень сайта POST'ом (405).
+        if (filter_var($host, FILTER_VALIDATE_IP) !== false
+            && filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) {
             return true;
         }
 
