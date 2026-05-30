@@ -77,6 +77,14 @@
                 class="absolute top-1/2 left-1/2 z-10 h-[120px] w-auto -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[145px] md:h-[175px]"
             />
 
+            <!-- Кол-во товара (сколько выдаётся за покупку) -->
+            <div
+                v-if="itemAmount"
+                class="absolute right-2 top-2 z-20 rounded-md border border-StrokeGray bg-[#0E1012]/90 px-2 py-1 text-[10px] font-bold text-white sm:text-xs"
+            >
+                x{{ formattedAmount }}
+            </div>
+
             <div
                 class="absolute -top-[16px] sm:-top-[19px] md:-top-[22px] left-1/2 -translate-x-1/2 rounded-lg border border-StrokeGray bg-[#0E1012] px-3 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3.5 text-[10px] sm:text-xs font-bold text-nowrap text-white uppercase"
             >
@@ -107,6 +115,7 @@ interface ShopItem {
     name_en?: string | null;
     price: number;
     price_usd?: number | null;
+    amount?: number | null;
     image?: string;
     variations?: any[];
 }
@@ -128,6 +137,16 @@ const quantity = ref(1);
 const hasVariations = computed(() => {
     return props.item.variations && props.item.variations.length > 0;
 });
+
+// Кол-во, которое выдаётся за одну покупку. У товаров с вариациями count всегда = 1,
+// поэтому amount там не отражает выдачу — бейдж не показываем.
+const itemAmount = computed<number | null>(() => {
+    if (hasVariations.value) return null;
+    const n = Number(props.item.amount ?? 1);
+    return Number.isFinite(n) && n > 1 ? n : null;
+});
+
+const formattedAmount = computed(() => (itemAmount.value ?? 0).toLocaleString('ru-RU'));
 
 const imageSrc = computed(() => {
     return props.item.image ? '/' + props.item.image : '/images/subscriptions/elete-pack.png';
