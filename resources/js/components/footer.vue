@@ -6,7 +6,7 @@
             class="flex items-center lg:gap-6 gap-3.5 max-lg:flex-col max-lg:text-center min-w-max"
         >
             <Link href="/">
-                <img src="/images/logo.png" class="size-10 grayFilter min-w-max" />
+                <img src="/images/logo.png" class="size-10 grayFilter" />
             </Link>
             <h1 class="text-[10px] text-TextGray font-medium max-w-[380px] text-wrap">
                 ALL RIGHTS RESERVED. ALL TRADEMARKS SHOWN IN THIS WEBSITE ARE THE PROPERTY OF THEIR RESPECTIVE OWNER.
