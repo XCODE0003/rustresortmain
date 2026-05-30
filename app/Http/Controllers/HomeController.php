@@ -31,7 +31,7 @@ class HomeController extends Controller
             ->get();
 
         $shopItems = ShopItem::query()
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.sort', 'shop_items.amount', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en', 'shop_items.variations'])
             ->with('category:id,title_ru,title_en,sort,discount_percent')
             ->where('shop_items.status', 1)
             ->whereNotNull('shop_items.category_id')

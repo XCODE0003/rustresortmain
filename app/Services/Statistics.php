@@ -44,6 +44,13 @@ class Statistics
             ->leftJoin('users', 'users.id', '=', 'donates.user_id')
             ->leftJoin('servers', 'servers.id', '=', 'donates.server')
             ->where('donates.created_at', '>=', $date_start)->where('donates.created_at', '<=', $date_end)
+            // Покупки, оплаченные с внутреннего баланса (payment_system = 'balance'), — это трата
+            // ранее пополненного баланса, а не реальная выручка. Исключаем их из отчёта по платежам,
+            // чтобы «Итого» (и таблица, и карточка, и график) считало только реальные пополнения.
+            ->where(function ($q) {
+                $q->where('donates.payment_system', '!=', 'balance')
+                    ->orWhereNull('donates.payment_system');
+            })
             ->orderBy('donates.created_at');
 
         if ($server_id > 0) {
