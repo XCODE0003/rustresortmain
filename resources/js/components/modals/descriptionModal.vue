@@ -2,7 +2,7 @@
     <Transition name="modal">
         <div
             v-if="isOpen"
-            class="fixed top-0 left-0 z-50 h-full w-full overflow-y-auto px-3.5 py-8 backdrop-blur-xl"
+            class="fixed top-0 left-0 z-50 h-full w-full overflow-y-auto overscroll-contain px-3.5 py-8 backdrop-blur-xl"
             @click="close"
         >
             <div class="flex min-h-full items-center justify-center">
@@ -287,9 +287,13 @@ const onServerDropdownPointerDown = (event: PointerEvent): void => {
     }
 };
 
-// Закрываем дропдаун при закрытии модалки
+// Закрываем дропдаун при закрытии модалки + блокируем скролл фона (магазина),
+// чтобы при докрутке описания не скроллилась страница под модалкой.
 watch(isOpen, (value) => {
     if (!value) isServerDropdownOpen.value = false;
+    if (typeof document !== 'undefined') {
+        document.body.style.overflow = value ? 'hidden' : '';
+    }
 });
 
 /**
@@ -435,6 +439,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', onKeyDown);
     document.removeEventListener('pointerdown', onServerDropdownPointerDown);
+    if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+    }
 });
 </script>
 
