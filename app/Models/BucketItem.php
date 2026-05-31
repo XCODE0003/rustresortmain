@@ -21,6 +21,7 @@ class BucketItem extends Model
         'shop_item_id',
         'rust_id',
         'var_id',
+        'command',
         'price',
         'quantity',
         'wipe_block',

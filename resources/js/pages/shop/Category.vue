@@ -102,6 +102,7 @@ const handleBuyItem = (payload: any): void => {
         defaultAmount: selectedQuantity,
         // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
         unitAmount: Number(item.amount ?? 1),
+        kind: (item as any).kind ?? 'item',
     });
 };
 </script>

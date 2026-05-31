@@ -140,6 +140,7 @@ const openBuyModal = (): void => {
         defaultAmount: 1,
         // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
         unitAmount: Number((item as any).amount ?? 1),
+        kind: (item as any).kind ?? 'item',
     });
 };
 </script>

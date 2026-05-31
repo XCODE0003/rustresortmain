@@ -41,21 +41,18 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             return;
         }
 
-        // Две разные схемы выдачи:
-        //  - Услуги/привилегии/рейты/изучения (is_command=1) — RCON-команда через
-        //    таблицу shopping (addgroup / grantperm ...).
-        //  - Обычные товары (оружие, ресурсы, патроны...) — кладём в bucket, их
-        //    выдаёт внутриигровой плагин по short_name. RCON не используется,
-        //    т.к. у таких предметов нет команды (а у части в БД лежит мусор 0/1).
-        if ($item->is_command) {
-            $this->deliverViaRcon($item);
-        } else {
-            $this->deliverToBucket($item);
-        }
+        // Всё идёт в bucket (внутриигровую корзину):
+        //  - Обычные товары — плагин выдаёт по short_name / rust_id.
+        //  - Привилегии/рейты/изучения (is_command=1) — кладём с готовой командой в
+        //    поле command; плагин исполняет её на сервере, где находится игрок.
+        // RCON (таблица shopping) для покупок больше не используется: на сайте убран
+        // выбор сервера, поэтому привязать команду к конкретному серверу нельзя —
+        // её применяет плагин при заходе игрока (как и выдачу обычных товаров).
+        $this->deliverToBucket($item);
 
         $this->recordPurchase($item);
 
-        Log::info("Item delivered for donate {$this->donate->id} (".($item->is_command ? 'rcon' : 'bucket').')');
+        Log::info("Item delivered for donate {$this->donate->id} (bucket".($item->is_command ? '+command' : '').')');
     }
 
     /**
@@ -92,9 +89,42 @@ class DeliverPurchaseItemsJob implements ShouldQueue
     {
         $steamId = (string) ($this->donate->steam_id ?? $this->donate->user?->steam_id ?? '');
         $serverId = $this->donate->server ?? $item->server ?? null;
+        // server=-1 (старое «все серверы») → не привязываем к серверу.
+        if ($serverId !== null && (int) $serverId < 0) {
+            $serverId = null;
+        }
         $server = $serverId ? Server::find($serverId) : null;
-        $count = max(1, (int) ($this->donate->count ?? 1));
 
+        // Привилегия (is_command): одна запись с готовой командой — плагин её исполнит
+        // на сервере, где находится игрок. ShortName/Amount плагин для команд игнорирует.
+        if ($item->is_command) {
+            $command = $this->generateCommand($item, $this->donate);
+            if (trim($command) === '' || $command === '0') {
+                Log::warning("Empty command for is_command item {$item->id}, donate {$this->donate->id} — nothing to deliver");
+
+                return;
+            }
+
+            BucketItem::create([
+                'user_id' => $this->donate->user_id,
+                'shop_item_id' => $item->id,
+                'rust_id' => (int) ($item->item_id ?? 0),
+                'var_id' => $this->donate->var_id,
+                'command' => $command,
+                'price' => $item->price,
+                'quantity' => 1,
+                'wipe_block' => (int) $item->wipe_block,
+                'steam_id' => $steamId,
+                'server_name' => $server?->name,
+                'server_id' => $serverId,
+            ]);
+
+            Log::info("Bucket(command): {$command} for donate {$this->donate->id}");
+
+            return;
+        }
+
+        $count = max(1, (int) ($this->donate->count ?? 1));
         $amount = $this->resolveAmount($item, $this->donate);
 
         for ($i = 0; $i < $count; $i++) {
@@ -103,6 +133,7 @@ class DeliverPurchaseItemsJob implements ShouldQueue
                 'shop_item_id' => $item->id,
                 'rust_id' => (int) ($item->item_id ?? 0),
                 'var_id' => $this->donate->var_id,
+                'command' => null,
                 'price' => $item->price,
                 'quantity' => $amount,
                 'wipe_block' => (int) $item->wipe_block,

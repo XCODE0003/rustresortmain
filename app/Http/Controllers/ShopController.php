@@ -21,18 +21,11 @@ class ShopController extends Controller
     {
         $categories = ShopCategory::orderBy('sort')->get();
 
-        $selectedServerId = session('selected_server_id');
         $categorySlug = request('category');
 
-        $serverFilter = function ($query, string $table) use ($selectedServerId) {
-            $query->where(function ($q) use ($selectedServerId, $table) {
-                $q->where("$table.server", $selectedServerId)
-                    ->orWhere("$table.server", 0)
-                    ->orWhereNull("$table.server")
-                    ->orWhereJsonContains("$table.servers", (string) $selectedServerId)
-                    ->orWhereJsonContains("$table.servers", (int) $selectedServerId);
-            });
-        };
+        // Выбор сервера на сайте убран: все товары/наборы доступны на любом сервере,
+        // выдача идёт во внутриигровую корзину (плагин выдаёт на том сервере, где игрок).
+        // Поэтому магазин больше не фильтруем по серверу.
 
         $itemsQuery = ShopItem::with('category:id,path,title_ru,title_en,sort,discount_percent')
             ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.is_command', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
@@ -44,11 +37,6 @@ class ShopController extends Controller
             ->where('shop_sets.status', 1)
             ->whereNotNull('shop_sets.category_id');
 
-        if ($selectedServerId) {
-            $serverFilter($itemsQuery, 'shop_items');
-            $serverFilter($setsQuery, 'shop_sets');
-        }
-
         $items = $itemsQuery->get()->map(fn ($item) => array_merge($item->toArray(), ['kind' => 'item']))
             ->concat($setsQuery->get()->map(fn ($set) => array_merge($set->toArray(), ['kind' => 'set'])))
             ->sortBy([
@@ -58,18 +46,11 @@ class ShopController extends Controller
             ])
             ->values();
 
-        $selectedServer = $selectedServerId ? Server::find($selectedServerId) : null;
-
-        $servers = Server::query()
-            ->where('status', 1)
-            ->orderBy('sort')
-            ->get(['id', 'name']);
-
         return Inertia::render('shop/Index', [
             'categories' => $categories,
             'items' => $items,
-            'selectedServer' => $selectedServer,
-            'servers' => $servers,
+            'selectedServer' => null,
+            'servers' => [],
             'categorySlug' => $categorySlug,
         ]);
     }

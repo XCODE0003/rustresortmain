@@ -406,6 +406,8 @@ const openItemModal = (item: ShopItem): void => {
         defaultAmount: 1,
         // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
         unitAmount: Number((item as any).amount ?? 1),
+        // Набор (сет) покупается по set_id — без kind модалка отправит item_id и покупка не пройдёт.
+        kind: (item as any).kind ?? 'item',
         serverId: selectedShopServerId.value,
         serverName: props.servers.find((s) => s.id === selectedShopServerId.value)?.name ?? null,
         availableServers: props.servers.map((s) => ({ id: s.id, name: s.name })),

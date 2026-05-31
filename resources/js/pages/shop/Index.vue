@@ -75,52 +75,6 @@
                 </div>
             </div>
 
-            <!-- Блок выбора сервера -->
-            <div
-                ref="serverBlockRef"
-                class="relative w-full rounded-xl border border-StrokeGray p-5 md:p-6 lg:p-8"
-                style="opacity: 0"
-            >
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-base font-bold text-white uppercase md:text-lg">
-                        {{ $t('shop.select_server') }}
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <Link
-                            href="/shop/server-reset"
-                            :class="[
-                                'rounded-lg border px-5 py-3 text-sm font-bold uppercase transition-all duration-300 ease-out',
-                                !selectedServer
-                                    ? 'border-Orange text-Orange bg-Orange/10 shadow-[0_0_18px_rgba(243,164,93,0.3)]'
-                                    : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40',
-                            ]"
-                        >
-                            {{ $t('shop.all_servers') }}
-                        </Link>
-                        <Link
-                            v-for="server in (servers ?? [])"
-                            :key="server.id"
-                            :href="`/shop/server/${server.id}`"
-                            :class="[
-                                'flex items-center gap-2 rounded-lg border px-5 py-3 text-sm font-bold uppercase transition-all duration-300 ease-out',
-                                selectedServer && selectedServer.id === server.id
-                                    ? 'border-Orange text-Orange bg-Orange/10 shadow-[0_0_18px_rgba(243,164,93,0.3)]'
-                                    : 'border-StrokeGray text-TextGray hover:text-white hover:border-white/40',
-                            ]"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
-                                <path d="M12 22s-8-4.5-8-12a8 8 0 0 1 16 0c0 7.5-8 12-8 12Z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            {{ server.name }}
-                        </Link>
-                    </div>
-                    <p class="text-xs text-TextGray">
-                        {{ selectedServer ? $t('shop.items_for_selected_server') : $t('shop.pick_server_to_filter') }}
-                    </p>
-                </div>
-            </div>
-
             <!-- Поиск товаров -->
             <div ref="searchRef" class="w-full" style="opacity: 0">
                 <div class="relative">
@@ -204,19 +158,9 @@
 
             <div v-if="filteredItems.length === 0" class="py-8 text-center text-TextGray">
                 <p class="text-lg">{{ $t('shop.no_items') }}</p>
-                <p v-if="selectedServer" class="mt-2 text-sm">
-                    {{ $t('shop.for_server', { name: selectedServer.name }) }}
-                </p>
-                <p v-else-if="searchQuery" class="mt-2 text-sm">
+                <p v-if="searchQuery" class="mt-2 text-sm">
                     {{ $t('shop.for_query', { q: searchQuery }) }}
                 </p>
-                <Link
-                    v-if="selectedServer"
-                    href="/shop/server"
-                    class="mt-4 inline-block text-Orange hover:underline"
-                >
-                    {{ $t('shop.pick_other_server') }}
-                </Link>
             </div>
         </div>
     </ShopLayout>

@@ -91,10 +91,18 @@ class ShopController extends Controller
         $payload = $this->presentBucketItem($bucketItem);
         $shopItemId = $bucketItem->shop_item_id;
         $serverId = $bucketItem->server_id;
+        // Привилегия? — определяем ДО удаления записи.
+        $isCommand = (bool) ($bucketItem->shopItem?->is_command)
+            || ($bucketItem->command !== null && trim((string) $bucketItem->command) !== '');
         $bucketItem->delete();
 
-        // Товар выдан в игре — убираем его из «купленных» в ЛК (списываем 1 шт.).
-        $this->consumePurchase($user->id, (int) $shopItemId, $serverId !== null ? (int) $serverId : null);
+        // Обычный товар выдан в игре — убираем его из «купленных» в ЛК (списываем 1 шт.).
+        // Привилегии (is_command) НЕ списываем: они остаются в ЛК как активная подписка
+        // со своим сроком (validity), пока не истекут — иначе VIP пропадал бы из ЛК
+        // сразу после захода игрока на сервер.
+        if (! $isCommand) {
+            $this->consumePurchase($user->id, (int) $shopItemId, $serverId !== null ? (int) $serverId : null);
+        }
 
         return response()->json([
             'status' => 'success',
@@ -276,10 +284,20 @@ class ShopController extends Controller
             return null;
         }
 
-        // IsItem выводим логически: всё, что попало в bucket — выдаваемый предмет,
-        // т.к. услуги (is_command) сюда не складываются. На колонку is_item в БД
-        // не опираемся — у импортированных товаров она ненадёжна.
-        $isBlueprint = (bool) $item->is_blueprint;
+        // Привилегия (is_command): отдаём готовую команду из bucket.command (она
+        // резолвится при покупке). Плагин исполняет Command, а ShortName/Amount
+        // игнорирует. Для совместимости со старыми записями (без сохранённой команды)
+        // подставляем %steamid%/%var% в шаблон item->command на лету.
+        $isCommand = (bool) $item->is_command
+            || ($bucket->command !== null && trim((string) $bucket->command) !== '');
+
+        if ($isCommand) {
+            $command = (string) ($bucket->command ?: $this->resolveCommandFallback($item, $bucket));
+            $isBlueprint = false;
+        } else {
+            $command = '';
+            $isBlueprint = (bool) $item->is_blueprint;
+        }
 
         return [
             'ID' => (string) $bucket->id,
@@ -290,13 +308,39 @@ class ShopController extends Controller
             'SteamID' => $bucket->steam_id,
             'Amount' => $bucket->quantity,
             'ShortName' => $item->short_name,
-            'Command' => (string) ($item->command ?? ''),
+            'Command' => $command,
             'WipeBlock' => (int) $item->wipe_block,
             'ImageUrl' => $this->imageUrl($item->image),
             'IsBlueprint' => $isBlueprint,
-            'IsCommand' => false,
-            'IsItem' => ! $isBlueprint,
+            'IsCommand' => $isCommand,
+            'IsItem' => ! $isCommand && ! $isBlueprint,
         ];
+    }
+
+    /**
+     * Резолв команды для bucket-записей без сохранённой команды (старые записи):
+     * подставляет SteamID/var в шаблон item->command. Поддерживает оба стиля
+     * плейсхолдеров — {steamid}/{var} и %steamid%/%var%.
+     */
+    protected function resolveCommandFallback(ShopItem $item, BucketItem $bucket): string
+    {
+        $template = (string) ($item->command ?? '');
+        if ($template === '') {
+            return '';
+        }
+
+        $steamId = (string) ($bucket->steam_id ?? '');
+        $var = (string) ($bucket->var_id ?? '');
+        $amount = (string) ($item->amount ?? '');
+
+        return strtr($template, [
+            '{steamid}' => $steamId,
+            '{amount}' => $amount,
+            '{var}' => $var,
+            '%steamid%' => $steamId,
+            '%amount%' => $amount,
+            '%var%' => $var,
+        ]);
     }
 
     /**
