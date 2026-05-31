@@ -52,7 +52,7 @@
     "no_description": "Описание товара",
     "price": "Цена",
     "buy": "Купить",
-    "buy_for": "Купить за {price} ₽",
+    "buy_for": "Купить за {price}",
     "buy_as_gift": "Купить в подарок",
     "items_for_selected_server": "Показаны товары для выбранного сервера",
     "pick_server_to_filter": "Выберите сервер для фильтрации товаров",
@@ -79,6 +79,8 @@
     "back_to_categories": "Назад к категориям",
     "server_label": "Сервер:",
     "no_server_selected": "Сервер не выбран — выберите сервер перед покупкой",
+    "available_any_server": "Товар доступен для получения на любом сервере",
+    "you_receive": "Получите: {qty}",
     "item_unavailable_on_server": "Товар недоступен на этом сервере"
   },
   "home": {

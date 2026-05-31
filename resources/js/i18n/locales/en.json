@@ -52,7 +52,7 @@
     "no_description": "Item description",
     "price": "Price",
     "buy": "Buy",
-    "buy_for": "Buy for ${price}",
+    "buy_for": "Buy for {price}",
     "buy_as_gift": "Buy as gift",
     "items_for_selected_server": "Showing items for the selected server",
     "pick_server_to_filter": "Select a server to filter items",
@@ -79,6 +79,8 @@
     "back_to_categories": "Back to categories",
     "server_label": "Server:",
     "no_server_selected": "No server selected — pick a server before buying",
+    "available_any_server": "This item can be claimed on any server",
+    "you_receive": "You receive: {qty}",
     "item_unavailable_on_server": "Item not available on this server"
   },
   "home": {

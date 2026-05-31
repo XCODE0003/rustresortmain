@@ -35,7 +35,7 @@ class ShopController extends Controller
         };
 
         $itemsQuery = ShopItem::with('category:id,path,title_ru,title_en,sort,discount_percent')
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.is_command', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
             ->where('shop_items.status', 1)
             ->whereNotNull('shop_items.category_id');
 

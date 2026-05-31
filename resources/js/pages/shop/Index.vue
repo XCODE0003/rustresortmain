@@ -454,6 +454,8 @@ const handleBuyItem = (payload: any) => {
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,
+        unitAmount: Number(item.amount ?? 1),
+        isCommand: !!(item as any).is_command,
         serverId: props.selectedServer?.id ?? null,
         serverName: props.selectedServer?.name ?? null,
         availableServers: (props.servers ?? []).map((s) => ({ id: s.id, name: s.name })),

@@ -33,8 +33,9 @@
                 <h1 v-html="cleanedDescription" class="text-xs/[30px] description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
-                <!-- Server selector dropdown -->
-                <div ref="serverDropdownRef" class="relative">
+                <!-- Server selector dropdown — только для привилегий (команд).
+                     Обычные товары доступны на любом сервере. -->
+                <div v-if="isCommand" ref="serverDropdownRef" class="relative">
                     <button
                         type="button"
                         @click="toggleServerDropdown"
@@ -135,6 +136,13 @@
                         </div>
                     </Transition>
                 </div>
+                <!-- Для обычных товаров выбор сервера не нужен — доступно везде -->
+                <div
+                    v-else
+                    class="rounded-lg border border-StrokeGray bg-white/5 px-4 py-2.5 text-center text-xs font-medium text-TextGray"
+                >
+                    {{ $t('shop.available_any_server') }}
+                </div>
 
                 <Transition
                     @before-enter="onGiftBeforeEnter"
@@ -179,26 +187,31 @@
 
                     <div
                         v-else
-                        class="button-black flex items-center gap-2.5 rounded-lg border border-StrokeGray px-3 py-3.5 text-sm font-bold"
+                        class="button-black flex flex-col justify-center gap-1 rounded-lg border border-StrokeGray px-3 py-2 text-sm font-bold"
                     >
-                        <span class="text-TextGray">{{ $t('shop.quantity_label') }}</span>
-                        <div class="flex items-center gap-2.5">
-                            <button
-                                type="button"
-                                @click="decrementAmount"
-                                class="flex size-6 items-center justify-center rounded text-white duration-300 hover:bg-StrokeGray"
-                            >
-                                -
-                            </button>
-                            <span class="text-white">x{{ amount }}</span>
-                            <button
-                                type="button"
-                                @click="incrementAmount"
-                                class="flex size-6 items-center justify-center rounded text-white duration-300 hover:bg-StrokeGray"
-                            >
-                                +
-                            </button>
+                        <div class="flex items-center justify-center gap-2.5">
+                            <span class="text-TextGray">{{ $t('shop.quantity_label') }}</span>
+                            <div class="flex items-center gap-2.5">
+                                <button
+                                    type="button"
+                                    @click="decrementAmount"
+                                    class="flex size-6 items-center justify-center rounded text-white duration-300 hover:bg-StrokeGray"
+                                >
+                                    -
+                                </button>
+                                <span class="text-white">x{{ amount }}</span>
+                                <button
+                                    type="button"
+                                    @click="incrementAmount"
+                                    class="flex size-6 items-center justify-center rounded text-white duration-300 hover:bg-StrokeGray"
+                                >
+                                    +
+                                </button>
+                            </div>
                         </div>
+                        <span v-if="unitAmount > 1" class="text-center text-[11px] font-medium text-Orange">
+                            {{ $t('shop.you_receive', { qty: amount * unitAmount }) }}
+                        </span>
                     </div>
 
                     <button
@@ -242,6 +255,8 @@ const {
     variations,
     selectedVariation,
     amount,
+    unitAmount,
+    isCommand,
     currentPrice,
     serverId,
     serverName,

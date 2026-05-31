@@ -21,6 +21,8 @@ type DescriptionModalPayload = {
     imageSrc?: string;
     variations?: VariationOption[];
     defaultAmount?: number;
+    unitAmount?: number;
+    isCommand?: boolean;
     serverId?: number | null;
     serverName?: string | null;
     availableServers?: ServerOption[];
@@ -43,6 +45,8 @@ const state = reactive({
     variations: [] as VariationOption[],
     selectedVariationIndex: 0,
     amount: 1,
+    unitAmount: 1,
+    isCommand: false,
     isGift: false,
     giftSteamId: '',
     serverId: null as number | null,
@@ -116,7 +120,11 @@ export function useDescriptionModalStore() {
         if (payload.imageSrc !== undefined) {
             state.imageSrc = payload.imageSrc;
         }
-        
+        state.unitAmount = (payload.unitAmount != null && payload.unitAmount >= 1)
+            ? Math.floor(Number(payload.unitAmount))
+            : 1;
+        state.isCommand = payload.isCommand ?? false;
+
         if (payload.variations !== undefined && payload.variations.length > 0) {
             state.variations = payload.variations;
             state.selectedVariationIndex = 0;
