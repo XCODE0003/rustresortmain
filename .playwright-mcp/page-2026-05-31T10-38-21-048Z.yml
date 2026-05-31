@@ -1,0 +1,688 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "Logo" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "Logo" [ref=e10]
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - button "ru RU" [ref=e14] [cursor=pointer]:
+            - img "ru" [ref=e15]
+            - generic [ref=e16]: RU
+            - img [ref=e17]
+          - link "Войти" [ref=e20] [cursor=pointer]:
+            - /url: /auth/steam
+            - img [ref=e21]
+            - generic [ref=e23]: Войти
+        - button [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+  - main [ref=e29]:
+    - generic [ref=e31]:
+      - generic:
+        - img
+        - img
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - img "Баннер 1" [ref=e34]
+          - generic [ref=e36]:
+            - heading "Специальное предложение" [level=2] [ref=e37]
+            - paragraph [ref=e38]: Скидки до 50% на избранные товары
+        - generic [ref=e39]:
+          - img "Баннер 2" [ref=e40]
+          - generic [ref=e42]:
+            - heading "Новые товары" [level=2] [ref=e43]
+            - paragraph [ref=e44]: Эксклюзивные предметы в магазине
+      - generic [ref=e46]:
+        - heading "Выбор сервера" [level=3] [ref=e47]
+        - generic [ref=e48]:
+          - link "Все серверы" [ref=e49] [cursor=pointer]:
+            - /url: /shop/server-reset
+          - link "Monday 2X" [ref=e50] [cursor=pointer]:
+            - /url: /shop/server/3
+            - img [ref=e51]
+            - text: Monday 2X
+          - link "Thursday 2X" [ref=e54] [cursor=pointer]:
+            - /url: /shop/server/2
+            - img [ref=e55]
+            - text: Thursday 2X
+        - paragraph [ref=e58]: Выберите сервер для фильтрации товаров
+      - generic [ref=e60]:
+        - textbox "Поиск товаров..." [ref=e61]
+        - img [ref=e62]
+      - generic [ref=e66]:
+        - button "Все товары" [ref=e67] [cursor=pointer]
+        - button "Услуги" [ref=e68] [cursor=pointer]
+        - button "Чаи / Пироги" [ref=e69] [cursor=pointer]
+        - button "Оружие" [ref=e70] [cursor=pointer]
+        - button "Ресурсы" [ref=e71] [cursor=pointer]
+        - button "Взрывное" [ref=e72] [cursor=pointer]
+        - button "Компоненты" [ref=e73] [cursor=pointer]
+        - button "Предметы" [ref=e74] [cursor=pointer]
+        - button "Патроны" [ref=e75] [cursor=pointer]
+        - button "Электроника" [ref=e76] [cursor=pointer]
+        - button "Инструменты" [ref=e77] [cursor=pointer]
+        - button "Одежда" [ref=e78] [cursor=pointer]
+        - button "Карточки" [ref=e79] [cursor=pointer]
+        - button "Медицина" [ref=e80] [cursor=pointer]
+        - button "Рецепты" [ref=e81] [cursor=pointer]
+      - generic [ref=e82]:
+        - generic [ref=e85] [cursor=pointer]:
+          - img "Cobalt KIT" [ref=e86]
+          - generic [ref=e87]: Cobalt KIT
+          - button "2250.00 ₽" [ref=e89]
+        - generic [ref=e92] [cursor=pointer]:
+          - img "Military KIT" [ref=e93]
+          - generic [ref=e94]: Military KIT
+          - button "1500.00 ₽" [ref=e96]
+        - generic [ref=e99] [cursor=pointer]:
+          - img "Outpost KIT" [ref=e100]
+          - generic [ref=e101]: Outpost KIT
+          - button "825.00 ₽" [ref=e103]
+        - generic [ref=e106] [cursor=pointer]:
+          - img "VIP" [ref=e107]
+          - generic [ref=e108]: VIP
+          - button "349.00 ₽" [ref=e110]
+        - generic [ref=e113] [cursor=pointer]:
+          - img "BLUEPRINT" [ref=e114]
+          - generic [ref=e115]: BLUEPRINT
+          - button "599.00 ₽" [ref=e117]
+        - generic [ref=e120] [cursor=pointer]:
+          - img "Rate X3" [ref=e121]
+          - generic [ref=e122]: Rate X3
+          - button "599.00 ₽" [ref=e124]
+        - generic [ref=e127] [cursor=pointer]:
+          - img "Nickname" [ref=e128]
+          - generic [ref=e129]: Nickname
+          - button "150.00 ₽" [ref=e131]
+        - generic [ref=e134] [cursor=pointer]:
+          - img "Farmer Kit" [ref=e135]
+          - generic [ref=e136]: Farmer Kit
+          - button "699.00 ₽" [ref=e138]
+        - generic [ref=e141] [cursor=pointer]:
+          - img "Ore Tea" [ref=e142]
+          - generic [ref=e143]: Ore Tea
+          - button "100.00 ₽" [ref=e145]
+        - generic [ref=e148] [cursor=pointer]:
+          - img "Wood Tea" [ref=e149]
+          - generic [ref=e150]: Wood Tea
+          - button "70.00 ₽" [ref=e152]
+        - generic [ref=e155] [cursor=pointer]:
+          - img "Healing Tea" [ref=e156]
+          - generic [ref=e157]: x3
+          - generic [ref=e158]: Healing Tea
+          - button "30.00 ₽" [ref=e160]
+        - generic [ref=e163] [cursor=pointer]:
+          - img "Anti-Rad Tea" [ref=e164]
+          - generic [ref=e165]: x3
+          - generic [ref=e166]: Anti-Rad Tea
+          - button "30.00 ₽" [ref=e168]
+        - generic [ref=e171] [cursor=pointer]:
+          - img "Max Health Tea" [ref=e172]
+          - generic [ref=e173]: x2
+          - generic [ref=e174]: Max Health Tea
+          - button "50.00 ₽" [ref=e176]
+        - generic [ref=e179] [cursor=pointer]:
+          - img "Scrap Tea" [ref=e180]
+          - generic [ref=e181]: Scrap Tea
+          - button "75.00 ₽" [ref=e183]
+        - generic [ref=e186] [cursor=pointer]:
+          - img "Bear Pie" [ref=e187]
+          - generic [ref=e188]: Bear Pie
+          - button "90.00 ₽" [ref=e190]
+        - generic [ref=e193] [cursor=pointer]:
+          - img "Survivors Pie" [ref=e194]
+          - generic [ref=e195]: x2
+          - generic [ref=e196]: Survivors Pie
+          - button "50.00 ₽" [ref=e198]
+        - generic [ref=e201] [cursor=pointer]:
+          - img "M249" [ref=e202]
+          - generic [ref=e203]: M249
+          - button "450.00 ₽" [ref=e205]
+        - generic [ref=e208] [cursor=pointer]:
+          - img "L96 Rifle" [ref=e209]
+          - generic [ref=e210]: L96 Rifle
+          - button "300.00 ₽" [ref=e212]
+        - generic [ref=e215] [cursor=pointer]:
+          - img "Assault Rifle" [ref=e216]
+          - generic [ref=e217]: Assault Rifle
+          - button "250.00 ₽" [ref=e219]
+        - generic [ref=e222] [cursor=pointer]:
+          - img "Bolt Action Rifle" [ref=e223]
+          - generic [ref=e224]: Bolt Action Rifle
+          - button "200.00 ₽" [ref=e226]
+        - generic [ref=e229] [cursor=pointer]:
+          - img "Flame Thrower" [ref=e230]
+          - generic [ref=e231]: Flame Thrower
+          - button "200.00 ₽" [ref=e233]
+        - generic [ref=e236] [cursor=pointer]:
+          - img "LR-300" [ref=e237]
+          - generic [ref=e238]: LR-300
+          - button "170.00 ₽" [ref=e240]
+        - generic [ref=e243] [cursor=pointer]:
+          - img "M39 Rifle" [ref=e244]
+          - generic [ref=e245]: M39 Rifle
+          - button "180.00 ₽" [ref=e247]
+        - generic [ref=e250] [cursor=pointer]:
+          - img "MP5A4" [ref=e251]
+          - generic [ref=e252]: MP5A4
+          - button "140.00 ₽" [ref=e254]
+        - generic [ref=e257] [cursor=pointer]:
+          - img "HML" [ref=e258]
+          - generic [ref=e259]: HML
+          - button "180.00 ₽" [ref=e261]
+        - generic [ref=e264] [cursor=pointer]:
+          - img "Rocket Launcher" [ref=e265]
+          - generic [ref=e266]: Rocket Launcher
+          - button "180.00 ₽" [ref=e268]
+        - generic [ref=e271] [cursor=pointer]:
+          - img "MG Launcher" [ref=e272]
+          - generic [ref=e273]: MG Launcher
+          - button "180.00 ₽" [ref=e275]
+        - generic [ref=e278] [cursor=pointer]:
+          - img "SA Rifle" [ref=e279]
+          - generic [ref=e280]: SA Rifle
+          - button "130.00 ₽" [ref=e282]
+        - generic [ref=e285] [cursor=pointer]:
+          - img "Thompson" [ref=e286]
+          - generic [ref=e287]: Thompson
+          - button "130.00 ₽" [ref=e289]
+        - generic [ref=e292] [cursor=pointer]:
+          - img "Custom SMG" [ref=e293]
+          - generic [ref=e294]: Custom SMG
+          - button "120.00 ₽" [ref=e296]
+        - generic [ref=e299] [cursor=pointer]:
+          - img "M92 Pistol" [ref=e300]
+          - generic [ref=e301]: M92 Pistol
+          - button "100.00 ₽" [ref=e303]
+        - generic [ref=e306] [cursor=pointer]:
+          - img "Python Revolver" [ref=e307]
+          - generic [ref=e308]: Python Revolver
+          - button "100.00 ₽" [ref=e310]
+        - generic [ref=e313] [cursor=pointer]:
+          - img "Prototype 17" [ref=e314]
+          - generic [ref=e315]: Prototype 17
+          - button "100.00 ₽" [ref=e317]
+        - generic [ref=e320] [cursor=pointer]:
+          - img "Flame Thrower" [ref=e321]
+          - generic [ref=e322]: Flame Thrower
+          - button "100.00 ₽" [ref=e324]
+        - generic [ref=e327] [cursor=pointer]:
+          - img "SA Pistol" [ref=e328]
+          - generic [ref=e329]: SA Pistol
+          - button "90.00 ₽" [ref=e331]
+        - generic [ref=e334] [cursor=pointer]:
+          - img "Revolver" [ref=e335]
+          - generic [ref=e336]: Revolver
+          - button "75.00 ₽" [ref=e338]
+        - generic [ref=e341] [cursor=pointer]:
+          - img "Pump Shotgun" [ref=e342]
+          - generic [ref=e343]: Pump Shotgun
+          - button "80.00 ₽" [ref=e345]
+        - generic [ref=e348] [cursor=pointer]:
+          - img "Spas-12 Shotgun" [ref=e349]
+          - generic [ref=e350]: Spas-12 Shotgun
+          - button "80.00 ₽" [ref=e352]
+        - generic [ref=e355] [cursor=pointer]:
+          - img "M4 Shotgun" [ref=e356]
+          - generic [ref=e357]: M4 Shotgun
+          - button "120.00 ₽" [ref=e359]
+        - generic [ref=e362] [cursor=pointer]:
+          - img "DB Shotgun" [ref=e363]
+          - generic [ref=e364]: DB Shotgun
+          - button "60.00 ₽" [ref=e366]
+        - generic [ref=e369] [cursor=pointer]:
+          - img "Shotgun" [ref=e370]
+          - generic [ref=e371]: Shotgun
+          - button "30.00 ₽" [ref=e373]
+        - generic [ref=e376] [cursor=pointer]:
+          - img "Speargun" [ref=e377]
+          - generic [ref=e378]: Speargun
+          - button "30.00 ₽" [ref=e380]
+        - generic [ref=e383] [cursor=pointer]:
+          - img "F1 Grenade" [ref=e384]
+          - generic [ref=e385]: x5
+          - generic [ref=e386]: F1 Grenade
+          - button "50.00 ₽" [ref=e388]
+        - generic [ref=e391] [cursor=pointer]:
+          - img "16x Zoom Scope" [ref=e392]
+          - generic [ref=e393]: 16x Zoom Scope
+          - button "199.00 ₽" [ref=e395]
+        - generic [ref=e398] [cursor=pointer]:
+          - img "8x Zoom Scope" [ref=e399]
+          - generic [ref=e400]: 8x Zoom Scope
+          - button "199.00 ₽" [ref=e402]
+        - generic [ref=e405] [cursor=pointer]:
+          - img "Magazine" [ref=e406]
+          - generic [ref=e407]: Magazine
+          - button "40.00 ₽" [ref=e409]
+        - generic [ref=e412] [cursor=pointer]:
+          - img "Lasersight" [ref=e413]
+          - generic [ref=e414]: Lasersight
+          - button "40.00 ₽" [ref=e416]
+        - generic [ref=e419] [cursor=pointer]:
+          - img "Holosight" [ref=e420]
+          - generic [ref=e421]: Holosight
+          - button "40.00 ₽" [ref=e423]
+        - generic [ref=e426] [cursor=pointer]:
+          - img "Flashlight" [ref=e427]
+          - generic [ref=e428]: Flashlight
+          - button "30.00 ₽" [ref=e430]
+        - generic [ref=e433] [cursor=pointer]:
+          - img "Silencer" [ref=e434]
+          - generic [ref=e435]: Silencer
+          - button "60.00 ₽" [ref=e437]
+        - generic [ref=e440] [cursor=pointer]:
+          - img "Wood" [ref=e441]
+          - generic [ref=e442]: x1 000
+          - generic [ref=e443]: Wood
+          - button "30.00 ₽" [ref=e445]
+        - generic [ref=e448] [cursor=pointer]:
+          - img "Stones" [ref=e449]
+          - generic [ref=e450]: x1 000
+          - generic [ref=e451]: Stones
+          - button "40.00 ₽" [ref=e453]
+        - generic [ref=e456] [cursor=pointer]:
+          - img "Metal Fragments" [ref=e457]
+          - generic [ref=e458]: x1 000
+          - generic [ref=e459]: Metal Fragments
+          - button "80.00 ₽" [ref=e461]
+        - generic [ref=e464] [cursor=pointer]:
+          - img "Scrap" [ref=e465]
+          - generic [ref=e466]: x100
+          - generic [ref=e467]: Scrap
+          - button "90.00 ₽" [ref=e469]
+        - generic [ref=e472] [cursor=pointer]:
+          - img "HQ Metal" [ref=e473]
+          - generic [ref=e474]: x100
+          - generic [ref=e475]: HQ Metal
+          - button "140.00 ₽" [ref=e477]
+        - generic [ref=e480] [cursor=pointer]:
+          - img "Gunpowder" [ref=e481]
+          - generic [ref=e482]: x1 000
+          - generic [ref=e483]: Gunpowder
+          - button "100.00 ₽" [ref=e485]
+        - generic [ref=e488] [cursor=pointer]:
+          - img "Sulfur" [ref=e489]
+          - generic [ref=e490]: x1 000
+          - generic [ref=e491]: Sulfur
+          - button "80.00 ₽" [ref=e493]
+        - generic [ref=e496] [cursor=pointer]:
+          - img "Cloth" [ref=e497]
+          - generic [ref=e498]: x500
+          - generic [ref=e499]: Cloth
+          - button "45.00 ₽" [ref=e501]
+        - generic [ref=e504] [cursor=pointer]:
+          - img "Low Grade Fuel" [ref=e505]
+          - generic [ref=e506]: x500
+          - generic [ref=e507]: Low Grade Fuel
+          - button "60.00 ₽" [ref=e509]
+        - generic [ref=e512] [cursor=pointer]:
+          - img "Charcoal" [ref=e513]
+          - generic [ref=e514]: x3 000
+          - generic [ref=e515]: Charcoal
+          - button "25.00 ₽" [ref=e517]
+        - generic [ref=e520] [cursor=pointer]:
+          - img "Diesel Fuel" [ref=e521]
+          - generic [ref=e522]: x5
+          - generic [ref=e523]: Diesel Fuel
+          - button "100.00 ₽" [ref=e525]
+        - generic [ref=e528] [cursor=pointer]:
+          - img "C4 Explosives" [ref=e529]
+          - generic [ref=e530]: x3
+          - generic [ref=e531]: C4 Explosives
+          - button "400.00 ₽" [ref=e533]
+        - generic [ref=e536] [cursor=pointer]:
+          - img "Rocket" [ref=e537]
+          - generic [ref=e538]: x3
+          - generic [ref=e539]: Rocket
+          - button "300.00 ₽" [ref=e541]
+        - generic [ref=e544] [cursor=pointer]:
+          - img "HV Rocket" [ref=e545]
+          - generic [ref=e546]: x3
+          - generic [ref=e547]: HV Rocket
+          - button "70.00 ₽" [ref=e549]
+        - generic [ref=e552] [cursor=pointer]:
+          - img "5.56R Explosives" [ref=e553]
+          - generic [ref=e554]: x128
+          - generic [ref=e555]: 5.56R Explosives
+          - button "200.00 ₽" [ref=e557]
+        - generic [ref=e560] [cursor=pointer]:
+          - img "Satchel Charge" [ref=e561]
+          - generic [ref=e562]: x5
+          - generic [ref=e563]: Satchel Charge
+          - button "189.00 ₽" [ref=e565]
+        - generic [ref=e568] [cursor=pointer]:
+          - img "Semi-Auto Body" [ref=e569]
+          - generic [ref=e570]: x3
+          - generic [ref=e571]: Semi-Auto Body
+          - button "45.00 ₽" [ref=e573]
+        - generic [ref=e576] [cursor=pointer]:
+          - img "SMG body" [ref=e577]
+          - generic [ref=e578]: x3
+          - generic [ref=e579]: SMG body
+          - button "45.00 ₽" [ref=e581]
+        - generic [ref=e584] [cursor=pointer]:
+          - img "Metal spring" [ref=e585]
+          - generic [ref=e586]: x3
+          - generic [ref=e587]: Metal spring
+          - button "45.00 ₽" [ref=e589]
+        - generic [ref=e592] [cursor=pointer]:
+          - img "Metal pipe" [ref=e593]
+          - generic [ref=e594]: x10
+          - generic [ref=e595]: Metal pipe
+          - button "60.00 ₽" [ref=e597]
+        - generic [ref=e600] [cursor=pointer]:
+          - img "Gears" [ref=e601]
+          - generic [ref=e602]: x10
+          - generic [ref=e603]: Gears
+          - button "80.00 ₽" [ref=e605]
+        - generic [ref=e608] [cursor=pointer]:
+          - img "Road signs" [ref=e609]
+          - generic [ref=e610]: x10
+          - generic [ref=e611]: Road signs
+          - button "50.00 ₽" [ref=e613]
+        - generic [ref=e616] [cursor=pointer]:
+          - img "Sheet Metal" [ref=e617]
+          - generic [ref=e618]: x10
+          - generic [ref=e619]: Sheet Metal
+          - button "40.00 ₽" [ref=e621]
+        - generic [ref=e624] [cursor=pointer]:
+          - img "Metal blade" [ref=e625]
+          - generic [ref=e626]: x10
+          - generic [ref=e627]: Metal blade
+          - button "40.00 ₽" [ref=e629]
+        - generic [ref=e632] [cursor=pointer]:
+          - img "Electric Fuse" [ref=e633]
+          - generic [ref=e634]: Electric Fuse
+          - button "30.00 ₽" [ref=e636]
+        - generic [ref=e639] [cursor=pointer]:
+          - img "Tarp" [ref=e640]
+          - generic [ref=e641]: x10
+          - generic [ref=e642]: Tarp
+          - button "50.00 ₽" [ref=e644]
+        - generic [ref=e647] [cursor=pointer]:
+          - img "Rope" [ref=e648]
+          - generic [ref=e649]: x20
+          - generic [ref=e650]: Rope
+          - button "50.00 ₽" [ref=e652]
+        - generic [ref=e655] [cursor=pointer]:
+          - img "Blueprint" [ref=e656]
+          - generic [ref=e657]: Blueprint
+          - button "55.00 ₽" [ref=e659]
+        - generic [ref=e662] [cursor=pointer]:
+          - img "Blueprint" [ref=e663]
+          - generic [ref=e664]: Blueprint
+          - button "90.00 ₽" [ref=e666]
+        - generic [ref=e669] [cursor=pointer]:
+          - img "Workbench Tier 3" [ref=e670]
+          - generic [ref=e671]: Workbench Tier 3
+          - button "529.00 ₽" [ref=e673]
+        - generic [ref=e676] [cursor=pointer]:
+          - img "Workbench Tier 2" [ref=e677]
+          - generic [ref=e678]: Workbench Tier 2
+          - button "350.00 ₽" [ref=e680]
+        - generic [ref=e683] [cursor=pointer]:
+          - img "Workbench Tier 1" [ref=e684]
+          - generic [ref=e685]: Workbench Tier 1
+          - button "70.00 ₽" [ref=e687]
+        - generic [ref=e690] [cursor=pointer]:
+          - img "Large Furnace" [ref=e691]
+          - generic [ref=e692]: Large Furnace
+          - button "60.00 ₽" [ref=e694]
+        - generic [ref=e697] [cursor=pointer]:
+          - img "Oil Refinery" [ref=e698]
+          - generic [ref=e699]: Oil Refinery
+          - button "60.00 ₽" [ref=e701]
+        - generic [ref=e704] [cursor=pointer]:
+          - img "Bed" [ref=e705]
+          - generic [ref=e706]: Bed
+          - button "40.00 ₽" [ref=e708]
+        - generic [ref=e711] [cursor=pointer]:
+          - img "Furnace" [ref=e712]
+          - generic [ref=e713]: Furnace
+          - button "30.00 ₽" [ref=e715]
+        - generic [ref=e718] [cursor=pointer]:
+          - img "5.56R Ammo" [ref=e719]
+          - generic [ref=e720]: x128
+          - generic [ref=e721]: 5.56R Ammo
+          - button "50.00 ₽" [ref=e723]
+        - generic [ref=e726] [cursor=pointer]:
+          - img "HV 5.56R Ammo" [ref=e727]
+          - generic [ref=e728]: x128
+          - generic [ref=e729]: HV 5.56R Ammo
+          - button "60.00 ₽" [ref=e731]
+        - generic [ref=e734] [cursor=pointer]:
+          - img "5.56R Ammo" [ref=e735]
+          - generic [ref=e736]: x128
+          - generic [ref=e737]: 5.56R Ammo
+          - button "80.00 ₽" [ref=e739]
+        - generic [ref=e742] [cursor=pointer]:
+          - img "Pistol Bullet" [ref=e743]
+          - generic [ref=e744]: x128
+          - generic [ref=e745]: Pistol Bullet
+          - button "50.00 ₽" [ref=e747]
+        - generic [ref=e750] [cursor=pointer]:
+          - img "HVP Ammo" [ref=e751]
+          - generic [ref=e752]: x128
+          - generic [ref=e753]: HVP Ammo
+          - button "60.00 ₽" [ref=e755]
+        - generic [ref=e758] [cursor=pointer]:
+          - img "IP Bullet" [ref=e759]
+          - generic [ref=e760]: x128
+          - generic [ref=e761]: IP Bullet
+          - button "80.00 ₽" [ref=e763]
+        - generic [ref=e766] [cursor=pointer]:
+          - img "12 GI Shell" [ref=e767]
+          - generic [ref=e768]: x64
+          - generic [ref=e769]: 12 GI Shell
+          - button "80.00 ₽" [ref=e771]
+        - generic [ref=e774] [cursor=pointer]:
+          - img "12G Buckshot" [ref=e775]
+          - generic [ref=e776]: x64
+          - generic [ref=e777]: 12G Buckshot
+          - button "80.00 ₽" [ref=e779]
+        - generic [ref=e782] [cursor=pointer]:
+          - img "12G Slug" [ref=e783]
+          - generic [ref=e784]: x64
+          - generic [ref=e785]: 12G Slug
+          - button "80.00 ₽" [ref=e787]
+        - generic [ref=e790] [cursor=pointer]:
+          - img "Computer" [ref=e791]
+          - generic [ref=e792]: x3
+          - generic [ref=e793]: Computer
+          - button "60.00 ₽" [ref=e795]
+        - generic [ref=e798] [cursor=pointer]:
+          - img "CCTV Camera" [ref=e799]
+          - generic [ref=e800]: x3
+          - generic [ref=e801]: CCTV Camera
+          - button "60.00 ₽" [ref=e803]
+        - generic [ref=e806] [cursor=pointer]:
+          - img "Tech Trash" [ref=e807]
+          - generic [ref=e808]: x5
+          - generic [ref=e809]: Tech Trash
+          - button "50.00 ₽" [ref=e811]
+        - generic [ref=e814] [cursor=pointer]:
+          - img "Wind Turbine" [ref=e815]
+          - generic [ref=e816]: Wind Turbine
+          - button "70.00 ₽" [ref=e818]
+        - generic [ref=e821] [cursor=pointer]:
+          - img "Small Generator" [ref=e822]
+          - generic [ref=e823]: Small Generator
+          - button "40.00 ₽" [ref=e825]
+        - generic [ref=e828] [cursor=pointer]:
+          - img "Large Solar Panel" [ref=e829]
+          - generic [ref=e830]: Large Solar Panel
+          - button "30.00 ₽" [ref=e832]
+        - generic [ref=e835] [cursor=pointer]:
+          - img "LR Battery" [ref=e836]
+          - generic [ref=e837]: LR Battery
+          - button "50.00 ₽" [ref=e839]
+        - generic [ref=e842] [cursor=pointer]:
+          - img "MR Battery" [ref=e843]
+          - generic [ref=e844]: MR Battery
+          - button "35.00 ₽" [ref=e846]
+        - generic [ref=e849] [cursor=pointer]:
+          - img "Computer Station" [ref=e850]
+          - generic [ref=e851]: Computer Station
+          - button "50.00 ₽" [ref=e853]
+        - generic [ref=e856] [cursor=pointer]:
+          - img "Auto Turret" [ref=e857]
+          - generic [ref=e858]: Auto Turret
+          - button "100.00 ₽" [ref=e860]
+        - generic [ref=e863] [cursor=pointer]:
+          - img "Switch" [ref=e864]
+          - generic [ref=e865]: Switch
+          - button "20.00 ₽" [ref=e867]
+        - generic [ref=e870] [cursor=pointer]:
+          - img "Sprinkler" [ref=e871]
+          - generic [ref=e872]: Sprinkler
+          - button "20.00 ₽" [ref=e874]
+        - generic [ref=e877] [cursor=pointer]:
+          - img "Jackhammer" [ref=e878]
+          - generic [ref=e879]: Jackhammer
+          - button "80.00 ₽" [ref=e881]
+        - generic [ref=e884] [cursor=pointer]:
+          - img "Chainsaw" [ref=e885]
+          - generic [ref=e886]: Chainsaw
+          - button "80.00 ₽" [ref=e888]
+        - generic [ref=e891] [cursor=pointer]:
+          - img "Icepick Salvaged" [ref=e892]
+          - generic [ref=e893]: Icepick Salvaged
+          - button "60.00 ₽" [ref=e895]
+        - generic [ref=e898] [cursor=pointer]:
+          - img "Axe Salvaged" [ref=e899]
+          - generic [ref=e900]: Axe Salvaged
+          - button "60.00 ₽" [ref=e902]
+        - generic [ref=e905] [cursor=pointer]:
+          - img "Metal Facemask" [ref=e906]
+          - generic [ref=e907]: Metal Facemask
+          - button "100.00 ₽" [ref=e909]
+        - generic [ref=e912] [cursor=pointer]:
+          - img "Metal Chest Plate" [ref=e913]
+          - generic [ref=e914]: Metal Chest Plate
+          - button "100.00 ₽" [ref=e916]
+        - generic [ref=e919] [cursor=pointer]:
+          - img "Helmet" [ref=e920]
+          - generic [ref=e921]: Helmet
+          - button "50.00 ₽" [ref=e923]
+        - generic [ref=e926] [cursor=pointer]:
+          - img "Road Sign Jacket" [ref=e927]
+          - generic [ref=e928]: Road Sign Jacket
+          - button "50.00 ₽" [ref=e930]
+        - generic [ref=e933] [cursor=pointer]:
+          - img "Road Sign Kilt" [ref=e934]
+          - generic [ref=e935]: Road Sign Kilt
+          - button "50.00 ₽" [ref=e937]
+        - generic [ref=e940] [cursor=pointer]:
+          - img "Roadsign Gloves" [ref=e941]
+          - generic [ref=e942]: Roadsign Gloves
+          - button "40.00 ₽" [ref=e944]
+        - generic [ref=e947] [cursor=pointer]:
+          - img "Backpack" [ref=e948]
+          - generic [ref=e949]: Backpack
+          - button "60.00 ₽" [ref=e951]
+        - generic [ref=e954] [cursor=pointer]:
+          - img "Hazmat Suit" [ref=e955]
+          - generic [ref=e956]: Hazmat Suit
+          - button "50.00 ₽" [ref=e958]
+        - generic [ref=e961] [cursor=pointer]:
+          - img "Arctic Suit" [ref=e962]
+          - generic [ref=e963]: Arctic Suit
+          - button "50.00 ₽" [ref=e965]
+        - generic [ref=e968] [cursor=pointer]:
+          - img "Lumberjack Suit" [ref=e969]
+          - generic [ref=e970]: Lumberjack Suit
+          - button "50.00 ₽" [ref=e972]
+        - generic [ref=e975] [cursor=pointer]:
+          - img "Nomad Suit" [ref=e976]
+          - generic [ref=e977]: Nomad Suit
+          - button "50.00 ₽" [ref=e979]
+        - generic [ref=e982] [cursor=pointer]:
+          - img "Abyss Divers Suit" [ref=e983]
+          - generic [ref=e984]: Abyss Divers Suit
+          - button "50.00 ₽" [ref=e986]
+        - generic [ref=e989] [cursor=pointer]:
+          - img "Jacket" [ref=e990]
+          - generic [ref=e991]: Jacket
+          - button "30.00 ₽" [ref=e993]
+        - generic [ref=e996] [cursor=pointer]:
+          - img "Hoodie" [ref=e997]
+          - generic [ref=e998]: Hoodie
+          - button "30.00 ₽" [ref=e1000]
+        - generic [ref=e1003] [cursor=pointer]:
+          - img "Pants" [ref=e1004]
+          - generic [ref=e1005]: Pants
+          - button "30.00 ₽" [ref=e1007]
+        - generic [ref=e1010] [cursor=pointer]:
+          - img "Tactical Gloves" [ref=e1011]
+          - generic [ref=e1012]: Tactical Gloves
+          - button "50.00 ₽" [ref=e1014]
+        - generic [ref=e1017] [cursor=pointer]:
+          - img "Boots" [ref=e1018]
+          - generic [ref=e1019]: Boots
+          - button "30.00 ₽" [ref=e1021]
+        - generic [ref=e1024] [cursor=pointer]:
+          - img "Night Vision" [ref=e1025]
+          - generic [ref=e1026]: Night Vision
+          - button "80.00 ₽" [ref=e1028]
+        - generic [ref=e1031] [cursor=pointer]:
+          - img "Green Keycard" [ref=e1032]
+          - generic [ref=e1033]: Green Keycard
+          - button "40.00 ₽" [ref=e1035]
+        - generic [ref=e1038] [cursor=pointer]:
+          - img "Blue Keycard" [ref=e1039]
+          - generic [ref=e1040]: Blue Keycard
+          - button "70.00 ₽" [ref=e1042]
+        - generic [ref=e1045] [cursor=pointer]:
+          - img "Red Keycard" [ref=e1046]
+          - generic [ref=e1047]: Red Keycard
+          - button "100.00 ₽" [ref=e1049]
+        - generic [ref=e1052] [cursor=pointer]:
+          - img "Large Medkit" [ref=e1053]
+          - generic [ref=e1054]: x2
+          - generic [ref=e1055]: Large Medkit
+          - button "40.00 ₽" [ref=e1057]
+        - generic [ref=e1060] [cursor=pointer]:
+          - img "Medical Syringe" [ref=e1061]
+          - generic [ref=e1062]: x4
+          - generic [ref=e1063]: Medical Syringe
+          - button "50.00 ₽" [ref=e1065]
+        - generic [ref=e1068] [cursor=pointer]:
+          - img "Blueberries" [ref=e1069]
+          - generic [ref=e1070]: x5
+          - generic [ref=e1071]: Blueberries
+          - button "50.00 ₽" [ref=e1073]
+        - generic [ref=e1076] [cursor=pointer]:
+          - img "AK47" [ref=e1077]
+          - generic [ref=e1078]: AK47
+          - button "250.00 ₽" [ref=e1080]
+        - generic [ref=e1083] [cursor=pointer]:
+          - img "Bolt Action Rifle (250)" [ref=e1084]
+          - generic [ref=e1085]: Bolt Action Rifle (250)
+          - button "250.00 ₽" [ref=e1087]
+  - contentinfo [ref=e1088]:
+    - generic [ref=e1089]:
+      - link [ref=e1090] [cursor=pointer]:
+        - /url: /
+        - img [ref=e1091]
+      - heading "ALL RIGHTS RESERVED. ALL TRADEMARKS SHOWN IN THIS WEBSITE ARE THE PROPERTY OF THEIR RESPECTIVE OWNER. COPYRIGHT 2024 RUST RESORT" [level=1] [ref=e1092]:
+        - text: ALL RIGHTS RESERVED. ALL TRADEMARKS SHOWN IN THIS WEBSITE ARE THE PROPERTY OF THEIR RESPECTIVE OWNER.
+        - text: COPYRIGHT 2024 RUST RESORT
+    - generic [ref=e1094]:
+      - generic [ref=e1095]:
+        - link "ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ" [ref=e1096] [cursor=pointer]:
+          - /url: /legal/terms
+        - link "ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ" [ref=e1097] [cursor=pointer]:
+          - /url: /legal/privacy
+        - link "ПОЛИТИКА ВОЗВРАТА" [ref=e1098] [cursor=pointer]:
+          - /url: /legal/refund
+      - generic [ref=e1099]:
+        - link [ref=e1100] [cursor=pointer]:
+          - /url: https://discord.gg/rustresort
+          - img [ref=e1101]
+        - link [ref=e1103] [cursor=pointer]:
+          - /url: https://vk.com/rustresort
+          - img [ref=e1104]
+        - link [ref=e1106] [cursor=pointer]:
+          - /url: https://t.me/rustresort
+          - img [ref=e1107]
