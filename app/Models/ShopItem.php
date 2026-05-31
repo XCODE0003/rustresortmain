@@ -29,6 +29,7 @@ class ShopItem extends Model
         'wipe_block',
         'status',
         'variations',
+        'kit_items',
         'image',
         'sort',
         'can_gift',
@@ -70,6 +71,7 @@ class ShopItem extends Model
             'can_gift' => 'boolean',
             'servers' => 'array',
             'variations' => 'array',
+            'kit_items' => 'array',
         ];
     }
 

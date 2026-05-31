@@ -44,7 +44,10 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             $this->deliverToBucket($item);
         }
 
-        $this->recordPurchase($item);
+        // Кит сам пишет покупки по каждому вложенному предмету — общий не нужен.
+        if (! $this->isKit($item)) {
+            $this->recordPurchase($item);
+        }
 
         Log::info("Item delivered for donate {$this->donate->id} (".($item->is_command ? 'rcon' : 'bucket').')');
     }
@@ -84,8 +87,17 @@ class DeliverPurchaseItemsJob implements ShouldQueue
         $steamId = (string) ($this->donate->steam_id ?? $this->donate->user?->steam_id ?? '');
         $serverId = $this->donate->server ?? $item->server ?? null;
         $server = $serverId ? Server::find($serverId) : null;
-        $amount = $this->resolveAmount($item, $this->donate);
         $count = max(1, (int) ($this->donate->count ?? 1));
+
+        // Набор (кит): раскладываем на отдельные предметы — каждый кладётся в
+        // корзину как самостоятельный товар по своему short_name.
+        if ($this->isKit($item)) {
+            $this->deliverKit($item, $steamId, $serverId, $server, $count);
+
+            return;
+        }
+
+        $amount = $this->resolveAmount($item, $this->donate);
 
         for ($i = 0; $i < $count; $i++) {
             BucketItem::create([
@@ -103,6 +115,57 @@ class DeliverPurchaseItemsJob implements ShouldQueue
         }
 
         Log::info("Bucket: {$count}x{$amount} {$item->short_name} for donate {$this->donate->id}");
+    }
+
+    /**
+     * Набор = обычный товар с непустым составом kit_items.
+     */
+    protected function isKit(ShopItem $item): bool
+    {
+        return ! $item->is_command && is_array($item->kit_items) && count($item->kit_items) > 0;
+    }
+
+    /**
+     * Раскладывает набор на отдельные предметы: каждый вложенный товар кладётся
+     * в корзину самостоятельной записью (с его short_name) и отдельной покупкой,
+     * количество = состав × множитель покупки.
+     */
+    protected function deliverKit(ShopItem $item, string $steamId, ?int $serverId, ?Server $server, int $count): void
+    {
+        foreach ((array) $item->kit_items as $entry) {
+            $contentId = (int) ($entry['id'] ?? 0);
+            $contentQty = max(1, (int) ($entry['amount'] ?? 1)) * $count;
+
+            $content = ShopItem::find($contentId);
+            if (! $content) {
+                Log::warning("Kit {$item->id}: content item {$contentId} not found");
+
+                continue;
+            }
+
+            BucketItem::create([
+                'user_id' => $this->donate->user_id,
+                'shop_item_id' => $content->id,
+                'rust_id' => (int) ($content->item_id ?? 0),
+                'var_id' => null,
+                'price' => 0,
+                'quantity' => $contentQty,
+                'wipe_block' => (int) $content->wipe_block,
+                'steam_id' => $steamId,
+                'server_name' => $server?->name,
+                'server_id' => $serverId,
+            ]);
+
+            ShopPurchase::create([
+                'item_id' => $content->id,
+                'user_id' => $this->donate->user_id,
+                'count' => 1,
+                'server_id' => $serverId,
+                'validity' => null,
+            ]);
+        }
+
+        Log::info('Kit '.$item->short_name." (id {$item->id}) → ".count((array) $item->kit_items)." items for donate {$this->donate->id}");
     }
 
     protected function recordPurchase(ShopItem $item): void

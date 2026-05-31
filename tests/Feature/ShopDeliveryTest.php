@@ -215,3 +215,21 @@ test('выдача в игре списывает покупку из ЛК', fun
 
     expect((int) App\Models\ShopPurchase::find($purchase->id)->count)->toBe(1);
 });
+
+test('кит раскладывается на отдельные предметы в корзине', function () {
+    $user = User::factory()->create(['steam_id' => '76561190000000030']);
+    $oreTea = makeItem(['short_name' => 'oretea.pure', 'amount' => 1]);
+    $bearPie = makeItem(['short_name' => 'pie.bear', 'amount' => 1]);
+    $kit = makeItem(['is_command' => false, 'short_name' => null, 'kit_items' => [
+        ['id' => $oreTea->id, 'amount' => 5],
+        ['id' => $bearPie->id, 'amount' => 3],
+    ]]);
+
+    (new DeliverPurchaseItemsJob(makeDonate($kit, $user, ['count' => 2, 'server' => null])))->handle();
+
+    expect(BucketItem::where('user_id', $user->id)->count())->toBe(2);
+    expect(BucketItem::where('shop_item_id', $oreTea->id)->first()->quantity)->toBe(10); // 5×2
+    expect(BucketItem::where('shop_item_id', $bearPie->id)->first()->quantity)->toBe(6);  // 3×2
+    expect(BucketItem::where('shop_item_id', $kit->id)->count())->toBe(0);
+    expect(App\Models\ShopPurchase::where('user_id', $user->id)->count())->toBe(2);
+});

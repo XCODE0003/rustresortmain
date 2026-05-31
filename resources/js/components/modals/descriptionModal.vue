@@ -29,6 +29,13 @@
             >
                 {{ title }}
             </div>
+            <!-- Сколько товара будет выдано (за выбранное количество) -->
+            <div
+                v-if="!hasVariations && unitAmount > 1"
+                class="absolute right-3 top-3 z-20 rounded-md border border-StrokeGray bg-[#0E1012]/90 px-3 py-1.5 text-xs font-bold text-Orange"
+            >
+                x{{ receivedFormatted }}
+            </div>
             <div class="flex w-full flex-col gap-8 text-center">
                 <h1 v-html="cleanedDescription" class="text-xs/[30px] description-modal-text font-medium text-white rounded-lg">
                 </h1>
@@ -167,13 +174,6 @@
                 </Transition>
 
                 <div
-                    v-if="!hasVariations && unitAmount > 1"
-                    class="text-sm font-bold text-Orange"
-                >
-                    {{ $t('shop.you_receive', { qty: amount * unitAmount }) }}
-                </div>
-
-                <div
                     class="flex flex-wrap items-stretch justify-center gap-2.5"
                 >
                     <button
@@ -282,6 +282,11 @@ const displayCurrentPrice = computed(() => {
     return displayPrice(currentPrice.value, usd);
 });
 
+// Сколько единиц товара выдастся за выбранное количество (множитель × базовое).
+const receivedFormatted = computed(() =>
+    (Number(amount.value) * Number(unitAmount.value)).toLocaleString('ru-RU'),
+);
+
 const isServerDropdownOpen = ref(false);
 const serverDropdownRef = ref<HTMLElement | null>(null);
 
@@ -379,7 +384,12 @@ const handleBuy = (): void => {
             server_id: serverId.value,
             gift_steam_id: isGift.value && giftSteamId.value ? String(giftSteamId.value).trim() : null,
         }, {
+            // Быстрые повторные покупки: не перезагружаем весь магазин, а обновляем
+            // только баланс (auth). preserveState не даёт перемонтировать страницу
+            // (без повторных GSAP-анимаций 100+ карточек) → покупка мгновенная.
             preserveScroll: true,
+            preserveState: true,
+            only: ['auth'],
             onSuccess: () => close(),
         });
     } else {
