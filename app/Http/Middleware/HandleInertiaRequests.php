@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Server;
 use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -54,6 +55,11 @@ class HandleInertiaRequests extends Middleware
                     'steam_id' => $request->user()->steam_id,
                 ] : null,
             ],
+            // Активные серверы — для выбора сервера при покупке привилегии (модалка
+            // магазина). Шарим глобально, чтобы дропдаун работал на любой странице.
+            'shop_servers' => Server::where('status', 1)->orderBy('sort')->get(['id', 'name'])
+                ->map(fn ($s) => ['id' => $s->id, 'name' => $s->name])
+                ->toArray(),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'social_links' => SocialLink::where('active', true)->orderBy('sort')->get()
                 ->map(fn ($s) => ['platform' => $s->platform, 'url' => $s->url])

@@ -40,9 +40,90 @@
                 <h1 v-html="cleanedDescription" class="text-xs/[30px] description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
-                <!-- Выбор сервера убран: всё выдаётся во внутриигровую корзину и
-                     применяется на сервере, где находится игрок. -->
+                <!-- Привилегии (is_command) активируются сразу через RCON на ВЫБРАННОМ
+                     сервере, даже если игрок оффлайн (нужно для пропуска очереди) →
+                     требуется выбор сервера. Обычные товары идут в корзину и забираются
+                     на любом сервере → выбор не нужен. -->
+                <div v-if="isCommand" ref="serverDropdownRef" class="relative">
+                    <button
+                        type="button"
+                        @click="toggleServerDropdown"
+                        :disabled="!allServers.length"
+                        :class="[
+                            'flex w-full items-center gap-3 rounded-lg border px-4 py-2.5 transition-all duration-300',
+                            isServerDropdownOpen
+                                ? 'border-Orange/70'
+                                : serverId
+                                    ? 'button-black border-StrokeGray hover:border-white/30'
+                                    : 'border-yellow-500/50 bg-yellow-500/5 hover:border-yellow-400',
+                            !allServers.length ? 'cursor-default' : 'cursor-pointer',
+                        ]"
+                    >
+                        <template v-if="serverId">
+                            <span class="size-2 shrink-0 rounded-full bg-green-400"></span>
+                            <span class="text-xs font-medium text-TextGray">{{ $t('shop.server_label') }}</span>
+                            <span class="flex-1 truncate text-left text-xs font-bold text-white">{{ serverName }}</span>
+                        </template>
+                        <template v-else>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 shrink-0 text-yellow-400">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                            </svg>
+                            <span class="flex-1 text-left text-xs font-medium text-yellow-400">{{ $t('shop.no_server_selected') }}</span>
+                        </template>
+                        <svg
+                            v-if="allServers.length"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            :class="['size-4 shrink-0 text-TextGray transition-transform duration-200', isServerDropdownOpen ? 'rotate-180' : '']"
+                        >
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </button>
+
+                    <Transition name="server-dropdown">
+                        <div
+                            v-if="isServerDropdownOpen && allServers.length"
+                            class="server-dropdown-panel absolute top-full left-0 right-0 z-20 mt-2 max-h-60 overflow-y-auto rounded-lg border border-StrokeGray shadow-2xl"
+                        >
+                            <button
+                                v-for="server in allServers"
+                                :key="server.id"
+                                type="button"
+                                @click="selectServer(server)"
+                                :class="[
+                                    'flex w-full items-center gap-3 px-4 py-2.5 text-left text-xs transition-colors duration-200 cursor-pointer hover:bg-white/5',
+                                    server.id === serverId ? 'bg-Orange/10' : '',
+                                ]"
+                            >
+                                <span class="size-2 shrink-0 rounded-full bg-green-400"></span>
+                                <span :class="['flex-1 truncate font-medium', server.id === serverId ? 'text-Orange' : 'text-white']">
+                                    {{ server.name }}
+                                </span>
+                                <svg
+                                    v-if="server.id === serverId"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="size-4 shrink-0 text-Orange"
+                                >
+                                    <path d="M20 6 9 17l-5-5"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </Transition>
+                </div>
+                <!-- Обычный товар — на любой сервер -->
                 <div
+                    v-else
                     class="rounded-lg border border-StrokeGray bg-white/5 px-4 py-2.5 text-center text-xs font-medium text-TextGray"
                 >
                     {{ $t('shop.available_any_server') }}
@@ -76,7 +157,7 @@
                     <button
                         type="button"
                         @click="handleBuy"
-                        :disabled="itemId == null"
+                        :disabled="itemId == null || (isCommand && serverId == null)"
                         class="shrink-0 rounded-lg bg-Orange px-5 py-3.5 text-sm font-bold whitespace-nowrap text-black duration-300 ease-in-out hover:bg-PaleOrange hover:text-Orange disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {{ $t('shop.buy_for', { price: displayCurrentPrice }) }}
@@ -171,6 +252,11 @@ const {
 
 const { displayPrice } = useCurrency();
 
+// Список активных серверов шарится глобально (HandleInertiaRequests.shop_servers),
+// поэтому выбор сервера для привилегий работает на любой странице магазина.
+const page = usePage();
+const allServers = computed<ServerOption[]>(() => ((page.props as any).shop_servers ?? []) as ServerOption[]);
+
 const displayCurrentPrice = computed(() => {
     // Для обычных товаров USD-цена масштабируется множителем (priceUsd × amount).
     // Для вариаций отдельной USD-цены нет → displayPrice сконвертирует ₽ по курсу.
@@ -189,12 +275,11 @@ const isServerDropdownOpen = ref(false);
 const serverDropdownRef = ref<HTMLElement | null>(null);
 
 const toggleServerDropdown = (): void => {
-    if (!availableServers.value.length) return;
+    if (!allServers.value.length) return;
     isServerDropdownOpen.value = !isServerDropdownOpen.value;
 };
 
 const selectServer = (server: ServerOption): void => {
-    if (!isItemAvailableOnServer(server.id)) return;
     setServer(server);
     isServerDropdownOpen.value = false;
 };
@@ -269,6 +354,8 @@ const giftState = computed({
 
 const handleBuy = (): void => {
     if (itemId.value == null) return;
+    // Привилегию нельзя выдать без сервера (RCON-команда уходит на конкретный сервер).
+    if (isCommand.value && serverId.value == null) return;
 
     const pageProps = usePage().props as any;
     const userBalance = Number(pageProps.auth?.user?.balance ?? 0);

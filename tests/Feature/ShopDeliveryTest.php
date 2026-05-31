@@ -64,25 +64,22 @@ test('обычный товар (без команды) кладётся в buck
     expect($bucket->steam_id)->toBe('76561190000000001');
 });
 
-test('услуга (is_command) кладётся в bucket с готовой командой, RCON не используется', function () {
+test('услуга (is_command) идёт в RCON (shopping) на выбранный сервер, не в bucket', function () {
     $user = User::factory()->create(['steam_id' => '76561190000000002']);
     $item = makeItem([
         'is_command' => true,
         'command' => 'addgroup {steamid} vip {var}',
     ]);
 
+    // Сервер выбирается при покупке привилегии — команда уходит на него сразу (RCON).
     $donate = makeDonate($item, $user, ['var_id' => 30, 'server' => null]);
 
     (new DeliverPurchaseItemsJob($donate))->handle();
 
-    // Привилегии больше не идут в RCON-очередь — они в bucket, плагин исполнит Command.
-    expect(Shopping::count())->toBe(0);
-    expect(BucketItem::where('user_id', $user->id)->count())->toBe(1);
-
-    $bucket = BucketItem::where('user_id', $user->id)->first();
-    expect($bucket->command)->toBe('addgroup 76561190000000002 vip 30');
-    expect($bucket->shop_item_id)->toBe($item->id);
-    expect($bucket->quantity)->toBe(1);
+    expect(BucketItem::count())->toBe(0);
+    $shopping = Shopping::first();
+    expect($shopping)->not->toBeNull();
+    expect($shopping->command)->toBe('addgroup 76561190000000002 vip 30');
 });
 
 test('пустая команда у услуги не создаёт мусорную запись', function () {
@@ -138,7 +135,19 @@ test('getUser отдаёт привилегию как команду (IsCommand
         'command' => 'addgroup {steamid} vip {var}',
     ]);
 
-    (new DeliverPurchaseItemsJob(makeDonate($item, $user, ['var_id' => 30, 'server' => null])))->handle();
+    // Привилегии теперь идут в RCON, но presentBucketItem всё ещё корректно отдаёт
+    // команду для совместимости со старыми bucket-записями (если такие появятся).
+    BucketItem::create([
+        'user_id' => $user->id,
+        'shop_item_id' => $item->id,
+        'rust_id' => 0,
+        'var_id' => '30',
+        'command' => 'addgroup 76561190000000044 vip 30',
+        'price' => $item->price,
+        'quantity' => 1,
+        'steam_id' => $user->steam_id,
+        'server_id' => null,
+    ]);
 
     $res = $this->getJson('/api/shop/getUser?api_key=secret-key&userID=76561190000000044');
 
