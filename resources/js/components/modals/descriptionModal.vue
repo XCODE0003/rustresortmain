@@ -7,7 +7,7 @@
         >
             <div class="flex min-h-full items-center justify-center">
             <div
-                class="bg-modal relative flex w-full max-w-[579px] flex-col items-center gap-5 rounded-xl border border-StrokeGray p-2.5 md:p-5 lg:p-[30px]"
+                class="bg-modal relative flex w-full max-w-[660px] flex-col items-center gap-5 rounded-xl border border-StrokeGray p-2.5 md:p-5 lg:p-[30px]"
                 @click.stop
             >
             <div class="p-10 md:p-11 lg:p-12">
@@ -174,13 +174,13 @@
                 </Transition>
 
                 <div
-                    class="flex flex-wrap items-stretch justify-center gap-2.5"
+                    class="flex items-stretch justify-center gap-2.5"
                 >
                     <button
                         type="button"
                         @click="handleBuy"
                         :disabled="itemId == null"
-                        class="rounded-lg bg-Orange px-6 py-3.5 text-sm font-bold text-black duration-300 ease-in-out hover:bg-PaleOrange hover:text-Orange disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="shrink-0 rounded-lg bg-Orange px-5 py-3.5 text-sm font-bold whitespace-nowrap text-black duration-300 ease-in-out hover:bg-PaleOrange hover:text-Orange disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {{ $t('shop.buy_for', { price: displayCurrentPrice }) }}
                     </button>
@@ -194,7 +194,7 @@
 
                     <div
                         v-else
-                        class="button-black flex items-center gap-2.5 rounded-lg border border-StrokeGray px-3 py-3.5 text-sm font-bold"
+                        class="button-black flex shrink-0 items-center gap-2.5 rounded-lg border border-StrokeGray px-3 py-3.5 text-sm font-bold whitespace-nowrap"
                     >
                         <span class="text-TextGray">{{ $t('shop.quantity_label') }}</span>
                         <div class="flex items-center gap-2.5">
@@ -220,12 +220,12 @@
                         type="button"
                         @click="onGiftButtonClick"
                         :class="[
-                            'button-black flex items-center gap-2.5 rounded-lg border border-StrokeGray px-6 py-3.5 pr-5 text-sm font-bold duration-300 ease-in-out',
+                            'button-black flex min-w-0 items-center gap-2.5 rounded-lg border border-StrokeGray px-5 py-3.5 text-sm font-bold duration-300 ease-in-out',
                             isGift ? 'text-Orange' : 'text-TextGray',
                         ]"
                     >
-                        {{ $t('shop.buy_as_gift') }}
-                        <Toggle v-model="giftState" />
+                        <span class="truncate">{{ $t('shop.buy_as_gift') }}</span>
+                        <Toggle v-model="giftState" class="shrink-0" />
                     </button>
                 </div>
             </div>
