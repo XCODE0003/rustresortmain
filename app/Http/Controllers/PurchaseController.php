@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BucketItem;
 use App\Models\Donate;
 use App\Models\ShopPurchase;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,6 +31,14 @@ class PurchaseController extends Controller
                     'created_at'     => $d->created_at,
                 ]);
         } else {
+            // Ключи «висящих» в игровой корзине предметов (item_id+server) с ценой > 0.
+            // Возврат возможен ТОЛЬКО пока предмет ещё в корзине (не выдан/не активирован
+            // в игре). Цена > 0 отсекает содержимое наборов (у них bucket price = 0).
+            $pendingKeys = BucketItem::where('user_id', auth()->id())
+                ->where('price', '>', 0)
+                ->get(['shop_item_id', 'server_id'])
+                ->mapWithKeys(fn ($b) => [$b->shop_item_id.':'.($b->server_id ?? '') => true]);
+
             $items = ShopPurchase::with('shopItem', 'server')
                 ->where('user_id', auth()->id())
                 ->latest()
@@ -41,6 +51,7 @@ class PurchaseController extends Controller
                     'created_at' => $p->created_at,
                     'validity'   => $p->validity,
                     'is_valid'   => $p->isValid(),
+                    'returnable' => $pendingKeys->has($p->item_id.':'.($p->server_id ?? '')),
                     'server'     => $p->server ? ['name' => $p->server->name] : null,
                     'item'       => $p->shopItem ? [
                         'name_ru' => $p->shopItem->name_ru,
@@ -86,17 +97,42 @@ class PurchaseController extends Controller
     {
         abort_if($purchase->user_id !== auth()->id(), 403);
 
-        $amount = 0;
-        if ($purchase->shopItem) {
-            $amount = $purchase->shopItem->getFinalPrice() * ($purchase->count ?? 1);
+        // Возврат возможен ТОЛЬКО пока предмет ещё «висит» в игровой корзине (BucketItem)
+        // и не выдан/не активирован в игре. Иначе игрок получил бы и предмет, и деньги.
+        // Цена > 0 отсекает содержимое наборов (bucket price = 0) — их поштучно не возвращаем.
+        $pending = BucketItem::where('user_id', $purchase->user_id)
+            ->where('shop_item_id', $purchase->item_id)
+            ->where('price', '>', 0)
+            ->when(
+                $purchase->server_id === null,
+                fn ($q) => $q->whereNull('server_id'),
+                fn ($q) => $q->where('server_id', $purchase->server_id),
+            )
+            ->get();
+
+        if ($pending->isEmpty()) {
+            return back()->with('error', 'Этот товар уже выдан в игре — возврат невозможен');
         }
 
-        if ($amount > 0) {
-            $purchase->user->increment('balance', $amount);
-        }
+        // Возвращаем за реально «висящие» единицы по текущей цене товара.
+        $units = $pending->count();
+        $refund = round((float) ($purchase->shopItem?->getFinalPrice() ?? 0) * $units, 2);
 
-        $purchase->delete();
+        DB::transaction(function () use ($purchase, $pending, $units, $refund) {
+            BucketItem::whereIn('id', $pending->pluck('id'))->delete();
 
-        return redirect()->route('profile')->with('success', 'Возврат выполнен');
+            if ($refund > 0) {
+                $purchase->user->increment('balance', $refund);
+            }
+
+            // Списываем возвращённые единицы из покупки; если вернули всё — убираем из ЛК.
+            if ((int) $purchase->count > $units) {
+                $purchase->decrement('count', $units);
+            } else {
+                $purchase->delete();
+            }
+        });
+
+        return back()->with('success', 'Возврат выполнен: '.$refund.' ₽ на баланс');
     }
 }

@@ -125,6 +125,15 @@
                     </div>
                     <div class="text-xs text-TextGray">x{{ purchase.count }}</div>
                   </div>
+                  <button
+                    v-if="purchase.returnable"
+                    type="button"
+                    :disabled="refundingId === purchase.id"
+                    class="button-black rounded-lg border border-StrokeGray px-4 py-2.5 text-xs font-bold text-TextGray uppercase duration-300 ease-in-out hover:border-[#CE6464] hover:text-[#CE6464] disabled:opacity-50"
+                    @click="refundPurchase(purchase)"
+                  >
+                    Вернуть
+                  </button>
                   <Link
                     :href="`/purchases/${purchase.id}`"
                     class="button-black rounded-lg border border-StrokeGray px-4 py-2.5 text-xs font-bold text-TextGray uppercase duration-300 ease-in-out hover:border-Orange hover:text-Orange"
@@ -259,6 +268,7 @@ interface Purchase {
   created_at: string;
   validity?: string | null;
   is_valid: boolean;
+  returnable?: boolean;
   server?: { name: string } | null;
   item?: PurchaseItem | null;
 }
@@ -301,6 +311,28 @@ const isLoadingMore = ref(false);
 const isAppending = ref(false);
 const sentinelRef = ref<HTMLElement | null>(null);
 let purchaseObserver: IntersectionObserver | null = null;
+
+// ─── Возврат товара ─────────────────────────────────────────────────────────
+const refundingId = ref<number | null>(null);
+
+const refundPurchase = (purchase: Purchase): void => {
+  if (refundingId.value !== null) return;
+  if (
+    !window.confirm(
+      "Вернуть товар? Он будет убран из игровой корзины, а деньги вернутся на баланс.",
+    )
+  ) {
+    return;
+  }
+  refundingId.value = purchase.id;
+  router.delete(`/profile/purchases/${purchase.id}`, {
+    preserveScroll: true,
+    preserveState: false, // обновляем список покупок и баланс из свежих props
+    onFinish: () => {
+      refundingId.value = null;
+    },
+  });
+};
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 const switchTab = (newTab: "purchases" | "topups"): void => {
