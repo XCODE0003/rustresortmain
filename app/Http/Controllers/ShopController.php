@@ -8,6 +8,7 @@ use App\Models\Server;
 use App\Models\ShopCategory;
 use App\Models\ShopItem;
 use App\Models\ShopSet;
+use App\Models\ShopStatistic;
 use App\Models\User;
 use App\Notifications\PurchaseComplete;
 use Illuminate\Http\RedirectResponse;
@@ -154,6 +155,20 @@ class ShopController extends Controller
         ]);
 
         DeliverPurchaseItemsJob::dispatchSync($donate);
+
+        // Запись в статистику магазина (источник для админки «Статистика магазина»).
+        // price = полная сумма покупки (суммируется в «Итого»), amount = кол-во;
+        // user_id = покупатель, steam_id = получатель (для подарка — другой игрок).
+        ShopStatistic::create([
+            'item_id' => $isSet ? null : $product->id,
+            'set_id' => $isSet ? $product->id : null,
+            'case_id' => null,
+            'amount' => $count,
+            'price' => $total,
+            'server' => $validated['server_id'] ?? null,
+            'user_id' => $user->id,
+            'steam_id' => $recipient->steam_id,
+        ]);
 
         // Уведомляем получателя (для подарка — он же увидит «получено»).
         $recipient->notify(new PurchaseComplete($productName, $total));

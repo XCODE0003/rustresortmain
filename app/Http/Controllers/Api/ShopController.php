@@ -10,6 +10,7 @@ use App\Models\Option;
 use App\Models\ShopItem;
 use App\Models\Shopping;
 use App\Models\ShopPurchase;
+use App\Models\ShopSet;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -251,14 +252,27 @@ class ShopController extends Controller
      */
     protected function imageList(): array
     {
-        return ShopItem::query()
-            ->select(['short_name', 'image'])
+        // Товары (по short_name) + наборы (shop_sets) — чтобы плагин предзагрузил и их
+        // картинки тоже (Farmer Kit и т.п.). Поле Name даёт запасной ключ сопоставления.
+        $items = ShopItem::query()
+            ->select(['name_en', 'short_name', 'image'])
             ->get()
             ->map(fn (ShopItem $item) => [
                 'ShortName' => $item->short_name,
+                'Name' => $item->name_en,
                 'ImageUrl' => $this->imageUrl($item->image),
-            ])
-            ->all();
+            ]);
+
+        $sets = ShopSet::query()
+            ->select(['name_en', 'image'])
+            ->get()
+            ->map(fn (ShopSet $set) => [
+                'ShortName' => null,
+                'Name' => $set->name_en,
+                'ImageUrl' => $this->imageUrl($set->image),
+            ]);
+
+        return $items->concat($sets)->values()->all();
     }
 
     /**
