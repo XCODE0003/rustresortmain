@@ -7,7 +7,7 @@
         >
             <div class="flex min-h-full items-center justify-center">
             <div
-                class="bg-modal relative flex max-w-[579px] flex-col items-center gap-5 rounded-xl border border-StrokeGray p-2.5 md:p-5 lg:p-[30px]"
+                class="bg-modal relative flex w-full max-w-[579px] flex-col items-center gap-5 rounded-xl border border-StrokeGray p-2.5 md:p-5 lg:p-[30px]"
                 @click.stop
             >
             <div class="p-10 md:p-11 lg:p-12">
@@ -29,7 +29,7 @@
             >
                 {{ title }}
             </div>
-            <div class="flex flex-col gap-8 text-center">
+            <div class="flex w-full flex-col gap-8 text-center">
                 <h1 v-html="cleanedDescription" class="text-xs/[30px] description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
