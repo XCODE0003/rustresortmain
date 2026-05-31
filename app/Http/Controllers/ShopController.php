@@ -8,6 +8,7 @@ use App\Models\Server;
 use App\Models\ShopCategory;
 use App\Models\ShopItem;
 use App\Models\ShopSet;
+use App\Models\User;
 use App\Notifications\PurchaseComplete;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -102,6 +103,7 @@ class ShopController extends Controller
             'count' => 'integer|min:1|max:100',
             'var_id' => 'nullable|integer',
             'server_id' => 'nullable|integer',
+            'gift_steam_id' => 'nullable|string|max:32',
         ]);
 
         $user = auth()->user();
@@ -118,6 +120,18 @@ class ShopController extends Controller
 
         $total = $price * $count;
 
+        // Получатель: по умолчанию сам покупатель. Для подарка (валидный SteamID64,
+        // отличный от своего) — другой игрок; платит при этом покупатель.
+        $recipient = $user;
+        $giftSteamId = trim((string) ($validated['gift_steam_id'] ?? ''));
+        if ($giftSteamId !== '' && ctype_digit($giftSteamId) && strlen($giftSteamId) >= 17
+            && $giftSteamId !== (string) $user->steam_id) {
+            if (! $item->can_gift) {
+                return redirect()->back()->with('error', __('common.gift_not_allowed'));
+            }
+            $recipient = $this->resolveRecipient($giftSteamId);
+        }
+
         if ($user->balance < $total) {
             return redirect()->route('payment')->with('error', __('common.balance_insufficient'));
         }
@@ -125,7 +139,7 @@ class ShopController extends Controller
         $user->decrement('balance', $total);
 
         $donate = Donate::create([
-            'user_id' => $user->id,
+            'user_id' => $recipient->id,
             'payment_id' => uniqid('balance_', true),
             'amount' => $total,
             'item_id' => $item->id,
@@ -134,13 +148,33 @@ class ShopController extends Controller
             'server' => $validated['server_id'] ?? null,
             'status' => 1,
             'payment_system' => 'balance',
-            'steam_id' => $user->steam_id,
+            'steam_id' => $recipient->steam_id,
         ]);
 
         DeliverPurchaseItemsJob::dispatchSync($donate);
 
-        $user->notify(new PurchaseComplete($item->getLocalizedName() ?? $item->name_ru ?? 'Предмет', $total));
+        // Уведомляем получателя (для подарка — он же увидит «получено»).
+        $recipient->notify(new PurchaseComplete($item->getLocalizedName() ?? $item->name_ru ?? 'Предмет', $total));
 
         return redirect()->back()->with('success', __('common.purchase_success'));
+    }
+
+    /**
+     * Находит получателя подарка по SteamID64 или создаёт минимального юзера.
+     */
+    protected function resolveRecipient(string $steamId): User
+    {
+        $recipient = User::where('steam_id', $steamId)->first();
+        if ($recipient) {
+            return $recipient;
+        }
+
+        return User::create([
+            'name' => $steamId,
+            'email' => $steamId.'@steam.rustresort.local',
+            'password' => bin2hex(random_bytes(20)),
+            'steam_id' => $steamId,
+            'balance' => 0,
+        ]);
     }
 }

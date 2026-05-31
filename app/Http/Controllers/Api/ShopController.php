@@ -9,6 +9,7 @@ use App\Models\BucketItem;
 use App\Models\Option;
 use App\Models\ShopItem;
 use App\Models\Shopping;
+use App\Models\ShopPurchase;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -88,7 +89,12 @@ class ShopController extends Controller
         }
 
         $payload = $this->presentBucketItem($bucketItem);
+        $shopItemId = $bucketItem->shop_item_id;
+        $serverId = $bucketItem->server_id;
         $bucketItem->delete();
+
+        // Товар выдан в игре — убираем его из «купленных» в ЛК (списываем 1 шт.).
+        $this->consumePurchase($user->id, (int) $shopItemId, $serverId !== null ? (int) $serverId : null);
 
         return response()->json([
             'status' => 'success',
@@ -96,6 +102,30 @@ class ShopController extends Controller
                 'item' => $payload,
             ],
         ]);
+    }
+
+    /**
+     * Списывает одну единицу соответствующей покупки (ShopPurchase) после выдачи
+     * предмета в игре: count-1, либо удаляет запись при достижении нуля.
+     */
+    protected function consumePurchase(int $userId, int $shopItemId, ?int $serverId): void
+    {
+        $base = ShopPurchase::where('user_id', $userId)->where('item_id', $shopItemId);
+
+        $sameServer = clone $base;
+        $serverId === null ? $sameServer->whereNull('server_id') : $sameServer->where('server_id', $serverId);
+
+        $purchase = $sameServer->orderBy('id')->first() ?? $base->orderBy('id')->first();
+
+        if (! $purchase) {
+            return;
+        }
+
+        if ((int) $purchase->count > 1) {
+            $purchase->decrement('count');
+        } else {
+            $purchase->delete();
+        }
     }
 
     /**

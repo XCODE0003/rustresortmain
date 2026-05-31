@@ -90,7 +90,8 @@ const purchases = computed(() =>
     (user.value?.shop_purchases || []).filter((p: Purchase) => {
         const isCommand = toBool(p.shop_item?.is_command);
         const wipeBlock = toBool(p.shop_item?.wipe_block);
-        return !!p.validity && isCommand && !wipeBlock;
+        // Истёкшие привилегии полностью убираем из ЛК (а не показываем «истёк»).
+        return !!p.validity && isCommand && !wipeBlock && !isExpired(p);
     }),
 );
 

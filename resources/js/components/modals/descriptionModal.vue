@@ -358,6 +358,7 @@ const handleBuy = (): void => {
             count: hasVariations.value ? 1 : amount.value,
             var_id: hasVariations.value ? (selectedVariation.value?.variationId ?? null) : null,
             server_id: serverId.value,
+            gift_steam_id: isGift.value && giftSteamId.value ? String(giftSteamId.value).trim() : null,
         }, {
             preserveScroll: true,
             onSuccess: () => close(),

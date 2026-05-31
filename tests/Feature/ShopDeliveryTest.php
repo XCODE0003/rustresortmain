@@ -179,3 +179,39 @@ test('deleteItem убирает товар из bucket', function () {
 
     expect(BucketItem::find($bucket->id))->toBeNull();
 });
+
+test('подарок: товар уходит получателю, а не покупателю', function () {
+    $buyer = User::factory()->create(['steam_id' => '76561190000000020', 'balance' => 500]);
+    $item = makeItem(['is_command' => false, 'can_gift' => 1, 'short_name' => 'rifle.ak', 'amount' => 1, 'price' => 100, 'command' => null]);
+
+    $this->actingAs($buyer)->post('/shop/buy-balance', [
+        'item_id' => $item->id,
+        'count' => 1,
+        'gift_steam_id' => '76561190000000099',
+    ]);
+
+    $recipient = User::where('steam_id', '76561190000000099')->first();
+    expect($recipient)->not->toBeNull();
+    expect(BucketItem::where('user_id', $recipient->id)->count())->toBe(1);
+    expect(BucketItem::where('user_id', $buyer->id)->count())->toBe(0);
+    expect((float) $buyer->fresh()->balance)->toBe(400.0);
+});
+
+test('выдача в игре списывает покупку из ЛК', function () {
+    Option::create(['key' => 'game_api_key', 'value' => 'secret-key', 'server' => null]);
+    $user = User::factory()->create(['steam_id' => '76561190000000021']);
+    $item = makeItem(['is_command' => false, 'short_name' => 'wood']);
+    $bucket = BucketItem::create([
+        'user_id' => $user->id, 'shop_item_id' => $item->id, 'rust_id' => 0,
+        'price' => 1, 'quantity' => 1, 'steam_id' => $user->steam_id, 'server_id' => null,
+    ]);
+    $purchase = App\Models\ShopPurchase::create([
+        'item_id' => $item->id, 'user_id' => $user->id, 'count' => 2, 'server_id' => null, 'validity' => null,
+    ]);
+
+    $this->postJson('/api/shop/deleteItem', [
+        'api_key' => 'secret-key', 'userID' => $user->steam_id, 'ID' => $bucket->id,
+    ])->assertOk()->assertJsonPath('status', 'success');
+
+    expect((int) App\Models\ShopPurchase::find($purchase->id)->count)->toBe(1);
+});

@@ -72,4 +72,5 @@ return [
 
     'balance_insufficient' => 'Insufficient balance.',
     'purchase_success' => 'Purchase completed successfully.',
+    'gift_not_allowed' => 'This item cannot be purchased as a gift.',
 ];
