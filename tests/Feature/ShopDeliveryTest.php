@@ -82,6 +82,23 @@ test('услуга (is_command) идёт в RCON (shopping) на выбранн�
     expect($shopping->command)->toBe('addgroup 76561190000000002 vip 30');
 });
 
+test('подарок привилегии: RCON-команда уходит на SteamID получателя', function () {
+    $buyer = User::factory()->create(['steam_id' => '76561190000000801']);
+    $recipient = User::factory()->create(['steam_id' => '76561190000000802']);
+    $priv = makeItem([
+        'is_command' => true,
+        'command' => 'addgroup {steamid} vip {var}',
+    ]);
+
+    // Подарок: донат записан под получателя (user_id + steam_id получателя).
+    $donate = makeDonate($priv, $recipient, ['var_id' => 30, 'server' => null, 'steam_id' => $recipient->steam_id]);
+
+    (new DeliverPurchaseItemsJob($donate))->handle();
+
+    expect(BucketItem::count())->toBe(0);
+    expect(Shopping::first()->command)->toBe('addgroup 76561190000000802 vip 30'); // получатель, не покупатель
+});
+
 test('пустая команда у услуги не создаёт мусорную запись', function () {
     $user = User::factory()->create(['steam_id' => '76561190000000003']);
     $item = makeItem([
