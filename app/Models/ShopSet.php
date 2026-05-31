@@ -69,4 +69,19 @@ class ShopSet extends Model
     {
         return $this->hasMany(ShopStatistic::class, 'set_id');
     }
+
+    public function getFinalPrice(): float
+    {
+        $price = (float) $this->price;
+
+        if ($this->discount_percent > 0 && ! $this->disable_category_discount) {
+            $price *= (1 - $this->discount_percent / 100);
+        }
+
+        if (! $this->disable_category_discount && $this->category && $this->category->discount_percent > 0) {
+            $price *= (1 - $this->category->discount_percent / 100);
+        }
+
+        return round($price, 2);
+    }
 }

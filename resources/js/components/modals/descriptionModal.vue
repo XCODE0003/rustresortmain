@@ -259,6 +259,7 @@ const {
     amount,
     unitAmount,
     isCommand,
+    kind,
     currentPrice,
     serverId,
     serverName,
@@ -377,13 +378,20 @@ const handleBuy = (): void => {
     const price = Number(currentPrice.value);
 
     if (userBalance >= price) {
-        router.post('/shop/buy-balance', {
-            item_id: itemId.value,
+        const payload: Record<string, unknown> = {
             count: hasVariations.value ? 1 : amount.value,
             var_id: hasVariations.value ? (selectedVariation.value?.variationId ?? null) : null,
             server_id: serverId.value,
             gift_steam_id: isGift.value && giftSteamId.value ? String(giftSteamId.value).trim() : null,
-        }, {
+        };
+        // Набор покупается по set_id, обычный товар — по item_id.
+        if (kind.value === 'set') {
+            payload.set_id = itemId.value;
+        } else {
+            payload.item_id = itemId.value;
+        }
+
+        router.post('/shop/buy-balance', payload, {
             // Быстрые повторные покупки: не перезагружаем весь магазин, а обновляем
             // только баланс (auth). preserveState не даёт перемонтировать страницу
             // (без повторных GSAP-анимаций 100+ карточек) → покупка мгновенная.

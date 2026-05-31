@@ -23,6 +23,7 @@ type DescriptionModalPayload = {
     defaultAmount?: number;
     unitAmount?: number;
     isCommand?: boolean;
+    kind?: string;
     serverId?: number | null;
     serverName?: string | null;
     availableServers?: ServerOption[];
@@ -47,6 +48,7 @@ const state = reactive({
     amount: 1,
     unitAmount: 1,
     isCommand: false,
+    kind: 'item',
     isGift: false,
     giftSteamId: '',
     serverId: null as number | null,
@@ -124,6 +126,7 @@ export function useDescriptionModalStore() {
             ? Math.floor(Number(payload.unitAmount))
             : 1;
         state.isCommand = payload.isCommand ?? false;
+        state.kind = payload.kind ?? 'item';
 
         if (payload.variations !== undefined && payload.variations.length > 0) {
             state.variations = payload.variations;

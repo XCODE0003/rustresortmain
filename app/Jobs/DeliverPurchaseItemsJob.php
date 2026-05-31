@@ -8,6 +8,7 @@ use App\Models\Server;
 use App\Models\ShopItem;
 use App\Models\Shopping;
 use App\Models\ShopPurchase;
+use App\Models\ShopSet;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -24,6 +25,14 @@ class DeliverPurchaseItemsJob implements ShouldQueue
 
     public function handle(): void
     {
+        // Набор (сет): покупается одним лотом и раскладывается на отдельные
+        // предметы в корзине (каждый вложенный товар — самостоятельная выдача).
+        if ($this->donate->set_id) {
+            $this->deliverSet();
+
+            return;
+        }
+
         $item = ShopItem::find($this->donate->item_id);
 
         if (! $item) {
@@ -44,10 +53,7 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             $this->deliverToBucket($item);
         }
 
-        // Кит сам пишет покупки по каждому вложенному предмету — общий не нужен.
-        if (! $this->isKit($item)) {
-            $this->recordPurchase($item);
-        }
+        $this->recordPurchase($item);
 
         Log::info("Item delivered for donate {$this->donate->id} (".($item->is_command ? 'rcon' : 'bucket').')');
     }
@@ -89,14 +95,6 @@ class DeliverPurchaseItemsJob implements ShouldQueue
         $server = $serverId ? Server::find($serverId) : null;
         $count = max(1, (int) ($this->donate->count ?? 1));
 
-        // Набор (кит): раскладываем на отдельные предметы — каждый кладётся в
-        // корзину как самостоятельный товар по своему short_name.
-        if ($this->isKit($item)) {
-            $this->deliverKit($item, $steamId, $serverId, $server, $count);
-
-            return;
-        }
-
         $amount = $this->resolveAmount($item, $this->donate);
 
         for ($i = 0; $i < $count; $i++) {
@@ -118,27 +116,35 @@ class DeliverPurchaseItemsJob implements ShouldQueue
     }
 
     /**
-     * Набор = обычный товар с непустым составом kit_items.
+     * Доставка набора (сета): раскладываем items сета на отдельные предметы в
+     * корзине (каждый — самостоятельная запись по своему short_name + отдельная
+     * покупка), количество = состав × множитель покупки.
      */
-    protected function isKit(ShopItem $item): bool
+    protected function deliverSet(): void
     {
-        return ! $item->is_command && is_array($item->kit_items) && count($item->kit_items) > 0;
-    }
+        $set = ShopSet::find($this->donate->set_id);
+        if (! $set) {
+            Log::warning("ShopSet not found for donate {$this->donate->id}");
 
-    /**
-     * Раскладывает набор на отдельные предметы: каждый вложенный товар кладётся
-     * в корзину самостоятельной записью (с его short_name) и отдельной покупкой,
-     * количество = состав × множитель покупки.
-     */
-    protected function deliverKit(ShopItem $item, string $steamId, ?int $serverId, ?Server $server, int $count): void
-    {
-        foreach ((array) $item->kit_items as $entry) {
+            return;
+        }
+
+        $steamId = (string) ($this->donate->steam_id ?? $this->donate->user?->steam_id ?? '');
+        $serverId = $this->donate->server ?? $set->server ?? null;
+        // server=-1 у старых сетов = «все серверы» → не привязываем к серверу.
+        if ($serverId !== null && (int) $serverId < 0) {
+            $serverId = null;
+        }
+        $server = $serverId ? Server::find($serverId) : null;
+        $count = max(1, (int) ($this->donate->count ?? 1));
+
+        foreach ((array) $set->items as $entry) {
             $contentId = (int) ($entry['id'] ?? 0);
             $contentQty = max(1, (int) ($entry['amount'] ?? 1)) * $count;
 
             $content = ShopItem::find($contentId);
             if (! $content) {
-                Log::warning("Kit {$item->id}: content item {$contentId} not found");
+                Log::warning("Set {$set->id}: content item {$contentId} not found");
 
                 continue;
             }
@@ -165,7 +171,7 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             ]);
         }
 
-        Log::info('Kit '.$item->short_name." (id {$item->id}) → ".count((array) $item->kit_items)." items for donate {$this->donate->id}");
+        Log::info("Set {$set->id} → ".count((array) $set->items)." items for donate {$this->donate->id}");
     }
 
     protected function recordPurchase(ShopItem $item): void

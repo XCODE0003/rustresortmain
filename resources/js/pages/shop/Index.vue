@@ -456,6 +456,7 @@ const handleBuyItem = (payload: any) => {
         defaultAmount: selectedQuantity,
         unitAmount: Number(item.amount ?? 1),
         isCommand: !!(item as any).is_command,
+        kind: (item as any).kind ?? 'item',
         serverId: props.selectedServer?.id ?? null,
         serverName: props.selectedServer?.name ?? null,
         availableServers: (props.servers ?? []).map((s) => ({ id: s.id, name: s.name })),

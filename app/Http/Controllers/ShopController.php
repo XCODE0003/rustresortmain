@@ -99,26 +99,39 @@ class ShopController extends Controller
     public function buyWithBalance(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'item_id' => 'required|exists:shop_items,id',
+            'item_id' => 'nullable|exists:shop_items,id',
+            'set_id' => 'nullable|exists:shop_sets,id',
             'count' => 'integer|min:1|max:100',
             'var_id' => 'nullable|integer',
             'server_id' => 'nullable|integer',
             'gift_steam_id' => 'nullable|string|max:32',
         ]);
 
-        $user = auth()->user();
-        $item = ShopItem::findOrFail($validated['item_id']);
-        $count = $validated['count'] ?? 1;
+        if (empty($validated['item_id']) && empty($validated['set_id'])) {
+            return redirect()->back();
+        }
 
-        $price = $item->getFinalPrice();
-        if (! empty($validated['var_id']) && is_array($item->variations)) {
-            $variation = collect($item->variations)->firstWhere('id', $validated['var_id']);
-            if ($variation) {
-                $price = (float) ($variation['price'] ?? $price);
+        $user = auth()->user();
+        $count = $validated['count'] ?? 1;
+        $isSet = ! empty($validated['set_id']);
+
+        // Товар или набор (сет). У сета цена за лот; вариаций у сетов нет.
+        if ($isSet) {
+            $product = ShopSet::findOrFail($validated['set_id']);
+            $price = $product->getFinalPrice();
+        } else {
+            $product = ShopItem::findOrFail($validated['item_id']);
+            $price = $product->getFinalPrice();
+            if (! empty($validated['var_id']) && is_array($product->variations)) {
+                $variation = collect($product->variations)->firstWhere('id', $validated['var_id']);
+                if ($variation) {
+                    $price = (float) ($variation['price'] ?? $price);
+                }
             }
         }
 
         $total = $price * $count;
+        $productName = $product->getLocalizedName() ?? $product->name_ru ?? ($isSet ? 'Набор' : 'Предмет');
 
         // Получатель: по умолчанию сам покупатель. Для подарка (валидный SteamID64,
         // отличный от своего) — другой игрок; платит при этом покупатель.
@@ -126,7 +139,7 @@ class ShopController extends Controller
         $giftSteamId = trim((string) ($validated['gift_steam_id'] ?? ''));
         if ($giftSteamId !== '' && ctype_digit($giftSteamId) && strlen($giftSteamId) >= 17
             && $giftSteamId !== (string) $user->steam_id) {
-            if (! $item->can_gift) {
+            if (! $product->can_gift) {
                 return redirect()->back()->with('error', __('common.gift_not_allowed'));
             }
             $recipient = $this->resolveRecipient($giftSteamId);
@@ -142,9 +155,10 @@ class ShopController extends Controller
             'user_id' => $recipient->id,
             'payment_id' => uniqid('balance_', true),
             'amount' => $total,
-            'item_id' => $item->id,
+            'item_id' => $isSet ? null : $product->id,
+            'set_id' => $isSet ? $product->id : null,
             'count' => $count,
-            'var_id' => $validated['var_id'] ?? null,
+            'var_id' => $isSet ? null : ($validated['var_id'] ?? null),
             'server' => $validated['server_id'] ?? null,
             'status' => 1,
             'payment_system' => 'balance',
@@ -154,7 +168,7 @@ class ShopController extends Controller
         DeliverPurchaseItemsJob::dispatchSync($donate);
 
         // Уведомляем получателя (для подарка — он же увидит «получено»).
-        $recipient->notify(new PurchaseComplete($item->getLocalizedName() ?? $item->name_ru ?? 'Предмет', $total));
+        $recipient->notify(new PurchaseComplete($productName, $total));
 
         return redirect()->back()->with('success', __('common.purchase_success'));
     }

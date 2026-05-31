@@ -216,20 +216,48 @@ test('выдача в игре списывает покупку из ЛК', fun
     expect((int) App\Models\ShopPurchase::find($purchase->id)->count)->toBe(1);
 });
 
-test('кит раскладывается на отдельные предметы в корзине', function () {
+function makeSet(array $items, array $overrides = []): App\Models\ShopSet
+{
+    return App\Models\ShopSet::create(array_merge([
+        'items' => $items,
+        'status' => 1,
+        'price' => 699,
+        'price_usd' => 9,
+        'amount' => 1,
+        'can_gift' => 1,
+        'name_ru' => 'Test Set',
+        'name_en' => 'Test Set',
+    ], $overrides));
+}
+
+test('сет раскладывается на отдельные предметы в корзине', function () {
     $user = User::factory()->create(['steam_id' => '76561190000000030']);
     $oreTea = makeItem(['short_name' => 'oretea.pure', 'amount' => 1]);
     $bearPie = makeItem(['short_name' => 'pie.bear', 'amount' => 1]);
-    $kit = makeItem(['is_command' => false, 'short_name' => null, 'kit_items' => [
+    $set = makeSet([
         ['id' => $oreTea->id, 'amount' => 5],
         ['id' => $bearPie->id, 'amount' => 3],
-    ]]);
+    ]);
 
-    (new DeliverPurchaseItemsJob(makeDonate($kit, $user, ['count' => 2, 'server' => null])))->handle();
+    $donate = Donate::create([
+        'user_id' => $user->id, 'payment_id' => uniqid('t_', true), 'amount' => 1398,
+        'set_id' => $set->id, 'count' => 2, 'status' => 1, 'payment_system' => 'balance', 'steam_id' => $user->steam_id,
+    ]);
+    (new DeliverPurchaseItemsJob($donate))->handle();
 
     expect(BucketItem::where('user_id', $user->id)->count())->toBe(2);
     expect(BucketItem::where('shop_item_id', $oreTea->id)->first()->quantity)->toBe(10); // 5×2
     expect(BucketItem::where('shop_item_id', $bearPie->id)->first()->quantity)->toBe(6);  // 3×2
-    expect(BucketItem::where('shop_item_id', $kit->id)->count())->toBe(0);
     expect(App\Models\ShopPurchase::where('user_id', $user->id)->count())->toBe(2);
+});
+
+test('покупка сета списывает баланс и выдаёт состав', function () {
+    $buyer = User::factory()->create(['steam_id' => '76561190000000031', 'balance' => 1000]);
+    $oreTea = makeItem(['short_name' => 'oretea.pure', 'amount' => 1]);
+    $set = makeSet([['id' => $oreTea->id, 'amount' => 5]], ['price' => 100]);
+
+    $this->actingAs($buyer)->post('/shop/buy-balance', ['set_id' => $set->id, 'count' => 1]);
+
+    expect(BucketItem::where('shop_item_id', $oreTea->id)->where('user_id', $buyer->id)->first()->quantity)->toBe(5);
+    expect((float) $buyer->fresh()->balance)->toBe(900.0);
 });
