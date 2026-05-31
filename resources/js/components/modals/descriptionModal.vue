@@ -269,13 +269,15 @@ const {
     decrementAmount,
 } = useDescriptionModalStore();
 
-const { displayPrice, isEn } = useCurrency();
+const { displayPrice } = useCurrency();
 
 const displayCurrentPrice = computed(() => {
-    if (isEn.value && priceUsd.value != null && Number(priceUsd.value) > 0) {
-        return `$${Number(priceUsd.value).toFixed(2)}`;
-    }
-    return `${Number(currentPrice.value).toFixed(2)} ₽`;
+    // Для обычных товаров USD-цена масштабируется множителем (priceUsd × amount).
+    // Для вариаций отдельной USD-цены нет → displayPrice сконвертирует ₽ по курсу.
+    const usd = (! hasVariations.value && priceUsd.value != null && Number(priceUsd.value) > 0)
+        ? Number(priceUsd.value) * amount.value
+        : null;
+    return displayPrice(currentPrice.value, usd);
 });
 
 const isServerDropdownOpen = ref(false);
