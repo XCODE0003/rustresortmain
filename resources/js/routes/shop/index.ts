@@ -84,7 +84,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 export const category = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -99,7 +99,7 @@ category.definition = {
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 category.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -126,7 +126,7 @@ category.url = (args: { path: string | number } | [path: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 category.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -136,7 +136,7 @@ category.get = (args: { path: string | number } | [path: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 category.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -146,7 +146,7 @@ category.head = (args: { path: string | number } | [path: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 const categoryForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -156,7 +156,7 @@ const categoryForm = (args: { path: string | number } | [path: string | number ]
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 categoryForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -166,7 +166,7 @@ categoryForm.get = (args: { path: string | number } | [path: string | number ] |
 
 /**
 * @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:77
+* @see app/Http/Controllers/ShopController.php:58
 * @route '/shop/category/{path}'
 */
 categoryForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -345,7 +345,7 @@ other.form = otherForm
 
 /**
 * @see \App\Http\Controllers\ShopController::buyBalance
-* @see app/Http/Controllers/ShopController.php:99
+* @see app/Http/Controllers/ShopController.php:80
 * @route '/shop/buy-balance'
 */
 export const buyBalance = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -360,7 +360,7 @@ buyBalance.definition = {
 
 /**
 * @see \App\Http\Controllers\ShopController::buyBalance
-* @see app/Http/Controllers/ShopController.php:99
+* @see app/Http/Controllers/ShopController.php:80
 * @route '/shop/buy-balance'
 */
 buyBalance.url = (options?: RouteQueryOptions) => {
@@ -369,7 +369,7 @@ buyBalance.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ShopController::buyBalance
-* @see app/Http/Controllers/ShopController.php:99
+* @see app/Http/Controllers/ShopController.php:80
 * @route '/shop/buy-balance'
 */
 buyBalance.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -379,7 +379,7 @@ buyBalance.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\ShopController::buyBalance
-* @see app/Http/Controllers/ShopController.php:99
+* @see app/Http/Controllers/ShopController.php:80
 * @route '/shop/buy-balance'
 */
 const buyBalanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -389,7 +389,7 @@ const buyBalanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'
 
 /**
 * @see \App\Http\Controllers\ShopController::buyBalance
-* @see app/Http/Controllers/ShopController.php:99
+* @see app/Http/Controllers/ShopController.php:80
 * @route '/shop/buy-balance'
 */
 buyBalanceForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

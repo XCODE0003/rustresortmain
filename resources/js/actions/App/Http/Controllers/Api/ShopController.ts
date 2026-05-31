@@ -138,7 +138,7 @@ deleteItem.form = deleteItemForm
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::hasItem
-* @see app/Http/Controllers/Api/ShopController.php:135
+* @see app/Http/Controllers/Api/ShopController.php:143
 * @route '/api/shop/hasItem'
 */
 export const hasItem = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -153,7 +153,7 @@ hasItem.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::hasItem
-* @see app/Http/Controllers/Api/ShopController.php:135
+* @see app/Http/Controllers/Api/ShopController.php:143
 * @route '/api/shop/hasItem'
 */
 hasItem.url = (options?: RouteQueryOptions) => {
@@ -162,7 +162,7 @@ hasItem.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::hasItem
-* @see app/Http/Controllers/Api/ShopController.php:135
+* @see app/Http/Controllers/Api/ShopController.php:143
 * @route '/api/shop/hasItem'
 */
 hasItem.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ hasItem.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::hasItem
-* @see app/Http/Controllers/Api/ShopController.php:135
+* @see app/Http/Controllers/Api/ShopController.php:143
 * @route '/api/shop/hasItem'
 */
 const hasItemForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -182,7 +182,7 @@ const hasItemForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::hasItem
-* @see app/Http/Controllers/Api/ShopController.php:135
+* @see app/Http/Controllers/Api/ShopController.php:143
 * @route '/api/shop/hasItem'
 */
 hasItemForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -194,7 +194,7 @@ hasItem.form = hasItemForm
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::reportService
-* @see app/Http/Controllers/Api/ShopController.php:174
+* @see app/Http/Controllers/Api/ShopController.php:182
 * @route '/api/shop/reportService'
 */
 export const reportService = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -209,7 +209,7 @@ reportService.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::reportService
-* @see app/Http/Controllers/Api/ShopController.php:174
+* @see app/Http/Controllers/Api/ShopController.php:182
 * @route '/api/shop/reportService'
 */
 reportService.url = (options?: RouteQueryOptions) => {
@@ -218,7 +218,7 @@ reportService.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::reportService
-* @see app/Http/Controllers/Api/ShopController.php:174
+* @see app/Http/Controllers/Api/ShopController.php:182
 * @route '/api/shop/reportService'
 */
 reportService.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -228,7 +228,7 @@ reportService.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::reportService
-* @see app/Http/Controllers/Api/ShopController.php:174
+* @see app/Http/Controllers/Api/ShopController.php:182
 * @route '/api/shop/reportService'
 */
 const reportServiceForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -238,7 +238,7 @@ const reportServiceForm = (options?: RouteQueryOptions): RouteFormDefinition<'po
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::reportService
-* @see app/Http/Controllers/Api/ShopController.php:174
+* @see app/Http/Controllers/Api/ShopController.php:182
 * @route '/api/shop/reportService'
 */
 reportServiceForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -250,7 +250,7 @@ reportService.form = reportServiceForm
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrls
-* @see app/Http/Controllers/Api/ShopController.php:211
+* @see app/Http/Controllers/Api/ShopController.php:219
 * @route '/api/shop/getImageUrls'
 */
 export const getImageUrls = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -265,7 +265,7 @@ getImageUrls.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrls
-* @see app/Http/Controllers/Api/ShopController.php:211
+* @see app/Http/Controllers/Api/ShopController.php:219
 * @route '/api/shop/getImageUrls'
 */
 getImageUrls.url = (options?: RouteQueryOptions) => {
@@ -274,7 +274,7 @@ getImageUrls.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrls
-* @see app/Http/Controllers/Api/ShopController.php:211
+* @see app/Http/Controllers/Api/ShopController.php:219
 * @route '/api/shop/getImageUrls'
 */
 getImageUrls.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -284,7 +284,7 @@ getImageUrls.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrls
-* @see app/Http/Controllers/Api/ShopController.php:211
+* @see app/Http/Controllers/Api/ShopController.php:219
 * @route '/api/shop/getImageUrls'
 */
 const getImageUrlsForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -294,7 +294,7 @@ const getImageUrlsForm = (options?: RouteQueryOptions): RouteFormDefinition<'pos
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrls
-* @see app/Http/Controllers/Api/ShopController.php:211
+* @see app/Http/Controllers/Api/ShopController.php:219
 * @route '/api/shop/getImageUrls'
 */
 getImageUrlsForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -306,7 +306,7 @@ getImageUrls.form = getImageUrlsForm
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 export const getImageUrlsV2 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -321,7 +321,7 @@ getImageUrlsV2.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 getImageUrlsV2.url = (options?: RouteQueryOptions) => {
@@ -330,7 +330,7 @@ getImageUrlsV2.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 getImageUrlsV2.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -340,7 +340,7 @@ getImageUrlsV2.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 getImageUrlsV2.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -350,7 +350,7 @@ getImageUrlsV2.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => 
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 const getImageUrlsV2Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -360,7 +360,7 @@ const getImageUrlsV2Form = (options?: RouteQueryOptions): RouteFormDefinition<'g
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 getImageUrlsV2Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -370,7 +370,7 @@ getImageUrlsV2Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get
 
 /**
 * @see \App\Http\Controllers\Api\ShopController::getImageUrlsV2
-* @see app/Http/Controllers/Api/ShopController.php:229
+* @see app/Http/Controllers/Api/ShopController.php:237
 * @route '/api/v2/shop/getImageUrls'
 */
 getImageUrlsV2Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
