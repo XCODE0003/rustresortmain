@@ -74,7 +74,13 @@ class Statistics
 
         $results = $results->get();
 
-        $transactions = $results->sortByDesc('created_at');
+        // Таблица транзакций рендерится в Blade целиком (client-side DataTable), поэтому
+        // за период «Все» (десятки тысяч строк) вью упиралось в memory_limit (HTTP 500).
+        // Итоги и график ниже считаются по ПОЛНОЙ выборке ($results); в таблицу отдаём
+        // только последние N — это детальный журнал, а не источник итоговых цифр.
+        $transactions_limit = 2000;
+        $transactions = $results->sortByDesc('created_at')->take($transactions_limit)->values();
+        $transactions_total = $results->count();
 
         $servers = Server::all();
 
@@ -109,6 +115,8 @@ class Statistics
             "total_amount" => $total_amount,
             "total_count" => $total_count,
             "transactions" => $transactions,
+            "transactions_total" => $transactions_total,
+            "transactions_limit" => $transactions_limit,
             "type" => $type,
             "user_id" => $user_id,
             "payment_system" => $payment_system,

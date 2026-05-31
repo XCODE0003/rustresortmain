@@ -76,6 +76,9 @@
                             <div class="container container-table_wrapper" style="max-width: 100%">
                         <div class="card-title">
                             <h6 class="title">{{ __('Транзакции') }}</h6>
+                            @if (!empty($data["transactions_total"]) && $data["transactions_total"] > count($data["transactions"]))
+                                <p class="text-soft small mt-1">{{ __('Показаны последние') }} {{ count($data["transactions"]) }} {{ __('из') }} {{ $data["transactions_total"] }} {{ __('транзакций. Итоги и график выше — по всему периоду. Сузьте период или фильтры, чтобы увидеть остальные в таблице.') }}</p>
+                            @endif
                         </div>
                         <table cellspacing=0 class="table table-bordered table-hover table-inverse table-striped" id="payments-table" width=100%>
                             <thead>
