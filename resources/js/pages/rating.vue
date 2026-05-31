@@ -48,6 +48,9 @@ onMounted(() => {
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: transparent; }
+  /* RankEval-виджет рендерится ВНУТРИ этого iframe, поэтому стили из app.css сюда не доходят.
+     Правило для .v-container должно жить здесь — в документе самого iframe. */
+  .v-container { max-width: 1500px !important; margin-left: auto !important; margin-right: auto !important; }
 </style>
 </head>
 <body>
