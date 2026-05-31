@@ -138,6 +138,8 @@ const openBuyModal = (): void => {
         imageSrc: item.image ? `/${item.image}` : '/images/ak.png',
         variations,
         defaultAmount: 1,
+        // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
+        unitAmount: Number((item as any).amount ?? 1),
     });
 };
 </script>

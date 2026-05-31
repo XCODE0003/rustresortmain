@@ -404,6 +404,8 @@ const openItemModal = (item: ShopItem): void => {
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations: mappedVariations,
         defaultAmount: 1,
+        // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
+        unitAmount: Number((item as any).amount ?? 1),
         serverId: selectedShopServerId.value,
         serverName: props.servers.find((s) => s.id === selectedShopServerId.value)?.name ?? null,
         availableServers: props.servers.map((s) => ({ id: s.id, name: s.name })),

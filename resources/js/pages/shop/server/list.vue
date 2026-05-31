@@ -141,7 +141,8 @@ const filteredItems = computed(() => {
 
 const handleBuyItem = (payload) => {
     const item = payload?.item ?? payload;
-    const selectedQuantity = payload?.quantity ?? item?.amount ?? 1;
+    // item.amount = сколько даёт 1 лот, НЕ количество лотов — не использовать как дефолт.
+    const selectedQuantity = payload?.quantity ?? 1;
 
     modalStore.setPendingAmount(selectedQuantity);
 
@@ -163,6 +164,8 @@ const handleBuyItem = (payload) => {
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,
+        // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
+        unitAmount: Number(item.amount ?? 1),
     });
 };
 </script>

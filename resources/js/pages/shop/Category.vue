@@ -75,7 +75,9 @@ const modalStore = useDescriptionModalStore();
 
 const handleBuyItem = (payload: any): void => {
     const item = payload?.item ?? payload;
-    const selectedQuantity = payload?.quantity ?? item?.amount ?? 1;
+    // ВНИМАНИЕ: item.amount — это «сколько даёт 1 лот» (напр. 1000 серы), а НЕ количество
+    // лотов. Использовать его как дефолт количества нельзя (открывало бы модалку с x1000).
+    const selectedQuantity = payload?.quantity ?? 1;
 
     modalStore.setPendingAmount(selectedQuantity);
 
@@ -98,6 +100,8 @@ const handleBuyItem = (payload: any): void => {
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations,
         defaultAmount: selectedQuantity,
+        // Сколько единиц даёт 1 лот (для тега «получите x…» справа сверху в модалке).
+        unitAmount: Number(item.amount ?? 1),
     });
 };
 </script>
