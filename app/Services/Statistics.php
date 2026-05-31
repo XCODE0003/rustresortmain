@@ -34,7 +34,11 @@ class Statistics
                     $date_start = date('Y-m') . '-01' . ' 00:00:00';
                     break;
                 default:
-                    $date_start = Donate::query()->first()->created_at;
+                    // «Все» — от самого раннего платежа по ДАТЕ, а не по id.
+                    // Старые донаты мигрированы с новыми auto-increment id, поэтому
+                    // первая строка по id (id=1) — недавний платёж 2026 г.; брать её
+                    // дату означало бы отрезать всю историю до 2026. Нужен MIN(created_at).
+                    $date_start = Donate::min('created_at') ?: '2000-01-01 00:00:00';
                     break;
             }
             $date_end = date('Y-m-d H:i:s');
