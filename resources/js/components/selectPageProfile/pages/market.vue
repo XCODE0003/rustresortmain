@@ -33,6 +33,17 @@
                     <span v-if="purchase.server" class="size-1 shrink-0 rounded-full bg-StrokeGray"></span>
                     <span>{{ formatDate(purchase.created_at) }}</span>
                 </div>
+
+                <!-- Возврат — пока предмет ещё в игровой корзине (не выдан/не активирован) -->
+                <button
+                    v-if="purchase.returnable"
+                    type="button"
+                    :disabled="refundingId === purchase.id"
+                    class="mt-auto w-full rounded-lg border border-StrokeGray px-2 py-1.5 text-[10px] font-bold uppercase text-TextGray transition-colors duration-300 hover:border-[#CE6464] hover:text-[#CE6464] disabled:opacity-50"
+                    @click="refundPurchase(purchase)"
+                >
+                    {{ refundingId === purchase.id ? '...' : 'Вернуть' }}
+                </button>
             </div>
         </div>
         <div v-else class="flex flex-col items-center justify-center gap-4 p-10 text-center">
@@ -48,8 +59,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import { useShopLocale } from '@/composables/useShopLocale';
 import { useCurrency } from '@/composables/useCurrency';
@@ -80,6 +91,7 @@ interface Purchase {
     count: number;
     created_at: string;
     validity: string | null;
+    returnable?: boolean;
     shop_item?: ShopItem;
     server?: Server;
 }
@@ -126,6 +138,23 @@ const formatDate = (dateString: string): string => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     return `${day}.${month}`;
+};
+
+// Возврат: убирает предмет из игровой корзины и возвращает деньги на баланс.
+const refundingId = ref<number | null>(null);
+
+const refundPurchase = (purchase: Purchase): void => {
+    if (refundingId.value !== null) return;
+    if (!window.confirm('Вернуть товар? Он будет убран из игровой корзины, а деньги вернутся на баланс.')) {
+        return;
+    }
+    refundingId.value = purchase.id;
+    router.delete(`/profile/purchases/${purchase.id}`, {
+        preserveScroll: true,
+        onFinish: () => {
+            refundingId.value = null;
+        },
+    });
 };
 </script>
 
