@@ -11,6 +11,7 @@ import BalanceController from './BalanceController'
 import NotificationController from './NotificationController'
 import PurchaseController from './PurchaseController'
 import ProfileController from './ProfileController'
+import PromoController from './PromoController'
 import FaqController from './FaqController'
 import LegalPageController from './LegalPageController'
 import Backend from './Backend'
@@ -29,6 +30,7 @@ const Controllers = {
     NotificationController: Object.assign(NotificationController, NotificationController),
     PurchaseController: Object.assign(PurchaseController, PurchaseController),
     ProfileController: Object.assign(ProfileController, ProfileController),
+    PromoController: Object.assign(PromoController, PromoController),
     FaqController: Object.assign(FaqController, FaqController),
     LegalPageController: Object.assign(LegalPageController, LegalPageController),
     Backend: Object.assign(Backend, Backend),

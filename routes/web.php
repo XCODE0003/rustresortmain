@@ -68,6 +68,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+
+    // Активация промокода из личного кабинета.
+    Route::post('/promocode/activate', [\App\Http\Controllers\PromoController::class, 'activate'])->name('promocode.activate');
 });
 
 Route::get('/faq', [\App\Http\Controllers\FaqController::class, 'index'])->name('faq');

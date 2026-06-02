@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see routes/web.php:76
+* @see routes/web.php:79
 * @route '/tickets'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -14,7 +14,7 @@ store.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see routes/web.php:76
+* @see routes/web.php:79
 * @route '/tickets'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ store.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:76
+* @see routes/web.php:79
 * @route '/tickets'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -31,7 +31,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see routes/web.php:76
+* @see routes/web.php:79
 * @route '/tickets'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -40,7 +40,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 })
 
 /**
-* @see routes/web.php:76
+* @see routes/web.php:79
 * @route '/tickets'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

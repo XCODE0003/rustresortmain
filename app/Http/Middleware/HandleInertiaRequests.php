@@ -41,6 +41,12 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => session('locale', 'ru'),
+            // Флеш-сообщения (redirect()->back()->with('success'|'error', ...)) — для
+            // показа результата действий вроде активации промокода.
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+            ],
             // Курс USD→RUB для отображения сумм в английской локали (баланс/цены
             // без price_usd делятся на курс). Кэшируется в сервисе на час.
             'usd_rate' => app(\App\Services\ExchangeRateService::class)->usdToRub(),

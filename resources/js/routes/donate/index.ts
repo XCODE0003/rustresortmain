@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 export const transfer = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ transfer.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ transfer.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -31,7 +31,7 @@ transfer.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -40,7 +40,7 @@ transfer.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -49,7 +49,7 @@ transfer.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -58,7 +58,7 @@ transfer.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -67,7 +67,7 @@ transfer.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -76,7 +76,7 @@ transfer.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transfer.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -85,7 +85,7 @@ transfer.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => 
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 const transferForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -94,7 +94,7 @@ const transferForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -103,7 +103,7 @@ transferForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -117,7 +117,7 @@ transferForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ transferForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -140,7 +140,7 @@ transferForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -154,7 +154,7 @@ transferForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> 
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -168,7 +168,7 @@ transferForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'>
 })
 
 /**
-* @see routes/web.php:101
+* @see routes/web.php:104
 * @route '/donate/transfer'
 */
 transferForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
