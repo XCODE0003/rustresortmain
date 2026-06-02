@@ -66,7 +66,9 @@ class ShopItem extends Model
             'is_blueprint' => 'boolean',
             'is_command' => 'boolean',
             'is_item' => 'boolean',
-            'wipe_block' => 'boolean',
+            // wipe_block — ЧИСЛО ЧАСОВ блокировки выдачи после вайпа (0 = без блока),
+            // а не флаг. Каст в boolean терял значение (24ч → true → 1).
+            'wipe_block' => 'integer',
             'can_gift' => 'boolean',
             'servers' => 'array',
             'variations' => 'array',

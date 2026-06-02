@@ -40,6 +40,18 @@
                 <h1 v-html="cleanedDescription" class="text-xs/[30px] description-modal-text font-medium text-white rounded-lg">
                 </h1>
 
+                <!-- Кулдаун после вайпа: товар нельзя забрать первые N часов после вайпа
+                     (чтобы донат не решал в начале вайпа). Показываем на каждом товаре. -->
+                <div
+                    v-if="wipeBlock > 0"
+                    class="flex items-center justify-center gap-2 rounded-lg border border-yellow-500/40 bg-yellow-500/5 px-4 py-2.5 text-xs font-medium text-yellow-400"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 shrink-0">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    {{ $t('shop.wipe_block', { hours: wipeBlock }) }}
+                </div>
+
                 <!-- Привилегии (is_command) активируются сразу через RCON на ВЫБРАННОМ
                      сервере, даже если игрок оффлайн (нужно для пропуска очереди) →
                      требуется выбор сервера. Обычные товары идут в корзину и забираются
@@ -237,6 +249,7 @@ const {
     amount,
     unitAmount,
     isCommand,
+    wipeBlock,
     kind,
     currentPrice,
     serverId,

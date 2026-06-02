@@ -400,6 +400,7 @@ const handleBuyItem = (payload: any) => {
         defaultAmount: selectedQuantity,
         unitAmount: Number(item.amount ?? 1),
         isCommand: !!(item as any).is_command,
+        wipeBlock: Number((item as any).wipe_block ?? 0),
         kind: (item as any).kind ?? 'item',
         serverId: props.selectedServer?.id ?? null,
         serverName: props.selectedServer?.name ?? null,

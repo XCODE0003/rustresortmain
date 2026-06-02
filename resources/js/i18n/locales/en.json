@@ -79,6 +79,7 @@
     "back_to_categories": "Back to categories",
     "server_label": "Server:",
     "no_server_selected": "No server selected — pick a server before buying",
+    "wipe_block": "Locked for {hours}h after wipe (can't be claimed right after a wipe)",
     "available_any_server": "This item can be claimed on any server",
     "you_receive": "You receive: {qty}",
     "item_unavailable_on_server": "Item not available on this server"

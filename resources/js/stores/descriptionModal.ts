@@ -23,6 +23,7 @@ type DescriptionModalPayload = {
     defaultAmount?: number;
     unitAmount?: number;
     isCommand?: boolean;
+    wipeBlock?: number;
     kind?: string;
     serverId?: number | null;
     serverName?: string | null;
@@ -48,6 +49,7 @@ const state = reactive({
     amount: 1,
     unitAmount: 1,
     isCommand: false,
+    wipeBlock: 0,
     kind: 'item',
     isGift: false,
     giftSteamId: '',
@@ -126,6 +128,9 @@ export function useDescriptionModalStore() {
             ? Math.floor(Number(payload.unitAmount))
             : 1;
         state.isCommand = payload.isCommand ?? false;
+        state.wipeBlock = (payload.wipeBlock != null && payload.wipeBlock > 0)
+            ? Math.floor(Number(payload.wipeBlock))
+            : 0;
         state.kind = payload.kind ?? 'item';
 
         if (payload.variations !== undefined && payload.variations.length > 0) {

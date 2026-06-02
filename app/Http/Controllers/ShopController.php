@@ -29,7 +29,7 @@ class ShopController extends Controller
         // Поэтому магазин больше не фильтруем по серверу.
 
         $itemsQuery = ShopItem::with('category:id,path,title_ru,title_en,sort,discount_percent')
-            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.is_command', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
+            ->select(['shop_items.id', 'shop_items.name_ru', 'shop_items.name_en', 'shop_items.price', 'shop_items.price_usd', 'shop_items.image', 'shop_items.category_id', 'shop_items.server', 'shop_items.servers', 'shop_items.variations', 'shop_items.sort', 'shop_items.amount', 'shop_items.is_command', 'shop_items.wipe_block', 'shop_items.discount_percent', 'shop_items.disable_category_discount', 'shop_items.description_ru', 'shop_items.description_en'])
             ->where('shop_items.status', 1)
             ->whereNotNull('shop_items.category_id');
 
@@ -104,9 +104,12 @@ class ShopController extends Controller
         } else {
             $product = ShopItem::findOrFail($validated['item_id']);
 
-            // Привилегии (is_command) выдаются RCON-командой на ВСЕ активные серверы
-            // (см. DeliverPurchaseItemsJob::deliverViaRcon), поэтому выбор сервера для
-            // них больше не обязателен — привилегия активируется везде.
+            // Привилегии (is_command) выдаются RCON-командой на ВЫБРАННЫЙ сервер —
+            // выбор сервера обязателен, иначе привилегия уйдёт «в никуда».
+            if ($product->is_command && empty($validated['server_id'])) {
+                return redirect()->back()->with('error', 'Выберите сервер для активации привилегии');
+            }
+
             $price = $product->getFinalPrice();
             if (! empty($validated['var_id']) && is_array($product->variations)) {
                 $variation = collect($product->variations)->firstWhere('id', $validated['var_id']);

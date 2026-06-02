@@ -4,7 +4,6 @@ use App\Jobs\DeliverPurchaseItemsJob;
 use App\Models\BucketItem;
 use App\Models\Donate;
 use App\Models\Option;
-use App\Models\Server;
 use App\Models\ShopItem;
 use App\Models\Shopping;
 use App\Models\User;
@@ -43,11 +42,6 @@ function makeDonate(ShopItem $item, User $user, array $overrides = []): Donate
     ], $overrides));
 }
 
-function makeServer(string $name, int $status = 1): Server
-{
-    return Server::create(['name' => $name, 'status' => $status]);
-}
-
 test('обычный товар (без команды) кладётся в bucket, а не в shopping', function () {
     $user = User::factory()->create(['steam_id' => '76561190000000001']);
     $item = makeItem([
@@ -70,31 +64,38 @@ test('обычный товар (без команды) кладётся в buck
     expect($bucket->steam_id)->toBe('76561190000000001');
 });
 
-test('услуга (is_command) идёт в RCON (shopping) на ВСЕ активные серверы, не в bucket', function () {
+test('услуга (is_command) идёт в RCON (shopping) на ВЫБРАННЫЙ сервер, не в bucket', function () {
     $user = User::factory()->create(['steam_id' => '76561190000000002']);
-    makeServer('Server A', 1);
-    makeServer('Server B', 1);
-    makeServer('Server Off', 0); // неактивный — команду получать не должен
     $item = makeItem([
         'is_command' => true,
         'command' => 'addgroup {steamid} vip {var}',
     ]);
 
-    // «Фул выдача»: привилегия активируется на каждом активном сервере отдельно.
+    // Выбор сервера обязателен для привилегии — команда уходит только на него
+    // (одна запись в очередь, не на все серверы).
     $donate = makeDonate($item, $user, ['var_id' => 30, 'server' => null]);
 
     (new DeliverPurchaseItemsJob($donate))->handle();
 
     expect(BucketItem::count())->toBe(0);
-    // По одной записи на каждый активный сервер (2), неактивный пропущен.
-    expect(Shopping::count())->toBe(2);
-    Shopping::all()->each(fn ($s) => expect($s->command)->toBe('addgroup 76561190000000002 vip 30'));
+    expect(Shopping::count())->toBe(1);
+    expect(Shopping::first()->command)->toBe('addgroup 76561190000000002 vip 30');
+});
+
+test('wipe_block (часы) сохраняется в bucket как число, не как boolean', function () {
+    $user = User::factory()->create(['steam_id' => '76561190000000050']);
+    // 24 часа блокировки после вайпа. Раньше каст в boolean превращал это в 1.
+    $item = makeItem(['is_command' => false, 'short_name' => 'rifle.ak', 'wipe_block' => 24, 'command' => null]);
+
+    (new DeliverPurchaseItemsJob(makeDonate($item, $user, ['server' => null])))->handle();
+
+    expect((int) BucketItem::where('user_id', $user->id)->first()->wipe_block)->toBe(24);
+    expect($item->fresh()->wipe_block)->toBe(24);
 });
 
 test('подарок привилегии: RCON-команда уходит на SteamID получателя', function () {
     $buyer = User::factory()->create(['steam_id' => '76561190000000801']);
     $recipient = User::factory()->create(['steam_id' => '76561190000000802']);
-    makeServer('Server A', 1);
     $priv = makeItem([
         'is_command' => true,
         'command' => 'addgroup {steamid} vip {var}',

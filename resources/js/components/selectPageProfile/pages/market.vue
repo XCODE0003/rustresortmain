@@ -108,7 +108,8 @@ const toBool = (v: unknown): boolean => v === true || v === 1 || v === '1';
 const purchases = computed(() =>
     (user.value?.shop_purchases || []).filter((p: Purchase) => {
         const isCommand = toBool(p.shop_item?.is_command);
-        const wipeBlock = toBool(p.shop_item?.wipe_block);
+        // wipe_block — число часов (0 = без блока), не флаг.
+        const wipeBlock = Number(p.shop_item?.wipe_block ?? 0) > 0;
         return !isCommand || wipeBlock;
     }),
 );
