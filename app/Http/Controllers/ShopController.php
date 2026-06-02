@@ -104,12 +104,9 @@ class ShopController extends Controller
         } else {
             $product = ShopItem::findOrFail($validated['item_id']);
 
-            // Привилегии (is_command) выдаются RCON-командой на конкретный сервер —
-            // без выбора сервера выдать нельзя (иначе уйдёт «в никуда»).
-            if ($product->is_command && empty($validated['server_id'])) {
-                return redirect()->back()->with('error', 'Выберите сервер для активации привилегии');
-            }
-
+            // Привилегии (is_command) выдаются RCON-командой на ВСЕ активные серверы
+            // (см. DeliverPurchaseItemsJob::deliverViaRcon), поэтому выбор сервера для
+            // них больше не обязателен — привилегия активируется везде.
             $price = $product->getFinalPrice();
             if (! empty($validated['var_id']) && is_array($product->variations)) {
                 $variation = collect($product->variations)->firstWhere('id', $validated['var_id']);

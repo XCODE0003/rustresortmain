@@ -72,12 +72,25 @@ class DeliverPurchaseItemsJob implements ShouldQueue
             return;
         }
 
-        Shopping::create([
-            'user_id' => $this->donate->user_id,
-            'command' => $command,
-            'status' => 0,
-            'server' => $this->donate->server ?? $item->server ?? 0,
-        ]);
+        // Привилегия действует на КАЖДОМ сервере сети по отдельности (IQPermissions
+        // хранит группы/права по-серверно). Поэтому ставим команду в очередь для ВСЕХ
+        // активных серверов, а не только для выбранного — иначе игрок, купивший VIP и
+        // играющий на другом сервере, привилегию не получит. Это и есть «фул выдача».
+        $servers = Server::query()->where('status', 1)->get();
+        if ($servers->isEmpty()) {
+            Log::warning("No active servers to deliver privilege for item {$item->id}, donate {$this->donate->id}");
+
+            return;
+        }
+
+        foreach ($servers as $server) {
+            Shopping::create([
+                'user_id' => $this->donate->user_id,
+                'command' => $command,
+                'status' => 0,
+                'server' => $server->id,
+            ]);
+        }
 
         // Не ждём следующий тик планировщика — пытаемся выдать сразу.
         ProcessShoppingQueueJob::dispatchSync();

@@ -39,7 +39,8 @@ return new class extends Migration
             ->selectRaw('NULLIF(d.item_id, 0) as item_id')
             ->selectRaw('NULLIF(d.set_id, 0) as set_id')
             ->selectRaw('NULL as case_id')
-            ->selectRaw('GREATEST(COALESCE(d.count, 1), 1) as amount')
+            // CASE вместо GREATEST — портируемо между MySQL и SQLite (тесты на sqlite).
+            ->selectRaw('CASE WHEN COALESCE(d.count, 1) < 1 THEN 1 ELSE COALESCE(d.count, 1) END as amount')
             ->selectRaw('d.amount as price')
             ->selectRaw('d.server as server')
             ->selectRaw('d.user_id as user_id')
