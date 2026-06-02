@@ -52,6 +52,7 @@ export default {
       return [
         { key: 'market', label: this.$t('profile.market_tab') },
         { key: 'subscriptions', label: this.$t('profile.subscriptions_tab') },
+        { key: 'bonuses', label: this.$t('profile.promo_tab') },
       ];
     },
   },

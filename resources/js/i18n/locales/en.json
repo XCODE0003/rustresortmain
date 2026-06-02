@@ -195,6 +195,7 @@
     "statistics": "Statistics",
     "inventory": "Inventory",
     "bonuses": "Bonuses",
+    "promo_tab": "Promo codes",
     "promo_title": "Activate promo code",
     "promo_hint": "Enter a promo code to get a balance bonus, a case, or an item.",
     "promo_placeholder": "Enter promo code",
