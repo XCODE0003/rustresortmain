@@ -19,11 +19,13 @@ class BansService
 
     private function client(): PendingRequest
     {
+        // Таймаут с запасом: офсетная пагинация RustApp деградирует на глубоких страницах
+        // (несколько секунд на страницу), а синк проходит десятки страниц.
         return Http::withHeaders([
             'X-API-Key' => $this->privateKey,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-        ])->baseUrl($this->baseUrl)->timeout(15);
+        ])->baseUrl($this->baseUrl)->timeout(30);
     }
 
     /**
@@ -38,7 +40,10 @@ class BansService
         ];
 
         try {
-            $response = $this->client()->get('/public/bans', array_merge($defaults, $params));
+            // GET идемпотентен → ретраим транзиентные сбои (таймаут/5xx) без падения всего синка.
+            $response = $this->client()
+                ->retry(3, 800, throw: false)
+                ->get('/public/bans', array_merge($defaults, $params));
 
             if ($response->successful()) {
                 $payload = $response->json() ?? ['results' => [], 'page' => 0, 'limit' => 0];

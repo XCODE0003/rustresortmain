@@ -2,31 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ban;
 use App\Models\Server;
-use App\Services\RustApp\BansService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class BansController extends Controller
 {
-    public function index(Request $request, BansService $bansService): Response
+    private const PER_PAGE = 50;
+
+    /**
+     * Список банов читается из ЛОКАЛЬНОЙ таблицы bans (её наполняет SyncRustAppBansJob каждые 3 минуты).
+     * Так страница не зависит от доступности RustApp и показывает накопленную историю.
+     */
+    public function index(Request $request): Response
     {
         $page = max(1, (int) $request->query('page', 1));
         $search = trim((string) $request->query('search', ''));
-
-        $params = [
-            'page' => $page - 1,
-            'exclude_stale' => true,
-            'include_total' => true,
-            'limit' => 50,
-        ];
-
-        if ($search !== '') {
-            $params['search'] = $search;
-        }
-
-        $data = $bansService->getBans($params);
 
         $servers = Server::where('status', 1)
             ->orderBy('sort')
@@ -35,29 +28,37 @@ class BansController extends Controller
             ->map(fn (Server $s) => $s->name)
             ->all();
 
-        $success = $data['success'] ?? false;
-        $raw = $data['results'] ?? [];
+        $query = Ban::query()
+            ->orderByDesc('banned_at')
+            ->orderByDesc('rustapp_id');
 
-        $bans = array_map(fn (array $ban) => $this->mapBanForPublic($ban, $servers), $raw);
-        $limit = (int) ($data['limit'] ?? 0);
-        if ($limit < 1) {
-            $limit = 20;
+        if ($search !== '') {
+            $like = '%'.$search.'%';
+            $query->where(function ($q) use ($like) {
+                $q->where('steam_name', 'like', $like)
+                    ->orWhere('steam_id', 'like', $like)
+                    ->orWhere('reason', 'like', $like);
+            });
         }
 
-        $total = (int) ($data['total'] ?? count($raw));
-        $lastPage = max(1, (int) ceil($total / $limit));
+        $paginator = $query->paginate(self::PER_PAGE, ['*'], 'page', $page);
+
+        $bans = array_map(
+            fn (Ban $ban) => $this->mapBanForPublic($ban, $servers),
+            $paginator->items(),
+        );
 
         return Inertia::render('bans', [
             'bans' => $bans,
             'meta' => [
-                'total' => $total,
-                'per_page' => $limit,
-                'current_page' => $page,
-                'last_page' => $lastPage,
+                'total' => $paginator->total(),
+                'per_page' => $paginator->perPage(),
+                'current_page' => $paginator->currentPage(),
+                'last_page' => $paginator->lastPage(),
             ],
             'servers' => $servers,
             'search' => $search,
-            'loadError' => ! $success,
+            'loadError' => false,
         ]);
     }
 
@@ -65,29 +66,20 @@ class BansController extends Controller
      * @param  array<int|string, string>  $servers
      * @return array{nickname: string, avatar: ?string, banned_at: ?int, reason: string, is_active: bool, expires_at: int, server_names: string[]}
      */
-    private function mapBanForPublic(array $ban, array $servers): array
+    private function mapBanForPublic(Ban $ban, array $servers): array
     {
-        $player = $ban['player'] ?? [];
-
-        $serverIds = [];
-        if (isset($ban['server_ids']) && is_array($ban['server_ids'])) {
-            $serverIds = $ban['server_ids'];
-        } elseif (isset($ban['server_id'])) {
-            $serverIds = [$ban['server_id']];
-        }
-
         $serverNames = array_values(array_filter(
-            array_map(fn ($id) => $servers[(int) $id] ?? null, $serverIds),
+            array_map(fn ($id) => $servers[(int) $id] ?? null, $ban->server_ids ?? []),
             fn ($name) => $name !== null,
         ));
 
         return [
-            'nickname' => $player['steam_name'] ?? ($ban['steam_id'] ?? '—'),
-            'avatar' => $player['steam_avatar'] ?? null,
-            'banned_at' => isset($ban['created_at']) ? (int) $ban['created_at'] : null,
-            'reason' => $ban['reason'] ?? '—',
-            'is_active' => (bool) ($ban['computed_is_active'] ?? true),
-            'expires_at' => (int) ($ban['expired_at'] ?? 0),
+            'nickname' => $ban->steam_name ?: ($ban->steam_id ?: '—'),
+            'avatar' => $ban->steam_avatar,
+            'banned_at' => $ban->banned_at,         // уже в UNIX-секундах
+            'reason' => $ban->reason ?: '—',
+            'is_active' => (bool) $ban->is_active,
+            'expires_at' => (int) $ban->expires_at, // 0 = навсегда
             'server_names' => $serverNames,
         ];
     }

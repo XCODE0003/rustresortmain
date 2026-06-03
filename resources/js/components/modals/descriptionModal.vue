@@ -56,31 +56,37 @@
                      сервере, даже если игрок оффлайн (нужно для пропуска очереди) →
                      требуется выбор сервера. Обычные товары идут в корзину и забираются
                      на любом сервере → выбор не нужен. -->
-                <div v-if="isCommand" ref="serverDropdownRef" class="relative">
+                <div v-if="isCommand" ref="serverDropdownRef" class="relative text-left">
+                    <!-- Выбор сервера обязателен для привилегий (RCON уходит на конкретный
+                         сервер) → выносим заголовок отдельной строкой, чтобы шаг было видно. -->
+                    <div class="mb-2 flex items-center gap-1.5 px-0.5">
+                        <span class="text-sm font-semibold text-white">{{ $t('shop.select_server') }}</span>
+                        <span class="text-base leading-none font-bold text-Orange">*</span>
+                    </div>
                     <button
                         type="button"
                         @click="toggleServerDropdown"
                         :disabled="!allServers.length"
                         :class="[
-                            'flex w-full items-center gap-3 rounded-lg border px-4 py-2.5 transition-all duration-300',
+                            'flex w-full items-center gap-3 rounded-xl border-2 px-5 py-4 transition-all duration-300',
                             isServerDropdownOpen
-                                ? 'border-Orange/70'
+                                ? 'border-Orange'
                                 : serverId
                                     ? 'button-black border-StrokeGray hover:border-white/30'
-                                    : 'border-yellow-500/50 bg-yellow-500/5 hover:border-yellow-400',
+                                    : 'server-select-attention border-yellow-400/70 bg-yellow-500/10 hover:border-yellow-300',
                             !allServers.length ? 'cursor-default' : 'cursor-pointer',
                         ]"
                     >
                         <template v-if="serverId">
-                            <span class="size-2 shrink-0 rounded-full bg-green-400"></span>
-                            <span class="text-xs font-medium text-TextGray">{{ $t('shop.server_label') }}</span>
-                            <span class="flex-1 truncate text-left text-xs font-bold text-white">{{ serverName }}</span>
+                            <span class="size-2.5 shrink-0 rounded-full bg-green-400"></span>
+                            <span class="text-sm font-medium text-TextGray">{{ $t('shop.server_label') }}</span>
+                            <span class="flex-1 truncate text-left text-sm font-bold text-white">{{ serverName }}</span>
                         </template>
                         <template v-else>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 shrink-0 text-yellow-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="size-5 shrink-0 text-yellow-400">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                             </svg>
-                            <span class="flex-1 text-left text-xs font-medium text-yellow-400">{{ $t('shop.no_server_selected') }}</span>
+                            <span class="flex-1 text-left text-sm font-semibold text-yellow-400">{{ $t('shop.no_server_selected') }}</span>
                         </template>
                         <svg
                             v-if="allServers.length"
@@ -91,7 +97,7 @@
                             stroke-width="1.5"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            :class="['size-4 shrink-0 text-TextGray transition-transform duration-200', isServerDropdownOpen ? 'rotate-180' : '']"
+                            :class="['size-5 shrink-0 text-TextGray transition-transform duration-200', isServerDropdownOpen ? 'rotate-180' : '']"
                         >
                             <path d="m6 9 6 6 6-6"/>
                         </svg>
@@ -100,7 +106,7 @@
                     <Transition name="server-dropdown">
                         <div
                             v-if="isServerDropdownOpen && allServers.length"
-                            class="server-dropdown-panel absolute top-full left-0 right-0 z-20 mt-2 max-h-60 overflow-y-auto rounded-lg border border-StrokeGray shadow-2xl"
+                            class="server-dropdown-panel absolute top-full left-0 right-0 z-20 mt-2 max-h-72 overflow-y-auto rounded-xl border border-StrokeGray shadow-2xl"
                         >
                             <button
                                 v-for="server in allServers"
@@ -108,11 +114,11 @@
                                 type="button"
                                 @click="selectServer(server)"
                                 :class="[
-                                    'flex w-full items-center gap-3 px-4 py-2.5 text-left text-xs transition-colors duration-200 cursor-pointer hover:bg-white/5',
+                                    'flex w-full items-center gap-3 px-5 py-3.5 text-left text-sm transition-colors duration-200 cursor-pointer hover:bg-white/5',
                                     server.id === serverId ? 'bg-Orange/10' : '',
                                 ]"
                             >
-                                <span class="size-2 shrink-0 rounded-full bg-green-400"></span>
+                                <span class="size-2.5 shrink-0 rounded-full bg-green-400"></span>
                                 <span :class="['flex-1 truncate font-medium', server.id === serverId ? 'text-Orange' : 'text-white']">
                                     {{ server.name }}
                                 </span>
@@ -125,7 +131,7 @@
                                     stroke-width="2"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    class="size-4 shrink-0 text-Orange"
+                                    class="size-5 shrink-0 text-Orange"
                                 >
                                     <path d="M20 6 9 17l-5-5"/>
                                 </svg>
@@ -542,6 +548,28 @@ onBeforeUnmount(() => {
 .server-dropdown-panel {
     background: rgba(14, 16, 18, 0.97);
     backdrop-filter: blur(24px);
+}
+
+/* Пока сервер не выбран — мягко пульсируем рамкой, чтобы шаг было невозможно
+   пропустить (частая жалоба: пользователи не замечали выбор сервера). */
+.server-select-attention {
+    animation: serverSelectPulse 2s ease-in-out infinite;
+}
+
+@keyframes serverSelectPulse {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(250, 204, 21, 0);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.14);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .server-select-attention {
+        animation: none;
+    }
 }
 
 .server-dropdown-enter-active,

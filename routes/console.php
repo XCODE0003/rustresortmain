@@ -23,6 +23,19 @@ Schedule::job(\App\Jobs\SyncOnlinePlayersJob::class)
     ->name('sync-online-players')
     ->withoutOverlapping();
 
+// Инкрементальная синхронизация банов: новые баны + истёкшие временные.
+Schedule::job(\App\Jobs\SyncRustAppBansJob::class)
+    ->everyThreeMinutes()
+    ->name('sync-rustapp-bans')
+    ->withoutOverlapping();
+
+// Полная сверка раз в час: ловит снятия старых банов и переводит пропавшие в историю.
+Schedule::command('bans:sync --full')
+    ->hourly()
+    ->name('reconcile-rustapp-bans')
+    ->withoutOverlapping()
+    ->runInBackground();
+
 Schedule::command('queue:work --queue=rcon,payments,default --stop-when-empty --tries=3 --timeout=120')
     ->everyMinute()
     ->name('queue-worker-tick')

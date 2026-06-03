@@ -1,27 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
+use App\Models\Ban;
+use App\Models\Server;
 
-test('guest can view bans page with ban rows from rustapp', function () {
-    Http::fake([
-        'https://court.rustapp.io/public/bans*' => Http::response([
-            'results' => [
-                [
-                    'steam_id' => '76561198000000000',
-                    'reason' => 'Cheating',
-                    'created_at' => 1_700_000_000,
-                    'expired_at' => 0,
-                    'computed_is_active' => true,
-                    'player' => [
-                        'steam_name' => 'TestPlayer',
-                        'steam_avatar' => 'https://example.com/a.jpg',
-                    ],
-                ],
-            ],
-            'total' => 25,
-            'page' => 0,
-            'limit' => 10,
-        ]),
+test('guest can view bans page from local database', function () {
+    Server::create(['name' => 'Server X', 'status' => 1, 'sort' => 1]);
+
+    Ban::create([
+        'rustapp_id' => 1,
+        'steam_id' => '76561198000000000',
+        'steam_name' => 'TestPlayer',
+        'steam_avatar' => 'https://example.com/a.jpg',
+        'reason' => 'Cheating',
+        'server_ids' => [],
+        'banned_at' => 1_700_000_000, // UNIX-секунды
+        'expires_at' => 0,            // навсегда
+        'is_active' => true,
     ]);
 
     $response = $this->get('/bans');
@@ -32,24 +26,65 @@ test('guest can view bans page with ban rows from rustapp', function () {
         ->has('bans', 1)
         ->where('bans.0.nickname', 'TestPlayer')
         ->where('bans.0.reason', 'Cheating')
-        ->where('meta.total', 25)
-        ->where('meta.last_page', 3)
+        ->where('bans.0.banned_at', 1_700_000_000)
+        ->where('bans.0.expires_at', 0)
+        ->where('bans.0.is_active', true)
         ->where('meta.current_page', 1)
         ->where('loadError', false)
     );
 });
 
-test('bans page shows load error when rustapp request fails', function () {
-    Http::fake([
-        'https://court.rustapp.io/public/bans*' => Http::response('Server Error', 500),
+test('bans page filters by search query', function () {
+    Ban::create([
+        'rustapp_id' => 1,
+        'steam_id' => 'a',
+        'steam_name' => 'Alice',
+        'reason' => 'x',
+        'server_ids' => [],
+        'banned_at' => 1_700_000_100,
+        'expires_at' => 0,
+        'is_active' => true,
+    ]);
+    Ban::create([
+        'rustapp_id' => 2,
+        'steam_id' => 'b',
+        'steam_name' => 'Bob',
+        'reason' => 'y',
+        'server_ids' => [],
+        'banned_at' => 1_700_000_200,
+        'expires_at' => 0,
+        'is_active' => true,
     ]);
 
-    $response = $this->get('/bans?page=2');
+    $response = $this->get('/bans?search=Alice');
 
     $response->assertSuccessful();
     $response->assertInertia(fn ($page) => $page
         ->component('bans')
-        ->where('loadError', true)
-        ->where('meta.current_page', 2)
+        ->has('bans', 1)
+        ->where('bans.0.nickname', 'Alice')
+        ->where('search', 'Alice')
+    );
+});
+
+test('inactive (history) bans are still listed', function () {
+    Ban::create([
+        'rustapp_id' => 9,
+        'steam_id' => 'old',
+        'steam_name' => 'Expired',
+        'reason' => 'temp',
+        'server_ids' => [],
+        'banned_at' => 1_700_000_000,
+        'expires_at' => 1_700_086_400,
+        'is_active' => false,
+    ]);
+
+    $response = $this->get('/bans');
+
+    $response->assertSuccessful();
+    $response->assertInertia(fn ($page) => $page
+        ->has('bans', 1)
+        ->where('bans.0.nickname', 'Expired')
+        ->where('bans.0.is_active', false)
     );
 });
