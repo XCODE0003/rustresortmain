@@ -6,7 +6,10 @@
     $selectedWipeDays = collect(old('wipe_schedule_days', isset($server) ? ($server->wipe_schedule_days ?? []) : []))
         ->map(fn($day) => (int) $day)
         ->all();
-    $wipeScheduleTime = old('wipe_schedule_time', isset($server->wipe_schedule_time) ? $server->wipe_schedule_time : '12:00');
+    // TIME-колонка возвращает HH:MM:SS — обрезаем до HH:MM, иначе <input type="time"> и
+    // правило date_format:H:i ругаются при повторном редактировании.
+    $rawWipeScheduleTime = old('wipe_schedule_time', isset($server->wipe_schedule_time) ? $server->wipe_schedule_time : '12:00');
+    $wipeScheduleTime = $rawWipeScheduleTime ? substr($rawWipeScheduleTime, 0, 5) : '';
     $nextWipeValue = old('next_wipe', isset($server->next_wipe) ? optional($server->next_wipe)->format('Y-m-d\TH:i') : '');
     $lastWipeValue = isset($server->wipe) ? optional($server->wipe)->format('Y-m-d\TH:i') : '';
 @endphp
