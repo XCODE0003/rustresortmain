@@ -30,7 +30,14 @@ class ProcessPaymentWebhookJob implements ShouldQueue
 
             $gateway = $paymentManager->gateway($this->gateway);
 
-            $request = new \Illuminate\Http\Request($this->webhookData);
+            // Данные кладём и в query bag (гейтвеи с $request->input(): pally, enot…),
+            // и в тело запроса (Tebex читает $request->json() — без тела он получал
+            // пустой payload, и зачисление молча не происходило).
+            $request = new \Illuminate\Http\Request(
+                $this->webhookData,
+                [], [], [], [], [],
+                json_encode($this->webhookData)
+            );
             $paymentData = $gateway->processWebhook($request);
 
             Log::info('PAYMENT_WEBHOOK_PARSED', [
