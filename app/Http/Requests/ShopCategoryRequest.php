@@ -17,6 +17,18 @@ class ShopCategoryRequest extends FormRequest
     }
 
     /**
+     * В type=number с локалью RU вводят «9,97» — часть браузеров (Safari) шлёт
+     * значение как есть, и numeric-валидация падает (скидка молча не сохраняется).
+     * Нормализуем десятичную запятую в точку до валидации.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge(collect($this->only(['discount_percent']))
+            ->map(fn ($v) => is_string($v) ? str_replace(',', '.', trim($v)) : $v)
+            ->all());
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -24,7 +36,7 @@ class ShopCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'path' => ['required','max:255'],
+            'path' => ['required', 'max:255'],
             'title_ru' => ['max:255'],
             'title_en' => ['max:255'],
             'title_de' => ['max:255'],

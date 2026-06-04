@@ -17,6 +17,18 @@ class ShopSetRequest extends FormRequest
     }
 
     /**
+     * В type=number с локалью RU вводят «9,97» — часть браузеров (Safari) шлёт
+     * значение как есть, и numeric-валидация падает (скидка молча не сохраняется).
+     * Нормализуем десятичную запятую в точку до валидации.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge(collect($this->only(['price', 'price_usd', 'discount_percent']))
+            ->map(fn ($v) => is_string($v) ? str_replace(',', '.', trim($v)) : $v)
+            ->all());
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -25,24 +37,24 @@ class ShopSetRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'max:20'],
-            'price'       => ['required', 'max:12'],
-            'price_usd'   => ['required', 'max:12'],
-            'status'      => ['required', 'max:1'],
-            'server'      => ['required', 'max:10'],
-            'servers'     => [''],
-            'can_gift'    => ['max:1'],
-            'name_ru'     => ['max:255'],
-            'name_en'     => ['max:255'],
-            'name_de'     => ['max:255'],
-            'name_fr'     => ['max:255'],
-            'name_it'     => ['max:255'],
-            'name_es'     => ['max:255'],
-            'name_uk'     => ['max:255'],
-            'sort'        => ['max:10'],
-            'amount'      => ['max:20'],
-            'discount_percent' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'price' => ['required', 'max:12'],
+            'price_usd' => ['required', 'max:12'],
+            'status' => ['required', 'max:1'],
+            'server' => ['required', 'max:10'],
+            'servers' => [''],
+            'can_gift' => ['max:1'],
+            'name_ru' => ['max:255'],
+            'name_en' => ['max:255'],
+            'name_de' => ['max:255'],
+            'name_fr' => ['max:255'],
+            'name_it' => ['max:255'],
+            'name_es' => ['max:255'],
+            'name_uk' => ['max:255'],
+            'sort' => ['max:10'],
+            'amount' => ['max:20'],
+            'discount_percent' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'disable_category_discount' => ['nullable', 'boolean'],
-            'image'       => ['required_without:edit', 'image'],
+            'image' => ['required_without:edit', 'image'],
         ];
     }
 }
