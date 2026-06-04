@@ -18,8 +18,8 @@
                             <h1 class="text-2xl font-bold text-white">
                                 {{ displayName }}
                             </h1>
-                            <div v-if="item.discount" class="rounded-full bg-TextGreen px-3 py-1 text-sm font-bold text-TextBlack">
-                                -{{ ((item.discount / item.price) * 100).toFixed(0) }}%
+                            <div v-if="hasDiscount" class="rounded-full bg-TextGreen px-3 py-1 text-sm font-bold text-TextBlack">
+                                -{{ discountPercent }}%
                             </div>
                         </div>
 
@@ -28,7 +28,7 @@
                         </p>
 
                         <div class="flex items-center gap-4">
-                            <div v-if="item.discount" class="text-xl text-TextGray line-through">
+                            <div v-if="hasDiscount" class="text-xl text-TextGray line-through">
                                 {{ displayPrice(item.price, item.price_usd) }}
                             </div>
                             <div class="text-3xl font-bold text-Orange">
@@ -80,7 +80,9 @@ interface ShopItemShow {
     description_en?: string | null;
     price: number;
     price_usd?: number | null;
-    discount?: number;
+    final_price?: number | null;
+    final_price_usd?: number | null;
+    discount_total_percent?: number | null;
     image?: string;
     type?: string;
     category?: {
@@ -114,8 +116,11 @@ onMounted(() => {
 const displayName = computed(() => itemName(props.item));
 const displayDesc = computed(() => itemDescription(props.item));
 const displayCategory = computed(() => categoryTitle(props.item.category ?? undefined));
-const finalPrice = computed(() => props.item.price - (props.item.discount || 0));
-const finalPriceUsd = computed(() => props.item.price_usd ?? null);
+// Скидки (собственная + категории) считает бэкенд — те же цены спишет buyWithBalance.
+const hasDiscount = computed(() => Number(props.item.discount_total_percent ?? 0) > 0);
+const discountPercent = computed(() => Math.round(Number(props.item.discount_total_percent ?? 0)));
+const finalPrice = computed(() => Number(props.item.final_price ?? props.item.price));
+const finalPriceUsd = computed(() => props.item.final_price_usd ?? props.item.price_usd ?? null);
 
 const openBuyModal = (): void => {
     const item = props.item;

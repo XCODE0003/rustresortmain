@@ -85,6 +85,14 @@
                 x{{ formattedAmount }}
             </div>
 
+            <!-- Бейдж скидки -->
+            <div
+                v-if="hasDiscount"
+                class="absolute left-2 top-2 z-20 rounded-md bg-TextGreen px-2 py-1 text-[10px] font-bold text-TextBlack sm:text-xs"
+            >
+                -{{ discountPercent }}%
+            </div>
+
             <div
                 class="absolute -top-[16px] sm:-top-[19px] md:-top-[22px] left-1/2 -translate-x-1/2 rounded-lg border border-StrokeGray bg-[#0E1012] px-3 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3.5 text-[10px] sm:text-xs font-bold text-nowrap text-white uppercase"
             >
@@ -97,7 +105,10 @@
                     @click.stop="handleBuy"
                     class="cursor-pointer rounded-md bg-PaleOrange px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-xs sm:text-sm font-bold text-Orange duration-300 ease-in-out hover:bg-Orange hover:text-PaleOrange"
                 >
-                    {{ displayPrice(item.price, item.price_usd) }}
+                    <span v-if="hasDiscount" class="mr-1 text-[10px] line-through opacity-60 sm:text-xs">
+                        {{ displayPrice(item.price, item.price_usd) }}
+                    </span>
+                    {{ displayPrice(finalPrice, finalPriceUsd) }}
                 </button>
             </div>
         </div>
@@ -115,6 +126,9 @@ interface ShopItem {
     name_en?: string | null;
     price: number;
     price_usd?: number | null;
+    final_price?: number | null;
+    final_price_usd?: number | null;
+    discount_total_percent?: number | null;
     amount?: number | null;
     image?: string;
     variations?: any[];
@@ -137,6 +151,12 @@ const quantity = ref(1);
 const hasVariations = computed(() => {
     return props.item.variations && props.item.variations.length > 0;
 });
+
+// Скидки (собственная + категории) считает бэкенд — фронт только отображает.
+const hasDiscount = computed(() => Number(props.item.discount_total_percent ?? 0) > 0);
+const discountPercent = computed(() => Math.round(Number(props.item.discount_total_percent ?? 0)));
+const finalPrice = computed(() => Number(props.item.final_price ?? props.item.price));
+const finalPriceUsd = computed(() => props.item.final_price_usd ?? props.item.price_usd ?? null);
 
 // Кол-во, которое выдаётся за одну покупку. У товаров с вариациями count всегда = 1,
 // поэтому amount там не отражает выдачу — бейдж не показываем.

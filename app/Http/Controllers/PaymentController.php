@@ -22,7 +22,7 @@ class PaymentController extends Controller
 
     public function create(): Response
     {
-        $cart = ShopCart::with('item')
+        $cart = ShopCart::with('item.category')
             ->where('user_id', auth()->id())
             ->get();
 
@@ -37,7 +37,7 @@ class PaymentController extends Controller
 
     public function store(StorePaymentRequest $request): HttpResponse
     {
-        $cart = ShopCart::with('item')
+        $cart = ShopCart::with('item.category')
             ->where('user_id', auth()->id())
             ->get();
 

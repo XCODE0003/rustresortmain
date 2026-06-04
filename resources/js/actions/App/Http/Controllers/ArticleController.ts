@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::index
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 export const show = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 show.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -124,7 +124,7 @@ show.url = (args: { path: string | number } | [path: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 show.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -134,7 +134,7 @@ show.get = (args: { path: string | number } | [path: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 show.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -144,7 +144,7 @@ show.head = (args: { path: string | number } | [path: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 const showForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -154,7 +154,7 @@ const showForm = (args: { path: string | number } | [path: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 showForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -164,7 +164,7 @@ showForm.get = (args: { path: string | number } | [path: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 showForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

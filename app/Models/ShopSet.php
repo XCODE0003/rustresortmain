@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasMultiLanguageFields;
+use App\Traits\HasShopDiscounts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ShopSet extends Model
 {
     use HasMultiLanguageFields;
+    use HasShopDiscounts;
 
     protected $fillable = [
         'items',
@@ -68,20 +70,5 @@ class ShopSet extends Model
     public function statistics(): HasMany
     {
         return $this->hasMany(ShopStatistic::class, 'set_id');
-    }
-
-    public function getFinalPrice(): float
-    {
-        $price = (float) $this->price;
-
-        if ($this->discount_percent > 0 && ! $this->disable_category_discount) {
-            $price *= (1 - $this->discount_percent / 100);
-        }
-
-        if (! $this->disable_category_discount && $this->category && $this->category->discount_percent > 0) {
-            $price *= (1 - $this->category->discount_percent / 100);
-        }
-
-        return round($price, 2);
     }
 }

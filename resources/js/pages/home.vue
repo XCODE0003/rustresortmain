@@ -257,6 +257,9 @@ interface ShopItem {
     name_en?: string | null;
     price: number;
     price_usd?: number | null;
+    final_price?: number | null;
+    final_price_usd?: number | null;
+    discount_total_percent?: number | null;
     image?: string;
     description_ru?: string;
     description_en?: string | null;
@@ -380,7 +383,8 @@ const toSafeNumber = (value: unknown, fallback = 0): number => {
 };
 
 const openItemModal = (item: ShopItem): void => {
-    const fallbackItemPrice = toSafeNumber(item.price, 0);
+    // Цена со скидкой (final_price считает бэкенд) — её же спишет buyWithBalance.
+    const fallbackItemPrice = toSafeNumber(item.final_price ?? item.price, 0);
     const mappedVariations = Array.isArray(item.variations) && item.variations.length > 0
         ? item.variations.map((variation) => ({
             label: variation.variation_name || variation.name || t('shop.variation_default'),
@@ -400,7 +404,7 @@ const openItemModal = (item: ShopItem): void => {
         title: itemName(item),
         description: itemDescription(item),
         priceRub: fallbackItemPrice,
-        priceUsd: item.price_usd ?? null,
+        priceUsd: item.final_price_usd ?? item.price_usd ?? null,
         imageSrc: item.image ? `/${item.image}` : '/images/subscriptions/elete-pack.png',
         variations: mappedVariations,
         defaultAmount: 1,

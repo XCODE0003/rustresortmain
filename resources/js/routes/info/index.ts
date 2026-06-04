@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 export const show = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 show.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ show.url = (args: { path: string | number } | [path: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 show.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ show.get = (args: { path: string | number } | [path: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 show.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ show.head = (args: { path: string | number } | [path: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 const showForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -73,7 +73,7 @@ const showForm = (args: { path: string | number } | [path: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 showForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -83,7 +83,7 @@ showForm.get = (args: { path: string | number } | [path: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\ArticleController::show
-* @see app/Http/Controllers/ArticleController.php:30
+* @see app/Http/Controllers/ArticleController.php:31
 * @route '/info/{path}'
 */
 showForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

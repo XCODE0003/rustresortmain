@@ -195,6 +195,9 @@ interface ShopItem {
     description_en?: string | null;
     price: number;
     price_usd?: number | null;
+    final_price?: number | null;
+    final_price_usd?: number | null;
+    discount_total_percent?: number | null;
     image?: string;
     category_id: number;
     server?: number | string | null;
@@ -393,8 +396,8 @@ const handleBuyItem = (payload: any) => {
         itemId: item.id,
         title: itemName(item),
         description: itemDescription(item),
-        priceRub: item.price,
-        priceUsd: item.price_usd ?? null,
+        priceRub: Number(item.final_price ?? item.price),
+        priceUsd: item.final_price_usd ?? item.price_usd ?? null,
         imageSrc: item.image ? '/' + item.image : '/images/subscriptions/elete-pack.png',
         variations: variations,
         defaultAmount: selectedQuantity,

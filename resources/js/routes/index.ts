@@ -484,7 +484,7 @@ settheme.form = setthemeForm
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 export const info = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -499,7 +499,7 @@ info.definition = {
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 info.url = (options?: RouteQueryOptions) => {
@@ -508,7 +508,7 @@ info.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 info.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -518,7 +518,7 @@ info.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 info.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -528,7 +528,7 @@ info.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 const infoForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -538,7 +538,7 @@ const infoForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 infoForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -548,7 +548,7 @@ infoForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ArticleController::info
-* @see app/Http/Controllers/ArticleController.php:11
+* @see app/Http/Controllers/ArticleController.php:12
 * @route '/info'
 */
 infoForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

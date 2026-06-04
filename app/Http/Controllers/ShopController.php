@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\DeliverPurchaseItemsJob;
 use App\Models\Donate;
-use App\Models\Server;
 use App\Models\ShopCategory;
 use App\Models\ShopItem;
 use App\Models\ShopSet;
@@ -61,7 +60,7 @@ class ShopController extends Controller
         $category = ShopCategory::where('path', $path)
             ->with(['items' => function ($query) {
                 $query->orderBy('sort');
-            }])
+            }, 'items.category:id,path,title_ru,title_en,sort,discount_percent'])
             ->firstOrFail();
 
         return Inertia::render('shop/Category', [

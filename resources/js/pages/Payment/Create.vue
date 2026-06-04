@@ -55,7 +55,7 @@
                             class="flex items-center justify-between text-sm"
                         >
                             <span class="text-TextGray">{{ itemName(item.item) }} x{{ item.count }}</span>
-                            <span class="text-white font-bold">{{ ((item.item.price || 0) - (item.item.discount || 0)) * item.count }} {{ currencySymbol }}</span>
+                            <span class="text-white font-bold">{{ (Number(item.item.final_price ?? item.item.price) || 0) * item.count }} {{ currencySymbol }}</span>
                         </div>
                         <div class="border-t border-StrokeGray pt-3">
                             <div class="flex items-center justify-between">
