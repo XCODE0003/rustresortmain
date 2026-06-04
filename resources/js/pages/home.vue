@@ -385,13 +385,19 @@ const toSafeNumber = (value: unknown, fallback = 0): number => {
 const openItemModal = (item: ShopItem): void => {
     // Цена со скидкой (final_price считает бэкенд) — её же спишет buyWithBalance.
     const fallbackItemPrice = toSafeNumber(item.final_price ?? item.price, 0);
+    // Скидка (своя + категории) действует и на цены вариаций.
+    const discountFactor = 1 - Number(item.discount_total_percent ?? 0) / 100;
+    const withDiscount = (p: number) => Math.round(p * discountFactor * 100) / 100;
     const mappedVariations = Array.isArray(item.variations) && item.variations.length > 0
-        ? item.variations.map((variation) => ({
-            label: variation.variation_name || variation.name || t('shop.variation_default'),
-            value: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
-            price: toSafeNumber(variation.variation_price ?? variation.price, fallbackItemPrice),
-            variationId: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
-        }))
+        ? item.variations.map((variation) => {
+            const rawVarPrice = toSafeNumber(variation.variation_price ?? variation.price, NaN);
+            return {
+                label: variation.variation_name || variation.name || t('shop.variation_default'),
+                value: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
+                price: Number.isFinite(rawVarPrice) ? withDiscount(rawVarPrice) : fallbackItemPrice,
+                variationId: toSafeNumber(variation.variation_id ?? variation.id ?? 0, 0),
+            };
+        })
         : undefined;
 
     const itemServerField = item.server === null || item.server === undefined

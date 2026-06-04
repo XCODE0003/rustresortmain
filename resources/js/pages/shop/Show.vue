@@ -124,12 +124,15 @@ const finalPriceUsd = computed(() => props.item.final_price_usd ?? props.item.pr
 
 const openBuyModal = (): void => {
     const item = props.item;
+    // Скидка (своя + категории) действует и на цены вариаций — ту же цену спишет бэкенд.
+    const discountFactor = 1 - Number(item.discount_total_percent ?? 0) / 100;
+    const withDiscount = (p: unknown) => Math.round((Number(p) || 0) * discountFactor * 100) / 100;
     const variations =
         item.variations && item.variations.length > 0
             ? item.variations.map((v) => ({
                 label: v.variation_name || v.name || '',
                 value: v.variation_id ?? v.id ?? 0,
-                price: v.variation_price ?? v.price ?? item.price,
+                price: withDiscount(v.variation_price ?? v.price ?? item.price),
                 variationId: v.variation_id ?? v.id ?? 0,
             }))
             : undefined;

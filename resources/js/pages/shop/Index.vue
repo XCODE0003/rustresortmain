@@ -378,11 +378,15 @@ const handleBuyItem = (payload: any) => {
 
     modalStore.setPendingAmount(selectedQuantity);
 
+    // Скидка (своя + категории) действует и на цены вариаций — ту же цену спишет бэкенд.
+    const discountFactor = 1 - Number(item.discount_total_percent ?? 0) / 100;
+    const withDiscount = (p: unknown) => Math.round((Number(p) || 0) * discountFactor * 100) / 100;
+
     const variations = item?.variations && item.variations.length > 0
         ? item.variations.map((v: any) => ({
             label: v.variation_name || v.name,
             value: v.variation_id || v.id,
-            price: v.variation_price || v.price,
+            price: withDiscount(v.variation_price || v.price),
             variationId: v.variation_id || v.id,
         }))
         : undefined;

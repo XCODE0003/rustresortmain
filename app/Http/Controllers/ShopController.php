@@ -111,9 +111,14 @@ class ShopController extends Controller
 
             $price = $product->getFinalPrice();
             if (! empty($validated['var_id']) && is_array($product->variations)) {
-                $variation = collect($product->variations)->firstWhere('id', $validated['var_id']);
-                if ($variation) {
-                    $price = (float) ($variation['price'] ?? $price);
+                // В БД вариации хранятся с ключами variation_id/variation_price
+                // (см. Backend\ShopItemController), но поддерживаем и id/price.
+                $variation = collect($product->variations)
+                    ->firstWhere(fn ($v) => (string) ($v['variation_id'] ?? $v['id'] ?? '') === (string) $validated['var_id']);
+                $varPrice = $variation['variation_price'] ?? $variation['price'] ?? null;
+                if ($varPrice !== null && $varPrice !== '') {
+                    // Скидки (своя + категории) действуют и на цены вариаций.
+                    $price = $product->applyDiscount((float) $varPrice);
                 }
             }
         }

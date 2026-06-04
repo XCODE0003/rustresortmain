@@ -4,6 +4,7 @@ namespace App\Traits;
 
 /**
  * Скидки товара/набора: собственная скидка (discount_percent) и скидка категории.
+ * Скидки ПЕРЕМНОЖАЮТСЯ: 30% у товара + 30% у категории = 51% итоговой скидки.
  * Флаг disable_category_discount отключает ТОЛЬКО скидку категории — собственная
  * скидка товара применяется всегда.
  *
@@ -21,10 +22,16 @@ trait HasShopDiscounts
         ]);
     }
 
+    /** Применяет скидки к произвольной цене (базовой или цене вариации). */
+    public function applyDiscount(float $price): float
+    {
+        return round($price * $this->discountFactor(), 2);
+    }
+
     /** Итоговая цена в рублях с учётом всех скидок. */
     public function getFinalPrice(): float
     {
-        return round((float) $this->price * $this->discountFactor(), 2);
+        return $this->applyDiscount((float) $this->price);
     }
 
     /** Итоговая цена в USD с учётом всех скидок (null, если price_usd не задана). */
@@ -35,7 +42,7 @@ trait HasShopDiscounts
             return null;
         }
 
-        return round($usd * $this->discountFactor(), 2);
+        return $this->applyDiscount($usd);
     }
 
     /** Суммарный процент скидки (собственная + категории), 0–100. */
