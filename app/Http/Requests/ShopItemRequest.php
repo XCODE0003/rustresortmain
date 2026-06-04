@@ -26,6 +26,12 @@ class ShopItemRequest extends FormRequest
         $this->merge(collect($this->only(['price', 'price_usd', 'discount_percent']))
             ->map(fn ($v) => is_string($v) ? str_replace(',', '.', trim($v)) : $v)
             ->all());
+
+        // Rust ID предмета и rs_id необязательны (nullable int в БД): пустую
+        // строку приводим к null, иначе строгий MySQL падает на ''.
+        $this->merge(collect($this->only(['item_id', 'rs_id']))
+            ->map(fn ($v) => (is_string($v) && trim($v) === '') ? null : $v)
+            ->all());
     }
 
     /**
@@ -42,7 +48,7 @@ class ShopItemRequest extends FormRequest
             'price_usd' => ['required', 'max:12'],
             'discount_percent' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'disable_category_discount' => ['nullable', 'boolean'],
-            'item_id' => ['max:20'],
+            'item_id' => ['nullable', 'max:20'],
             'status' => ['required', 'max:1'],
             'server' => ['required', 'max:10'],
             'servers' => [''],

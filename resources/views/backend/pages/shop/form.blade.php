@@ -119,7 +119,7 @@
                                         <label class="form-label" for="item_id">Rust {{ __('ID предмета') }}</label>
                                         <div class="form-control-wrap">
                                             <input type="text" class="form-control" id="item_id" name="item_id"
-                                                   @isset($shopitem) value="{{ $shopitem->item_id }}" @else value="0" @endisset required>
+                                                   @isset($shopitem) value="{{ $shopitem->item_id }}" @else value="0" @endisset>
                                             @error('item_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
