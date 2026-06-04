@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -14,14 +15,14 @@ class ArticleController extends Controller
             ->orderBy('sort')
             ->orderByDesc('created_at')
             ->get()
-            ->map(fn($a) => [
-                'id'          => $a->id,
-                'path'        => $a->path,
-                'type'        => $a->type,
-                'image'       => $this->absImage($a->image),
-                'title'       => $a->getLocalizedTitle(),
+            ->map(fn ($a) => [
+                'id' => $a->id,
+                'path' => $a->path,
+                'type' => $a->type,
+                'image' => $this->absImage($a->image),
+                'title' => $a->getLocalizedTitle(),
                 'description' => $this->absHtml($a->getLocalizedDescription()),
-                'created_at'  => $a->created_at,
+                'created_at' => $a->created_at,
             ]);
 
         return Inertia::render('info/list', ['articles' => $articles]);
@@ -35,13 +36,13 @@ class ArticleController extends Controller
 
         return Inertia::render('info/show', [
             'article' => [
-                'id'          => $article->id,
-                'path'        => $article->path,
-                'type'        => $article->type,
-                'image'       => $this->absImage($article->image),
-                'title'       => $article->getLocalizedTitle(),
+                'id' => $article->id,
+                'path' => $article->path,
+                'type' => $article->type,
+                'image' => $this->absImage($article->image),
+                'title' => $article->getLocalizedTitle(),
                 'description' => $this->absHtml($article->getLocalizedDescription()),
-                'created_at'  => $article->created_at,
+                'created_at' => $article->created_at,
             ],
         ]);
     }
@@ -106,6 +107,14 @@ class ArticleController extends Controller
         // не из images/ или storage/ → файл лежит в images/{basename}
         if (! preg_match('#(^|/)(images|storage)/#i', '/'.$u)) {
             $u = 'images/'.basename($u);
+        }
+
+        // файла нет в public/, но он есть на диске public (storage/app/public —
+        // туда кладёт загрузка из админки) → отдаём через симлинк /storage/...
+        if (! str_starts_with(strtolower($u), 'storage/')
+            && ! is_file(public_path($u))
+            && Storage::disk('public')->exists($u)) {
+            $u = 'storage/'.$u;
         }
 
         return $u;

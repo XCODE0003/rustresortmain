@@ -33,7 +33,7 @@
                     <div class="flex w-full items-center gap-5">
                         <img
                             v-if="article.image"
-                            :src="'/storage'+article.image"
+                            :src="article.image"
                             :alt="article.title"
                             class="h-[158px] w-[260px] object-cover rounded-lg max-md:hidden"
                         />
