@@ -98,7 +98,7 @@ class ShopItemController extends Controller
             }
         }
 
-        $data['variations'] = json_encode($variations);
+        $data['variations'] = $variations;
 
         //Собираем сервера, с которых считать онлайн
         $servers = [];
@@ -108,7 +108,7 @@ class ShopItemController extends Controller
                 $servers[] = $request->input($server_id);
             }
         }
-        $data['servers'] = json_encode($servers);
+        $data['servers'] = $servers;
 
         ShopItem::create($data);
 
@@ -186,7 +186,7 @@ class ShopItemController extends Controller
             }
         }
 
-        $data['variations'] = json_encode($variations);
+        $data['variations'] = $variations;
 
         //Собираем сервера, с которых считать онлайн
         $servers = [];
@@ -196,7 +196,7 @@ class ShopItemController extends Controller
                 $servers[] = $request->input($server_id);
             }
         }
-        $data['servers'] = json_encode($servers);
+        $data['servers'] = $servers;
 
         $shopitem->update($data);
 

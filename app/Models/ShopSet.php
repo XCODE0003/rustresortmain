@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\LenientJsonArray;
 use App\Traits\HasMultiLanguageFields;
 use App\Traits\HasShopDiscounts;
 use Illuminate\Database\Eloquent\Model;
@@ -53,8 +54,9 @@ class ShopSet extends Model
     protected function casts(): array
     {
         return [
-            'items' => 'array',
-            'servers' => 'array',
+            // Не 'array': админка двойно кодировала JSON (см. LenientJsonArray).
+            'items' => LenientJsonArray::class,
+            'servers' => LenientJsonArray::class,
             'price' => 'decimal:2',
             'price_usd' => 'decimal:2',
             'can_gift' => 'boolean',

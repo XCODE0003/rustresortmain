@@ -69,7 +69,7 @@ class ShopSetController extends Controller
                 ];
             }
         }
-        $data['items'] = json_encode($items);
+        $data['items'] = $items;
 
         //Собираем сервера, с которых считать онлайн
         $servers = [];
@@ -79,7 +79,7 @@ class ShopSetController extends Controller
                 $servers[] = $request->input($server_id);
             }
         }
-        $data['servers'] = json_encode($servers);
+        $data['servers'] = $servers;
 
         ShopSet::create($data);
 
@@ -122,7 +122,7 @@ class ShopSetController extends Controller
                 ];
             }
         }
-        $data['items'] = json_encode($items);
+        $data['items'] = $items;
 
         //Собираем сервера, с которых считать онлайн
         $servers = [];
@@ -132,7 +132,7 @@ class ShopSetController extends Controller
                 $servers[] = $request->input($server_id);
             }
         }
-        $data['servers'] = json_encode($servers);
+        $data['servers'] = $servers;
 
         $shopset->update($data);
 

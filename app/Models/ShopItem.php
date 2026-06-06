@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\LenientJsonArray;
 use App\Traits\HasMultiLanguageFields;
 use App\Traits\HasShopDiscounts;
 use Illuminate\Database\Eloquent\Model;
@@ -72,8 +73,10 @@ class ShopItem extends Model
             // а не флаг. Каст в boolean терял значение (24ч → true → 1).
             'wipe_block' => 'integer',
             'can_gift' => 'boolean',
-            'servers' => 'array',
-            'variations' => 'array',
+            // Не 'array': админка двойно кодировала JSON, и каст 'array' отдавал
+            // строку вместо массива (вариации «терялись» — см. LenientJsonArray).
+            'servers' => LenientJsonArray::class,
+            'variations' => LenientJsonArray::class,
         ];
     }
 
