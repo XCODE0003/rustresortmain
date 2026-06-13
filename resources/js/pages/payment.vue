@@ -26,12 +26,39 @@
                     {{ $t('payment.tab_history') }}
                 </Link>
             </div>
+            <!-- Переключатель валюты: RUB / USD. По умолчанию выбирается по языку
+                 (русский → RUB, иначе → USD), но переключается вручную. -->
+            <div class="payment-section flex w-full justify-center">
+                <div class="inline-flex rounded-xl border border-StrokeGray bg-[#0e1012]/60 p-1">
+                    <button
+                        type="button"
+                        @click="currency = 'RUB'"
+                        :class="[
+                            'rounded-lg px-8 py-2.5 text-sm font-bold uppercase transition-all duration-300',
+                            currency === 'RUB' ? 'bg-Orange text-black' : 'text-TextGray hover:text-white',
+                        ]"
+                    >
+                        ₽ RUB
+                    </button>
+                    <button
+                        type="button"
+                        @click="currency = 'USD'"
+                        :class="[
+                            'rounded-lg px-8 py-2.5 text-sm font-bold uppercase transition-all duration-300',
+                            currency === 'USD' ? 'bg-Orange text-black' : 'text-TextGray hover:text-white',
+                        ]"
+                    >
+                        $ USD
+                    </button>
+                </div>
+            </div>
+
             <div
                 class="payment-section relative flex w-full items-stretch lg:items-start gap-2.5 max-lg:flex-col md:gap-5 lg:gap-8"
             >
                 <div class="grid w-full grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
                     <button
-                        v-for="(gateway, code) in gateways"
+                        v-for="(gateway, code) in visibleGateways"
                         :key="code"
                         type="button"
                         @click="selectedGateway = code"
@@ -51,7 +78,7 @@
                                     : 'border-StrokeGray bg-[#0E1012]/80 text-TextGray group-hover:text-white',
                             ]"
                         >
-                            {{ gateway.currency }}
+                            {{ currency }}
                         </span>
 
                         <!-- Logo: uniform bounding box for every provider.
@@ -166,7 +193,7 @@
                                     stroke-linejoin="round"
                                 />
                             </svg>
-                            {{ $t('payment.min_amount_line', { amount: gateways[selectedGateway].min_amount, currency: gateways[selectedGateway].currency }) }}
+                            {{ $t('payment.min_amount_line', { amount: minAmountForTab, currency: currency }) }}
                         </div>
                         <div
                             class="block-black flex flex-col gap-2.5 rounded-xl border border-StrokeGray p-2.5 md:gap-5 md:p-5 lg:gap-[30px] lg:p-8"
@@ -197,8 +224,7 @@
                                     <input
                                         v-model="amount"
                                         type="number"
-                                        :min="selectedGateway && gateways[selectedGateway] ? gateways[selectedGateway].min_amount : 10"
-                                        :max="selectedGateway && gateways[selectedGateway] ? gateways[selectedGateway].max_amount : null"
+                                        :min="minAmountForTab"
                                         class="w-full rounded-md border border-StrokeGray bg-transparent px-6 py-2 text-xs/[30px] font-medium text-white outline-none placeholder:text-TextGray"
                                         :placeholder="$t('payment.amount_placeholder')"
                                     />
@@ -215,7 +241,7 @@
                                 <p
                                     class="text-base font-bold text-Orange uppercase"
                                 >
-                                    {{ amount || 0 }} {{ currencySymbol }}
+                                    {{ amount || 0 }} {{ tabCurrencySymbol }}
                                 </p>
                             </div>
                             <div class="flex flex-col gap-2.5">
@@ -260,8 +286,8 @@
 </template>
 
 <script>
-import { Link, router } from '@inertiajs/vue3';
-import { computed, onMounted, ref } from 'vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { computed, onMounted, ref, watch } from 'vue';
 import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';
 import Toggle from '../components/toggle.vue';
@@ -280,7 +306,8 @@ export default {
         },
     },
     setup(props) {
-        const { currencySymbol } = useCurrency();
+        const { usdRate } = useCurrency();
+        const page = usePage();
 
         onMounted(() => {
             gsap.fromTo(
@@ -290,12 +317,57 @@ export default {
             );
         });
 
-        const selectedGateway = ref(Object.keys(props.gateways)[0] || null);
+        // Вкладка валюты: по языку (русский → RUB, любой другой → USD), переключается вручную.
+        const pageLocale = String(page.props?.locale ?? '').toLowerCase();
+        const currency = ref(pageLocale.startsWith('ru') ? 'RUB' : 'USD');
+        const tabCurrencySymbol = computed(() => (currency.value === 'USD' ? '$' : '₽'));
+
+        // Способы оплаты, доступные в выбранной валютной вкладке.
+        const visibleGateways = computed(() => {
+            const entries = Object.entries(props.gateways).filter(([, g]) => {
+                const list = g.currencies;
+                if (Array.isArray(list) && list.length > 0) {
+                    return list.includes(currency.value);
+                }
+                // Фолбэк для старого формата без currencies: по родной валюте.
+                return (g.currency || 'RUB') === currency.value;
+            });
+            return Object.fromEntries(entries);
+        });
+
+        const selectedGateway = ref(Object.keys(visibleGateways.value)[0] || null);
         const amount = ref(100);
+
+        // Минимальная сумма способа в валюте текущей вкладки (конвертируем из родной).
+        const convertToTab = (value, nativeCurrency) => {
+            const v = Number(value) || 0;
+            const native = (nativeCurrency || 'RUB').toUpperCase();
+            const rate = usdRate.value > 0 ? usdRate.value : 90;
+            if (native === currency.value) return v;
+            if (currency.value === 'RUB' && native === 'USD') return Math.ceil(v * rate);
+            if (currency.value === 'USD' && native === 'RUB') return Math.max(1, Math.ceil(v / rate));
+            return v;
+        };
+
+        const minAmountForTab = computed(() => {
+            const g = selectedGateway.value ? props.gateways[selectedGateway.value] : null;
+            if (!g) return currency.value === 'USD' ? 1 : 10;
+            return convertToTab(g.min_amount, g.currency);
+        });
         const promoCode = ref('');
         const agreeTerms = ref(false);
         const agreePolicy = ref(false);
         const processing = ref(false);
+
+        // При смене валюты: оставляем способ если он есть в новой вкладке, иначе
+        // выбираем первый доступный; подгоняем сумму под минимум вкладки.
+        watch(currency, () => {
+            const codes = Object.keys(visibleGateways.value);
+            if (!selectedGateway.value || !codes.includes(selectedGateway.value)) {
+                selectedGateway.value = codes[0] || null;
+            }
+            amount.value = currency.value === 'USD' ? 10 : 100;
+        });
 
         const isSteamGateway = computed(() => {
             if (!selectedGateway.value || !props.gateways[selectedGateway.value]) return false;
@@ -324,6 +396,7 @@ export default {
             router.post('/balance/topup', {
                 amount: amount.value,
                 gateway: selectedGateway.value,
+                currency: currency.value,
                 promo_code: promoCode.value || null,
             }, {
                 onFinish: () => {
@@ -333,6 +406,10 @@ export default {
         };
 
         return {
+            currency,
+            tabCurrencySymbol,
+            visibleGateways,
+            minAmountForTab,
             selectedGateway,
             amount,
             promoCode,
@@ -342,7 +419,6 @@ export default {
             isSteamGateway,
             isOversizeLogo,
             submitPayment,
-            currencySymbol,
         };
     },
 };

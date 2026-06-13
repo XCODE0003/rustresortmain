@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 export const settings = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ settings.definition = {
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 settings.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ settings.url = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 settings.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ settings.get = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 settings.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ settings.head = (args: { id: string | number } | [id: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 const settingsForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -73,7 +73,7 @@ const settingsForm = (args: { id: string | number } | [id: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 settingsForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -83,7 +83,7 @@ settingsForm.get = (args: { id: string | number } | [id: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::settings
-* @see app/Http/Controllers/Backend/ServerController.php:91
+* @see app/Http/Controllers/Backend/ServerController.php:93
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{id}/settings'
 */
 settingsForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

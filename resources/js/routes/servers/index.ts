@@ -219,7 +219,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 export const edit = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +234,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 edit.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ edit.url = (args: { server: number | { id: number } } | [server: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 edit.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -277,7 +277,7 @@ edit.get = (args: { server: number | { id: number } } | [server: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 edit.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -287,7 +287,7 @@ edit.head = (args: { server: number | { id: number } } | [server: number | { id:
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 const editForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -297,7 +297,7 @@ const editForm = (args: { server: number | { id: number } } | [server: number | 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 editForm.get = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -307,7 +307,7 @@ editForm.get = (args: { server: number | { id: number } } | [server: number | { 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::edit
-* @see app/Http/Controllers/Backend/ServerController.php:86
+* @see app/Http/Controllers/Backend/ServerController.php:88
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}/edit'
 */
 editForm.head = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -324,7 +324,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 export const update = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -339,7 +339,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 update.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -372,7 +372,7 @@ update.url = (args: { server: number | { id: number } } | [server: number | { id
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 update.put = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -382,7 +382,7 @@ update.put = (args: { server: number | { id: number } } | [server: number | { id
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 update.patch = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -392,7 +392,7 @@ update.patch = (args: { server: number | { id: number } } | [server: number | { 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 const updateForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -407,7 +407,7 @@ const updateForm = (args: { server: number | { id: number } } | [server: number 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 updateForm.put = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -422,7 +422,7 @@ updateForm.put = (args: { server: number | { id: number } } | [server: number | 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::update
-* @see app/Http/Controllers/Backend/ServerController.php:101
+* @see app/Http/Controllers/Backend/ServerController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 updateForm.patch = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -439,7 +439,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:144
+* @see app/Http/Controllers/Backend/ServerController.php:148
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 export const destroy = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -454,7 +454,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:144
+* @see app/Http/Controllers/Backend/ServerController.php:148
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 destroy.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -487,7 +487,7 @@ destroy.url = (args: { server: number | { id: number } } | [server: number | { i
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:144
+* @see app/Http/Controllers/Backend/ServerController.php:148
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 destroy.delete = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -497,7 +497,7 @@ destroy.delete = (args: { server: number | { id: number } } | [server: number | 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:144
+* @see app/Http/Controllers/Backend/ServerController.php:148
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 const destroyForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ const destroyForm = (args: { server: number | { id: number } } | [server: number
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:144
+* @see app/Http/Controllers/Backend/ServerController.php:148
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 destroyForm.delete = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

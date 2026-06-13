@@ -254,7 +254,8 @@
     "online_players": "Онлайн",
     "max_players": "Максимум игроков",
     "wipe": "Вайп",
-    "connect": "Подключиться",
+    "connect": "Скопировать коннект",
+    "connect_copied": "Скопировано!",
     "connect_via_steam": "Подключиться через Steam"
   }
 }

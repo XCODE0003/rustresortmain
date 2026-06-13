@@ -78,6 +78,25 @@
                                 </div>
                             </div>
 
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="connect">{{ __('Адрес коннекта (домен:порт)') }}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" id="connect" name="connect"
+                                                   placeholder="monday.rustresort.com:28015"
+                                                   @isset($options->connect) value="{{ $options->connect }}" @else value="" @endisset>
+                                            <div class="form-note">{{ __('Копируется игроком кнопкой «Скопировать коннект». Если пусто — используется IP:PORT.') }}</div>
+                                            @error('connect')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                                 <div class="row g-4">
                                 <div class="col-lg-6">
                                     <div class="form-group">

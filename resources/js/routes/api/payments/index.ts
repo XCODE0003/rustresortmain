@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import webhookB2f11f from './webhook'
 /**
 * @see \App\Http\Controllers\Api\PaymentWebhookController::webhook
 * @see app/Http/Controllers/Api/PaymentWebhookController.php:18
@@ -219,7 +220,7 @@ webhookForm.options = (args: { gateway: string | number } | [gateway: string | n
 webhook.form = webhookForm
 
 const payments = {
-    webhook: Object.assign(webhook, webhook),
+    webhook: Object.assign(webhook, webhookB2f11f),
 }
 
 export default payments

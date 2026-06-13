@@ -27,6 +27,7 @@ class ServerRequest extends FormRequest
             'name' => ['required', 'string'],
             'ip' => ['required', 'string'],
             'rcon_ip' => ['required', 'string'],
+            'connect' => ['nullable', 'string', 'max:255'],
             'status' => ['required', 'string'],
             'sort' => ['required', 'string', 'max:20'],
             'category_id' => ['required', 'string', 'max:20'],

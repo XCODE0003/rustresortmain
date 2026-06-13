@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 export const tebex = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ tebex.definition = {
 
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 tebex.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ tebex.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 tebex.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ tebex.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 tebex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ tebex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 const tebexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const tebexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 tebexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ tebexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BalanceController::tebex
-* @see app/Http/Controllers/BalanceController.php:139
+* @see app/Http/Controllers/BalanceController.php:150
 * @route '/balance/tebex'
 */
 tebexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

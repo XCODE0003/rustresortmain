@@ -67,13 +67,21 @@
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <a
-                                        v-if="steamConnectHref(server)"
-                                        :href="steamConnectHref(server)"
-                                        class="inline-flex cursor-pointer items-center justify-center rounded-md bg-Orange px-5 py-2.5 text-[12px]/[12px] font-medium text-black no-underline transition-colors duration-300 hover:bg-Orange/80"
+                                    <button
+                                        v-if="connectString(server)"
+                                        type="button"
+                                        @click="copyConnect(server)"
+                                        class="inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-Orange px-5 py-2.5 text-[12px]/[12px] font-medium text-black transition-colors duration-300 hover:bg-Orange/80"
                                     >
-                                        {{ $t('server.connect') }}
-                                    </a>
+                                        <svg v-if="copiedServerId === server.id" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                            <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+                                            <path d="M5 15V5a2 2 0 012-2h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                        {{ copiedServerId === server.id ? $t('server.connect_copied') : $t('server.connect') }}
+                                    </button>
                                     <span
                                         v-else
                                         class="inline-flex cursor-not-allowed items-center justify-center rounded-md bg-Orange/35 px-5 py-2.5 text-[12px]/[12px] font-medium text-black/55"
@@ -147,7 +155,7 @@
                         </button>
 
                         <button
-                            v-for="category in shopCategories"
+                            v-for="category in visibleShopCategories"
                             :key="category.id"
                             type="button"
                             @click="selectedShopCategoryId = category.id"
@@ -211,7 +219,6 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import DescriptionModal from '@/components/modals/descriptionModal.vue';
 import ShopItemCard from '@/components/ShopItemCard.vue';
-import { steamRustConnectUrl } from '@/composables/useSteamRustConnect';
 import { useShopLocale } from '@/composables/useShopLocale';
 import { useWipeInfo } from '@/composables/useWipeInfo';
 import MainLayout from '@/layouts/main.vue';
@@ -229,6 +236,7 @@ interface Server {
         ip?: string;
         port?: number;
         rate?: string;
+        connect?: string;
     };
     category?: {
         title_ru?: string;
@@ -340,6 +348,12 @@ const normalizedShopItems = computed(() => {
         serverIds: normalizeServerIds(item.servers),
         serverField: item.server === null || item.server === undefined ? null : Number(item.server),
     }));
+});
+
+// Только категории с товарами — пустые (например удалённые «Рецепты») не показываем.
+const visibleShopCategories = computed(() => {
+    const usedCategoryIds = new Set(props.shopItems.map((item) => item.category_id));
+    return props.shopCategories.filter((category) => usedCategoryIds.has(category.id));
 });
 
 const filteredShopItems = computed(() => {
@@ -469,14 +483,50 @@ const getServerIp = (server: Server): string => {
     return 'N/A';
 };
 
-/** Полная `steam://run/252490//+connect …` или пусто, если адрес не задан */
-const steamConnectHref = (server: Server): string => {
-    const addr = getServerIp(server);
-    if (addr === 'N/A') {
-        return '';
+// Коннект-строка для копирования: домен из админки (options.connect) или IP.
+const connectAddress = (server: Server): string => {
+    const explicit = server.options?.connect;
+    if (typeof explicit === 'string' && explicit.trim() !== '') {
+        return explicit.trim().replace(/^connect\s+/i, '');
     }
+    const ip = getServerIp(server);
+    return ip === 'N/A' ? '' : ip;
+};
 
-    return steamRustConnectUrl(addr);
+const connectString = (server: Server): string => {
+    const addr = connectAddress(server);
+    return addr === '' ? '' : `connect ${addr}`;
+};
+
+const copiedServerId = ref<number | null>(null);
+
+const copyConnect = async (server: Server): Promise<void> => {
+    const text = connectString(server);
+    if (!text) {
+        return;
+    }
+    try {
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            const el = document.createElement('textarea');
+            el.value = text;
+            el.style.position = 'fixed';
+            el.style.opacity = '0';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+        copiedServerId.value = server.id;
+        setTimeout(() => {
+            if (copiedServerId.value === server.id) {
+                copiedServerId.value = null;
+            }
+        }, 2000);
+    } catch {
+        // буфер недоступен — игнорируем
+    }
 };
 
 onMounted(() => {

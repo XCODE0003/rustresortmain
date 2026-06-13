@@ -54,6 +54,8 @@ class ServerController extends Controller
             'ip' => $req['ip'],
             'rcon_ip' => $req['rcon_ip'],
             'rsworld_db_type' => $req['rsworld_db_type'],
+            // Адрес для кнопки «Скопировать коннект» на сайте (домен:порт).
+            'connect' => $req['connect'] ?? '',
             'api_url' => '',
             'api_key' => '',
             'rcon_passw' => $req['rcon_passw'],
@@ -106,6 +108,8 @@ class ServerController extends Controller
             'ip' => $req['ip'],
             'rcon_ip' => $req['rcon_ip'],
             'rsworld_db_type' => $req['rsworld_db_type'],
+            // Адрес для кнопки «Скопировать коннект» на сайте (домен:порт).
+            'connect' => $req['connect'] ?? '',
             'api_url' => (isset($req['api_url'])) ? $req['api_url'] : '',
             'api_key' => (isset($req['api_key'])) ? $req['api_key'] : '',
             'rcon_passw' => (isset($req['rcon_passw'])) ? $req['rcon_passw'] : '',

@@ -124,7 +124,7 @@
                             {{ $t('shop.all_items') }}
                         </button>
                     <button
-                        v-for="category in categories"
+                        v-for="category in visibleCategories"
                         :key="category.id"
                         @click="selectCategory(category.id)"
                         style="opacity: 0"
@@ -261,6 +261,13 @@ if (props.categorySlug) {
         selectedCategory.value = category.id;
     }
 }
+
+// Показываем только категории, в которых есть товары. Пустые (например удалённые
+// «Рецепты») не выводим — иначе остаётся мёртвая вкладка-фильтр без товаров.
+const visibleCategories = computed(() => {
+    const usedCategoryIds = new Set(props.items.map((item: ShopItem) => item.category_id));
+    return props.categories.filter((category: Category) => usedCategoryIds.has(category.id));
+});
 
 const filteredItems = computed(() => {
     let filtered = props.items;

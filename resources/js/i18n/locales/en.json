@@ -254,7 +254,8 @@
     "online_players": "Online",
     "max_players": "Max Players",
     "wipe": "Wipe",
-    "connect": "Connect",
+    "connect": "Copy connect",
+    "connect_copied": "Copied!",
     "connect_via_steam": "Connect via Steam"
   }
 }

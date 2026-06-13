@@ -70,27 +70,23 @@ class PaymentManager
                     $backend = $gateway->getSetting('backend');
                     $isSteam = $backend === 'steam';
 
-                    // Крипто-шлюзы Heleket: пользователь платит с рублёвого баланса,
-                    // но лимиты заданы в USD — переводим их в рубли для отображения.
-                    // ВАЖНО: трогаем ТОЛЬКО Heleket. Tebex/Steam и прочие реально в USD,
-                    // их валюту/лимиты не меняем (иначе бейдж ошибочно станет RUB).
+                    // Валюта/лимиты гейтвея отдаются в его «родной» валюте как есть.
+                    // Конвертацию для отображения в выбранной вкладке (RUB/USD)
+                    // делает фронт по курсу usd_rate. donate.amount ВСЕГДА хранится
+                    // в рублях (см. BalanceController::topup) — Pally/Heleket/вебхук
+                    // на это рассчитывают.
                     $currency = $gateway->currency;
                     $minAmount = $gateway->min_amount;
                     $maxAmount = $gateway->max_amount;
-                    if (($backend === 'heleket' || $gateway->code === 'heleket') && is_string($currency) && strtoupper($currency) === 'USD') {
-                        $rate = app(\App\Services\ExchangeRateService::class)->usdToRub();
-                        $minAmount = (int) ceil(((float) $minAmount) * $rate);
-                        if ($maxAmount) {
-                            $maxAmount = (int) floor(((float) $maxAmount) * $rate);
-                        }
-                        $currency = 'RUB';
-                    }
 
                     $data = [
                         'id' => $gateway->id,
                         'name' => $gateway->name_ru,
                         'logo' => $gateway->logo,
                         'currency' => $currency,
+                        // В каких вкладках (RUB/USD) показывать способ. Pally — только
+                        // RUB, Tebex — только USD, Steam и крипта (Heleket) — в обеих.
+                        'currencies' => $this->gatewayCurrencies($backend, $currency),
                         'min_amount' => $minAmount,
                         'max_amount' => $maxAmount,
                         'commission_percent' => $gateway->commission_percent,
@@ -105,6 +101,22 @@ class PaymentManager
                 })
                 ->toArray();
         });
+    }
+
+    /**
+     * Вкладки валют, в которых показывается способ оплаты.
+     * Pally — рубли, Tebex — доллары, Steam и крипта (Heleket) — в обеих.
+     *
+     * @return list<string>
+     */
+    private function gatewayCurrencies(?string $backend, ?string $currency): array
+    {
+        return match ($backend) {
+            'pally' => ['RUB'],
+            'tebex' => ['USD'],
+            'steam', 'heleket' => ['RUB', 'USD'],
+            default => [is_string($currency) && strtoupper($currency) === 'USD' ? 'USD' : 'RUB'],
+        };
     }
 
     public function hasGateway(string $name): bool

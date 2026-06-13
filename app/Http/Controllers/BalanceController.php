@@ -34,17 +34,28 @@ class BalanceController extends Controller
     public function topup(Request $request): HttpResponse
     {
         $validated = $request->validate([
-            'amount' => 'required|numeric|min:10|max:100000',
+            'amount' => 'required|numeric|min:0.01|max:1000000',
             'gateway' => 'required|string',
+            'currency' => 'nullable|in:RUB,USD',
             'promo_code' => 'nullable|string',
         ]);
 
-        $amount = $validated['amount'];
-        $bonusAmount = 0;
         $user = Auth::user();
         if (! $user) {
             abort(401);
         }
+
+        // Баланс/донат ВСЕГДА в рублях. Если платёж в USD-вкладке (Tebex, крипта
+        // в долларах), введённая сумма — доллары; конвертируем в рубли по тому же
+        // курсу, что и отображение баланса (ExchangeRateService), чтобы зачисление
+        // совпало с тем, что игрок видит на сайте.
+        $currency = $validated['currency'] ?? 'RUB';
+        $amount = (float) $validated['amount'];
+        if ($currency === 'USD') {
+            $rate = app(\App\Services\ExchangeRateService::class)->usdToRub();
+            $amount = round($amount * $rate, 2);
+        }
+        $bonusAmount = 0;
 
         Log::info('BALANCE_TOPUP_REQUEST_RECEIVED', [
             'user_id' => $user->id,
@@ -160,9 +171,13 @@ class BalanceController extends Controller
             return redirect()->route('payment')->with('error', 'Корзина Tebex не найдена');
         }
 
-        $exchangeRate = (float) config('options.exchange_rate_usd', 70);
+        // ВАЖНО: тот же курс, что и при зачислении/отображении (ExchangeRateService),
+        // а не хардкод config('options.exchange_rate_usd'). Из-за расхождения курсов
+        // игрок платил в Tebex по одному курсу, а на баланс падало по другому
+        // (отсюда «заплатил $4 — пришло $2»).
+        $exchangeRate = app(\App\Services\ExchangeRateService::class)->usdToRub();
         if ($exchangeRate <= 0) {
-            $exchangeRate = 70;
+            $exchangeRate = 90;
         }
 
         $priceUsd = (int) round((float) $donate->amount / $exchangeRate);
