@@ -72,7 +72,9 @@ class WipeScheduleService
      */
     private function parseTime(?string $time): array
     {
-        if (! $time || ! preg_match('/^(\d{2}):(\d{2})$/', $time, $match)) {
+        // Принимаем и HH:MM (из формы), и HH:MM:SS (из TIME-колонки БД) — иначе
+        // время вайпа молча сбрасывалось на 12:00.
+        if (! $time || ! preg_match('/^(\d{2}):(\d{2})(?::\d{2})?$/', $time, $match)) {
             return [12, 0];
         }
 
