@@ -71,7 +71,7 @@ class ServerController extends Controller
             'options' => json_encode($options),
         ];
 
-        $data['image'] = $request->image->store('images', 'public');
+        $data['image'] = $this->storeImage($request->file('image'));
 
         $this->alert('success', __('Сервер успешно добавлен'));
         Log::channel('adminlog')->info('Admin '.auth()->user()->name.': Server added successfully. Parameters: '.json_encode($request->all()));
@@ -126,11 +126,12 @@ class ServerController extends Controller
             'options' => json_encode($options),
         ];
 
-        if (isset($data['image'])) {
-            Storage::disk('public')->delete($server->image);
-        }
-        if ($request->has('image')) {
-            $data['image'] = $request->image->store('images', 'public');
+        if ($request->hasFile('image')) {
+            // удаляем старую картинку из public/images, если она там
+            if ($server->image && is_file(public_path($server->image))) {
+                @unlink(public_path($server->image));
+            }
+            $data['image'] = $this->storeImage($request->file('image'));
         }
 
         $this->alert('success', __('Сервер успешно обновлен'));
@@ -147,13 +148,29 @@ class ServerController extends Controller
      */
     public function destroy(Server $server)
     {
-        Storage::disk('public')->delete($server->image);
+        if ($server->image && is_file(public_path($server->image))) {
+            @unlink(public_path($server->image));
+        }
         $server->delete();
 
         $this->alert('success', __('Сервер успешно удален'));
         Log::channel('adminlog')->info('Admin '.auth()->user()->name.': The server was successfully removed. Parameters:'.json_encode($server->name));
 
         return back();
+    }
+
+    /**
+     * Сохраняет загруженную картинку сервера в public/images (туда же, где старые
+     * серверы и куда смотрит фронт `/images/...`), а не в storage. Возвращает
+     * относительный путь `images/<file>` для колонки image.
+     */
+    private function storeImage(\Illuminate\Http\UploadedFile $file): string
+    {
+        $ext = strtolower($file->getClientOriginalExtension() ?: 'png');
+        $name = uniqid('srv_', true).'.'.$ext;
+        $file->move(public_path('images'), $name);
+
+        return 'images/'.$name;
     }
 
     private function applyScheduleDates(Server $server): void
