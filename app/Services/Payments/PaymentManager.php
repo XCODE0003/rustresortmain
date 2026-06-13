@@ -86,7 +86,7 @@ class PaymentManager
                         'currency' => $currency,
                         // В каких вкладках (RUB/USD) показывать способ. Pally — только
                         // RUB, Tebex — только USD, Steam и крипта (Heleket) — в обеих.
-                        'currencies' => $this->gatewayCurrencies($backend, $currency),
+                        'currencies' => $this->gatewayCurrencies($backend, $gateway->code, $currency),
                         'min_amount' => $minAmount,
                         'max_amount' => $maxAmount,
                         'commission_percent' => $gateway->commission_percent,
@@ -109,12 +109,18 @@ class PaymentManager
      *
      * @return list<string>
      */
-    private function gatewayCurrencies(?string $backend, ?string $currency): array
+    private function gatewayCurrencies(?string $backend, ?string $code, ?string $currency): array
     {
+        // Крипта/Steam доступны в обеих вкладках — ловим и по backend, и по коду
+        // (у общего шлюза «heleket» backend не задан).
+        $both = ['heleket', 'steam', 'bitcoin', 'usdt', 'btc', 'tether'];
+        if (in_array($backend, ['steam', 'heleket'], true) || in_array((string) $code, $both, true)) {
+            return ['RUB', 'USD'];
+        }
+
         return match ($backend) {
             'pally' => ['RUB'],
             'tebex' => ['USD'],
-            'steam', 'heleket' => ['RUB', 'USD'],
             default => [is_string($currency) && strtoupper($currency) === 'USD' ? 'USD' : 'RUB'],
         };
     }
