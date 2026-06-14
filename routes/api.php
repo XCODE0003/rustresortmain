@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ClearStatisticsController;
 use App\Http\Controllers\Api\PaymentWebhookController;
+use App\Http\Controllers\Api\ServersStatisticsController;
+use App\Http\Controllers\Api\ServersWipeController;
 use App\Http\Controllers\Api\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +23,11 @@ Route::post('shop/hasItem', [ShopController::class, 'hasItem']);
 Route::post('shop/reportService', [ShopController::class, 'reportService']);
 Route::post('shop/getImageUrls', [ShopController::class, 'getImageUrls']);
 Route::get('v2/shop/getImageUrls', [ShopController::class, 'getImageUrlsV2']);
+
+// Приём игровой статистики от Rust-плагина (порт из старого проекта).
+// Плагин шлёт api_key=options.game_api_key. CSRF на api-роутах не действует.
+Route::any('statistics/setStatistics', [ServersStatisticsController::class, 'setStatistics']);
+Route::any('statistics/clearStatistics', [ClearStatisticsController::class, 'clearStatistics']);
+Route::any('server/setLastWipeDate', [ServersWipeController::class, 'setLastWipeDate']);
+Route::any('server/forgetCacheOnline', [ServersWipeController::class, 'forgetCacheOnline']);
+Route::any('server/refreshStatus', [ServersWipeController::class, 'refreshStatus']);
