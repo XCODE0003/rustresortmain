@@ -156,18 +156,35 @@ class DeliverPurchaseItemsJob implements ShouldQueue
                 continue;
             }
 
-            BucketItem::create([
-                'user_id' => $this->donate->user_id,
-                'shop_item_id' => $content->id,
-                'rust_id' => (int) ($content->item_id ?? 0),
-                'var_id' => null,
-                'price' => 0,
-                'quantity' => $contentQty,
-                'wipe_block' => (int) $content->wipe_block,
-                'steam_id' => $steamId,
-                'server_name' => $server?->name,
-                'server_id' => $serverId,
-            ]);
+            // Компонент-привилегия/рейт/изучение (is_command) внутри набора
+            // выдаётся RCON-командой, а НЕ в bucket. Иначе, например, x3-рейт от
+            // Cobalt KIT просто бакетился в пустоту и не активировался.
+            if ($content->is_command) {
+                $command = $this->generateContentCommand($content, $contentQty, $steamId);
+                if (trim($command) !== '' && $command !== '0') {
+                    Shopping::create([
+                        'user_id' => $this->donate->user_id,
+                        'command' => $command,
+                        'status' => 0,
+                        'server' => $serverId ?? $content->server ?? 0,
+                    ]);
+                } else {
+                    Log::warning("Set {$set->id}: is_command content {$content->id} has empty command");
+                }
+            } else {
+                BucketItem::create([
+                    'user_id' => $this->donate->user_id,
+                    'shop_item_id' => $content->id,
+                    'rust_id' => (int) ($content->item_id ?? 0),
+                    'var_id' => null,
+                    'price' => 0,
+                    'quantity' => $contentQty,
+                    'wipe_block' => (int) $content->wipe_block,
+                    'steam_id' => $steamId,
+                    'server_name' => $server?->name,
+                    'server_id' => $serverId,
+                ]);
+            }
 
             ShopPurchase::create([
                 'item_id' => $content->id,
@@ -177,6 +194,9 @@ class DeliverPurchaseItemsJob implements ShouldQueue
                 'validity' => null,
             ]);
         }
+
+        // Сразу пытаемся выполнить RCON-команды привилегий из набора.
+        ProcessShoppingQueueJob::dispatchSync();
 
         Log::info("Set {$set->id} → ".count((array) $set->items)." items for donate {$this->donate->id}");
     }
@@ -220,6 +240,22 @@ class DeliverPurchaseItemsJob implements ShouldQueue
         }
 
         return max(1, (int) $amount);
+    }
+
+    /**
+     * Команда выдачи для компонента набора (is_command): подставляет steamid и
+     * количество. Вариаций у компонентов набора нет.
+     */
+    protected function generateContentCommand(ShopItem $content, int $qty, string $steamId): string
+    {
+        return strtr((string) ($content->command ?? ''), [
+            '{steamid}' => $steamId,
+            '{amount}' => (string) $qty,
+            '{var}' => '',
+            '%steamid%' => $steamId,
+            '%amount%' => (string) $qty,
+            '%var%' => '',
+        ]);
     }
 
     protected function generateCommand(ShopItem $item, Donate $donate): string
