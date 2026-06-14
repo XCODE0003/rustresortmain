@@ -32,8 +32,8 @@
 
         <title inertia>{{ config('app.name', 'RustResort') }}</title>
 
-        <link rel="icon" href="/images/icon.png" sizes="any">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="/favicon.png?v=3" sizes="any">
+        <link rel="apple-touch-icon" href="/favicon.png?v=3">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
