@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// 301-редиректы со старых URL, которые поисковики держат в выдаче как «быстрые ссылки»
+// (страницы 404-или → показывали дефолтный favicon Laravel). Ведём на актуальные разделы,
+// чтобы Google/Яндекс заменили битые ссылки на рабочие при переобходе.
+Route::permanentRedirect('/store', '/shop');
+Route::get('/store/{path}', fn (string $path) => redirect('/shop', 301))->where('path', '.*');
+Route::permanentRedirect('/news', '/info');
+Route::get('/news/{path}', fn (string $path) => redirect('/info', 301))->where('path', '.*');
+
 Route::post('/locale', [\App\Http\Controllers\LocaleController::class, 'update'])->name('locale.update');
 
 Route::get('/setlocale/{locale}', function (string $locale) {
