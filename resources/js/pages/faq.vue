@@ -1,33 +1,21 @@
 <template>
     <MainLayout>
         <div class="container flex flex-col gap-6 md:gap-9 lg:gap-10">
-            <div
-                class="page-section flex w-full items-center justify-center max-md:justify-around md:gap-12"
-            >
-                <Link
-                    href="/tickets"
-                    class="text-[15px] font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white hover:opacity-80 md:text-[17px] lg:text-[19px]"
-                    :class="{ 'text-white': $page.url.includes('/tickets') }"
-                >
-                    {{ $t('faq.tickets') }}
-                </Link>
-                <Link
-                    href="/faq"
-                    class="text-[15px] font-bold text-TextGray uppercase duration-300 ease-in-out hover:text-white hover:opacity-80 md:text-[17px] lg:text-[19px]"
-                    :class="{ 'text-white': $page.url.includes('/faq') }"
+            <div class="page-section flex w-full items-center justify-center">
+                <h1
+                    class="text-[19px] font-bold text-white uppercase md:text-[22px] lg:text-[26px]"
                 >
                     {{ $t('faq.questions') }}
-                </Link>
+                </h1>
             </div>
 
-            <div v-if="faqs.length === 0" class="page-section flex flex-col gap-2">
-                <div
-                    v-for="i in 4"
-                    :key="i"
-                    class="animate-pulse w-full rounded-xl border border-StrokeGray px-5 py-4"
-                >
-                    <div class="h-4 w-3/4 rounded bg-white/10" />
-                </div>
+            <div
+                v-if="faqs.length === 0"
+                class="page-section flex w-full flex-col items-center justify-center gap-3 rounded-xl border border-StrokeGray px-5 py-12 text-center"
+            >
+                <p class="text-sm font-medium text-TextGray md:text-base">
+                    {{ $t('faq.empty') }}
+                </p>
             </div>
 
             <div v-else class="flex w-full flex-col gap-1 lg:gap-2.5">
@@ -74,7 +62,6 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
 import { reactive, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import MainLayout from '@/layouts/main.vue';

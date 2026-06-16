@@ -4,9 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class PromoCode extends Model
 {
+    protected static function booted(): void
+    {
+        // Гарантируем публичный uuid для шаренной ссылки /p/{uuid}.
+        static::creating(function (PromoCode $promo) {
+            if (empty($promo->public_uuid)) {
+                $promo->public_uuid = (string) Str::uuid();
+            }
+        });
+    }
+
     protected $fillable = [
         'public_uuid',
         'title',

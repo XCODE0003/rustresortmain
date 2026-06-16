@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             OptionsSeeder::class,
             PaymentGatewaysSeeder::class,
             ShopSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

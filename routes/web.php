@@ -9,8 +9,9 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 // 301-редиректы со старых URL, которые поисковики держат в выдаче как «быстрые ссылки»
 // (страницы 404-или → показывали дефолтный favicon Laravel). Ведём на актуальные разделы,
 // чтобы Google/Яндекс заменили битые ссылки на рабочие при переобходе.
-Route::permanentRedirect('/store', '/shop');
-Route::get('/store/{path}', fn (string $path) => redirect('/shop', 301))->where('path', '.*');
+// Магазин закрыт → старые /store ведём сразу на главную (без цепочки /store → /shop → /).
+Route::permanentRedirect('/store', '/');
+Route::get('/store/{path}', fn () => redirect('/', 301))->where('path', '.*');
 Route::permanentRedirect('/news', '/info');
 Route::get('/news/{path}', fn (string $path) => redirect('/info', 301))->where('path', '.*');
 
@@ -44,14 +45,11 @@ Route::get('/servers', [\App\Http\Controllers\ServerController::class, 'index'])
 
 Route::get('/bans', [\App\Http\Controllers\BansController::class, 'index'])->name('bans.index');
 
-Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
-Route::get('/shop/category/{path}', [\App\Http\Controllers\ShopController::class, 'category'])->name('shop.category');
-Route::get('/shop/item/{item}', [\App\Http\Controllers\ShopController::class, 'show'])->name('shop.item.show');
-
-Route::get('/shop/server', [\App\Http\Controllers\ServerController::class, 'shopServers'])->name('shop.server');
-Route::get('/shop/server-reset', [\App\Http\Controllers\ServerController::class, 'shopServerReset'])->name('shop.server.reset');
-Route::get('/shop/server/{server}', [\App\Http\Controllers\ServerController::class, 'shopServerShow'])->name('shop.server.show');
-Route::inertia('/shop/other', 'shop/other', [])->name('shop.other');
+// Магазин закрыт: все GET-страницы магазина ведут на главную постоянным редиректом (301).
+// Имя shop.index сохраняем — на него ссылаются PaymentController и ServerController через route('shop.index').
+// POST /shop/buy-balance (auth-группа ниже) не затрагивается: catch-all только для GET.
+Route::permanentRedirect('/shop', '/')->name('shop.index');
+Route::get('/shop/{path}', fn () => redirect('/', 301))->where('path', '.*')->name('shop.closed');
 
 // match get+post: некоторые шлюзы (Pally) делают POST-redirect на success/fail → иначе 405
 Route::match(['get', 'post'], '/payment/{donate}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
@@ -104,11 +102,14 @@ Route::get('/test/login', function () {
     return redirect('/');
 })->name('test.login');
 
-// Stubs for legacy named routes referenced by ported admin views.
-// Actual implementations were absent in the source project too.
-Route::get('/p/{uuid}', fn () => abort(404))
+// Публичная статистика промокода (шаренная ссылка для блогеров): сколько задонатили
+// игроки, активировавшие промокод (в т.ч. на сервере через плагин). Порт из старого проекта.
+Route::get('/p/{uuid}', [\App\Http\Controllers\PublicPromoController::class, 'show'])
     ->where('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
     ->name('promo.public');
+
+// Stubs for legacy named routes referenced by ported admin views.
+// Actual implementations were absent in the source project too.
 Route::any('/donate/transfer', fn () => back())->name('donate.transfer');
 Route::any('/videos', fn () => back())->name('videos.store');
 Route::any('/videos/create', fn () => back())->name('videos.create');

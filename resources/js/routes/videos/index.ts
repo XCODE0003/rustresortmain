@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ store.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ store.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -31,7 +31,7 @@ store.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -40,7 +40,7 @@ store.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -49,7 +49,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -58,7 +58,7 @@ store.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -67,7 +67,7 @@ store.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -76,7 +76,7 @@ store.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 store.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -85,7 +85,7 @@ store.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -94,7 +94,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -103,7 +103,7 @@ storeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -117,7 +117,7 @@ storeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -140,7 +140,7 @@ storeForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -154,7 +154,7 @@ storeForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -168,7 +168,7 @@ storeForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 })
 
 /**
-* @see routes/web.php:105
+* @see routes/web.php:114
 * @route '/videos'
 */
 storeForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -184,7 +184,7 @@ storeForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 store.form = storeForm
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -198,7 +198,7 @@ create.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -206,7 +206,7 @@ create.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -215,7 +215,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -224,7 +224,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -233,7 +233,7 @@ create.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -242,7 +242,7 @@ create.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -251,7 +251,7 @@ create.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -260,7 +260,7 @@ create.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 create.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -269,7 +269,7 @@ create.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -278,7 +278,7 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -287,7 +287,7 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -301,7 +301,7 @@ createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -310,7 +310,7 @@ createForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -324,7 +324,7 @@ createForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -338,7 +338,7 @@ createForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -352,7 +352,7 @@ createForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 })
 
 /**
-* @see routes/web.php:106
+* @see routes/web.php:115
 * @route '/videos/create'
 */
 createForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -368,7 +368,7 @@ createForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 create.form = createForm
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 export const update = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -382,7 +382,7 @@ update.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.url = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -408,7 +408,7 @@ update.url = (args: { video: string | number } | [video: string | number ] | str
 }
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.get = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -417,7 +417,7 @@ update.get = (args: { video: string | number } | [video: string | number ] | str
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.head = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -426,7 +426,7 @@ update.head = (args: { video: string | number } | [video: string | number ] | st
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.post = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -435,7 +435,7 @@ update.post = (args: { video: string | number } | [video: string | number ] | st
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.put = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -444,7 +444,7 @@ update.put = (args: { video: string | number } | [video: string | number ] | str
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.patch = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -453,7 +453,7 @@ update.patch = (args: { video: string | number } | [video: string | number ] | s
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.delete = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -462,7 +462,7 @@ update.delete = (args: { video: string | number } | [video: string | number ] | 
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 update.options = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -471,7 +471,7 @@ update.options = (args: { video: string | number } | [video: string | number ] |
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 const updateForm = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -480,7 +480,7 @@ const updateForm = (args: { video: string | number } | [video: string | number ]
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.get = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -489,7 +489,7 @@ updateForm.get = (args: { video: string | number } | [video: string | number ] |
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.head = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -503,7 +503,7 @@ updateForm.head = (args: { video: string | number } | [video: string | number ] 
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.post = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ updateForm.post = (args: { video: string | number } | [video: string | number ] 
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.put = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -526,7 +526,7 @@ updateForm.put = (args: { video: string | number } | [video: string | number ] |
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.patch = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -540,7 +540,7 @@ updateForm.patch = (args: { video: string | number } | [video: string | number ]
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.delete = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -554,7 +554,7 @@ updateForm.delete = (args: { video: string | number } | [video: string | number 
 })
 
 /**
-* @see routes/web.php:107
+* @see routes/web.php:116
 * @route '/videos/{video}'
 */
 updateForm.options = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -570,7 +570,7 @@ updateForm.options = (args: { video: string | number } | [video: string | number
 update.form = updateForm
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 export const edit = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -584,7 +584,7 @@ edit.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.url = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -610,7 +610,7 @@ edit.url = (args: { video: string | number } | [video: string | number ] | strin
 }
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.get = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -619,7 +619,7 @@ edit.get = (args: { video: string | number } | [video: string | number ] | strin
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.head = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -628,7 +628,7 @@ edit.head = (args: { video: string | number } | [video: string | number ] | stri
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.post = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -637,7 +637,7 @@ edit.post = (args: { video: string | number } | [video: string | number ] | stri
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.put = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -646,7 +646,7 @@ edit.put = (args: { video: string | number } | [video: string | number ] | strin
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.patch = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -655,7 +655,7 @@ edit.patch = (args: { video: string | number } | [video: string | number ] | str
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.delete = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -664,7 +664,7 @@ edit.delete = (args: { video: string | number } | [video: string | number ] | st
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 edit.options = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -673,7 +673,7 @@ edit.options = (args: { video: string | number } | [video: string | number ] | s
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 const editForm = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -682,7 +682,7 @@ const editForm = (args: { video: string | number } | [video: string | number ] |
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.get = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -691,7 +691,7 @@ editForm.get = (args: { video: string | number } | [video: string | number ] | s
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.head = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -705,7 +705,7 @@ editForm.head = (args: { video: string | number } | [video: string | number ] | 
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.post = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -714,7 +714,7 @@ editForm.post = (args: { video: string | number } | [video: string | number ] | 
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.put = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -728,7 +728,7 @@ editForm.put = (args: { video: string | number } | [video: string | number ] | s
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.patch = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -742,7 +742,7 @@ editForm.patch = (args: { video: string | number } | [video: string | number ] |
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.delete = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -756,7 +756,7 @@ editForm.delete = (args: { video: string | number } | [video: string | number ] 
 })
 
 /**
-* @see routes/web.php:108
+* @see routes/web.php:117
 * @route '/videos/{video}/edit'
 */
 editForm.options = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -772,7 +772,7 @@ editForm.options = (args: { video: string | number } | [video: string | number ]
 edit.form = editForm
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 export const destroy = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -786,7 +786,7 @@ destroy.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.url = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -812,7 +812,7 @@ destroy.url = (args: { video: string | number } | [video: string | number ] | st
 }
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.get = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -821,7 +821,7 @@ destroy.get = (args: { video: string | number } | [video: string | number ] | st
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.head = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -830,7 +830,7 @@ destroy.head = (args: { video: string | number } | [video: string | number ] | s
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.post = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -839,7 +839,7 @@ destroy.post = (args: { video: string | number } | [video: string | number ] | s
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.put = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -848,7 +848,7 @@ destroy.put = (args: { video: string | number } | [video: string | number ] | st
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.patch = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -857,7 +857,7 @@ destroy.patch = (args: { video: string | number } | [video: string | number ] | 
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.delete = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -866,7 +866,7 @@ destroy.delete = (args: { video: string | number } | [video: string | number ] |
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroy.options = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -875,7 +875,7 @@ destroy.options = (args: { video: string | number } | [video: string | number ] 
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 const destroyForm = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -884,7 +884,7 @@ const destroyForm = (args: { video: string | number } | [video: string | number 
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.get = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -893,7 +893,7 @@ destroyForm.get = (args: { video: string | number } | [video: string | number ] 
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.head = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -907,7 +907,7 @@ destroyForm.head = (args: { video: string | number } | [video: string | number ]
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.post = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -916,7 +916,7 @@ destroyForm.post = (args: { video: string | number } | [video: string | number ]
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.put = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -930,7 +930,7 @@ destroyForm.put = (args: { video: string | number } | [video: string | number ] 
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.patch = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -944,7 +944,7 @@ destroyForm.patch = (args: { video: string | number } | [video: string | number 
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.delete = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -958,7 +958,7 @@ destroyForm.delete = (args: { video: string | number } | [video: string | number
 })
 
 /**
-* @see routes/web.php:109
+* @see routes/web.php:118
 * @route '/videos/{video}/destroy'
 */
 destroyForm.options = (args: { video: string | number } | [video: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

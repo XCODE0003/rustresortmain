@@ -439,7 +439,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:148
+* @see app/Http/Controllers/Backend/ServerController.php:149
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 export const destroy = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -454,7 +454,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:148
+* @see app/Http/Controllers/Backend/ServerController.php:149
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 destroy.url = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -487,7 +487,7 @@ destroy.url = (args: { server: number | { id: number } } | [server: number | { i
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:148
+* @see app/Http/Controllers/Backend/ServerController.php:149
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 destroy.delete = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -497,7 +497,7 @@ destroy.delete = (args: { server: number | { id: number } } | [server: number | 
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:148
+* @see app/Http/Controllers/Backend/ServerController.php:149
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 const destroyForm = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ const destroyForm = (args: { server: number | { id: number } } | [server: number
 
 /**
 * @see \App\Http\Controllers\Backend\ServerController::destroy
-* @see app/Http/Controllers/Backend/ServerController.php:148
+* @see app/Http/Controllers/Backend/ServerController.php:149
 * @route '/backend_uc7BgHFmw32FDIEp/servers/{server}'
 */
 destroyForm.delete = (args: { server: number | { id: number } } | [server: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

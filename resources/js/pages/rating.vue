@@ -26,7 +26,6 @@ import MainLayout from '@/layouts/main.vue';
 const iframeRef = ref<HTMLIFrameElement | null>(null);
 
 const RANKEVAL_SRC = 'https://cdn.rankeval.gg/integration/latest/rankeval-widget.js';
-// Ключ интеграции RankEval. Виджет читает его из data-target тега <script>.
 const RANKEVAL_KEY = 'a748debd-fc51-4057-8095-4fd4af19f398';
 
 onMounted(() => {

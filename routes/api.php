@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ClearStatisticsController;
 use App\Http\Controllers\Api\PaymentWebhookController;
+use App\Http\Controllers\Api\PromoApiController;
 use App\Http\Controllers\Api\ServersStatisticsController;
 use App\Http\Controllers\Api\ServersWipeController;
 use App\Http\Controllers\Api\ShopController;
@@ -31,3 +32,9 @@ Route::any('statistics/clearStatistics', [ClearStatisticsController::class, 'cle
 Route::any('server/setLastWipeDate', [ServersWipeController::class, 'setLastWipeDate']);
 Route::any('server/forgetCacheOnline', [ServersWipeController::class, 'forgetCacheOnline']);
 Route::any('server/refreshStatus', [ServersWipeController::class, 'refreshStatus']);
+
+// Промокоды для внутриигрового плагина ResortPromo (порт из старого проекта).
+// Открытые эндпоинты — плагин не присылает api_key (см. PromoApiController).
+// GET /api/promo/get — список активных бот-промокодов; POST /api/activate — активация.
+Route::get('promo/get', [PromoApiController::class, 'getPromos']);
+Route::post('activate', [PromoApiController::class, 'activate']);

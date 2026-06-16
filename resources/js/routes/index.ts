@@ -299,7 +299,7 @@ homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 home.form = homeForm
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 export const setlocale = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -313,7 +313,7 @@ setlocale.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 setlocale.url = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -339,7 +339,7 @@ setlocale.url = (args: { locale: string | number } | [locale: string | number ] 
 }
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 setlocale.get = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -348,7 +348,7 @@ setlocale.get = (args: { locale: string | number } | [locale: string | number ] 
 })
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 setlocale.head = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -357,7 +357,7 @@ setlocale.head = (args: { locale: string | number } | [locale: string | number ]
 })
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 const setlocaleForm = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -366,7 +366,7 @@ const setlocaleForm = (args: { locale: string | number } | [locale: string | num
 })
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 setlocaleForm.get = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -375,7 +375,7 @@ setlocaleForm.get = (args: { locale: string | number } | [locale: string | numbe
 })
 
 /**
-* @see routes/web.php:11
+* @see routes/web.php:20
 * @route '/setlocale/{locale}'
 */
 setlocaleForm.head = (args: { locale: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +391,7 @@ setlocaleForm.head = (args: { locale: string | number } | [locale: string | numb
 setlocale.form = setlocaleForm
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 export const settheme = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -405,7 +405,7 @@ settheme.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 settheme.url = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -431,7 +431,7 @@ settheme.url = (args: { theme: string | number } | [theme: string | number ] | s
 }
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 settheme.get = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -440,7 +440,7 @@ settheme.get = (args: { theme: string | number } | [theme: string | number ] | s
 })
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 settheme.head = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -449,7 +449,7 @@ settheme.head = (args: { theme: string | number } | [theme: string | number ] | 
 })
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 const setthemeForm = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -458,7 +458,7 @@ const setthemeForm = (args: { theme: string | number } | [theme: string | number
 })
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 setthemeForm.get = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -467,7 +467,7 @@ setthemeForm.get = (args: { theme: string | number } | [theme: string | number ]
 })
 
 /**
-* @see routes/web.php:20
+* @see routes/web.php:29
 * @route '/settheme/{theme}'
 */
 setthemeForm.head = (args: { theme: string | number } | [theme: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

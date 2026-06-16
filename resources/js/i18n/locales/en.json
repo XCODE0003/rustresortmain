@@ -180,7 +180,8 @@
     "q3": "How do I start playing RUST?",
     "q4": "I have a payment/game/ban issue — where do I go?",
     "q5": "General info, legal details, and project contacts",
-    "placeholder_answer": "The project team will publish an answer here."
+    "placeholder_answer": "The project team will publish an answer here.",
+    "empty": "No questions yet — they'll appear here soon."
   },
   "servers_page": {
     "title": "OUR SERVERS",

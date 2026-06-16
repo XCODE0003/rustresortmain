@@ -5,15 +5,16 @@ import LocaleController from './LocaleController'
 import ArticleController from './ArticleController'
 import ServerController from './ServerController'
 import BansController from './BansController'
-import ShopController from './ShopController'
 import PaymentController from './PaymentController'
 import BalanceController from './BalanceController'
 import NotificationController from './NotificationController'
+import ShopController from './ShopController'
 import PurchaseController from './PurchaseController'
 import ProfileController from './ProfileController'
 import PromoController from './PromoController'
 import FaqController from './FaqController'
 import LegalPageController from './LegalPageController'
+import PublicPromoController from './PublicPromoController'
 import Backend from './Backend'
 
 const Controllers = {
@@ -24,15 +25,16 @@ const Controllers = {
     ArticleController: Object.assign(ArticleController, ArticleController),
     ServerController: Object.assign(ServerController, ServerController),
     BansController: Object.assign(BansController, BansController),
-    ShopController: Object.assign(ShopController, ShopController),
     PaymentController: Object.assign(PaymentController, PaymentController),
     BalanceController: Object.assign(BalanceController, BalanceController),
     NotificationController: Object.assign(NotificationController, NotificationController),
+    ShopController: Object.assign(ShopController, ShopController),
     PurchaseController: Object.assign(PurchaseController, PurchaseController),
     ProfileController: Object.assign(ProfileController, ProfileController),
     PromoController: Object.assign(PromoController, PromoController),
     FaqController: Object.assign(FaqController, FaqController),
     LegalPageController: Object.assign(LegalPageController, LegalPageController),
+    PublicPromoController: Object.assign(PublicPromoController, PublicPromoController),
     Backend: Object.assign(Backend, Backend),
 }
 

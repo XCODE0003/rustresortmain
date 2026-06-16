@@ -1,9 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
-import item from './item'
-import server7c4559 from './server'
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -12,13 +10,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 index.definition = {
-    methods: ["get","head"],
+    methods: ["get","head","post","put","patch","delete","options"],
     url: '/shop',
-} satisfies RouteDefinition<["get","head"]>
+} satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -26,8 +24,8 @@ index.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,8 +34,8 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,8 +44,58 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: index.url(options),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+index.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: index.url(options),
+    method: 'put',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+index.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: index.url(options),
+    method: 'patch',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+index.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: index.url(options),
+    method: 'delete',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+index.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
+    url: index.url(options),
+    method: 'options',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -56,8 +104,8 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -66,8 +114,8 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::index
-* @see app/Http/Controllers/ShopController.php:20
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/shop'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -80,29 +128,97 @@ indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     method: 'get',
 })
 
-index.form = indexForm
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+indexForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: index.url(options),
+    method: 'post',
+})
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
 */
-export const category = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: category.url(args, options),
+indexForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+indexForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+indexForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/shop'
+*/
+indexForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'OPTIONS',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
     method: 'get',
 })
 
-category.definition = {
+index.form = indexForm
+
+/**
+* @see routes/web.php:52
+* @route '/shop/{path}'
+*/
+export const closed = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: closed.url(args, options),
+    method: 'get',
+})
+
+closed.definition = {
     methods: ["get","head"],
-    url: '/shop/category/{path}',
+    url: '/shop/{path}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see routes/web.php:52
+* @route '/shop/{path}'
 */
-category.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
+closed.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { path: args }
     }
@@ -119,58 +235,53 @@ category.url = (args: { path: string | number } | [path: string | number ] | str
         path: args.path,
     }
 
-    return category.definition.url
+    return closed.definition.url
             .replace('{path}', parsedArgs.path.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see routes/web.php:52
+* @route '/shop/{path}'
 */
-category.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: category.url(args, options),
+closed.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: closed.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see routes/web.php:52
+* @route '/shop/{path}'
 */
-category.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: category.url(args, options),
+closed.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: closed.url(args, options),
     method: 'head',
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see routes/web.php:52
+* @route '/shop/{path}'
 */
-const categoryForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: category.url(args, options),
+const closedForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: closed.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see routes/web.php:52
+* @route '/shop/{path}'
 */
-categoryForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: category.url(args, options),
+closedForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: closed.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\ShopController::category
-* @see app/Http/Controllers/ShopController.php:58
-* @route '/shop/category/{path}'
+* @see routes/web.php:52
+* @route '/shop/{path}'
 */
-categoryForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: category.url(args, {
+closedForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: closed.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -179,169 +290,7 @@ categoryForm.head = (args: { path: string | number } | [path: string | number ] 
     method: 'get',
 })
 
-category.form = categoryForm
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-export const server = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: server.url(options),
-    method: 'get',
-})
-
-server.definition = {
-    methods: ["get","head"],
-    url: '/shop/server',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-server.url = (options?: RouteQueryOptions) => {
-    return server.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-server.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: server.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-server.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: server.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-const serverForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: server.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-serverForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: server.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\ServerController::server
-* @see app/Http/Controllers/ServerController.php:33
-* @route '/shop/server'
-*/
-serverForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: server.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-server.form = serverForm
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-export const other = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: other.url(options),
-    method: 'get',
-})
-
-other.definition = {
-    methods: ["get","head"],
-    url: '/shop/other',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-other.url = (options?: RouteQueryOptions) => {
-    return other.definition.url + queryParams(options)
-}
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-other.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: other.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-other.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: other.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-const otherForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: other.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-otherForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: other.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/shop/other'
-*/
-otherForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: other.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-other.form = otherForm
+closed.form = closedForm
 
 /**
 * @see \App\Http\Controllers\ShopController::buyBalance
@@ -401,10 +350,7 @@ buyBalance.form = buyBalanceForm
 
 const shop = {
     index: Object.assign(index, index),
-    category: Object.assign(category, category),
-    item: Object.assign(item, item),
-    server: Object.assign(server, server7c4559),
-    other: Object.assign(other, other),
+    closed: Object.assign(closed, closed),
     buyBalance: Object.assign(buyBalance, buyBalance),
 }
 
