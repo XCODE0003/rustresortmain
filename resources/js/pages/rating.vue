@@ -1,10 +1,10 @@
 <template>
     <MainLayout>
-        <div class="container flex flex-col gap-10">
+        <div class="">
             <h1 class="page-section text-center text-[19px] font-bold text-white uppercase">
                 {{ $t('nav.rating') }}
             </h1>
-            <div class="page-section w-full">
+            <div class="">
                 <iframe
                     ref="iframeRef"
                     class="w-full rounded-xl border border-StrokeGray"
