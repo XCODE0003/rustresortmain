@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ClearStatisticsController;
 use App\Http\Controllers\Api\PaymentWebhookController;
 use App\Http\Controllers\Api\PromoApiController;
 use App\Http\Controllers\Api\ServersStatisticsController;
+use App\Http\Controllers\Api\TelegramBotController;
 use App\Http\Controllers\Api\ServersWipeController;
 use App\Http\Controllers\Api\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,7 @@ Route::any('server/refreshStatus', [ServersWipeController::class, 'refreshStatus
 // GET /api/promo/get — список активных бот-промокодов; POST /api/activate — активация.
 Route::get('promo/get', [PromoApiController::class, 'getPromos']);
 Route::post('activate', [PromoApiController::class, 'activate']);
+
+// Вебхук Telegram-бота промокодов. Доступ ограничен whitelist'ом (telegram.allowed_ids)
+// + опц. секрет вебхука. Управление вебхуком — артизан-командой `telegram:webhook`.
+Route::post('telegram/webhook', [TelegramBotController::class, 'webhook']);
