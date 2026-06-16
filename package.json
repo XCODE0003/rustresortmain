@@ -9,7 +9,7 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
-        "deploy:install": "rm -rf node_modules package-lock.json && npm install --include=optional"
+        "deploy:install": "npm ci --no-audit --no-fund"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
@@ -55,5 +55,8 @@
         "@tailwindcss/oxide-win32-x64-msvc": "^4.2.2",
         "lightningcss-linux-x64-gnu": "^1.29.1",
         "lightningcss-win32-x64-msvc": "^1.29.1"
+    },
+    "overrides": {
+        "@jridgewell/trace-mapping": "^0.3.25"
     }
 }

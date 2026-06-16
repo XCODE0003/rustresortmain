@@ -27,8 +27,13 @@ jobs:
 
 
 
-            echo "==> Installing JS dependencies and building assets..."
-            npm ci
+            echo "==> Node/npm versions:"
+            node -v && npm -v
+
+            echo "==> Installing JS dependencies (clean, reproducible from package-lock.json)..."
+            npm ci --no-audit --no-fund
+
+            echo "==> Building assets..."
             npm run build
 
             echo "==> Running migrations..."

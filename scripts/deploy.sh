@@ -13,12 +13,12 @@ composer install --no-dev --optimize-autoloader --no-interaction
 echo "==> php artisan migrate"
 php artisan migrate --force
 
-# Force-reinstall node deps with the correct platform bindings.
-# Workaround for https://github.com/npm/cli/issues/4828 — package-lock.json
-# generated on dev machine (macOS) doesn't carry linux-x64-gnu bindings.
-echo "==> npm install (clean)"
-rm -rf node_modules package-lock.json
-npm install --include=optional --no-audit --no-fund
+# Воспроизводимая установка строго из package-lock.json (lockfileVersion 3 содержит
+# бинарники под все платформы, включая linux-x64-gnu). НЕ удаляем лок: именно
+# `rm package-lock.json && npm install` тянул старый @jridgewell/trace-mapping без
+# .mjs и ломал `vite build`. npm ci сам очищает node_modules перед установкой.
+echo "==> npm ci (clean, reproducible)"
+npm ci --no-audit --no-fund
 
 echo "==> npm run build"
 npm run build
