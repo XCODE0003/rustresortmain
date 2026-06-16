@@ -5,11 +5,33 @@ on:
     branches:
       - main
 
+# Сборка фронта идёт НА РАННЕРЕ (Node 22), а не на сервере: у сервера в
+# non-interactive SSH стоит Node 18 / npm 9 — слишком старый для Vite 7
+# (нужен 20.19+/22.12+) и ломается на нативных биндингах @tailwindcss/oxide.
+# Поэтому: собираем assets здесь, заливаем public/build по SCP, а на сервере
+# выполняем только PHP-шаги (код + миграции + кэш + queue:restart).
+env:
+  DEPLOY_PATH: /var/www/www-root/data/www/dev.rustresort.com
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build assets
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: Update code, migrate & cache on server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -18,28 +40,40 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             set -e
-            cd /var/www/www-root/data/www/dev.rustresort.com
+            cd ${{ env.DEPLOY_PATH }}
 
             echo "==> Pulling latest code..."
             git fetch origin main
             git reset --hard origin/main
-            git clean -fd
+            git clean -fd   # public/build игнорируется gitignore и НЕ удаляется
 
-
-
-            echo "==> Node/npm versions:"
-            node -v && npm -v
-
-            echo "==> Installing JS dependencies (clean, reproducible from package-lock.json)..."
-            npm ci --no-audit --no-fund
-
-            echo "==> Building assets..."
-            npm run build
-
-            echo "==> Running migrations..."
+            echo "==> Migrations..."
             /opt/php84/bin/php artisan migrate --force
 
-            echo "==> Caching config, routes, views..."
+      - name: Upload built assets (public/build)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "public/build"
+          target: "${{ env.DEPLOY_PATH }}/public"
+          strip_components: 1
+          overwrite: true
+
+      - name: Cache config/routes/views & restart queue
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -e
+            cd ${{ env.DEPLOY_PATH }}
+
+            echo "==> Caching config, routes, views, events..."
             /opt/php84/bin/php artisan config:cache
             /opt/php84/bin/php artisan route:cache
             /opt/php84/bin/php artisan view:cache
