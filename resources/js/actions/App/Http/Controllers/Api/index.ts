@@ -4,6 +4,7 @@ import ServersStatisticsController from './ServersStatisticsController'
 import ClearStatisticsController from './ClearStatisticsController'
 import ServersWipeController from './ServersWipeController'
 import PromoApiController from './PromoApiController'
+import TelegramBotController from './TelegramBotController'
 
 const Api = {
     PaymentWebhookController: Object.assign(PaymentWebhookController, PaymentWebhookController),
@@ -12,6 +13,7 @@ const Api = {
     ClearStatisticsController: Object.assign(ClearStatisticsController, ClearStatisticsController),
     ServersWipeController: Object.assign(ServersWipeController, ServersWipeController),
     PromoApiController: Object.assign(PromoApiController, PromoApiController),
+    TelegramBotController: Object.assign(TelegramBotController, TelegramBotController),
 }
 
 export default Api

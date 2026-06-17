@@ -62,7 +62,7 @@ mute.form = muteForm
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-export const unmute = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const unmute = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: unmute.url(args, options),
     method: 'get',
 })
@@ -77,7 +77,7 @@ unmute.definition = {
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-unmute.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+unmute.url = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
@@ -110,7 +110,7 @@ unmute.url = (args: { user: number | { id: number } } | [user: number | { id: nu
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-unmute.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+unmute.get = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: unmute.url(args, options),
     method: 'get',
 })
@@ -120,7 +120,7 @@ unmute.get = (args: { user: number | { id: number } } | [user: number | { id: nu
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-unmute.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+unmute.head = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: unmute.url(args, options),
     method: 'head',
 })
@@ -130,7 +130,7 @@ unmute.head = (args: { user: number | { id: number } } | [user: number | { id: n
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-const unmuteForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const unmuteForm = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: unmute.url(args, options),
     method: 'get',
 })
@@ -140,7 +140,7 @@ const unmuteForm = (args: { user: number | { id: number } } | [user: number | { 
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-unmuteForm.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+unmuteForm.get = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: unmute.url(args, options),
     method: 'get',
 })
@@ -150,7 +150,7 @@ unmuteForm.get = (args: { user: number | { id: number } } | [user: number | { id
 * @see app/Http/Controllers/Backend/UserController.php:142
 * @route '/backend_uc7BgHFmw32FDIEp/users/unmute/{user}'
 */
-unmuteForm.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+unmuteForm.head = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: unmute.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

@@ -222,7 +222,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-export const edit = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -237,7 +237,7 @@ edit.definition = {
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-edit.url = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { guidecategory: args }
     }
@@ -270,7 +270,7 @@ edit.url = (args: { guidecategory: number | { id: number } } | [guidecategory: n
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-edit.get = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -280,7 +280,7 @@ edit.get = (args: { guidecategory: number | { id: number } } | [guidecategory: n
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-edit.head = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -290,7 +290,7 @@ edit.head = (args: { guidecategory: number | { id: number } } | [guidecategory: 
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-const editForm = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const editForm = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -300,7 +300,7 @@ const editForm = (args: { guidecategory: number | { id: number } } | [guidecateg
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-editForm.get = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.get = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -310,7 +310,7 @@ editForm.get = (args: { guidecategory: number | { id: number } } | [guidecategor
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:63
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}/edit'
 */
-editForm.head = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.head = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -327,7 +327,7 @@ edit.form = editForm
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-export const update = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -342,7 +342,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-update.url = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { guidecategory: args }
     }
@@ -375,7 +375,7 @@ update.url = (args: { guidecategory: number | { id: number } } | [guidecategory:
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-update.put = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -385,7 +385,7 @@ update.put = (args: { guidecategory: number | { id: number } } | [guidecategory:
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-update.patch = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -395,7 +395,7 @@ update.patch = (args: { guidecategory: number | { id: number } } | [guidecategor
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-const updateForm = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -410,7 +410,7 @@ const updateForm = (args: { guidecategory: number | { id: number } } | [guidecat
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-updateForm.put = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -425,7 +425,7 @@ updateForm.put = (args: { guidecategory: number | { id: number } } | [guidecateg
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:71
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-updateForm.patch = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -442,7 +442,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:83
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-export const destroy = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -457,7 +457,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:83
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-destroy.url = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { guidecategory: args }
     }
@@ -490,7 +490,7 @@ destroy.url = (args: { guidecategory: number | { id: number } } | [guidecategory
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:83
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-destroy.delete = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -500,7 +500,7 @@ destroy.delete = (args: { guidecategory: number | { id: number } } | [guidecateg
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:83
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-const destroyForm = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -515,7 +515,7 @@ const destroyForm = (args: { guidecategory: number | { id: number } } | [guideca
 * @see app/Http/Controllers/Backend/GuideCategoryController.php:83
 * @route '/backend_uc7BgHFmw32FDIEp/guidecategories/{guidecategory}'
 */
-destroyForm.delete = (args: { guidecategory: number | { id: number } } | [guidecategory: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { guidecategory: string | number | { id: string | number } } | [guidecategory: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

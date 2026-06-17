@@ -7,7 +7,7 @@
             <div class="">
                 <iframe
                     ref="iframeRef"
-                    class=""
+                    class="w-full container max-w-"
                     style="height: 0; overflow: hidden;"
                     frameborder="0"
                     scrolling="no"

@@ -222,7 +222,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-export const edit = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -237,7 +237,7 @@ edit.definition = {
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-edit.url = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { article: args }
     }
@@ -270,7 +270,7 @@ edit.url = (args: { article: number | { id: number } } | [article: number | { id
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-edit.get = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -280,7 +280,7 @@ edit.get = (args: { article: number | { id: number } } | [article: number | { id
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-edit.head = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -290,7 +290,7 @@ edit.head = (args: { article: number | { id: number } } | [article: number | { i
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-const editForm = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const editForm = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -300,7 +300,7 @@ const editForm = (args: { article: number | { id: number } } | [article: number 
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-editForm.get = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.get = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, options),
     method: 'get',
 })
@@ -310,7 +310,7 @@ editForm.get = (args: { article: number | { id: number } } | [article: number | 
 * @see app/Http/Controllers/Backend/ArticleController.php:74
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}/edit'
 */
-editForm.head = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+editForm.head = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: edit.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -327,7 +327,7 @@ edit.form = editForm
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-export const update = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -342,7 +342,7 @@ update.definition = {
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-update.url = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { article: args }
     }
@@ -375,7 +375,7 @@ update.url = (args: { article: number | { id: number } } | [article: number | { 
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-update.put = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -385,7 +385,7 @@ update.put = (args: { article: number | { id: number } } | [article: number | { 
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-update.patch = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -395,7 +395,7 @@ update.patch = (args: { article: number | { id: number } } | [article: number | 
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-const updateForm = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -410,7 +410,7 @@ const updateForm = (args: { article: number | { id: number } } | [article: numbe
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-updateForm.put = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -425,7 +425,7 @@ updateForm.put = (args: { article: number | { id: number } } | [article: number 
 * @see app/Http/Controllers/Backend/ArticleController.php:82
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-updateForm.patch = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -442,7 +442,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Backend/ArticleController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-export const destroy = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -457,7 +457,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Backend/ArticleController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-destroy.url = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { article: args }
     }
@@ -490,7 +490,7 @@ destroy.url = (args: { article: number | { id: number } } | [article: number | {
 * @see app/Http/Controllers/Backend/ArticleController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-destroy.delete = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -500,7 +500,7 @@ destroy.delete = (args: { article: number | { id: number } } | [article: number 
 * @see app/Http/Controllers/Backend/ArticleController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-const destroyForm = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -515,7 +515,7 @@ const destroyForm = (args: { article: number | { id: number } } | [article: numb
 * @see app/Http/Controllers/Backend/ArticleController.php:103
 * @route '/backend_uc7BgHFmw32FDIEp/articles/{article}'
 */
-destroyForm.delete = (args: { article: number | { id: number } } | [article: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { article: string | number | { id: string | number } } | [article: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

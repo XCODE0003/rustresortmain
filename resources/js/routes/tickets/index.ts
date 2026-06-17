@@ -136,7 +136,7 @@ all.form = allForm
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-export const deleteMethod = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const deleteMethod = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: deleteMethod.url(args, options),
     method: 'get',
 })
@@ -151,7 +151,7 @@ deleteMethod.definition = {
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-deleteMethod.url = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+deleteMethod.url = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { ticket: args }
     }
@@ -184,7 +184,7 @@ deleteMethod.url = (args: { ticket: number | { id: number } } | [ticket: number 
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-deleteMethod.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+deleteMethod.get = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: deleteMethod.url(args, options),
     method: 'get',
 })
@@ -194,7 +194,7 @@ deleteMethod.get = (args: { ticket: number | { id: number } } | [ticket: number 
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-deleteMethod.head = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+deleteMethod.head = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: deleteMethod.url(args, options),
     method: 'head',
 })
@@ -204,7 +204,7 @@ deleteMethod.head = (args: { ticket: number | { id: number } } | [ticket: number
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-const deleteMethodForm = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const deleteMethodForm = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: deleteMethod.url(args, options),
     method: 'get',
 })
@@ -214,7 +214,7 @@ const deleteMethodForm = (args: { ticket: number | { id: number } } | [ticket: n
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-deleteMethodForm.get = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+deleteMethodForm.get = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: deleteMethod.url(args, options),
     method: 'get',
 })
@@ -224,7 +224,7 @@ deleteMethodForm.get = (args: { ticket: number | { id: number } } | [ticket: num
 * @see app/Http/Controllers/Backend/TicketController.php:121
 * @route '/backend_uc7BgHFmw32FDIEp/tickets/{ticket}/delete'
 */
-deleteMethodForm.head = (args: { ticket: number | { id: number } } | [ticket: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+deleteMethodForm.head = (args: { ticket: string | number | { id: string | number } } | [ticket: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: deleteMethod.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',

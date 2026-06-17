@@ -85,7 +85,7 @@ index.form = indexForm
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-export const show = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -100,7 +100,7 @@ show.definition = {
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-show.url = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show.url = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { purchase: args }
     }
@@ -133,7 +133,7 @@ show.url = (args: { purchase: number | { id: number } } | [purchase: number | { 
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-show.get = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -143,7 +143,7 @@ show.get = (args: { purchase: number | { id: number } } | [purchase: number | { 
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-show.head = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -153,7 +153,7 @@ show.head = (args: { purchase: number | { id: number } } | [purchase: number | {
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-const showForm = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const showForm = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -163,7 +163,7 @@ const showForm = (args: { purchase: number | { id: number } } | [purchase: numbe
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-showForm.get = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.get = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -173,7 +173,7 @@ showForm.get = (args: { purchase: number | { id: number } } | [purchase: number 
 * @see app/Http/Controllers/PurchaseController.php:70
 * @route '/purchases/{purchase}'
 */
-showForm.head = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.head = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -190,7 +190,7 @@ show.form = showForm
 * @see app/Http/Controllers/PurchaseController.php:96
 * @route '/profile/purchases/{purchase}'
 */
-export const refund = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const refund = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: refund.url(args, options),
     method: 'delete',
 })
@@ -205,7 +205,7 @@ refund.definition = {
 * @see app/Http/Controllers/PurchaseController.php:96
 * @route '/profile/purchases/{purchase}'
 */
-refund.url = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+refund.url = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { purchase: args }
     }
@@ -238,7 +238,7 @@ refund.url = (args: { purchase: number | { id: number } } | [purchase: number | 
 * @see app/Http/Controllers/PurchaseController.php:96
 * @route '/profile/purchases/{purchase}'
 */
-refund.delete = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+refund.delete = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: refund.url(args, options),
     method: 'delete',
 })
@@ -248,7 +248,7 @@ refund.delete = (args: { purchase: number | { id: number } } | [purchase: number
 * @see app/Http/Controllers/PurchaseController.php:96
 * @route '/profile/purchases/{purchase}'
 */
-const refundForm = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const refundForm = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: refund.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -263,7 +263,7 @@ const refundForm = (args: { purchase: number | { id: number } } | [purchase: num
 * @see app/Http/Controllers/PurchaseController.php:96
 * @route '/profile/purchases/{purchase}'
 */
-refundForm.delete = (args: { purchase: number | { id: number } } | [purchase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+refundForm.delete = (args: { purchase: string | number | { id: string | number } } | [purchase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: refund.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
