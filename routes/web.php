@@ -207,6 +207,7 @@ Route::middleware('backend')
 
         Route::get('/shopitems/{shopitem}/duplicate', [Backend\ShopItemController::class, 'duplicate'])->name('shopitems.duplicate');
         Route::post('/shopitems/getVariations', [Backend\ShopItemController::class, 'getVariations'])->name('shopitems.getVariations');
+        Route::post('/shopitems/reorder', [Backend\ShopItemController::class, 'reorder'])->name('shopitems.reorder');
         Route::get('/shopitems/resetCache', [Backend\ShopItemController::class, 'resetCache'])->name('shopitems.resetCache');
 
         Route::get('/bonuses', [Backend\BonusesController::class, 'index'])->name('bonuses');

@@ -7,8 +7,10 @@ use App\Http\Requests\ShopItemRequest;
 use App\Models\ShopItem;
 use App\Models\ShopCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ShopItemController extends Controller
@@ -39,7 +41,10 @@ class ShopItemController extends Controller
             $shopitems->where('category_id', $category_id);
         }
 
-        $shopitems = $shopitems->orderBy('sort')->orderBy('id')->paginate();
+        // При выбранной категории показываем все её товары одной страницей,
+        // чтобы перетаскиванием можно было менять порядок по всей категории.
+        $perPage = $category_id > 0 ? 1000 : 15;
+        $shopitems = $shopitems->orderBy('sort')->orderBy('id')->paginate($perPage)->withQueryString();
 
         $shopcategories = ShopCategory::query()->get();
 
@@ -237,7 +242,56 @@ class ShopItemController extends Controller
 
     }
 
+    /**
+     * Сохранить новый порядок товаров (drag-and-drop в админке).
+     * Принимает массив id в нужном порядке; раскладывает sort с шагом 10,
+     * чтобы между товарами оставались зазоры для будущих вставок.
+     */
+    public function reorder(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'order' => ['required', 'array', 'min:1'],
+            'order.*' => ['integer'],
+            'category_id' => ['nullable', 'integer'],
+        ]);
+
+        // Трогаем только реально существующие товары и, если задана категория,
+        // только её товары — чтобы нельзя было перетасовать чужие записи.
+        $query = ShopItem::query()->whereIn('id', $data['order']);
+        if (! empty($data['category_id'])) {
+            $query->where('category_id', $data['category_id']);
+        }
+        $validIds = $query->pluck('id')->all();
+
+        $sorts = [];
+        $position = 0;
+
+        DB::transaction(function () use ($data, $validIds, &$sorts, &$position) {
+            foreach ($data['order'] as $id) {
+                if (! in_array($id, $validIds, true)) {
+                    continue;
+                }
+
+                $position += 10;
+                ShopItem::where('id', $id)->update(['sort' => $position]);
+                $sorts[$id] = $position;
+            }
+        });
+
+        $this->forgetShopCaches();
+
+        return response()->json(['status' => 'ok', 'sorts' => $sorts]);
+    }
+
     public function resetCache()
+    {
+        $this->forgetShopCaches();
+
+        $this->alert('success', __('Кеш магазина успешно сброшен'));
+        return back();
+    }
+
+    private function forgetShopCaches(): void
     {
         foreach (getservers() as $server) {
             foreach (getshopcategories() as $shopcategory) {
@@ -245,8 +299,5 @@ class ShopItemController extends Controller
                 Cache::forget('page_shop_shopsets_cat'.$shopcategory->id.$server->id);
             }
         }
-
-        $this->alert('success', __('Кеш магазина успешно сброшен'));
-        return back();
     }
 }
