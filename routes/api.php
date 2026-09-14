@@ -3,10 +3,11 @@
 use App\Http\Controllers\Api\ClearStatisticsController;
 use App\Http\Controllers\Api\PaymentWebhookController;
 use App\Http\Controllers\Api\PromoApiController;
+use App\Http\Controllers\Api\ServerOnlineController;
 use App\Http\Controllers\Api\ServersStatisticsController;
-use App\Http\Controllers\Api\TelegramBotController;
 use App\Http\Controllers\Api\ServersWipeController;
 use App\Http\Controllers\Api\ShopController;
+use App\Http\Controllers\Api\TelegramBotController;
 use Illuminate\Support\Facades\Route;
 
 Route::any('payments/notification/{gateway}', [PaymentWebhookController::class, 'handle'])
@@ -33,6 +34,15 @@ Route::any('statistics/clearStatistics', [ClearStatisticsController::class, 'cle
 Route::any('server/setLastWipeDate', [ServersWipeController::class, 'setLastWipeDate']);
 Route::any('server/forgetCacheOnline', [ServersWipeController::class, 'forgetCacheOnline']);
 Route::any('server/refreshStatus', [ServersWipeController::class, 'refreshStatus']);
+
+// Публичный онлайн серверов для виджетов и внешних интеграций.
+// GET /api/server/online -> {currentplayer, queueplayers, maxplayers}
+// ?server=ID — счётчики одного сервера вместо суммы по активным.
+// Лимит задан явно: в bootstrap/app.php нет throttleApi(), то есть группового
+// лимита у /api нет, а этот эндпоинт открытый и его будут опрашивать виджеты.
+Route::get('server/online', [ServerOnlineController::class, 'show'])
+    ->middleware('throttle:60,1')
+    ->name('api.server.online');
 
 // Промокоды для внутриигрового плагина ResortPromo (порт из старого проекта).
 // Открытые эндпоинты — плагин не присылает api_key (см. PromoApiController).

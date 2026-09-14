@@ -36,6 +36,25 @@ class RustServerPlayerCountService
     }
 
     /**
+     * Парсит количество игроков в очереди из вывода RCON `status`.
+     * Rust печатает её отдельной скобкой: `players : 12 (250 max) (3 queued)`.
+     * Если очереди в ответе нет — она пустая, возвращаем 0.
+     */
+    public function parseQueuedFromStatusMessage(string $message): int
+    {
+        // (3 queued) / (3 in queue) / queued : 3
+        if (preg_match('/\((\d+)\s*(?:queued|in\s+queue)\)/iu', $message, $m)) {
+            return (int) $m[1];
+        }
+
+        if (preg_match('/queue(?:d)?\s*:\s*(\d+)/iu', $message, $m)) {
+            return (int) $m[1];
+        }
+
+        return 0;
+    }
+
+    /**
      * Текст ответа RCON на команду status (объект или массив после json_decode).
      */
     private function rconStatusMessage(mixed $result): string
@@ -56,9 +75,9 @@ class RustServerPlayerCountService
     }
 
     /**
-     * Подключается по RCON, выполняет `status`, парсит онлайн. При ошибке — null.
+     * Подключается по RCON, выполняет `status`, парсит онлайн и очередь. При ошибке — null.
      *
-     * @return array{online: int, max: int}|null
+     * @return array{online: int, max: int, queue: int}|null
      */
     public function syncFromRcon(Server $server): ?array
     {
@@ -99,6 +118,7 @@ class RustServerPlayerCountService
             return [
                 'online' => $parsed[0],
                 'max' => $parsed[1],
+                'queue' => $this->parseQueuedFromStatusMessage($message),
             ];
         } catch (\Throwable $e) {
             Log::channel('rcon_master')->error('RustServerPlayerCount: exception', [
@@ -113,7 +133,7 @@ class RustServerPlayerCountService
     }
 
     /**
-     * Обновляет online_players / max_players в options для активных серверов.
+     * Обновляет online_players / queue_players / max_players в options для активных серверов.
      *
      * @return array{updated: int, skipped: int, errors: list<array{server_id: int, message: string}>}
      */
@@ -149,6 +169,7 @@ class RustServerPlayerCountService
 
                 $options = $this->serverOptionsAsArray($server);
                 $options['online_players'] = $counts['online'];
+                $options['queue_players'] = $counts['queue'] ?? 0;
                 $options['max_players'] = $counts['max'];
                 $options['players_synced_at'] = now()->toIso8601String();
                 $server->options = $options;
@@ -159,6 +180,7 @@ class RustServerPlayerCountService
                 Log::channel('rcon_master')->info('SyncOnlinePlayers: counts saved', [
                     'server_id' => $server->id,
                     'online' => $counts['online'],
+                    'queue' => $counts['queue'] ?? 0,
                     'max' => $counts['max'],
                 ]);
             } catch (\Throwable $e) {

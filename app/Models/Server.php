@@ -83,6 +83,7 @@ class Server extends Model
             'next_wipe' => $this->next_wipe?->toISOString(),
             'last_wipe' => $this->wipe?->toISOString(),
             'online_players' => (int) ($options['online_players'] ?? 0),
+            'queue_players' => (int) ($options['queue_players'] ?? 0),
             'max_players' => (int) ($options['max_players'] ?? 500),
             'options' => Arr::only($options, self::PUBLIC_OPTION_KEYS),
         ];

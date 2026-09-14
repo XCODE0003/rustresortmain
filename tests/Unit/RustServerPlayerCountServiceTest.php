@@ -47,3 +47,26 @@ test('serverOptionsAsArray decodes json string options', function () {
 
     expect($out)->toBeArray()->and($out['ip'])->toBe('37.230.137.209:28015');
 });
+
+test('parses queued players from rust status line', function () {
+    $svc = new RustServerPlayerCountService;
+    $msg = <<<'TXT'
+hostname: Test
+version : 2623 secure
+players : 12 (250 max) (3 queued) (1 joining)
+TXT;
+
+    expect($svc->parseQueuedFromStatusMessage($msg))->toBe(3);
+});
+
+test('queued is zero when status has no queue info', function () {
+    $svc = new RustServerPlayerCountService;
+
+    expect($svc->parseQueuedFromStatusMessage('players : 12 (250 max)'))->toBe(0);
+});
+
+test('parses queued written as queue', function () {
+    $svc = new RustServerPlayerCountService;
+
+    expect($svc->parseQueuedFromStatusMessage('players : 12 (250 max) (7 in queue)'))->toBe(7);
+});
