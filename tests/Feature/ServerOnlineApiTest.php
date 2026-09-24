@@ -68,6 +68,25 @@ test('returns counters for a single server by id', function () {
     ]);
 });
 
+test('accepts id as an alias for server', function () {
+    $first = onlineServer('Server 1', online: 150, queue: 100, max: 200, sort: 1);
+    onlineServer('Server 2', online: 100, queue: 25, max: 100, sort: 2);
+
+    // Интеграторы зовут ?id=N — раньше параметр молча игнорировался
+    // и вместо одного сервера возвращалась сумма по всем.
+    $this->getJson("/api/server/online?id={$first->id}")->assertExactJson([
+        'currentplayer' => 150,
+        'queueplayers' => 100,
+        'maxplayers' => 200,
+    ]);
+});
+
+test('invalid id alias is rejected', function () {
+    $this->getJson('/api/server/online?id=abc')
+        ->assertStatus(422)
+        ->assertJsonPath('status', 'error');
+});
+
 test('single server lookup ignores disabled servers', function () {
     $disabled = onlineServer('Disabled', online: 999, queue: 999, max: 999, status: 0);
 

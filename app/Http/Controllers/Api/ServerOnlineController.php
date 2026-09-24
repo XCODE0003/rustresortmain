@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
  *
  * GET /api/server/online            — сумма по всем активным серверам
  * GET /api/server/online?server=ID  — счётчики одного сервера
+ *                                     (алиасы: ?server_id=ID, ?id=ID)
  *
  * Данные берутся из servers.options (online_players / queue_players /
  * max_players), которые раз в минуту обновляет SyncOnlinePlayersJob по RCON.
@@ -28,6 +29,7 @@ class ServerOnlineController extends Controller
         $validator = Validator::make($request->query(), [
             'server' => ['nullable', 'integer', 'min:1'],
             'server_id' => ['nullable', 'integer', 'min:1'],
+            'id' => ['nullable', 'integer', 'min:1'],
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +40,10 @@ class ServerOnlineController extends Controller
         }
 
         $validated = $validator->validated();
-        $serverId = $validated['server'] ?? $validated['server_id'] ?? null;
+        // Три написания одного и того же параметра: интеграторы шлют кто ?server,
+        // кто ?id. Неизвестный параметр раньше молча игнорировался и в ответ
+        // уходила сумма по всем серверам — выглядело как "ID не работает".
+        $serverId = $validated['server'] ?? $validated['server_id'] ?? $validated['id'] ?? null;
 
         // Только активные серверы: выключенный сервер публично не существует.
         $query = Server::query()->select(['id', 'options'])->where('status', 1);
