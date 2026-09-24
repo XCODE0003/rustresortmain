@@ -87,6 +87,14 @@ test('invalid id alias is rejected', function () {
         ->assertJsonPath('status', 'error');
 });
 
+test('validation error is a readable message, not a raw translation key', function () {
+    // В lang/ru нет validation.php, поэтому дефолтные правила отдавали наружу
+    // сырой ключ "validation.integer" — интегратору это ни о чём не говорит.
+    $response = $this->getJson('/api/server/online?id=abc');
+
+    $response->assertJsonPath('msg', 'server must be a positive integer');
+});
+
 test('single server lookup ignores disabled servers', function () {
     $disabled = onlineServer('Disabled', online: 999, queue: 999, max: 999, status: 0);
 

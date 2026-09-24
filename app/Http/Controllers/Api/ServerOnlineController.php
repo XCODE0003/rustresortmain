@@ -30,6 +30,11 @@ class ServerOnlineController extends Controller
             'server' => ['nullable', 'integer', 'min:1'],
             'server_id' => ['nullable', 'integer', 'min:1'],
             'id' => ['nullable', 'integer', 'min:1'],
+        ], [
+            // Без явных сообщений наружу уходит сырой ключ "validation.integer":
+            // в lang/ru нет validation.php, а APP_LOCALE на проде = ru.
+            '*.integer' => 'server must be a positive integer',
+            '*.min' => 'server must be a positive integer',
         ]);
 
         if ($validator->fails()) {
